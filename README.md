@@ -21,8 +21,6 @@ __H3K27ac__
 
 __Pouch young heads were pooled to generate 2 replicates__
 
-<details><summary>Sample Information Table</summary>
-<p>
 
 | collection date | PY ID   | weight (g) | head_shape | maternal | paternal | litter | sex | replicate pool |
 |-----------------|---------|------------|------------|----------|----------|--------|-----|----------------|
@@ -79,9 +77,6 @@ __Pouch young heads were pooled to generate 2 replicates__
 | 27/11/2019      | Fb198.2 | 0.016      | flat head  | Fb198    | My234    | 10     | F   | A              |
 | 27/11/2019      | Fb198.3 | 0.012      | flat head  | Fb198    | My234    | 10     | F   | A              |
 | 27/11/2019      | Fb198.5 | 0.015      | flat head  | Fb198    | My234    | 10     | M   | A              |
-</p>
-</details>
-
 
 </br>
 
@@ -172,14 +167,17 @@ Analysis performed on Spartan HPC platform (University of Melbourne)
 lecook@spartan.hpc.unimelb.edu.au:/data/projects/punim0586/lecook/
 
 ```
-data/
-├── 
-├── 
-├── 
-├── 
-│   ├── 
-│   └── 
-│   └── 
-├──  
-└── 
+chipseq-cross-species/
+├── analysis
+│   ├── dunnart_peaks
+│   └── cross_species_peak_comparisons
+├── data
+│   ├── genomes
+│   └── raw_reads
+├── docs
+├── code
+│   ├── dunnart_peak_calling
+│   ├── mouse_peak_calling
+│   └── whole_genome_alignment
+└── output
 ```
