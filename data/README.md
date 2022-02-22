@@ -2,11 +2,8 @@
 Folder contains both raw reads for the dunnart ChIP-seq project and genomic data for mapping and performing whole genome alignments.
 
 # Table of Contents
-1. [Example](#example)
-2. [Example2](#example2)
-3. [Third Example](#third-example)
-4. [Fourth Example](#fourth-examplehttpwwwfourthexamplecom)
-
+1. [Raw reads](#raw-reads)
+2. [Genomic data](#genomic-data)
 
 ## Raw reads
 Raw data files for dunnart craniofacial ChIP-seq experiment.
