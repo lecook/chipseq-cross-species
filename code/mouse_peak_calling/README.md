@@ -1,9 +1,15 @@
 # Mouse ChIP-seq analysis
 
-## Experimental Design
+ChIP-seq aligned reads downloaded from ENCODE for H3K4me3 and H3K27ac for embryonic facial prominances collected from embryos (E10.5 to E15.5). Further details on the samples can be found in the master folder README.
+
+1. [Run snakemake pipeline](#run-snakemake-pipeline)
+2. [Filtering aligned reads](#filtering-aligned-reads)
+3. [QC with deepTools](#qc-with-deeptools)
+4. [Cross-correlation analysis](cross-correlation-analysis)
+5. [Peak calling with MACS2](peak-calling-with-MACS2)
 
 
-## Running snakemake pipeline
+## Run snakemake pipeline
 
 Create conda environment:
 
@@ -41,7 +47,11 @@ Sample configuration file: configs/config.yaml\
 Sample text file: configs/SSR.text\
 multiQC configuration file: configs/.multiqc_config.yaml\
 
-#  deepTools
+## Filtering aligned reads
+
+add details here.
+
+## QC with deepTools
 ### rule deeptools_coverage:
 Normalised to the reads per genomic content (normalized to 1x coverage)
 Produces a coverage file
@@ -53,7 +63,7 @@ The bigWig format is an indexed binary format useful for dense, continuous data 
 - `smoothLength`: defines a window, larger than the binSize, to average the number of reads over. This helps produce a more continuous plot.
 - `centerReads`: reads are centered with respect to the fragment length as specified by extendReads. This option is useful to get a sharper signal around enriched regions.
 
-#  phantomPeakQuals
+## Cross-correlation analysis
 
 Information from: https://docs.google.com/document/d/1lG_Rd7fnYgRpSIqrIfuVlAz2dW1VaSQThzk836Db99c/edit
 
@@ -87,7 +97,7 @@ RSC; RSC>0.8 (0 = no signal; <1 low quality ChIP; >1 high enrichment
 Quality tag based on thresholded RSC (codes: -2:veryLow,-1:Low,0:Medium,1:High; 2:veryHigh)
 
 
-#  Call peaks (MACS2)
+## Peak calling with MACS2
 
 __Input file options__
 
