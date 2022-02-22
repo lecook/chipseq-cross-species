@@ -1,0 +1,57 @@
+{
+    "__default__" :
+    {
+        "time" : "04:00:00",
+        "nodes": 1,
+        "ntasks": 8,
+        "mem": 100000,
+        "email" : "lecook@student.unimelb.edu.au",
+        "EmailNotice": "Y",
+        "account": "punim0586",
+        "partition": "mig"
+    },
+    "fastqc":
+    {
+        "time" : "1:00:00",
+        "nodes": 1,
+        "ntasks": 8,
+        "mem": 10000,
+        "email" : "lecook@student.unimelb.edu.au",
+        "EmailNotice": "Y",
+        "account": "punim0586",
+        "partition": "mig"
+    },
+    "align":
+    {
+        "time" : "6:00:00",
+        "nodes": 1,
+        "ntasks": 8,
+        "mem": 200000,
+        "email" : "lecook@student.unimelb.edu.au",
+        "EmailNotice": "Y",
+        "account": "punim0586",
+        "partition": "mig"
+    },
+    "overlap_peaks_H3K27ac":
+    {
+        "time" : "1:00:00",
+        "nodes": 1,
+        "ntasks": 1,
+        "mem": 10000,
+        "email" : "lecook@student.unimelb.edu.au",
+        "EmailNotice": "Y",
+        "account": "punim0586",
+        "partition": "mig"
+    },
+    "overlap_peaks_H3K4me3":
+    {
+        "time" : "1:00:00",
+        "nodes": 1,
+        "ntasks": 1,
+        "mem": 10000,
+        "email" : "lecook@student.unimelb.edu.au",
+        "EmailNotice": "Y",
+        "account": "punim0586",
+        "partition": "mig"
+    }
+}

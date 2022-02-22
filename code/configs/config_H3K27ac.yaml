@@ -1,0 +1,2 @@
+SAMPLES: 'configs/SRR_H3K27ac.txt'
+CLUSTER_JSON: 'configs/cluster.json'

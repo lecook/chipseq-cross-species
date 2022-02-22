@@ -1,0 +1,59 @@
+title: "Histone ChIP-seq QC for dunnart craniofacial tissue: H3K4me3 & H3K27ac"
+intro_text: ""
+report_comment: "Generated on DATE"
+
+
+report_header_info:
+    - Contact E-mail: 'lecook@student.unimelb.edu.au'
+    - Pipeline Type: 'ChIP-seq'
+
+module_order:
+    - MACS2
+    - MACS2_narrowPeak_count
+    - deepTools
+    - Preseq:
+        genome_size: 3074798085
+        read_length: 150
+    - Samtools
+    - Picard
+    - phantompeakqualtools
+    - featureCounts:
+        name: 'FRiP'
+        info: 'Fraction of reads in peaks (FRiP)'
+    - bowtie2:
+        name: 'Bowtie2'
+        info: 'Bowtie 2 alignment recap'
+    - fastqc
+
+log_filesize_limit: 5000000000
+
+custom_data:
+    encode_metrics:
+        plot_type: 'generalstats'
+        file_format: 'tsv'
+        pconfig:
+            - NRF:
+                namespace: "NRF"
+                title: "NRF"
+                description: "ratio between the number of positions in the genome that uniquely mapped reads map to and the total number of uniquely mappable reads"
+                max: 1
+                min: 0
+                scale: 'RdYlGn'
+            - PBC1:
+                namespace: "PBC1"
+                title: "PBC1"
+                description: "ratio of genomic locations with EXACTLY one read pair over the genomic locations with AT LEAST one read pair"
+                max: 1
+                min: 0
+                scale: 'RdYlGn'
+            - PBC2:
+                namespace: "PBC2"
+                title: "PBC2"
+                description: "ratio of genomic locations with EXACTLY one read pair over the genomic locations with EXACTLY two read pairs"
+                max: 10
+                min: 0
+                scale: 'RdYlGn'
+
+sp:
+    encode_metrics:
+        fn: '*encodeQC.txt'

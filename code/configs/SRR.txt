@@ -1,0 +1,5 @@
+IP      Input   mark
+A-2_H3K4me3     A-1_input       H3K4me3
+A-3_H3K27ac     A-1_input       H3K27ac
+B-2_H3K4me3     B-1_input       H3K4me3
+B-3_H3K27ac     B-1_input       H3K27ac
