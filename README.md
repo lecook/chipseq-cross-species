@@ -161,11 +161,6 @@ balhbalh
 </details>
 
 ## Data management
-
-Analysis performed on Spartan HPC platform (University of Melbourne)
-</br>
-lecook@spartan.hpc.unimelb.edu.au:/data/projects/punim0586/lecook/
-
 ```
 chipseq-cross-species/
 ├── analysis
