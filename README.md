@@ -5,7 +5,9 @@ A [workflowr][] project.
 [workflowr]: https://github.com/workflowr/workflowr
 
 ## Dunnart ChIP-seq data
-
+<details><summary>Experimental design</summary>
+<p>
+  
 __H3K4me3__
 
 - Signature of active promoters.
@@ -151,10 +153,17 @@ Column explain:\
 (6) GC%: The percentage of G+C in the reads\
 (7) N(ppm): The number of base ‘N’ per million bases.\
 
+</p>
+</details>
 
 ## Mouse ChIP-seq data
-
-
+<details><summary>Experimental design</summary>
+<p>
+  
+balhbalh
+  
+</p>
+</details>
 
 ## Data management
 
@@ -163,7 +172,7 @@ Analysis performed on Spartan HPC platform (University of Melbourne)
 lecook@spartan.hpc.unimelb.edu.au:/data/projects/punim0586/lecook/
 
 ```
-dunnart/
+data/
 ├── 
 ├── 
 ├── 
