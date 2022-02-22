@@ -149,8 +149,6 @@ Uses samtools and picards MarkDuplicates to remove low quality reads. This is ba
 
 Use `samtools index` to index BAM file for use with deeptools.
 
-# GENERAL ALIGNMENT QC
-
 ### rule mappingStats:
 
 Use `samtools flagstat` to get stats at each step in the filtering so I know exactly how many reads we lose at each filtering step.
