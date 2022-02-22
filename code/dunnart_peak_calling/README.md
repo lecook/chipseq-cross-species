@@ -1,8 +1,14 @@
 # Dunnart ChIP-seq analysis
 ChIP-seq for H3K4me3 and H3K27ac for craniofacial tissue collection from day of birth dunnart (_Sminthopsis crassicaudata_) pouch young.
 
+1. [Run snakemake pipeline](#run-snakemake-pipeline)
+2. [Read alignment](#read-alignment)
+3. [Filtering aligned reads](#filtering-aligned-reads)
+4. [QC with deepTools](#qc-with-deeptools)
+5. [Cross-correlation analysis](cross-correlation-analysis)
+6. [Peak calling with MACS2](peak-calling-with-MACS2)
 
-## SNAKEMAKE PIPELINE
+## Run snakemake pipeline
 
 Create conda environment:
 
@@ -28,7 +34,7 @@ Sample configuration file: configs/config.yaml\
 Sample text file: configs/SSR.text\
 multiQC configuration file: configs/.multiqc_config.yaml\
 
-# ALIGNMENT
+## Read alignment
 
 <details><summary>_Notes on Bowtie2 Mapping Scores_</summary>
 <p>
@@ -122,7 +128,7 @@ bowtie2-build Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2x
 bowtie2-build Sminthopsis_crassicaudata_HiC.fasta Sminthopsis_crassicaudata_HiC
 ```
 
-#  FILTERING
+## Filtering aligned reads
 
 ### rule filter:
 
@@ -180,7 +186,7 @@ Library Complexity ChIP-seq Standards:
 | 0.8 ≤ PBC1 < 0.9 | 3 ≤ PBC2 < 10 | Mild | 0.8 ≤ NRF < 0.9 | Compliant | None |
 | ≥ 0.9 | ≥ 10 | None | > 0.9 | Ideal | None |
 
-#  deepTools
+##  QC with deepTools
 
 ### rule deeptools_summary:
 
@@ -216,7 +222,7 @@ An ideal input with perfect uniform distribution of reads along the genome (i.e.
 
 This tool calculates the fragment sizes for read pairs given a BAM file from paired-end sequencing. Several regions are sampled depending on the size of the genome and number of processors to estimate thesummary statistics on the fragment lengths.
 
-#  Cross-correlation
+##  Cross-correlation analysis
 
 Information from: https://docs.google.com/document/d/1lG_Rd7fnYgRpSIqrIfuVlAz2dW1VaSQThzk836Db99c/edit
 
@@ -286,7 +292,7 @@ Notes from ENCODE pipeline:
 __CC_SCORE FILE format__
 Filename <tab> numReads <tab> estFragLen <tab> corr_estFragLen <tab> PhantomPeak <tab> corr_phantomPeak <tab> argmin_corr <tab> min_corr <tab> phantomPeakCoef <tab> relPhantomPeakCoef <tab> QualityTag
 
-# Call peaks (MACS2)
+## Peak calling with MACS2
 
 __Input file options__
 
@@ -418,5 +424,5 @@ cat H3K27ac_only.narrowPeak | sort -k 4,4 > dunnart_enhancer_peaks.narrowPeak
 sort -k1,1 -k2,2n dunnart_enhancers.narrowPeak | bedtools merge -i stdin -d 50 > dunnart_enhancer_mergedPeaks.narrowPeak
 ```
 
-# Peak Features, Annotation, GO, motif enrichment
-see scripts folder.
+### Peak Features, Annotation, GO, motif enrichment
+See analysis directory.
