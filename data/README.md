@@ -1,7 +1,6 @@
 # Data
 Folder contains both raw reads for the dunnart ChIP-seq project and genomic data for mapping and performing whole genome alignments.
 
-# Table of Contents
 1. [Raw reads](#raw-reads)
 2. [Genomic data](#genomic-data)
 
