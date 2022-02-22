@@ -1,4 +1,6 @@
 # Data
+
+## Raw reads
 Raw data files for dunnart craniofacial ChIP-seq experiment.
 
 Experiment performed according to manufacturers instructions for the __MAGnify™ Chromatin Immunoprecipitation System (492024)__.
@@ -80,3 +82,5 @@ Raw files not in github but can be found in NCBI after publication through GEO S
 - B-2_H3K4me3_R2.fastq.gz
 - B-3_H3K27ac_R1.fastq.gz
 - B-3_H3K27ac_R2.fastq.gz
+
+## Genomic data
