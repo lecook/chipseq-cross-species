@@ -11,3 +11,5 @@ analysis/*_cache
 analysis/site_libs
 data/*.gz
 data/*.md5
+data/md5*
+data/genomic_data/*
