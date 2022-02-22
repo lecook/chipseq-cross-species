@@ -67,7 +67,7 @@ Column explain:\
 (6) GC%: The percentage of G+C in the reads\
 (7) N(ppm): The number of base ‘N’ per million bases.\
 
-Raw files not in github but can be found in NCBI GEO under the ID: 
+Raw files not in github but can be found in NCBI after publication through GEO Series accession number GSE188990: 
 - A-1_input_R1.fastq.gz
 - A-1_input_R2.fastq.gz
 - A-2_H3K4me3_R1.fastq.gz
