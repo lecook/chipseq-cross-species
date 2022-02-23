@@ -1,5 +1,5 @@
 ---
-title: "Cross species peak comparison"
+title: "whole_genome_alignment"
 author: "lecook"
 date: "2022-02-23"
 output: workflowr::wflow_html
