@@ -8,4 +8,24 @@ editor_options:
   chunk_output_type: console
 ---
 
-Welcome to my research website.
+This project involves a number of analysis for the generation of ChIP-seq data for the fat-tailed dunnart for comparison with the exisiting mouse data in ENCODE.
+
+Data:
+
+Data preparation:
+- Dunnart data 
+	- Read alignment
+	- Aligned read filtering
+	- Peak calling
+- Mouse data 
+	- Aligned read filtering
+	- Peak calling
+
+Analyses:
+- Whole genome alignment between mouse and dunnart
+- Dunnart peak characterisation
+- [Cross-species peak comparisons](cross-species-peak-comparison.html)
+	- Peak level
+	- Gene level
+- Incorporating temporal mouse gene expression data
+
