@@ -1,8 +1,8 @@
 # chipseq_cross_species
 
-A [workflowr][] project.
+Link to project [website]
 
-[workflowr]: https://github.com/workflowr/workflowr
+[website]: https://github.com/lecook/chipseq-cross-species/tree/master/docs/index.html
 
 ## Dunnart ChIP-seq data
 <details><summary>Experimental design</summary>
