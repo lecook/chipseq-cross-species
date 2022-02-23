@@ -2,7 +2,7 @@
 
 Link to project [website]
 
-[website]: https://github.com/lecook/chipseq-cross-species/tree/master/docs/index.html
+[website]: https://github.com/lecook/chipseq-cross-species/index.html
 
 ## Dunnart ChIP-seq data
 <details><summary>Experimental design</summary>
