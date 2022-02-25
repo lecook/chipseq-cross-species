@@ -1,5 +1,5 @@
 ---
-title: "dunnart_data_processing"
+title: "Dunnart ChIP-seq data pre-processing"
 author: "lecook"
 date: "2022-02-23"
 output: workflowr::wflow_html
