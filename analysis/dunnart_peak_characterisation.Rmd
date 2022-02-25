@@ -1,5 +1,5 @@
 ---
-title: "dunnart_peak_characterisation"
+title: "Dunnart peak characterisation"
 author: "lecook"
 date: "2022-02-23"
 output: workflowr::wflow_html
@@ -7,9 +7,577 @@ editor_options:
   chunk_output_type: console
 ---
 
-## Introduction
+# Introduction
+This analysis looks through various features of the dunnart peaks including peak intensity, lengths, distance to TSS and nearest gene calls.
+
+
+# Load libraries
+```{r}
+library(GenomicFeatures)
+library(GenomicRanges)
+library(rtracklayer)
+library(AnnotationForge)
+library(clusterProfiler)
+library(ChIPseeker)
+library(ggpubr)
+library(AnnotationDbi)
+library(AnnotationHub)
+library(org.Mm.eg.db)
+library(plyr)
+library(tidyverse)
+library(RColorBrewer)
+library(ggplot2)
+library(data.table)
+library(ggridges)
+library(reshape2)
+library(RColorBrewer)
+library(VennDiagram)
+library(viridis)
+library(hrbrthemes)
+library(gghalves)
+library(multcompView)
+library(factoextra)
+library(NbClust)
+```
+
+# Set up 
+Set fonts, plot and output directories etc.
 
 ```{r}
+setwd("/data/projects/punim0586/lecook/chipseq-cross-species/output/")
+plot_dir = "plots/"
+fullPeak_dir = "peaks/"
+annot_dir = "annotations/"
+filterPeaks_dir = "filtered_peaks/"
+
+## Set the fonts up so that each plot is the saved the same way.
+font = theme(axis.text.x = element_text(size = 25),
+        axis.text.y = element_text(size = 25),  
+        axis.title.x = element_text(size = 25),
+        axis.title.y = element_text(size = 25), 
+        legend.title=element_text(size=25), legend.text=element_text(size=25))
+```
+
+# Peak features
+Explore the general peak features. Peak counts, intensity and length. 
+
+```{r}
+unfilteredPeakFeatures <- function(fileList, combined.tbl.stack, peak.length.plot, peak.intensity.plot){
+    files =list.files(fileList, pattern= ".narrowPeak", full.names=T) # create list of files in directory
+    files = as.list(files)
+    data = lapply(files, function(x) fread(x, header=FALSE, sep="\t", quote = "", na.strings=c("", "NA")))
+    names(data) = c("enhancers","promoters","H3K27ac_only","H3K27ac","H3K4me3_H3K27ac", "H3K4me3_only","H3K4me3")
+    df1 = Map(mutate, data, group = names(data))
+    df1$H3K27ac_only$cre = "enhancers"
+    df1$H3K4me3_only$cre = "promoters"
+    df1$H3K4me3_H3K27ac$cre = "promoters"
+
+    fullPeaks = rbind(df1$enhancers, df1$promoters, df1$H3K27ac, df1$H3K4me3)
+    combinedPeaks = rbind(df1$H3K27ac_only, df1$H3K4me3_H3K27ac, df1$H3K4me3_only)
+        
+    ## Plot stacked bar graph with number of peaks for each histone mark
+    combined.tbl <- with(combinedPeaks, table(group, cre))
+    combined.tbl <- as.data.frame(combined.tbl)
+    p = ggplot(combined.tbl, aes(factor(cre), Freq, fill=group)) + 
+      geom_bar(position=position_stack(reverse = TRUE), stat="identity") +
+      scale_fill_manual(values = c("#FF9D40",  "#37B6CE", "#04859D"))  + 
+      theme_minimal() + ylab("Number of peaks") +
+      xlab("")
+    p
+    pdf(file=paste0(plot_dir, combined.tbl.stack), width = 10, height = 7)
+    print(p)
+    dev.off()
+
+    # Peak lengths for H3K4me3 and H3K27ac
+    fullPeaks$length <- (fullPeaks$V3 - fullPeaks$V2)
+    level_order <- c('promoter', 'enhancer', 'H3K4me3', 'H3K27ac')
+
+    ## Plot peak lengths
+    p = ggplot(peaks, aes(factor(group), y = log10(length)))+ geom_violin(aes(fill=factor(group), color=factor(group))) + geom_boxplot(aes(color=factor(group)), width = .15, 
+    outlier.shape = NA,
+    position = position_dodge(width=.1)
+    ) + theme_bw() + xlab("") + ylab("Log10 Peak Length") 
+
+    p <- ggplot(fullPeaks, aes(factor(group, level = level_order), y = log10(length))) + 
+    geom_half_violin(aes(fill=factor(group), color=factor(group)),
+    side = "r", 
+    position = "dodge"
+    )+
+    geom_boxplot(aes(color=factor(group)),
+    width = .15, 
+    outlier.shape = NA,
+    fill=c("#FCF8EC","#FCF8EC","#F5F6F7","#E4F3F1"),
+    position = position_dodge(width=.1)
+    ) +
+    coord_cartesian(xlim = c(1.2, NA), clip = "off") + theme_bw() + xlab("") + ylab("Log10 Peak Length") 
+    pdf(file=paste0(plot_dir, peak.length.plot), width = 10, height = 7)
+    print(p +  scale_color_manual(values = c("#E9C46A","#E9C46A","#264653","#2A9D8F")) +
+    scale_fill_manual(values = c("#F1DAA2","#F1DAA2","#AEBABF","#7AC2B9")) + coord_flip())
+    dev.off()
+
+    ## Plot peak intensity
+    p <- ggplot(fullPeaks, aes(factor(group, level = level_order), y = log10(V7))) + 
+    geom_half_violin(aes(fill=factor(group), color=factor(group)),
+    side = "r", 
+    position = "dodge"
+    )+
+    geom_boxplot(aes(color=factor(group)),
+    width = .15, 
+    outlier.shape = NA,
+    fill=c("#FCF8EC","#FCF8EC","#F5F6F7","#E4F3F1"),
+    position = position_dodge(width=.1)
+    ) +
+    coord_cartesian(xlim = c(1.2, NA), clip = "off") + theme_bw() + xlab("") + ylab("Log10 Peak Intensity") 
+    pdf(file=paste0(plot_dir, peak.intensity.plot), width = 10, height = 7)
+    print(p +  scale_color_manual(values = c("#E9C46A","#E9C46A","#264653","#2A9D8F")) +
+    scale_fill_manual(values = c("#F1DAA2","#F1DAA2","#AEBABF","#7AC2B9")) + coord_flip())
+    dev.off()  
+}
+
+unfilteredPeakFeatures(fileList = fullPeak_dir, combined.tbl.stack= "dunnart_combined_stacked.pdf",
+peak.length.plot = "dunnart_fullPeaks_length.pdf", peak.intensity.plot = "dunnart_fullPeaks_intensity.pdf")
 
 ```
 
+## Now see where the peaks are located in relation to the TSS
+## Promoters should be reasonably close to the TSS and enhancers more distal to the TSS
+## Plot distance to TSS for all unfiltered peaks 
+
+distanceToTSS <- function(fileList, enhancerTSSplot, promoterTSSplot, TSSplot){
+    files =list.files(fileList, pattern= "annotation.txt", full.names=T) # create list of files in directory
+    files = as.list(files)
+    data = lapply(files, function(x) fread(x, header=TRUE, sep="\t", quote = "", na.strings=c("", "NA"))) # read in all files
+    names(data) = c("enhancers","promoters","H3K27ac","H3K4me3")
+    df1 = Map(mutate, data, mark = names(data))
+    enhProm = list(df1$promoters, df1$enhancers)
+    enhProm = suppressWarnings(lapply(enhProm, function(x) x[,log10_abs_dist:=log10(abs(distanceToTSS)+1)][,log10_abs_dist:=ifelse(distanceToTSS<0,-log10_abs_dist,log10_abs_dist)]))
+    names(enhProm) = c("promoters","enhancers")
+
+    pdf(file = paste0(plot_dir, enhancerTSSplot), width=10, height = 7)
+    print(ggplot(enhProm$enhancers, aes(x=log10_abs_dist)) + 
+    geom_density(alpha=0.5, color="#2A9D8F", fill="#2A9D8F") + 
+    scale_y_continuous(limits=c(0,0.3), labels = scales::percent) + 
+    scale_x_continuous(limits=c(-7, 7)) + theme_bw())
+    dev.off()
+
+    pdf(file = paste0(plot_dir, promoterTSSplot), width=10, height = 7)
+    print(ggplot(enhProm$promoters, aes(x=log10_abs_dist)) + 
+    geom_density(alpha=0.5, color="#2A9D8F", fill="#2A9D8F") + 
+    scale_y_continuous(limits=c(0,0.3), labels = scales::percent) + 
+    scale_x_continuous(limits=c(-7, 7)) + theme_bw())
+    dev.off()
+
+    enhProm = rbindlist(enhProm,)
+    pdf(file = paste0(plot_dir, TSSplot), width=10, height = 7)
+    print(ggplot(enhProm, aes(x=log10_abs_dist, fill=factor(mark), color=factor(mark))) + 
+    geom_density(alpha=0.5) +scale_color_manual(values=c("#E9C46A", "#2A9D8F")) + scale_fill_manual(values=c("#E9C46A", "#2A9D8F")) + 
+    scale_x_continuous(limits=c(-7, 7)) + theme_bw() + font)
+    dev.off()
+
+}
+distanceToTSS(fileList = annot_dir, enhancerTSSplot="dunnart_enhancerTSS.pdf", 
+promoterTSSplot="dunnart_promoterTSS.pdf", TSSplot = "dunnart_TSS.pdf")
+
+#########################################################################################################################
+################################################### K-MEAN CLUSTERING ###################################################
+#########################################################################################################################
+### From this we can see that the promoter peaks have a large amount of peaks a long way from the TSS
+### Suggests that these are either actually enhancers or they represent unannotated transcripts
+### Probably a mixture of both based on comparison with mouse peaks (where the annotation is better) there are not as many
+### peaks in this distal regions. 
+### Use k-means clustering to group the peaks to decide on a cut off for "promoter" peaks. This will be more conservative for
+### what we identify as promoters.
+
+font = theme(axis.text.x = element_text(size = 25),
+        axis.text.y = element_text(size = 25),  
+        axis.title.x = element_text(size = 25),
+        axis.title.y = element_text(size = 25), 
+        legend.title=element_text(size=25), legend.text=element_text(size=25))
+
+setwd("/data/projects/punim0586/lecook/chipseq-pipeline/dunnart/results/macs2/")
+
+## k-means clustering 
+
+kmeansCluster <- function(file, plot1, plot2, output){
+  data = fread(file, header=TRUE, sep="\t", quote = "") # read in all files
+  data = data[,log10_dist:=log10(abs(distanceToTSS)+1.1)][,log10_dist:=ifelse(distanceToTSS<0,-log10_dist,log10_dist)]
+  data = data[,abs_dist:=log10(abs(distanceToTSS)+1.1)]
+
+  data = data %>% dplyr::select("V4", "width", "V7", "distanceToTSS", "log10_dist", "abs_dist", "annotation")
+  
+  ## plot the number of peaks in each cluster
+  ## Using the MacQueen algorithm instead of the default Lloyd 
+  ## The algorithm is more efficient as it updates centroids more often and usually needs to
+  ## perform one complete pass through the cases to converge on a solution.
+  df = data[,5]
+  cre.kmeans = kmeans(df, 3, iter.max=100, nstart=25, algorithm="MacQueen")  
+  cre.kmeans_table = data.frame(cre.kmeans$size, cre.kmeans$centers)
+  cre.kmeans_df = data.frame(Cluster = cre.kmeans$cluster, data)
+
+  pdf(plot1, width=10, height = 7)
+  p <- ggplot(data = cre.kmeans_df, aes(y = Cluster, fill=as.factor(Cluster), color=as.factor(Cluster))) +
+  geom_bar()  +
+  theme(plot.title = element_text(hjust = 0.5)) + theme_bw() + font
+  pdf(plot1)
+  print(p + scale_color_manual(values = c('#9EBCDA','#8C6BB1', "#4D004B")) + scale_fill_manual(values = c('#9EBCDA','#8C6BB1', "#4D004B")))
+  dev.off()
+
+
+  p <- ggplot(cre.kmeans_df, aes(x=log10_dist, fill=as.factor(Cluster), color=as.factor(Cluster))) + 
+            geom_histogram(binwidth=0.1, position = 'identity')  +
+            theme_bw()+ font
+  pdf(plot2, width = 10, height = 7)
+  print(p + scale_color_manual(values = c('#9EBCDA','#8C6BB1', "#4D004B")) + scale_fill_manual(values = c('#9EBCDA','#8C6BB1', "#4D004B")))
+  dev.off()  
+
+  write.table(cre.kmeans_df, output, sep="\t", quote=F, row.names=F)
+  return(cre.kmeans_df)
+}
+
+promoter_kmeans = kmeansCluster(file = paste0(annot_dir, "dunnart_promoter_annotation.txt"),  plot1 = paste0(plot_dir, "promoter_kmeans_bar.pdf"), plot2 = paste0(plot_dir, "promoter_kmeans_histogram.pdf"), output = paste0(annot_dir, "promoter_kmeans_peaks.txt"))
+
+## Filter for cluster 1 and make final promoter/enhancer plots
+
+plotPeakClusters <- function(x, y, enhancer, promoter, plotTSS, peakIntensityPlot, peakWidthPlot, annotation){
+  enhancer.annot= fread(enhancer, header=TRUE, sep="\t", quote = "") 
+  enhancer.annot = enhancer.annot[,log10_dist:=log10(abs(distanceToTSS)+1)][,log10_dist:=ifelse(distanceToTSS<0,-log10_dist,log10_dist)]
+  enhancer.annot = enhancer.annot[,abs_dist:=abs(distanceToTSS)]
+  promoter.annot = fread(promoter, header=TRUE, sep="\t", quote = "")
+  promoter.annot = promoter.annot[,log10_dist:=log10(abs(distanceToTSS)+1)][,log10_dist:=ifelse(distanceToTSS<0,-log10_dist,log10_dist)]
+  promoter.annot = promoter.annot[,abs_dist:=abs(distanceToTSS)]
+
+  promoter.annot$label = "promoter"
+  enhancer.annot$label = "enhancer"
+  enhancer.annot = enhancer.annot %>% dplyr::select("V4", "width", "V7", "distanceToTSS", "log10_dist", "abs_dist", "annotation", "label")
+  promoter.annot = promoter.annot %>% dplyr::select("V4", "width", "V7", "distanceToTSS", "log10_dist", "abs_dist", "annotation", "label")
+
+  promoter.kmeans = fread(x, header=TRUE, sep="\t", quote = "") 
+  promoter.kmeans$cre = "promoter"
+
+  for (i in 1:nrow(promoter.kmeans)) {
+    if(promoter.kmeans$Cluster[i]=='1' & promoter.kmeans$cre[i]=='promoter') {
+            promoter.kmeans[i, 'label'] <- "promoter cluster 1"
+            }
+            else if(promoter.kmeans$Cluster[i]=='2' & promoter.kmeans$cre[i]=='promoter') {
+              promoter.kmeans[i, 'label'] <- "promoter cluster 2"
+              }
+              else if(promoter.kmeans$Cluster[i]=='3' & promoter.kmeans$cre[i]=='promoter') {
+                promoter.kmeans[i, 'label'] <- "promoter cluster 3"
+                }
+  }
+
+  data2 = promoter.kmeans %>% dplyr::select("V4", "width", "V7", "distanceToTSS", "log10_dist", "abs_dist", "annotation", "label")
+  all_peaks = rbind(data2, enhancer.annot, promoter.annot)
+  all_peaks = as.data.table(all_peaks)
+  all_peaks = all_peaks[,log10_intensity:=log10(V7)]
+  all_peaks = all_peaks[,log10_width:=log10(width)]
+
+  colors = c("#E9C46A","#e34a33", "#fdbb84","#fee8c8", "#2A9D8F")
+ 
+  ## Plot distance to TSS
+  pdf(plotTSS, width=10, height = 7)
+  print(ggplot(all_peaks, aes(x=log10_dist, colour = factor(Cluster), fill=factor(Cluster))) + geom_density(aes(x = log10_dist, y = ..density..), position="stack", alpha=0.7) + 
+  theme_bw() + scale_fill_manual(values = colors)+ 
+  scale_color_manual(values = colors) + font)
+  dev.off()
+
+  my_comparisons = list( c("promoter cluster 1", "promoter cluster 2"), c("promoter cluster 1", "promoter cluster 3"), c("promoter cluster 1", "promoter"), c("promoter cluster 1", "enhancer") )
+  ## Plot peak intensity
+  p <- ggplot(all_peaks, aes(factor(label), y = log10_intensity)) + 
+  geom_violin(aes(fill=factor(label), color=factor(label)),
+   position = "dodge"
+   )+
+  geom_boxplot(aes(color=factor(label)),
+    outlier.shape = NA,
+    width = .15, 
+    notch = TRUE,
+    position = position_dodge(width=.1)
+  ) + theme_bw() + xlab("") + ylab("Log 10 peak intensity") 
+  pdf("test.pdf", width=10, height = 8)
+  print(p + scale_color_manual(values = colors) +
+  scale_fill_manual(values = colors) + font + stat_compare_means(comparisons = my_comparisons)) 
+  dev.off()
+
+  ## Plot peak width
+  p <- ggplot(all_peaks, aes(factor(label), y = log10_width)) + 
+  geom_violin(aes(fill=factor(label), color=factor(label)),
+   position = "dodge"
+   )+
+  geom_boxplot(aes(color=factor(label)),
+    outlier.shape = NA,
+    width = .15, 
+    notch = TRUE,
+    position = position_dodge(width=.1)
+  ) + theme_bw() + xlab("") + ylab("Log 10 peak width") 
+  pdf(peakWidthPlot, width=9, height = 8)
+  print(p + scale_color_manual(values =colors) +
+  scale_fill_manual(values = colors) + font + stat_compare_means(comparisons = my_comparisons))
+  dev.off()
+
+  ## Plot genomic regions
+  df2 = rbind(promoter_kmeans)
+    #df1 = rbindlist(df1,) ## bind rows back together
+  df2 = map_df(df2, ~ gsub(" ().*", "", .x))# remove everything after the first space
+  #promoters_only = df2[complete.cases(df2), ]
+  tbl = with(df2, table(annotation, Cluster)) %>% as.data.frame()
+  pdf(annotation)
+    ggplot(tbl, aes(factor(annotation), Freq, fill=factor(Cluster))) + 
+    geom_bar(position=position_stack(reverse = TRUE), stat="identity") +
+    #geom_text(data=subset(data,Freq != 0),aes(label=Freq, y=pos), size=3)+
+    scale_fill_manual(values = c('#9EBCDA','#8C6BB1', "#4D004B"))  + 
+    theme_minimal() + ylab("Number of peaks") +
+    xlab("")
+    dev.off()
+}
+plotPeakClusters(peakWidthPlot = paste0(plot_dir, "peakWidthPlot.pdf"),plotTSS =paste0(plot_dir,  "peakDistanceToTSS.pdf"),
+peakIntensityPlot = paste0(plot_dir, "peakIntensityPlot.pdf"), annotation = paste0(plot_dir, "peakAnnotation.pdf"),
+x= paste0(annot_dir, "promoter_kmeans_peaks.txt"), enhancer = paste0(annot_dir, "dunnart_enhancer_annotation.txt"), 
+promoter = paste0(annot_dir, "dunnart_promoter_annotation.txt"))
+
+
+
+## Extract cluster groups from narrowPeak files and save separately
+cluster1 <- promoter.kmeans$V4[promoter.kmeans$Cluster==1]
+cluster2 <- promoter.kmeans$V4[promoter.kmeans$Cluster==2]
+cluster3 <- promoter.kmeans$V4[promoter.kmeans$Cluster==3]
+
+cluster1 <- enhancer_kmeans$V4[enhancer_kmeans$Cluster==1]
+cluster2 <- enhancer_kmeans$V4[enhancer_kmeans$Cluster==2]
+cluster3 <- enhancer_kmeans$V4[enhancer_kmeans$Cluster==3]
+
+
+
+extractClusters = function(promoter, cluster1, cluster2, cluster3, out1, out2, out3){
+  file= fread(promoter, header=FALSE, sep="\t", quote = "") 
+  write.table(subset(file, V4 %in% cluster1), out1, quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
+  write.table(subset(file, V4 %in% cluster2), out2, quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
+  write.table(subset(file, V4 %in% cluster3), out3, quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
+}
+
+extractClusters(promoter = "dunnart_promoters.narrowPeak", out1 = "cluster1_promoters.narrowPeak", 
+out2 ="cluster2_promoters.narrowPeak" , out3 = "cluster3_promoters.narrowPeak", cluster1 = cluster1, 
+cluster2 = cluster2, cluster3 = cluster3)
+
+extractClusters(promoter = "dunnart_enhancers.narrowPeak", out1 = "cluster1_enhancers.narrowPeak", 
+out2 ="cluster2_enhancers.narrowPeak" , out3 = "cluster3_enhancers.narrowPeak", cluster1 = cluster1, 
+cluster2 = cluster2, cluster3 = cluster3)
+
+
+## Now see where the peaks are located in relation to the TSS
+## Promoters should be reasonably close to the TSS and enhancers more distal to the TSS
+## Plot distance to TSS for all unfiltered peaks 
+
+distanceToTSS <- function(fileList, enhancerTSSplot, promoterTSSplot, TSSplot){
+    files =list.files(fileList, pattern= "annotation.txt", full.names=T) # create list of files in directory
+    files = as.list(files)
+    data = lapply(files, function(x) fread(x, header=TRUE, sep="\t", quote = "", na.strings=c("", "NA"))) # read in all files
+    names(data) = c("cluster1", "cluster2", "cluster3", "enhancers","promoters","H3K27ac","H3K4me3")
+    enhProm = Map(mutate, data, mark = names(data))
+    #promoter_5kb = x
+    #promoter_5kb$mark = "promoter_5kb"
+    #enhProm = list(df1$enhancers, df1$promoters)
+    enhProm = suppressWarnings(lapply(enhProm, function(x) x[,log10_abs_dist:=log10(abs(distanceToTSS)+1)][,log10_abs_dist:=ifelse(distanceToTSS<0,-log10_abs_dist,log10_abs_dist)]))
+    enhProm = suppressWarnings(lapply(enhProm, function(x) x[,abs_dist:=abs(distanceToTSS)]))
+    #names(enhProm) = c("enhancers","promoters", "promoter_5kb")
+    level_order = c("cluster1", "cluster2", "cluster3", "promoters", "enhancers", "H3K4me3", "H3K27ac")
+
+    pdf(file = paste0(plot_dir, enhancerTSSplot), width=10, height = 7)
+    print(ggplot(enhProm$enhancers, aes(x=log10_abs_dist, color=factor(mark), fill=factor(mark))) + 
+    geom_density(alpha=0.5) + theme_bw() + scale_color_manual(values = c('#E9C46A')) 
+    + scale_fill_manual(values = c('#E9C46A')) + font) 
+    dev.off()
+
+    enhProm = rbind(enhProm$promoters, enhProm$cluster1, enhProm$cluster2, enhProm$cluster3 ,use.names=TRUE)
+    pdf(file = paste0(plot_dir, TSSplot), width=15, height = 7)
+    print(ggplot(enhProm, aes(x=log10_abs_dist, color = factor(mark, level=level_order), fill = factor(mark, level=level_order))) + 
+    geom_density(position = "stack", alpha=0.8) + 
+    theme_bw() )
+    #+ scale_color_manual(values = c('#4D004B', '#E9C46A','#2A9D8F')) 
+    #+ scale_fill_manual(values = c('#4D004B', '#E9C46A','#2A9D8F')) + font) 
+    dev.off()
+}
+distanceToTSS(fileList = annot_dir, enhancerTSSplot="dunnart_enhancerTSS.pdf", promoterTSSplot="dunnart_promoterTSS.pdf",
+TSSplot = "dunnart_TSS.pdf")
+
+
+## Now look at CpG% and GC% for these groups
+## Run Homer on the clusters 
+setwd("/data/projects/punim0586/lecook/chipseq-pipeline/dunnart/results/macs2/")
+
+GCcontent = function(fileList, gcPlot, cpgPlot, dataframestobind){
+    files =list.files(fileList, pattern= "homerAnnot.txt", full.names=T) # create list of files in directory
+    files = as.list(files)
+    data = lapply(files, function(x) fread(x, header=TRUE, sep="\t", quote = "", na.strings=c("", "NA"))) # read in all files
+    names(data) = c("cluster1","cluster2","cluster3","enhancers", "promoters")
+    df1 = Map(mutate, data, group = names(data))
+    df1 = lapply(df1, function(x) x %>% dplyr::select("Chr", "Start", "End", "Peak Score", "Distance to TSS", "CpG%", "GC%", "group") %>% as.data.table())
+    df1 = rbind(df1$cluster1, df1$cluster2, df1$cluster3, df1$promoters, df1$enhancers)
+    colnames(df1)[5:7] <- c("distanceToTSS","CpG", "GC")
+    df1[is.na(df1)] <- 0
+    df1 = df1[,log10_abs_dist:=log10(abs(distanceToTSS)+1)][,log10_abs_dist:=ifelse(distanceToTSS<0,-log10_abs_dist,log10_abs_dist)]
+
+    my_comparisons = list( c("cluster1", "cluster2"), c("cluster1", "cluster3"), c("cluster1", "promoters"), 
+    c("cluster1", "enhancers"), c("promoters", "enhancers"), c("promoters", "cluster2"), 
+    c("promoters", "cluster3"), c("enhancers", "cluster2"), c("enhancers", "cluster3"), c("cluster2", "cluster3") )
+
+  p <- ggplot(df1, aes(factor(group), y = GC)) + 
+    geom_violin(aes(fill=factor(group), color=factor(group)),
+    position = "dodge"
+    )+
+  geom_boxplot(aes(color=factor(group)),
+    outlier.shape = NA,
+    width = .15, 
+    notch = TRUE,
+    fill=c("#E7EEF6","#D4C7E2","#D3BFD2", "#FCF8EC","#E4F3F1"),
+    position = position_dodge(width=.1)
+  ) + theme_bw() + xlab("") + ylab("GC content") 
+  pdf(gcPlot, width=9, height = 8)
+  print(p + font + scale_color_manual(values = c('#9EBCDA','#8C6BB1','#4D004B', '#E9C46A','#2A9D8F')) +
+  scale_fill_manual(values = c("#B6CDE3","#A990C4","#7A4078" ,"#F1DAA2","#7AC2B9")) + stat_compare_means(p.adjust.method = "fdr", comparisons = my_comparisons))
+  dev.off()
+
+  p <- ggplot(df1, aes(factor(group), y = CpG)) + 
+  geom_violin(aes(fill=factor(group), color=factor(group)),
+   position = "dodge"
+   )+
+  geom_boxplot(aes(color=factor(group)),
+    outlier.shape = NA,
+    width = .15, 
+    notch = TRUE,
+    fill=c("#E7EEF6","#D4C7E2","#D3BFD2", "#FCF8EC","#E4F3F1"),
+    position = position_dodge(width=.1)
+  ) + theme_bw() + xlab("") + ylab("CpG") 
+  pdf(cpgPlot, width=9, height = 8)
+  print(p + font + scale_color_manual(values = c('#9EBCDA','#8C6BB1','#4D004B', '#E9C46A','#2A9D8F')) +
+  scale_fill_manual(values = c("#B6CDE3","#A990C4","#7A4078" ,"#F1DAA2","#7AC2B9")) + stat_compare_means(p.adjust.method = "fdr", comparisons = my_comparisons))
+  dev.off()
+}
+GCcontent(fileList = annot_dir, gcPlot = paste0(plot_dir, "dunnart_GC.pdf"), cpgPlot = paste0(plot_dir, "dunnart_cpg.pdf"))
+
+
+# Peak length vs distance from TSS and peak intensity vs distance from TSS
+peak.counts <- df2 %>% as.data.frame() %>% group_by(geneId, group, geneLength) %>%
+    summarise(count = n(), .groups = 'drop') %>% as.data.table()
+
+pdf("geneLengthvsPeakCount.pdf", width=10, height = 15)
+p <- ggscatter(
+  peak.counts, x = "count", y = "geneLength",
+  color = "group", palette = "jco", add="reg.line",
+  conf.int = TRUE, # Add confidence interval
+  cor.coef = TRUE, # Add correlation coefficient. see ?stat_cor
+  cor.coeff.args = list(method = "pearson", label.x = 3, label.sep = "\n"), xlab = "Gene Length",
+  ylab = "Number of peaks per gene"
+  ) +
+  facet_wrap(~group)
+p + theme(panel.spacing = unit(3, "lines"), plot.margin = margin(2, 2, 2, 2, "cm"))
+dev.off()
+
+pdf("peakLengthVsDist.pdf", width=10, height = 7)
+ggplot(peak, aes(abs(distanceToTSS), y=log10_length, color=cre)) + geom_point(alpha=0.3) +  theme_bw() + scale_color_manual(values=c("#F1DAA2", "#7AC2B9"))
+dev.off()
+
+
+## Peak intensity for distal enhancers marked by H3K4me3
+# subset log10_abs_dist between 3.5 and 7 (3000bp and 10 million bps)
+H3K4me3 = fread("H3K4me3_annotation.txt", sep="\t", quote="", header=TRUE)
+H3K27ac = fread("H3K27ac_annotation.txt", sep="\t", quote="", header=TRUE)
+
+H3K4me3.subset.greater = subset(H3K4me3, abs(distanceToTSS) >=3000)
+H3K4me3.subset.greater$mark = "H3K4me3 > 3kb"
+H3K4me3.subset.less = subset(H3K4me3, abs(distanceToTSS) < 3000)
+H3K4me3.subset.less$mark = "H3K4me3 < 3kb"
+H3K27ac.subset = subset(H3K27ac, abs(distanceToTSS) >=3000)
+H3K27ac.subset$mark = "H3K27ac"
+data = rbind(H3K4me3.subset.less, H3K4me3.subset.greater, H3K27ac.subset)
+stat <- compare_means(V7 ~ mark, data = data)
+mean(H3K4me3.subset.greater$V7)
+mean(H3K4me3.subset.less$V7)
+
+
+enhancer <- fread("dunnart_enhancer_annotation.txt", sep="\t", quote="", header=TRUE)
+promoter <- fread("dunnart_promoter_annotation.txt", sep="\t", quote="", header=TRUE)
+enhancer$cre <- "enhancer"
+promoter$cre <- "promoter"
+enhancer = enhancer[,log10_abs_dist:=log10(abs(distanceToTSS)+1)]
+promoter = promoter[,log10_abs_dist:=log10(abs(distanceToTSS)+1)]
+
+promoter.subset=subset(promoter, log10_abs_dist >= 3.5)
+promoter = subset(promoter, log10_abs_dist <3.5)
+promoter.subset$cre = "subset"
+data = rbind(promoter, promoter.subset)
+data = data[,log10_intensity:=log10(V7)]
+
+p <- ggplot(data, aes(factor(cre), y = log10_intensity)) + 
+  #geom_violin(aes(fill=factor(cre), color=factor(cre)),
+   # position = "dodge"
+   # )+
+  geom_boxplot(aes(color=factor(cre)),
+    outlier.shape = NA,
+    width = .15, 
+    notch = TRUE,
+    fill=c("#FCF8EC","#E4F3F1"),
+    position = position_dodge(width=.1)
+  ) + theme_bw() + xlab("") + ylab("Peak intensity") 
+pdf("distalH3K4me3PeakIntensity.pdf", width=9, height = 8)
+p +  scale_color_manual(values = c("#E9C46A","#2A9D8F")) +
+scale_fill_manual(values = c("#F1DAA2","#7AC2B9")) + stat_compare_means(method = "wilcox.test" )
+dev.off()
+
+
+
+# Number of peaks per gene
+enhancer <- fread("annotations/dunnart_enhancer_annotation.txt", sep="\t", quote="", header=TRUE)
+promoter <- fread("annotations/dunnart_promoter_annotation.txt", sep="\t", quote="", header=TRUE)
+enhancer$cre <- "enhancer"
+promoter$cre <- "promoter"
+peak <- rbind(enhancer, promoter)
+peak.counts <- enhancer %>% as.data.frame() %>% group_by(geneId, cre) %>%
+    summarise(count = n(),.groups = 'drop') %>% as.data.table()
+peak.counts = peak.counts[,log10_abs_dist:=log10(count)][,log10_abs_dist:=ifelse(count<0,-log10_abs_dist,log10_abs_dist)]
+pick <- peak.counts %>% filter(count > 50)
+
+p <- ggplot(peak.counts, aes(factor(cre), y = log10_abs_dist)) + 
+  geom_violin(aes(fill=factor(cre), color=factor(cre))) +
+  geom_boxplot(aes(color=factor(cre)),
+    width = .15, 
+    outlier.shape = NA,
+    fill=c("#FCF8EC","#E4F3F1"),
+    position = position_dodge(width=.1)
+  )  +
+  geom_text(data = pick, aes(factor(cre), log10_abs_dist), label = pick$geneId, check_overlap = TRUE, size=3, position = position_jitter(w = 0.3)) +
+  theme_bw() + xlab("") + ylab("Log 10 number of peaks") 
+pdf("numberPeaksPerGene.pdf", width=9, height = 8)
+p +  scale_color_manual(values = c("#E9C46A","#2A9D8F")) +
+scale_fill_manual(values = c("#F1DAA2","#7AC2B9"))
+dev.off()
+
+## gene length and number of peaks per gene
+p <- ggplot(peak.counts, aes(x=log10_abs_length, y = log10(n))) + 
+  geom_point()+ theme_bw() + xlab("Gene Length") + ylab("Log 10 number of peaks") 
+pdf("numberPeaksvsGeneLength.pdf", width=9, height = 8)
+p
+dev.off()
+
+
+# Annotate dunnart peaks
+The easiest way to call the nearest genes for the peaks in the dunnart is to use the ChIPseeker package (Guangchuang Yu 2021) as it allows easy integration of non-model organism genomes and has well documented instructions on incorporating BYO genomes with the package.
+To use the ChIPseeker to annotate peaks, firstly a txdb is needed for the dunnart annotation file. A TxDb class is a container for storing transcript annotations. The dunnart genome doesn't have a de novo annotation so instead the Tasmanian devil annotation (RefSeq) has been lifted over to the dunnart genome using LiftOff (https://github.com/agshumate/Liftoff). 
+
+```{r}
+## Make txdb for dunnart annotation file
+setwd("/data/projects/punim0586/lecook/chipseq-cross-species/data/genomic_data")
+smiCra_txdb <- makeTxDbFromGFF("Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr2.gff")
+```
+
+For downstream analyses, conversion tables between gene databases and between species is needed.
+This is because the ENSEMBL/ENTREZ IDs for the Tasmanian Devil have fewer links to databases such as GO terms etc.
+For this I have two conversion tables: 
+1. Converts Tasmanian devil RefSeq to Tasmanian Devil ENSEMBL IDs
+2. Convert Tasmanian Devil ENSEMBL IDs to mouse ENSEMBL IDs
+
+```{r}
+## geneID conversion tables
+setwd("/data/projects/punim0586/lecook/chipseq-pipeline/cross_species/peakAnnotation/")
+df2 <- read.table("devil_to_mouse_ensembl.txt", header=TRUE, sep="\t") ## conversion table for devil ENSEMBL to mouse ENSEMBL
+df3 <- read.table("refseq_to_ensembl.txt", header=TRUE, sep="\t") ## convertsion table for devil refseq to devil ENSEMBL
+```
