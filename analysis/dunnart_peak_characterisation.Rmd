@@ -13,7 +13,6 @@ This analysis looks through various features of the dunnart peaks including peak
 
 # Load libraries
 ```{r}
-library(GenomicFeatures)
 library(GenomicRanges)
 library(rtracklayer)
 library(AnnotationForge)
