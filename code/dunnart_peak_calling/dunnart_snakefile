@@ -23,25 +23,25 @@ configfile: "code/configs/config.yaml"
 import csv
 import os
 
-#IPS = []
-#INPUTS = []
-#MARK = []
+IPS = []
+INPUTS = []
+MARK = []
 
-#with open(config['SAMPLES'], "r") as f:
-#    reader = csv.reader(f, delimiter = "\t")
+with open(config['SAMPLES'], "r") as f:
+    reader = csv.reader(f, delimiter = "\t")
     # skip the header
-#    header = next(reader)
+    header = next(reader)
 #    for row in reader:
 #        IPS.append(row[0])
 #        INPUTS.append(row[1])
 #f.close()
 
 ## multiple samples may use the same control input files
-#unique_inputs = list(set(INPUTS))
+unique_inputs = list(set(INPUTS))
 #unique_marks = list(set(MARK))
 
 ## combine all samples
-#all_samples = IPS + unique_inputs
+all_samples = IPS + unique_inputs
 
 # ===============================================================================================
 #        Output targets
