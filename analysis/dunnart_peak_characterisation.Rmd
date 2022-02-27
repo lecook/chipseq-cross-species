@@ -437,6 +437,108 @@ GCcontent(fileList = annot_dir, gcPlot = paste0(plot_dir, "dunnart_GC.pdf"), cpg
 
 ```
 
+# Peak length vs distance from TSS and peak intensity vs distance from TSS
+peak.counts <- df2 %>% as.data.frame() %>% group_by(geneId, group, geneLength) %>%
+    summarise(count = n(), .groups = 'drop') %>% as.data.table()
+
+pdf("geneLengthvsPeakCount.pdf", width=10, height = 15)
+p <- ggscatter(
+  peak.counts, x = "count", y = "geneLength",
+  color = "group", palette = "jco", add="reg.line",
+  conf.int = TRUE, # Add confidence interval
+  cor.coef = TRUE, # Add correlation coefficient. see ?stat_cor
+  cor.coeff.args = list(method = "pearson", label.x = 3, label.sep = "\n"), xlab = "Gene Length",
+  ylab = "Number of peaks per gene"
+  ) +
+  facet_wrap(~group)
+p + theme(panel.spacing = unit(3, "lines"), plot.margin = margin(2, 2, 2, 2, "cm"))
+dev.off()
+
+pdf("peakLengthVsDist.pdf", width=10, height = 7)
+ggplot(peak, aes(abs(distanceToTSS), y=log10_length, color=cre)) + geom_point(alpha=0.3) +  theme_bw() + scale_color_manual(values=c("#F1DAA2", "#7AC2B9"))
+dev.off()
+
+
+## Peak intensity for distal enhancers marked by H3K4me3
+# subset log10_abs_dist between 3.5 and 7 (3000bp and 10 million bps)
+H3K4me3 = fread("H3K4me3_annotation.txt", sep="\t", quote="", header=TRUE)
+H3K27ac = fread("H3K27ac_annotation.txt", sep="\t", quote="", header=TRUE)
+
+H3K4me3.subset.greater = subset(H3K4me3, abs(distanceToTSS) >=3000)
+H3K4me3.subset.greater$mark = "H3K4me3 > 3kb"
+H3K4me3.subset.less = subset(H3K4me3, abs(distanceToTSS) < 3000)
+H3K4me3.subset.less$mark = "H3K4me3 < 3kb"
+H3K27ac.subset = subset(H3K27ac, abs(distanceToTSS) >=3000)
+H3K27ac.subset$mark = "H3K27ac"
+data = rbind(H3K4me3.subset.less, H3K4me3.subset.greater, H3K27ac.subset)
+stat <- compare_means(V7 ~ mark, data = data)
+mean(H3K4me3.subset.greater$V7)
+mean(H3K4me3.subset.less$V7)
+
+
+enhancer <- fread("dunnart_enhancer_annotation.txt", sep="\t", quote="", header=TRUE)
+promoter <- fread("dunnart_promoter_annotation.txt", sep="\t", quote="", header=TRUE)
+enhancer$cre <- "enhancer"
+promoter$cre <- "promoter"
+enhancer = enhancer[,log10_abs_dist:=log10(abs(distanceToTSS)+1)]
+promoter = promoter[,log10_abs_dist:=log10(abs(distanceToTSS)+1)]
+
+promoter.subset=subset(promoter, log10_abs_dist >= 3.5)
+promoter = subset(promoter, log10_abs_dist <3.5)
+promoter.subset$cre = "subset"
+data = rbind(promoter, promoter.subset)
+data = data[,log10_intensity:=log10(V7)]
+
+p <- ggplot(data, aes(factor(cre), y = log10_intensity)) + 
+  #geom_violin(aes(fill=factor(cre), color=factor(cre)),
+   # position = "dodge"
+   # )+
+  geom_boxplot(aes(color=factor(cre)),
+    outlier.shape = NA,
+    width = .15, 
+    notch = TRUE,
+    fill=c("#FCF8EC","#E4F3F1"),
+    position = position_dodge(width=.1)
+  ) + theme_bw() + xlab("") + ylab("Peak intensity") 
+pdf("distalH3K4me3PeakIntensity.pdf", width=9, height = 8)
+p +  scale_color_manual(values = c("#E9C46A","#2A9D8F")) +
+scale_fill_manual(values = c("#F1DAA2","#7AC2B9")) + stat_compare_means(method = "wilcox.test" )
+dev.off()
+
+
+
+# Number of peaks per gene
+enhancer <- fread("annotations/dunnart_enhancer_annotation.txt", sep="\t", quote="", header=TRUE)
+promoter <- fread("annotations/dunnart_promoter_annotation.txt", sep="\t", quote="", header=TRUE)
+enhancer$cre <- "enhancer"
+promoter$cre <- "promoter"
+peak <- rbind(enhancer, promoter)
+peak.counts <- enhancer %>% as.data.frame() %>% group_by(geneId, cre) %>%
+    summarise(count = n(),.groups = 'drop') %>% as.data.table()
+peak.counts = peak.counts[,log10_abs_dist:=log10(count)][,log10_abs_dist:=ifelse(count<0,-log10_abs_dist,log10_abs_dist)]
+pick <- peak.counts %>% filter(count > 50)
+
+p <- ggplot(peak.counts, aes(factor(cre), y = log10_abs_dist)) + 
+  geom_violin(aes(fill=factor(cre), color=factor(cre))) +
+  geom_boxplot(aes(color=factor(cre)),
+    width = .15, 
+    outlier.shape = NA,
+    fill=c("#FCF8EC","#E4F3F1"),
+    position = position_dodge(width=.1)
+  )  +
+  geom_text(data = pick, aes(factor(cre), log10_abs_dist), label = pick$geneId, check_overlap = TRUE, size=3, position = position_jitter(w = 0.3)) +
+  theme_bw() + xlab("") + ylab("Log 10 number of peaks") 
+pdf("numberPeaksPerGene.pdf", width=9, height = 8)
+p +  scale_color_manual(values = c("#E9C46A","#2A9D8F")) +
+scale_fill_manual(values = c("#F1DAA2","#7AC2B9"))
+dev.off()
+
+## gene length and number of peaks per gene
+p <- ggplot(peak.counts, aes(x=log10_abs_length, y = log10(n))) + 
+  geom_point()+ theme_bw() + xlab("Gene Length") + ylab("Log 10 number of peaks") 
+pdf("numberPeaksvsGeneLength.pdf", width=9, height = 8)
+p
+dev.off()
 
 
 # Annotate dunnart peaks

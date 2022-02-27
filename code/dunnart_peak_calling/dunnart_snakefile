@@ -16,7 +16,7 @@
     # 10. Present QC for raw read, alignment, peak-calling in MultiQC (this part is a work in progress)
 
 
-configfile: "envs/config.yaml"
+configfile: "configs/config.yaml"
 # Contains sample and genome information
 # calls the SRR.txt file that contains the samples as either IP or control
 
@@ -112,14 +112,14 @@ rule all:
 
 rule fastqc:
     input:
-        ["rawdata/{sample}_R1.fastq.gz", "rawdata/{sample}_R2.fastq.gz"]
+        ["data/raw_reads/{sample}_R1.fastq.gz", "rawdata/{sample}_R2.fastq.gz"]
     output:
-        "results/qc/{sample}_R1_fastqc.html",
-        "results/qc/{sample}_R2_fastqc.html",
-        "results/qc/{sample}_R1_fastqc.zip",
-        "results/qc/{sample}_R2_fastqc.zip"
+        "output/qc/{sample}_R1_fastqc.html",
+        "output/qc/{sample}_R2_fastqc.html",
+        "output/qc/{sample}_R1_fastqc.zip",
+        "output/qc/{sample}_R2_fastqc.zip"
     log:
-        "results/logsHiC/{sample}.fastqc"
+        "output/logs/{sample}.fastqc"
     shell:
         "fastqc {input} -t 6 --extract --outdir=results/qc/ 2> {log}"
 
@@ -130,14 +130,14 @@ rule fastqc:
 
 rule align:
     input:
-        R1="rawdata/{sample}_R1.fastq.gz",
-        R2="rawdata/{sample}_R2.fastq.gz"
+        R1="data/raw_reads/{sample}_R1.fastq.gz",
+        R2="data/raw_reads/{sample}_R2.fastq.gz"
     output:
-        "results/bowtie2/{sample}.HiC.sorted.bam"
+        "output/bam_files/{sample}.sorted.bam"
     params:
-        index="genomes/Sminthopsis_crassicaudata_HiC"
+        index="data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr"
     log:
-        "results/logsHiC/{sample}.align"
+        "output/logs/{sample}.align"
     shell:
         "bowtie2 --threads 8 -q -X 2000 --very-sensitive -x {params.index} -1 {input.R1} -2 {input.R2} \
         |  samtools view -u -h  - |  samtools sort -o {output}  - 2> {log}"
@@ -160,59 +160,59 @@ rule align:
 
 rule filter:
     input:
-        "results/bowtie2/{sample}.HiC.sorted.bam"
+        "output/bam_files/{sample}.sorted.bam"
     output:
-        "results/bowtie2/{sample}_PPq30.HiC.sorted.bam"
+        "output/bam_files/{sample}_PPq30.sorted.bam"
     log:
-        "results/logsHiC/{sample}.dedup"
+        "output/logs/{sample}.dedup"
     shell:
         "samtools view -b -F 1804 -q 30 -f 2 {input} | samtools sort -o {output} - 2> {log}"
 
 rule markDups:
     input:
-        "results/bowtie2/{sample}_PPq30.HiC.sorted.bam"
+        "output/bam_files/{sample}_PPq30.sorted.bam"
     output:
-        bam="results/bowtie2/{sample}_PPq30.HiC.sorted.dupmark.bam",
-        dupQC="results/bowtie2/{sample}.HiC.dup.qc"
+        bam="output/bam_files/{sample}_PPq30.sorted.dupmark.bam",
+        dupQC="output/qc/{sample}.HiC.dup.qc"
     log:
-        "results/logsHiC/{sample}.dupmark"
+        "output/logs/{sample}.dupmark"
     shell:
         "picard MarkDuplicates I={input} O={output.bam} \
         METRICS_FILE={output.dupQC} REMOVE_DUPLICATES=FALSE ASSUME_SORTED=true 2> {log}"
 
 rule dedup:
     input:
-        "results/bowtie2/{sample}_PPq30.HiC.sorted.dupmark.bam"
+        "output/bam_files/{sample}_PPq30.sorted.dupmark.bam"
     output:
-        "results/bowtie2/{sample}_PPq30.HiC.sorted.dedup.bam"
+        "output/bam_files/{sample}_PPq30.sorted.dedup.bam"
     log:
-        "results/logsHiC/{sample}.dedup"
+        "output/logs/{sample}.dedup"
     shell:
         "samtools view -F 1804 -f 2 -b {input} | samtools sort -o {output} - 2> {log}"
 
 rule indexBam:
     input:
-        "results/bowtie2/{sample}_PPq30.HiC.sorted.dedup.bam"
+        "output/bam_files/{sample}_PPq30.sorted.dedup.bam"
     output:
-        "results/bowtie2/{sample}_PPq30.HiC.sorted.dedup.bai"
+        "output/bam_files/{sample}_PPq30.sorted.dedup.bai"
     log:
-        "results/logsHiC/{sample}.indexBam"
+        "output/logs/{sample}.indexBam"
     shell:
         "samtools index -c {input} {output} 2> {log}"
 
 rule mergeBAMreplicates:
     input:
-        H3K4me3 = ["results/bowtie2/A-2_H3K4me3_PPq30.HiC.sorted.dedup.bam",  "results/bowtie2/B-2_H3K4me3_PPq30.HiC.sorted.dedup.bam"],
-        H3K27ac = ["results/bowtie2/A-3_H3K27ac_PPq30.HiC.sorted.dedup.bam", "results/bowtie2/B-3_H3K27ac_PPq30.HiC.sorted.dedup.bam"],
-        control = ["results/bowtie2/A-1_input_PPq30.HiC.sorted.dedup.bam", "results/bowtie2/B-1_input_PPq30.HiC.sorted.dedup.bam"]
+        H3K4me3 = ["output/bam_files/A-2_H3K4me3_PPq30.sorted.dedup.bam",  "output/bam_files/B-2_H3K4me3_PPq30.sorted.dedup.bam"],
+        H3K27ac = ["output/bam_files/A-3_H3K27ac_PPq30.sorted.dedup.bam", "output/bam_files/B-3_H3K27ac_PPq30.sorted.dedup.bam"],
+        control = ["output/bam_files/A-1_input_PPq30.sorted.dedup.bam", "output/bam_files/B-1_input_PPq30.sorted.dedup.bam"]
     output:
-        H3K4me3 = "results/bowtie2/H3K4me3_pooled_PPq30.HiC.sorted.dedup.bam",
-        H3K27ac = "results/bowtie2/H3K27ac_pooled_PPq30.HiC.sorted.dedup.bam",
-        control = "results/bowtie2/input_pooled_PPq30.HiC.sorted.dedup.bam"
+        H3K4me3 = "output/bam_files/H3K4me3_pooled_PPq30.sorted.dedup.bam",
+        H3K27ac = "output/bam_files/H3K27ac_pooled_PPq30.sorted.dedup.bam",
+        control = "output/bam_files/input_pooled_PPq30.sorted.dedup.bam"
     log:
-        H3K4me3 = "results/logsHiC/H3K4me3.mergeBAM",
-        H3K27ac = "results/logsHiC/H3K27ac.mergeBAM",
-        control = "results/logsHiC/input.mergeBAM"
+        H3K4me3 = "output/logs/H3K4me3.mergeBAM",
+        H3K27ac = "output/logs/H3K27ac.mergeBAM",
+        control = "output/logs/input.mergeBAM"
     run:
         shell("samtools merge {output.H3K4me3} {input.H3K4me3} 2> {log.H3K4me3}")
         shell("samtools merge {output.H3K27ac} {input.H3K27ac} 2> {log.H3K27ac}")
@@ -228,15 +228,15 @@ rule mergeBAMreplicates:
 
 rule mappingStats:
     input:
-        a="results/bowtie2/{sample}_PPq30.HiC.sorted.dedup.bam",
-        b="results/bowtie2/{sample}_PPq30.HiC.sorted.dupmark.bam",
-        c="results/bowtie2/{sample}_PPq30.HiC.sorted.bam",
-        d="results/bowtie2/{sample}.HiC.sorted.bam"
+        a="output/bam_files/{sample}_PPq30.sorted.dedup.bam",
+        b="output/bam_files/{sample}_PPq30.sorted.dupmark.bam",
+        c="output/bam_files/{sample}_PPq30.sorted.bam",
+        d="output/bam_files/{sample}.sorted.bam"
     output:
-        a="results/qc/{sample}.HiC.dedup.flagstat.qc",
-        b="results/qc/{sample}.HiC.dupmark.flagstat.qc",
-        c="results/qc/{sample}.HiC.PPq30.flagstat.qc",
-        d="results/qc/{sample}.HiC.unfiltered.flagstat.qc",
+        a="output/qc/{sample}.dedup.flagstat.qc",
+        b="output/qc/{sample}.dupmark.flagstat.qc",
+        c="output/qc/{sample}.PPq30.flagstat.qc",
+        d="output/qc/{sample}.unfiltered.flagstat.qc",
     run:
         shell("samtools flagstat {input.a} > {output.a}")
         shell("samtools flagstat {input.b} > {output.b}")
@@ -246,55 +246,55 @@ rule mappingStats:
 
 rule downsample_bam:
     input:
-        "results/bowtie2/{sample}_PPq30.HiC.sorted.dupmark.bam"
+        "output/bam_files/{sample}_PPq30.sorted.dupmark.bam"
     output:
-        "results/bowtie2/{sample}_PPq30.HiC.sorted.dupmark_downSampled.bam"
+        "output/bam_files/{sample}_PPq30.sorted.dupmark_downSampled.bam"
     log:
-        "results/logsHiC/{sample}.downsample"
+        "output/logs/{sample}.downsample"
     shell:
         "picard DownsampleSam I={input} O={output} P=0.35 \
          2> {log}"
 
 rule preseq:
     input:
-        "results/bowtie2/{sample}_PPq30.HiC.sorted.dupmark.bam"
+        "output/bam_files/{sample}_PPq30.sorted.dupmark.bam"
     output:
-        ccurve = "results/qc/{sample}.HiC.ccurve.txt",
-        extrap = "results/qc/{sample}.HiC.extrap.txt"
+        ccurve = "output/qc/{sample}.ccurve.txt",
+        extrap = "output/qc/{sample}.extrap.txt"
     log:
-        ccurve = "results/logsHiC/{sample}.ccurve.preseq",
-        extrap = "results/logsHiC/{sample}.extrap.preseq"
+        ccurve = "output/logs/{sample}.ccurve.preseq",
+        extrap = "output/logs/{sample}.extrap.preseq"
     run:
         shell("preseq lc_extrap -v -output {output.extrap} -pe -bam {input} 2> {log.extrap}")
         shell("preseq c_curve -v -output {output.ccurve} -pe -bam {input} 2> {log.ccurve}")
 
 rule get_picard_complexity_metrics:
     input:
-        "results/bowtie2/{sample}_PPq30.HiC.sorted.dupmark.bam"
+        "output/bam_files/{sample}_PPq30.sorted.dupmark.bam"
     output:
-        "results/qc/{sample}.HiC_est_lib_complex_metrics.txt"
+        "output/qc/{sample}.est_lib_complex_metrics.txt"
     log:
-        "results/logsHiC/{sample}.downSampled.picardLibComplexity"
+        "output/logs/{sample}.downSampled.picardLibComplexity"
     shell:
         "picard -Xmx6G EstimateLibraryComplexity INPUT={input} OUTPUT={output} USE_JDK_DEFLATER=TRUE USE_JDK_INFLATER=TRUE VERBOSITY=ERROR"
 
 rule sort_name:
     input:
-        "results/bowtie2/{sample}_PPq30.HiC.sorted.dupmark_downSampled.bam"
+        "output/bam_files/{sample}_PPq30.sorted.dupmark_downSampled.bam"
     output:
-        tmp = "results/bowtie2/{sample}_PPq30.HiC.sorted.dupmark_downSampled.tmp.bam"
+        tmp = "output/bam_files/{sample}_PPq30.sorted.dupmark_downSampled.tmp.bam"
     log:
-        "results/logsHiC/{sample}.pbc.sort"
+        "output/logs/{sample}.pbc.sort"
     run:
         shell("samtools sort -n {input} -o {output.tmp} 2> {log}")
 
 rule estimate_lib_complexity:
     input:
-        "results/bowtie2/{sample}_PPq30.HiC.sorted.dupmark_downSampled.tmp.bam"
+        "output/bam_files/{sample}_PPq30.sorted.dupmark_downSampled.tmp.bam"
     output:
-        qc = "results/qc/{sample}.HiC.pbc.qc",
+        qc = "output/qc/{sample}.pbc.qc",
     log:
-        "results/logsHiC/{sample}.pbc"
+        "output/logs/{sample}.pbc"
     shell:
         """
         bedtools bamtobed -bedpe -i {input} \
@@ -324,14 +324,14 @@ rule estimate_lib_complexity:
 
 rule deeptools_summary:
     input:
-        bam = expand(["results/bowtie2/{sample}_PPq30.HiC.sorted.dedup.bam"], sample=all_samples),
-        bai = expand(["results/bowtie2/{sample}_PPq30.HiC.sorted.dedup.bai"], sample=all_samples)
+        bam = expand(["output/bam_files/{sample}_PPq30.sorted.dedup.bam"], sample=all_samples),
+        bai = expand(["output/bam_files/{sample}_PPq30.sorted.dedup.bai"], sample=all_samples)
     output:
-        sum="results/qc/multibamsum.HiC.npz",
-        counts="results/qc/multibamsum.HiC.tab"
+        sum="output/qc/multibamsum.npz",
+        counts="output/qc/multibamsum.tab"
     threads: 32
     log:
-        "results/logsHiC/multisummary.deepTools"
+        "output/logs/multisummary.deepTools"
     shell:
         " multiBamSummary bins \
         -p {threads} \
@@ -341,12 +341,12 @@ rule deeptools_summary:
         --outRawCounts {output.counts} 2> {log}"
 
 rule deeptools_correlation:
-    input: "results/qc/multibamsum.HiC.npz"
+    input: "output/qc/multibamsum.npz"
     output:
-        fig="results/qc/pearsoncor_multibamsum.HiC.png",
-        matrix="results/qc/pearsoncor_multibamsum.HiC_matrix.txt"
+        fig="output/qc/pearsoncor_multibamsum.png",
+        matrix="output/qc/pearsoncor_multibamsum_matrix.txt"
     log:
-        "results/logsHiC/correlation.deepTools"
+        "output/logs/correlation.deepTools"
     shell:
         "plotCorrelation \
         --corData {input} \
@@ -360,12 +360,12 @@ rule deeptools_correlation:
 
 rule deeptools_coverage:
     input:
-        bam ="results/bowtie2/{sample}_PPq30.HiC.sorted.dedup.bam",
-        bai ="results/bowtie2/{sample}_PPq30.HiC.sorted.dedup.bai"
+        bam ="output/bam_files/{sample}_PPq30.sorted.dedup.bam",
+        bai ="output/bam_files/{sample}_PPq30.sorted.dedup.bai"
     output:
-        "results/qc/{sample}.HiC.SeqDepthNorm.bw"
+        "output/qc/{sample}.SeqDepthNorm.bw"
     log:
-        "results/logsHiC/{sample}_coverage.deepTools"
+        "output/logs/{sample}_coverage.deepTools"
     shell:
         "bamCoverage \
         --bam {input.bam} \
@@ -379,15 +379,15 @@ rule deeptools_coverage:
 
 rule deeptools_fingerprint:
     input:
-        bam = expand(["results/bowtie2/{sample}_PPq30.HiC.sorted.dedup.bam"], sample=all_samples),
-        bai = expand(["results/bowtie2/{sample}_PPq30.HiC.sorted.dedup.bai"], sample=all_samples)
+        bam = expand(["output/bam_files/{sample}_PPq30.sorted.dedup.bam"], sample=all_samples),
+        bai = expand(["output/bam_files/{sample}_PPq30.sorted.dedup.bai"], sample=all_samples)
     output:
-        fig="results/qc/multiBAM.HiC_fingerprint.png",
-        metrics="results/qc/multiBAM.HiC_fingerprint_metrics.txt",
-        rawcounts="results/qc/multiBAM.HiC_fingerprint_rawcounts.txt"
+        fig="output/qc/multiBAM_fingerprint.png",
+        metrics="output/qc/multiBAM_fingerprint_metrics.txt",
+        rawcounts="output/qc/multiBAM_fingerprint_rawcounts.txt"
     threads: 32
     log:
-        "results/logsHiC/fingerprint.deepTools"
+        "output/logs/fingerprint.deepTools"
     shell:
         "plotFingerprint -p {threads} \
         -b {input.bam} \
@@ -400,23 +400,18 @@ rule deeptools_fingerprint:
 
 rule deeptools_bamPEFragmentSize:
     input:
-        bam = expand(["results/bowtie2/{sample}_PPq30.HiC.sorted.dedup.bam"], sample=all_samples),
-        bai = expand(["results/bowtie2/{sample}_PPq30.HiC.sorted.dedup.bai"], sample=all_samples)
+        bam = expand(["output/bam_files/{sample}_PPq30.sorted.dedup.bam"], sample=all_samples),
+        bai = expand(["output/bam_files/{sample}_PPq30.sorted.dedup.bai"], sample=all_samples)
     output:
-        fig="results/qc/bamPEFragmentSize.HiC_hist.png",
-        rawcounts="results/qc/bamPEFragmentSize.HiC_rawcounts.tab"
+        fig="output/qc/bamPEFragmentSize_hist.png",
+        rawcounts="output/qc/bamPEFragmentSize_rawcounts.tab"
     log:
-        "results/logsHiC/bamPEFragmentSize.deepTools"
+        "output/logs/bamPEFragmentSize.deepTools"
     shell:
         "bamPEFragmentSize \
         -hist {output.fig} \
         --outRawFragmentLengths {output.rawcounts} \
         -b {input.bam} 2> {log}"
-
-rule deeptools_computeGCBias:
-
-computeGCBias -b {input.bam} --effectiveGenomeSize 2740338543
-   --genome ../../../cross_species/data/genomes/smiCra1.2bit  -freq freq_test.txt --biasPlot test_gc.pdf
 
 # ===============================================================================================
 #  6. Cross-correlation scores - following ENCODE code
@@ -427,9 +422,9 @@ computeGCBias -b {input.bam} --effectiveGenomeSize 2740338543
 
 rule trim_read1:
     input:
-        "rawdata/{sample}_R1.fastq.gz"
+        "data/raw_reads/{sample}_R1.fastq.gz"
     output:
-        "results/qc/{sample}_R1_trimmed.fastq.gz"
+        "output/qc/{sample}_R1_trimmed.fastq.gz"
     run:
         shell("python scripts/trimfastq.py {input} 50 | gzip -nc > {output}")
 
@@ -437,13 +432,13 @@ rule trim_read1:
 
 rule align_trimmed_read1:
     input:
-        "results/qc/{sample}_R1_trimmed.fastq.gz"
+        "output/qc/{sample}_R1_trimmed.fastq.gz"
     output:
-        "results/bowtie2/{sample}_R1_trimmed.bam"
+        "output/bam_files/{sample}_R1_trimmed.bam"
     params:
-        index="genomes/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr"
+        index="data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr"
     log:
-        "results/logsHiC/{sample}_align_trimmed_read1.log"
+        "output/logs/{sample}_align_trimmed_read1.log"
     shell:
         "bowtie2 -x {params.index} -U {input} 2> {log} | \
         samtools view -Su - | samtools sort -o {output} - 2> {log}"
@@ -452,19 +447,19 @@ rule align_trimmed_read1:
 
 rule filter_sort_trimmed_alignment:
     input:
-        "results/bowtie2/{sample}_R1_trimmed.bam"
+        "output/bam_files/{sample}_R1_trimmed.bam"
     output:
-        bam = "results/bowtie2/{sample}.HiC_R1_trimmed_q30.bam"
+        bam = "output/bam_files/{sample}_R1_trimmed_q30.bam"
     log:
-        "results/logsHiC/{sample}_align_trimmed_read1_filter.log"
+        "output/logs/{sample}_align_trimmed_read1_filter.log"
     run:
         shell("samtools view -F 1804 -q 30 -b {input} -o {output.bam}")
 
 rule bamtobed_crossC:
     input:
-        "results/bowtie2/{sample}.HiC_R1_trimmed_q30.bam"
+        "output/bam_files/{sample}_R1_trimmed_q30.bam"
     output:
-        tagAlign = "results/bed/{sample}_R1_trimmed_q30_SE.tagAlign.gz"
+        tagAlign = "output/bam_files/{sample}_R1_trimmed_q30_SE.tagAlign.gz"
     shell:
         """
         bedtools bamtobed -i {input} | \
@@ -476,10 +471,10 @@ rule bamtobed_crossC:
 ## Estimate read length from first 100 reads
 rule subsample_aligned_reads:
     input:
-        "results/bed/{sample}_R1_trimmed_q30_SE.tagAlign.gz"
+        "output/bam_files/{sample}_R1_trimmed_q30_SE.tagAlign.gz"
     output:
-        subsample = "results/bed/{sample}.filt.sample.15Mreads.SE.tagAlign.gz",
-        tmp = "results/bed/{sample}_R1_trimmed_q30_SE.tagAlign.tmp"
+        subsample = "output/bam_files/{sample}.filt.sample.15Mreads.SE.tagAlign.gz",
+        tmp = "output/bam_files/{sample}_R1_trimmed_q30_SE.tagAlign.tmp"
     params:
         nreads= 15000000
     run:
@@ -497,12 +492,12 @@ rule subsample_aligned_reads:
 
 rule cross_correlation_SSP:
     input:
-        "results/bed/{sample}.filt.sample.15Mreads.SE.tagAlign.gz"
+        "output/bam_files/{sample}.filt.sample.15Mreads.SE.tagAlign.gz"
     output:
-        CC_SCORES_FILE="results/qc/{sample}.HiC_filt_15Mreads.SE.cc.qc",
-        CC_PLOT_FILE="results/qc/{sample}.HiC_filt_15Mreads.SE.cc.plot.pdf"
+        CC_SCORES_FILE="output/qc/{sample}_filt_15Mreads.SE.cc.qc",
+        CC_PLOT_FILE="output/qc/{sample}_filt_15Mreads.SE.cc.plot.pdf"
     log:
-        "results/logsHiC/{sample}_filt_15Mreads.SE.spp.log"
+        "output/logs/{sample}_filt_15Mreads.SE.spp.log"
     params:
         EXCLUSION_RANGE_MIN=-500,
         EXCLUSION_RANGE_MAX=60
@@ -523,14 +518,14 @@ rule cross_correlation_SSP:
 
 rule call_peaks_macs2:
     input:
-        control = "results/bowtie2/{control}_PPq30.HiC.sorted.dedup.bam",
-        case = "results/bowtie2/{case}_PPq30.HiC.sorted.dedup.bam"
+        control = "output/bam_files/{control}_PPq30.sorted.dedup.bam",
+        case = "output/bam_files/{case}_PPq30.sorted.dedup.bam"
     output:
-        "results/macs2/{case}_vs_{control}_macs2.HiC_default_peaks.xls",
-        "results/macs2/{case}_vs_{control}_macs2.HiC_default_summits.bed",
-        "results/macs2/{case}_vs_{control}_macs2.HiC_default_peaks.narrowPeak",
+        "output/peaks/{case}_vs_{control}_macs2_default_peaks.xls",
+        "output/peaks/{case}_vs_{control}_macs2_default_summits.bed",
+        "output/peaks/{case}_vs_{control}_macs2_default_peaks.narrowPeak",
     log:
-        "results/logsHiC/{case}_vs_{control}_call_peaks_macs2_default.log"
+        "output/logs/{case}_vs_{control}_call_peaks_macs2_default.log"
     params:
         name = "{case}_vs_{control}_macs2_default",
     shell:
@@ -542,19 +537,19 @@ rule call_peaks_macs2:
 
 rule call_peaks_macs2_pooled_replicates:
     input:
-        H3K4me3 = "results/bowtie2/H3K4me3_pooled_PPq30.HiC.sorted.dedup.bam",
-        H3K27ac = "results/bowtie2/H3K27ac_pooled_PPq30.HiC.sorted.dedup.bam",
-        input = "results/bowtie2/input_pooled_PPq30.HiC.sorted.dedup.bam"
+        H3K4me3 = "output/bam_files/H3K4me3_pooled_PPq30.sorted.dedup.bam",
+        H3K27ac = "output/bam_files/H3K27ac_pooled_PPq30.sorted.dedup.bam",
+        input = "output/bam_files/input_pooled_PPq30.sorted.dedup.bam"
     output:
-        "results/macs2/H3K4me3_pooled_macs2_default_peaks.xls",
-        "results/macs2/H3K4me3_pooled_macs2_default_summits.bed",
-        "results/macs2/H3K4me3_pooled_macs2_default_peaks.HiC.narrowPeak",
-        "results/macs2/H3K27ac_pooled_macs2_default_peaks.xls",
-        "results/macs2/H3K27ac_pooled_macs2_default_summits.bed",
-        "results/macs2/H3K27ac_pooled_macs2_default_peaks.HiC.narrowPeak"
+        "output/peaks/H3K4me3_pooled_macs2_default_peaks.xls",
+        "output/peaks/H3K4me3_pooled_macs2_default_summits.bed",
+        "output/peaks/H3K4me3_pooled_macs2_default_peaks.narrowPeak",
+        "output/peaks/H3K27ac_pooled_macs2_default_peaks.xls",
+        "output/peaks/H3K27ac_pooled_macs2_default_summits.bed",
+        "output/peaks/H3K27ac_pooled_macs2_default_peaks.narrowPeak"
     log:
-        H3K4me3 ="results/logsHiC/H3K4me3_pooled_call_peaks_macs2_default.log",
-        H3K27ac ="results/logsHiC/H3K27ac_pooled_call_peaks_macs2_default.log"
+        H3K4me3 ="output/logs/H3K4me3_pooled_call_peaks_macs2_default.log",
+        H3K27ac ="output/logs/H3K27ac_pooled_call_peaks_macs2_default.log"
     params:
         H3K4me3 = "H3K4me3_pooled_macs2_default",
         H3K27ac = "H3K27ac_pooled_macs2_default"
@@ -579,9 +574,9 @@ rule call_peaks_macs2_pooled_replicates:
 # peak counts in a format that multiqc can handle
 rule get_narrow_peak_counts_for_multiqc:
     input:
-        peaks = "results/macs2/{case}_vs_{control}_macs2.HiC_peaks.narrowPeak"
+        peaks = "output/peaks/{case}_vs_{control}_macs2_peaks.narrowPeak"
     output:
-        "results/qc/{case}-vs-{control}-narrowpeak-count_mqc.HiC.json"
+        "output/qc/{case}-vs-{control}-narrowpeak-count_mqc.json"
     params:
         peakType = "narrowPeak"
     shell:
@@ -593,11 +588,11 @@ rule get_narrow_peak_counts_for_multiqc:
 ## Convert BAM to tagAlign file for calculating FRiP QC metric (Fraction of reads in peaks)
 rule bamToBed:
     input:
-        "results/bowtie2/{case}_PPq30.HiC.sorted.dedup.bam"
+        "output/bam_files/{case}_PPq30.sorted.dedup.bam"
     output:
-        "results/bowtie2/{case}.HiC.bedpe"
+        "output/bam_files/{case}.bedpe"
     log:
-        "results/logsHiC/{case}.bamToBed"
+        "output/logs/{case}.bamToBed"
     shell:
         "samtools sort -n {input} | bedtools bamtobed -bedpe -mate1 -i - > {output}"
 
@@ -605,10 +600,10 @@ rule bamToBed:
 ## Fraction of reads in peaks
 rule frip:
     input:
-        bed = "results/bowtie2/{case}.HiC.bedpe",
-        peak = "results/macs2/{case}_vs_{control}_macs2.HiC_default_peaks.narrowPeak"
+        bed = "output/bam_files/{case}.bedpe",
+        peak = "output/peaks/{case}_vs_{control}_macs2_default_peaks.narrowPeak"
     output:
-        "results/qc/{case}_vs_{control}.frip_default.HiC.txt"
+        "output/qc/{case}_vs_{control}.frip_default.txt"
     shell:
         "python2.7 scripts/encode_frip.py {input.bed} {input.peak} > {output}"
 
@@ -622,84 +617,35 @@ rule frip:
 
 rule overlap_peaks_H3K4me3:
     input:
-        peak1="results/macs2/A-2_H3K4me3_vs_A-1_input_macs2_default_peaks.narrowPeak",
-        peak2="results/macs2/B-2_H3K4me3_vs_B-1_input_macs2_default_peaks.narrowPeak",
-        pooled="results/macs2/H3K4me3_pooled_macs2_default_peaks.HiC.narrowPeak"
+        peak1="output/peaks/A-2_H3K4me3_vs_A-1_input_macs2_default_peaks.narrowPeak",
+        peak2="output/peaks/B-2_H3K4me3_vs_B-1_input_macs2_default_peaks.narrowPeak",
+        pooled="output/peaks/H3K4me3_pooled_macs2_default_peaks.narrowPeak"
     output:
-        "results/macs2/H3K4me3_overlap_default.HiC.narrowPeak"
+        "output/peaks/H3K4me3_overlap_default.narrowPeak"
     shell:
         "python2.7 scripts/overlap_peaks.py {input.peak1} {input.peak2} {input.pooled} {output}"
 
 
 rule overlap_peaks_H3K27ac:
     input:
-        peak1="results/macs2/A-3_H3K27ac_vs_A-1_input_macs2_default_peaks.narrowPeak",
-        peak2="results/macs2/B-3_H3K27ac_vs_B-1_input_macs2_default_peaks.narrowPeak",
-        pooled="results/macs2/H3K27ac_pooled_macs2_default_peaks.HiC.narrowPeak"
+        peak1="output/peaks/A-3_H3K27ac_vs_A-1_input_macs2_default_peaks.narrowPeak",
+        peak2="output/peaks/B-3_H3K27ac_vs_B-1_input_macs2_default_peaks.narrowPeak",
+        pooled="output/peaks/H3K27ac_pooled_macs2_default_peaks.narrowPeak"
     output:
-        "results/macs2/H3K27ac_overlap_default.HiC.narrowPeak"
+        "output/peaks/H3K27ac_overlap_default.narrowPeak"
     shell:
         "python2.7 scripts/overlap_peaks.py {input.peak1} {input.peak2} {input.pooled} {output}"
 
 ## Fraction of reads in peaks
 rule overlap_frip:
     input:
-        H3K4me3bam = "results/bowtie2/H3K4me3_pooled_PPq30.HiC.sorted.dedup.bam",
-        H3K27acbam = "results/bowtie2/H3K27ac_pooled_PPq30.HiC.sorted.dedup.bam",
-        H3K4me3bed = "results/macs2/H3K4me3_overlap_default.HiC.narrowPeak",
-        H3K27acbed = "results/macs2/H3K27ac_overlap_default.HiC.narrowPeak"
+        H3K4me3bam = "output/bam_files/H3K4me3_pooled_PPq30.sorted.dedup.bam",
+        H3K27acbam = "output/bam_files/H3K27ac_pooled_PPq30.sorted.dedup.bam",
+        H3K4me3bed = "output/peaks/H3K4me3_overlap_default.narrowPeak",
+        H3K27acbed = "output/peaks/H3K27ac_overlap_default.narrowPeak"
     output:
-        H3K4me3frip = "results/qc/H3K4me3_overlap_default.HiC.frip",
-        H3K27acfrip = "results/qc/H3K27ac_overlap_default.HiC.frip"
+        H3K4me3frip = "output/qc/H3K4me3_overlap_default.frip",
+        H3K27acfrip = "output/qc/H3K27ac_overlap_default.frip"
     run:
         shell("python2.7 scripts/encode_frip.py {input.H3K4me3bam} {input.H3K4me3bed} > {output.H3K4me3frip}")
         shell("python2.7 scripts/encode_frip.py {input.H3K27acbam} {input.H3K27acbed} > {output.H3K27acfrip}")
-
-#  10. Combine all QC into multiqc output
-# ===============================================================================================
-#
-# rule multiqc:
-#     input:
-#         # fastqc
-#         expand("results/qc/{sample}_R1_fastqc.html", sample=all_samples),
-#         expand("results/qc/{sample}_R2_fastqc.html", sample=all_samples),
-#         expand("results/qc/{sample}_R1_fastqc.zip", sample=all_samples),
-#         expand("results/qc/{sample}_R2_fastqc.zip", sample=all_samples),
-#         # bowtie2
-#         expand("results/logsHiC/{sample}.align", sample=all_samples),
-#         expand("results/qc/{sample}.HiC.flagstat.qc", sample=all_samples),
-#         # preseq
-#         expand("results/qc/{sample}.HiC.ccurve.txt", sample=all_samples),
-#         expand("results/qc/{sample}.HiC.extrap.txt", sample=all_samples),
-#         # deepTools
-#         "results/deeptools/multibamsum.npz",
-#         "results/deeptools/multibamsum.tab",
-#         "results/deeptools/pearsoncor_multibamsum.png",
-#         "results/deeptools/pearsoncor_multibamsum_matrix.txt",
-#         expand("results/deeptools/{sample}.SeqDepthNorm.bw", sample=all_samples),
-#         "results/deeptools/multiBAM_fingerprint.png",
-#         "results/deeptools/multiBAM_fingerprint_metrics.txt",
-#         "results/deeptools/multiBAM_fingerprint_rawcounts.txt",
-#         "results/deeptools/plot_coverage.png",
-#         "results/deeptools/plot_coverage_rawcounts.tab",
-#         "results/deeptools/bamPEFragmentSize_hist.png",
-#         "results/deeptools/bamPEFragmentSize_rawcounts.tab",
-#         # phantomPeaks
-#         expand("results/phantomPeaks/{sample}.spp.pdf", sample = IPS),
-#         expand("results/phantomPeaks/{sample}.spp.Rdata", sample = IPS),
-#         expand("results/phantomPeaks/{sample}.spp.out", sample = IPS),
-#         # macs2
-#         expand("results/macs2/{case}_vs_{control}_macs2.HiC_peaks.narrowPeak", zip, case=IPS, control=INPUTS),
-#         expand("results/macs2/{case}_vs_{control}_macs2.HiC_peaks.xls", zip, case=IPS, control=INPUTS),
-#         expand("results/macs2/{case}_vs_{control}_macs2.HiC_summits.bed", zip, case=IPS, control=INPUTS),
-#         expand("results/macs2/{case}-vs-{control}-narrowpeak-count_mqc.json", zip, case=IPS, control=INPUTS),
-#         expand("results/frip/{case}_vs_{control}.frip.txt", case=IPS, control=INPUTS)
-#     output:
-#         directory("results/multiqc/multiqc_report_data/"),
-#         "results/multiqc/multiqc_report.html",
-#     conda:
-#         "envs/multiqc.yaml"
-#     log:
-#         "results/logsHiC/multiqc.log"
-#     wrapper:
-#         "0.31.1/bio/multiqc"
