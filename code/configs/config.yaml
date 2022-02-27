@@ -1,2 +1,2 @@
-SAMPLES: 'envs/SRR.txt'
-CLUSTER_JSON: 'envs/cluster.json'
+SAMPLES: 'configs/SRR.txt'
+CLUSTER_JSON: 'configs/cluster.json'
