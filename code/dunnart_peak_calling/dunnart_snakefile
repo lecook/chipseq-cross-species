@@ -31,11 +31,9 @@ with open(config['SAMPLES'], "r") as f:
     reader = csv.reader(f, delimiter = "\t")
     # skip the header
     header = next(reader)
-    print(reader)
-    #for row in reader:
-    #    IPS.append(row[0])
-    #    INPUTS.append(row[1])
-
+    for row in reader:
+        IPS.append(row[0])
+        INPUTS.append(row[1])
 f.close()
 
 ## multiple samples may use the same control input files
