@@ -25,7 +25,7 @@ import os
 
 IPS = []
 INPUTS = []
-#MARK = []
+MARK = []
 
 with open(config['SAMPLES'], "r") as f:
     reader = csv.reader(f, delimiter = "\t")
@@ -34,7 +34,7 @@ with open(config['SAMPLES'], "r") as f:
     for row in reader:
         IPS.append(row[0])
         INPUTS.append(row[1])
-        #MARK.append(row[2])
+        MARK.append(row[2])
 
 ## multiple samples may use the same control input files
 unique_inputs = list(set(INPUTS))
