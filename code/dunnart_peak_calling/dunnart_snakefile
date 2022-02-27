@@ -9,14 +9,14 @@
     # 3. Filtering
     # 4. Alignment QC & Library Complexity
     # 5. deepTools
-    # 6. cross correlation (SPP)
+    # 6. Cross correlation (SPP)
     # 7. Call narrow peaks (MACS2)
     # 8. Peak QC
     # 9. Create consensus peaksets
     # 10. Present QC for raw read, alignment, peak-calling in MultiQC (this part is a work in progress)
 
 
-configfile: "configs/config.yaml"
+configfile: "code/configs/config.yaml"
 # Contains sample and genome information
 # calls the SRR.txt file that contains the samples as either IP or control
 
@@ -49,63 +49,62 @@ all_samples = IPS + unique_inputs
 
 rule all:
     input:
-        expand("results/qc/{sample}_R1_fastqc.html", sample=all_samples),
-        expand("results/qc/{sample}_R2_fastqc.html", sample=all_samples),
-        expand("results/qc/{sample}_R1_fastqc.zip", sample=all_samples),
-        expand("results/qc/{sample}_R2_fastqc.zip", sample=all_samples),
-        expand("results/bowtie2/{sample}.HiC.sorted.bam", sample=all_samples),
-        expand("results/bowtie2/{sample}.HiC.sorted.bai", sample=all_samples),
-        expand("results/bowtie2/{sample}_PPq30.HiC.sorted.bam", sample=all_samples),
-        expand("results/bowtie2/{sample}_PPq30.HiC.sorted.dupmark.bam", sample=all_samples),
-        expand("results/bowtie2/{sample}_PPq30.HiC.sorted.dedup.bam", sample=all_samples),
-        expand("results/bowtie2/{sample}_PPq30.HiC.sorted.dedup.bai", sample=all_samples),
-        "results/bowtie2/H3K4me3_pooled_PPq30.HiC.sorted.dedup.bam",
-        "results/bowtie2/H3K27ac_pooled_PPq30.HiC.sorted.dedup.bam",
-        "results/bowtie2/input_pooled_PPq30.HiC.sorted.dedup.bam",
-        "results/logsHiC/H3K4me3.mergeBAM",
-        "results/logsHiC/H3K27ac.mergeBAM",
-        expand("results/qc/{sample}.HiC.unfiltered.flagstat.qc", sample=all_samples),
-        expand("results/qc/{sample}.HiC.dedup.flagstat.qc", sample=all_samples),
-        expand("results/qc/{sample}.HiC.dupmark.flagstat.qc", sample=all_samples),
-        expand("results/qc/{sample}.HiC.PPq30.flagstat.qc", sample=all_samples),
-        expand("results/qc/{sample}.HiC.ccurve.txt", sample=all_samples),
-        expand("results/qc/{sample}.HiC.extrap.txt", sample=all_samples),
-        expand("results/logsHiC/{sample}.ccurve.preseq", sample=all_samples),
-        expand("results/logsHiC/{sample}.extrap.preseq", sample=all_samples),
-        # expand("results/qc/{sample}.HiC_est_lib_complex_metrics.txt", sample=all_samples),
-        # expand("results/logsHiC/{sample}.picardLibComplexity", sample=all_samples),
-        expand("results/bowtie2/{sample}_PPq30.HiC.sorted.dupmark_downSampled.tmp.bam",sample=all_samples),
-        expand("results/bowtie2/{sample}_PPq30.HiC.sorted.dupmark_downSampled.bam",sample=all_samples),
-        expand("results/qc/{sample}.HiC.pbc.qc", sample=all_samples),
-        "results/qc/multibamsum.HiC.npz",
-        "results/qc/multibamsum.HiC.tab",
-        "results/qc/pearsoncor_multibamsum.HiC.png",
-        "results/qc/pearsoncor_multibamsum.HiC_matrix.txt",
-        expand("results/qc/{sample}.HiC.SeqDepthNorm.bw", sample=all_samples),
-        "results/qc/multiBAM.HiC_fingerprint.png",
-        "results/qc/multiBAM.HiC_fingerprint_metrics.txt",
-        "results/qc/multiBAM.HiC_fingerprint_rawcounts.txt",
-        "results/qc/bamPEFragmentSize.HiC_hist.png",
-        "results/qc/bamPEFragmentSize.HiC_rawcounts.tab",
-        expand("results/bowtie2/{sample}.HiC_R1_trimmed_q30.bam", sample=all_samples),
-        expand("results/logsHiC/{sample}_filt_15Mreads.SE.spp.log", sample=all_samples),
-        expand("results/qc/{sample}.HiC_filt_15Mreads.SE.cc.qc", sample=all_samples),
-        expand("results/qc/{sample}.HiC_filt_15Mreads.SE.cc.plot.pdf", sample=all_samples),
-        expand("results/macs2/{case}_vs_{control}_macs2.HiC_default_peaks.narrowPeak", zip, case=IPS, control=INPUTS),
-        expand("results/macs2/{case}_vs_{control}_macs2.HiC_default_peaks.xls", zip, case=IPS, control=INPUTS),
-        expand("results/macs2/{case}_vs_{control}_macs2.HiC_default_summits.bed", zip, case=IPS, control=INPUTS),
-        # expand("results/qc/{case}-vs-{control}-narrowpeak-count_mqc.HiC.json", zip, case=IPS, control=INPUTS),
-        # expand("results/bowtie2/{case}.HiC.bedpe", case=IPS),
-        # expand("results/logsHiC/{case}.HiC.bamToBed", case=IPS),
-        # expand("results/qc/{case}_vs_{control}.frip_default.HiC.txt", case=IPS, control=INPUTS),
-        # "results/macs2/H3K4me3_pooled_macs2_default_peaks.HiC.narrowPeak",
-        # "results/macs2/H3K27ac_pooled_macs2_default_peaks.HiC.narrowPeak",
-        # "results/macs2/H3K4me3_overlap_default.HiC.narrowPeak",
-        # "results/macs2/H3K27ac_overlap_default.HiC.narrowPeak",
-        # "results/qc/H3K4me3_overlap_default.HiC.frip",
-        # "results/qc/H3K27ac_overlap_default.HiC.frip"
-        # directory("results/multiqc/multiqc_report_data/")
-        # "results/multiqc/multiqc_report.html"
+        expand("output/qc/{sample}_R1_fastqc.html", sample=all_samples),
+        expand("output/qc/{sample}_R2_fastqc.html", sample=all_samples),
+        expand("output/qc/{sample}_R1_fastqc.zip", sample=all_samples),
+        expand("output/qc/{sample}_R2_fastqc.zip", sample=all_samples),
+        expand("output/bam_files/{sample}.sorted.bam", sample=all_samples),
+        expand("output/bam_files/{sample}.sorted.bai", sample=all_samples),
+        expand("output/bam_files/{sample}_PPq30.sorted.bam", sample=all_samples),
+        expand("output/bam_files/{sample}_PPq30.sorted.dupmark.bam", sample=all_samples),
+        expand("output/bam_files/{sample}_PPq30.sorted.dedup.bam", sample=all_samples),
+        expand("output/bam_files/{sample}_PPq30.sorted.dedup.bai", sample=all_samples),
+        "output/bam_files/H3K4me3_pooled_PPq30.sorted.dedup.bam",
+        "output/bam_files/H3K27ac_pooled_PPq30.sorted.dedup.bam",
+        "output/bam_files/input_pooled_PPq30.sorted.dedup.bam",
+        "output/logs/H3K4me3.mergeBAM",
+        "output/logs/H3K27ac.mergeBAM",
+        expand("output/qc/{sample}.unfiltered.flagstat.qc", sample=all_samples),
+        expand("output/qc/{sample}.dedup.flagstat.qc", sample=all_samples),
+        expand("output/qc/{sample}.dupmark.flagstat.qc", sample=all_samples),
+        expand("output/qc/{sample}.PPq30.flagstat.qc", sample=all_samples),
+        expand("output/qc/{sample}.ccurve.txt", sample=all_samples),
+        expand("output/qc/{sample}.extrap.txt", sample=all_samples),
+        expand("output/logs/{sample}.ccurve.preseq", sample=all_samples),
+        expand("output/logs/{sample}.extrap.preseq", sample=all_samples),
+        expand("output/qc/{sample}_est_lib_complex_metrics.txt", sample=all_samples),
+        expand("output/logs/{sample}.picardLibComplexity", sample=all_samples),
+        expand("output/bam_files/{sample}_PPq30.sorted.dupmark_downSampled.tmp.bam",sample=all_samples),
+        expand("output/bam_files/{sample}_PPq30.sorted.dupmark_downSampled.bam",sample=all_samples),
+        expand("output/qc/{sample}.pbc.qc", sample=all_samples),
+        "output/qc/multibamsum.npz",
+        "output/qc/multibamsum.tab",
+        "output/qc/pearsoncor_multibamsum.png",
+        "output/qc/pearsoncor_multibamsum_matrix.txt",
+        expand("results/qc/{sample}.SeqDepthNorm.bw", sample=all_samples),
+        "output/qc/multiBAM_fingerprint.png",
+        "output/qc/multiBAM_fingerprint_metrics.txt",
+        "output/qc/multiBAM_fingerprint_rawcounts.txt",
+        "output/qc/bamPEFragmentSize_hist.png",
+        "output/qc/bamPEFragmentSize_rawcounts.tab",
+        expand("output/bam_files/{sample}_R1_trimmed_q30.bam", sample=all_samples),
+        expand("output/logs/{sample}_filt_15Mreads.SE.spp.log", sample=all_samples),
+        expand("output/qc/{sample}_filt_15Mreads.SE.cc.qc", sample=all_samples),
+        expand("output/qc/{sample}_filt_15Mreads.SE.cc.plot.pdf", sample=all_samples),
+        expand("output/peaks/{case}_vs_{control}_macs2_default_peaks.narrowPeak", zip, case=IPS, control=INPUTS),
+        expand("output/peaks/{case}_vs_{control}_macs2_default_peaks.xls", zip, case=IPS, control=INPUTS),
+        expand("output/peaks/{case}_vs_{control}_macs2_default_summits.bed", zip, case=IPS, control=INPUTS),
+        expand("output/qc/{case}-vs-{control}-narrowpeak-count_mqc.json", zip, case=IPS, control=INPUTS),
+        expand("output/bam_files/{case}.bedpe", case=IPS),
+        expand("output/logs/{case}.bamToBed", case=IPS),
+        expand("output/qc/{case}_vs_{control}.frip_default.txt", case=IPS, control=INPUTS),
+        "output/peaks/H3K4me3_pooled_macs2_default_peaks.narrowPeak",
+        "output/peaks/H3K27ac_pooled_macs2_default_peaks.narrowPeak",
+        "output/peaks/H3K4me3_overlap_default.narrowPeak",
+        "output/peaks/H3K27ac_overlap_default.narrowPeak",
+        "output/qc/H3K4me3_overlap_default.frip",
+        "output/qc/H3K27ac_overlap_default.frip"
+
 # ===============================================================================================
 #  1. FASTQC
 # ===============================================================================================
@@ -173,7 +172,7 @@ rule markDups:
         "output/bam_files/{sample}_PPq30.sorted.bam"
     output:
         bam="output/bam_files/{sample}_PPq30.sorted.dupmark.bam",
-        dupQC="output/qc/{sample}.HiC.dup.qc"
+        dupQC="output/qc/{sample}.dup.qc"
     log:
         "output/logs/{sample}.dupmark"
     shell:
@@ -426,7 +425,7 @@ rule trim_read1:
     output:
         "output/qc/{sample}_R1_trimmed.fastq.gz"
     run:
-        shell("python scripts/trimfastq.py {input} 50 | gzip -nc > {output}")
+        shell("python code/trimfastq.py {input} 50 | gzip -nc > {output}")
 
 ## Align trimmed read to the genome
 
@@ -580,7 +579,7 @@ rule get_narrow_peak_counts_for_multiqc:
     params:
         peakType = "narrowPeak"
     shell:
-        "python3 scripts/count_peaks.py \
+        "python3 code/count_peaks.py \
         --peak_type {params.peakType} \
         --peaks {input.peaks} --sample_name {wildcards.case} > {output}"
 
@@ -605,7 +604,7 @@ rule frip:
     output:
         "output/qc/{case}_vs_{control}.frip_default.txt"
     shell:
-        "python2.7 scripts/encode_frip.py {input.bed} {input.peak} > {output}"
+        "python2.7 code/encode_frip.py {input.bed} {input.peak} > {output}"
 
 
 # ===============================================================================================
@@ -623,7 +622,7 @@ rule overlap_peaks_H3K4me3:
     output:
         "output/peaks/H3K4me3_overlap_default.narrowPeak"
     shell:
-        "python2.7 scripts/overlap_peaks.py {input.peak1} {input.peak2} {input.pooled} {output}"
+        "python2.7 code/overlap_peaks.py {input.peak1} {input.peak2} {input.pooled} {output}"
 
 
 rule overlap_peaks_H3K27ac:
@@ -634,7 +633,7 @@ rule overlap_peaks_H3K27ac:
     output:
         "output/peaks/H3K27ac_overlap_default.narrowPeak"
     shell:
-        "python2.7 scripts/overlap_peaks.py {input.peak1} {input.peak2} {input.pooled} {output}"
+        "python2.7 code/overlap_peaks.py {input.peak1} {input.peak2} {input.pooled} {output}"
 
 ## Fraction of reads in peaks
 rule overlap_frip:
@@ -647,5 +646,5 @@ rule overlap_frip:
         H3K4me3frip = "output/qc/H3K4me3_overlap_default.frip",
         H3K27acfrip = "output/qc/H3K27ac_overlap_default.frip"
     run:
-        shell("python2.7 scripts/encode_frip.py {input.H3K4me3bam} {input.H3K4me3bed} > {output.H3K4me3frip}")
-        shell("python2.7 scripts/encode_frip.py {input.H3K27acbam} {input.H3K27acbed} > {output.H3K27acfrip}")
+        shell("python2.7 code/encode_frip.py {input.H3K4me3bam} {input.H3K4me3bed} > {output.H3K4me3frip}")
+        shell("python2.7 code/encode_frip.py {input.H3K27acbam} {input.H3K27acbed} > {output.H3K27acfrip}")
