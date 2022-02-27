@@ -366,13 +366,13 @@ rule deeptools_coverage:
     log:
         "output/logs/{sample}_coverage.deepTools"
     shell:
-        "bamCoverage --bam {input.bam}  --binSize 10 \
+        """bamCoverage --bam {input.bam}  --binSize 10 \
         --normalizeUsing RPGC \
         --effectiveGenomeSize 2740338543 \
         --extendReads \
         --legendLocation none
         --colors #264653 #2A9D8F #E9C46A #F4A261 #E76F51
-        -o {output} 2> {log}"
+        -o {output} 2> {log}"""
 
 rule deeptools_fingerprint:
     input:
