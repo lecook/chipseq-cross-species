@@ -35,6 +35,7 @@ with open(config['SAMPLES'], "r") as f:
         IPS.append(row[0])
         INPUTS.append(row[1])
         MARK.append(row[2])
+f.close()
 
 ## multiple samples may use the same control input files
 unique_inputs = list(set(INPUTS))
