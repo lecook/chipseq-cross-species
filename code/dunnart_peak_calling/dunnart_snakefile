@@ -366,9 +366,7 @@ rule deeptools_coverage:
     log:
         "output/logs/{sample}_coverage.deepTools"
     shell:
-        "bamCoverage \
-        --bam {input.bam} \
-        --binSize 10 \
+        "bamCoverage --bam {input.bam}  --binSize 10 \
         --normalizeUsing RPGC \
         --effectiveGenomeSize 2740338543 \
         --extendReads \
@@ -388,14 +386,14 @@ rule deeptools_fingerprint:
     log:
         "output/logs/fingerprint.deepTools"
     shell:
-        "plotFingerprint -p {threads} \
+        """plotFingerprint -p {threads} \
         -b {input.bam} \
         --plotFile {output.fig} \
         --outQualityMetrics {output.metrics} \
         --outRawCounts {output.rawcounts} \
         --minMappingQuality 30 \
         --skipZeros \
-        --centerReads 2> {log}"
+        --centerReads 2> {log}"""
 
 rule deeptools_bamPEFragmentSize:
     input:
@@ -407,10 +405,10 @@ rule deeptools_bamPEFragmentSize:
     log:
         "output/logs/bamPEFragmentSize.deepTools"
     shell:
-        "bamPEFragmentSize \
+        """bamPEFragmentSize \
         -hist {output.fig} \
         --outRawFragmentLengths {output.rawcounts} \
-        -b {input.bam} 2> {log}"
+        -b {input.bam} 2> {log}"""
 
 # ===============================================================================================
 #  6. Cross-correlation scores - following ENCODE code
@@ -439,8 +437,8 @@ rule align_trimmed_read1:
     log:
         "output/logs/{sample}_align_trimmed_read1.log"
     shell:
-        "bowtie2 -x {params.index} -U {input} 2> {log} | \
-        samtools view -Su - | samtools sort -o {output} - 2> {log}"
+        """bowtie2 -x {params.index} -U {input} 2> {log} | \
+        samtools view -Su - | samtools sort -o {output} - 2> {log}"""
 
 ## Filter alignment but don't dedup
 
@@ -528,11 +526,11 @@ rule call_peaks_macs2:
     params:
         name = "{case}_vs_{control}_macs2_default",
     shell:
-        " macs2 callpeak -f BAMPE -t {input.case} \
+        """macs2 callpeak -f BAMPE -t {input.case} \
         -c {input.control} --keep-dup all \
         --outdir results/macs2/  \
         -n {params.name} \
-        -g 2740338543 2> {log} "
+        -g 2740338543 2> {log}"""
 
 rule call_peaks_macs2_pooled_replicates:
     input:
@@ -579,9 +577,9 @@ rule get_narrow_peak_counts_for_multiqc:
     params:
         peakType = "narrowPeak"
     shell:
-        "python3 code/count_peaks.py \
+        """python3 code/count_peaks.py \
         --peak_type {params.peakType} \
-        --peaks {input.peaks} --sample_name {wildcards.case} > {output}"
+        --peaks {input.peaks} --sample_name {wildcards.case} > {output}"""
 
 
 ## Convert BAM to tagAlign file for calculating FRiP QC metric (Fraction of reads in peaks)
