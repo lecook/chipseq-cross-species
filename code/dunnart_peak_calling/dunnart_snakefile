@@ -96,7 +96,7 @@ rule all:
         expand("output/peaks/{case}_vs_{control}_macs2_default_peaks.narrowPeak", zip, case=IPS, control=INPUTS),
         expand("output/peaks/{case}_vs_{control}_macs2_default_peaks.xls", zip, case=IPS, control=INPUTS),
         expand("output/peaks/{case}_vs_{control}_macs2_default_summits.bed", zip, case=IPS, control=INPUTS),
-        expand("output/qc/{case}-vs-{control}-narrowpeak-count_mqc.json", zip, case=IPS, control=INPUTS),
+        #expand("output/qc/{case}-vs-{control}-narrowpeak-count_mqc.json", zip, case=IPS, control=INPUTS),
         expand("output/bam_files/{case}.bedpe", case=IPS),
         expand("output/logs/{case}.bamToBed", case=IPS),
         expand("output/qc/{case}_vs_{control}.frip_default.txt", case=IPS, control=INPUTS),
