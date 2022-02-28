@@ -29,9 +29,10 @@ MARK = []
 
 with open(config['SAMPLES'], "r") as f:
     reader = csv.reader(f, delimiter = "\t")
-    IPS.append(reader["IP"])
-    INPUTS.append(reader["Input"])
-    MARK.append(reader["mark"])
+    for row in reader:
+        IPS.append(row["IP"])
+        INPUTS.append(row["Input"])
+        MARK.append(row["mark"])
     # skip the header
     #header = next(reader)
     #for row in reader:
