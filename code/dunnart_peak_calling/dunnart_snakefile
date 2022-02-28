@@ -54,7 +54,6 @@ rule all:
         expand("output/qc/{sample}_R1_fastqc.zip", sample=all_samples),
         expand("output/qc/{sample}_R2_fastqc.zip", sample=all_samples),
         expand("output/bam_files/{sample}.sorted.bam", sample=all_samples),
-        expand("output/bam_files/{sample}.sorted.bai", sample=all_samples),
         expand("output/bam_files/{sample}_PPq30.sorted.bam", sample=all_samples),
         expand("output/bam_files/{sample}_PPq30.sorted.dupmark.bam", sample=all_samples),
         expand("output/bam_files/{sample}_PPq30.sorted.dedup.bam", sample=all_samples),

@@ -7,9 +7,40 @@ editor_options:
   chunk_output_type: console
 ---
 
-## Introduction
 
-```{r}
+# Run snakemake pipeline
+For full snakemake script see code/dunnart_peak_calling/dunnart_snakefile.
 
+## Create conda environment
+
+```{bash eval=FALSE}
+# create conda environment with all packages and dependencies
+conda create --name chip bowtie2 samtools picard deeptools multiqc phantompeakqualtools preseq macs2 bedtools fastqc pybedtools
+
+# save environment to a yaml file
+conda env export > chip_environment.yml
+
+# activate environment before running pipeline
+conda activate chip
+```
+
+## Run snakemake from command line
+Cluster configuration file: code/configs/cluster.json
+Sample configuration file: code/configs/config.yaml
+Sample text file: code/configs/SSR.text
+
+```{bash eval=FALSE}
+module load snakemake/6.6.1
+snakemake --snakemakefile code/dunnart_peak_calling/dunnart_snakefile -j 6 --cluster-config envs/cluster.json --cluster "sbatch -A {cluster.account} -t {cluster.time} -p {cluster.partition} --nodes {cluster.nodes} --ntasks {cluster.ntasks} --mem {cluster.mem}" &
+```
+
+## Effective genome length
+We can approximate effective genome size for various read lengths using the khmer program and `unique-kmers.py`. This will estimate the number of unique kmers (for a specified length kmer) which can be used to infer the total uniquely mappable genome. (I.e it doesn't include highly repetitive regions). https://khmer.readthedocs.io/en/v2.1.1/user/scripts.html
+This was a suggestion of deepTools: https://deeptools.readthedocs.io/en/latest/content/feature/effectiveGenomeSize.html
+
+```{bash eval=FALSE}
+module load pip/21.2.4-python-3.8.6
+module load 
+pip2.7 install khmer
 ```
 
