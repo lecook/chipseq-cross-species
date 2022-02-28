@@ -113,7 +113,7 @@ rule all:
 
 rule fastqc:
     input:
-        ["data/raw_reads/{sample}_R1.fastq.gz", "rawdata/{sample}_R2.fastq.gz"]
+        ["data/raw_reads/{sample}_R1.fastq.gz", "data/raw_reads/{sample}_R2.fastq.gz"]
     output:
         "output/qc/{sample}_R1_fastqc.html",
         "output/qc/{sample}_R2_fastqc.html",
