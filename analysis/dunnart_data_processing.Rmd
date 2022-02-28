@@ -8,7 +8,7 @@ editor_options:
 ---
 
 
-# Run snakemake pipeline
+# Snakemake pipeline
 For full snakemake script see code/dunnart_peak_calling/dunnart_snakefile.
 
 ## Create conda environment
@@ -40,7 +40,46 @@ This was a suggestion of deepTools: https://deeptools.readthedocs.io/en/latest/c
 
 ```{bash eval=FALSE}
 module load pip/21.2.4-python-3.8.6
-module load 
 pip2.7 install khmer
 ```
 
+Run `unique-kmers.py` on dunnart genome for read length of 150bp:
+
+
+```{bash eval=FALSE}
+/usr/local/bin/unique-kmers.py -k 150 Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr.fa
+```
+```
+Estimated number of unique 150-mers in /Users/lauracook/../../Volumes/macOS/genomes/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr.fasta: 2740338543
+Total estimated number of unique 150-mers: 2740338543
+```
+
+## Indexing genome file
+
+Load modules:
+
+```{bash eval=FALSE}
+module load gcc/8.3.0
+module load bowtie2/2.3.5.1
+```
+
+Build index:
+```{bash eval=FALSE}
+bowtie2-build Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr.fa Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr
+```
+
+## Align reads and filter using samtools and Picard 
+See full snakemake script for details: code/dunnart_peak_calling/dunnart_snakefile.
+
+|  <br>                                                                                |               | **read counts**                                             |                    |                      |            |             |              |
+| :----------------------------------------------------------------------------------: | :-----------: | :---------------------------------------------------------: | :----------------: | :------------------: | :--------: | :---------: | :----------: |
+| **Sample**                                                                           | **Antibody**  | *bowtie2 alignment*                                         | *filtered reads\^*  | *remove duplicates*  | **NRF\***  | **PBC1\***  | **PBC2\***   |
+| A-1                                                                                  | input         | 130587134                                                   | 87165286           | 47645260             | 0\.773602  | 0\.774519   | 4\.45728     |
+| A-2                                                                                  | H3K4me3       | 103324742                                                   | 62678360           | 35617708             | 0\.789709  | 0\.789661   | 4\.754989    |
+| A-3                                                                                  | H3K27ac       | 131071676                                                   | 86503078           | 45700530             | 0\.761768  | 0\.761687   | 4\.196586    |
+| B-1                                                                                  | input         | 111574640                                                   | 72303316           | 44433864             | 0\.820313  | 0\.819974   | 5\.545324    |
+| B-2                                                                                  | H3K4me3       | 114146802                                                   | 67048994           | 42357180             | 0\.831032  | 0\.830749   | 5\.898224    |
+| B-3                                                                                  | H3K27ac       | 104714846                                                   | 66615704           | 43939460             | 0\.847255  | 0\.847022   | 6\.529168    |
+|                                                                                      |               |                                                             |                    |                      |            |             |              |
+| \* calculated from a subsample of ~10-15M aligned reads prior to removing duplicates |               |                                                             |                    |                      |            |             |              |
+| ̂ excluded low quality (MAPQ  30) and orphaned reads                                 |               |                                                             |                    |                      |            |             |              |
