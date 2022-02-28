@@ -30,7 +30,7 @@ MARK = []
 with open(config['SAMPLES'], "r") as f:
     reader = csv.reader(f, delimiter = "\t")
     header = next(reader)
-    for row in reader:
+    for row in range(reader,4):
         print(row[0])
         print(row[1])
         print(row[2])
