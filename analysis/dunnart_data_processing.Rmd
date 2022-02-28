@@ -168,5 +168,5 @@ Quality tag based on thresholded RSC (codes: -2:veryLow,-1:Low,0:Medium,1:High; 
 
 ### Fraction of reads in peaks
 
-### Consensus peaksets for biological replicates
+### Consensus peaksets for biological
 

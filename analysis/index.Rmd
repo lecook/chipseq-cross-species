@@ -20,7 +20,7 @@ This project involves a number of analysis for the generation of ChIP-seq data f
 
 * Mouse data from ENCODE
 
-## Data preparation
+## Data preparation and peak calling
 
 * [Dunnart data pre-processing](dunnart_data_processing.html)
 

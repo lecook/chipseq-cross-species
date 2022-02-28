@@ -11,10 +11,8 @@
     # 7. cross correlation (SPP)
     # 8. Call narrow peaks (MACS2)
     # 9. Create consensus peaksets
-    # 10. Present QC for raw read, alignment, peak-calling in MultiQC (work in progress)
 
-
-configfile: "configs/config_H3K4me3.yaml"
+configfile: "code/configs/config_H3K4me3.yaml"
 # Contains sample and genome information
 # calls the SRR.txt file that contains the samples as either IP or control
 
@@ -27,14 +25,14 @@ MARK = []
 STAGE = []
 
 with open(config['SAMPLES'], "r") as f:
-    reader = csv.reader(f, delimiter = "\t")
-    # skip the header
+    reader = csv.reader(f, delimiter = ",")
     header = next(reader)
     for row in reader:
-        STAGE.append(row[2])
-        MARK.append(row[1])
         IPS.append(row[3])
         INPUTS.append(row[4])
+        MARK.append(row[1])
+        STAGE.append(row[2])
+f.close()
 
 ## multiple samples may use the same control input files
 unique_inputs = list(set(INPUTS))
@@ -50,74 +48,72 @@ all_samples = IPS + INPUTS
 
 rule all:
     input:
-        #expand("results_10M/bwa/{sample}_{stage}_{mark}_q30.sorted.bam", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        #expand("results_10M/bwa/{sample}_{stage}_{mark}_q30.dupmark.bam", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        #expand("results_10M/bwa/{sample}_{stage}_{mark}_q30.sorted.dedup.bam", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        expand("results_10M/bwa/{sample}_{stage}_{mark}_q30.sorted.dedup.bai", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        expand("results_10M/qc/{sample}_{stage}_{mark}.dedup.flagstat.qc", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        #expand("results_10M/qc/{sample}_{stage}_{mark}.dupmark.flagstat.qc", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        #expand("results_10M/qc/{sample}_{stage}_{mark}.q30.flagstat.qc", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        #expand("results_10M/qc/{sample}_{stage}_{mark}.unfiltered.flagstat.qc", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        "results_10M/bwa/E10.5_H3K4me3_q30.sorted.pooled.dedup.bam",
-        "results_10M/bwa/E11.5_H3K4me3_q30.sorted.pooled.dedup.bam",
-        "results_10M/bwa/E12.5_H3K4me3_q30.sorted.pooled.dedup.bam",
-        "results_10M/bwa/E13.5_H3K4me3_q30.sorted.pooled.dedup.bam",
-        "results_10M/bwa/E14.5_H3K4me3_q30.sorted.pooled.dedup.bam",
-        "results_10M/bwa/E15.5_H3K4me3_q30.sorted.pooled.dedup.bam",
-        "results_10M/bwa/input_E10.5_H3K4me3_q30.sorted.dedup.bam",
-        "results_10M/bwa/input_E11.5_H3K4me3_q30.sorted.dedup.bam",
-        "results_10M/bwa/input_E12.5_H3K4me3_q30.sorted.dedup.bam",
-        "results_10M/bwa/input_E13.5_H3K4me3_q30.sorted.dedup.bam",
-        "results_10M/bwa/input_E14.5_H3K4me3_q30.sorted.dedup.bam",
-        "results_10M/bwa/input_E15.5_H3K4me3_q30.sorted.dedup.bam",
-        "results_10M/logs/E10.5_H3K4me3.mergeBAM",
-        "results_10M/logs/E11.5_H3K4me3.mergeBAM",
-        "results_10M/logs/E12.5_H3K4me3.mergeBAM",
-        "results_10M/logs/E13.5_H3K4me3.mergeBAM",
-        "results_10M/logs/E14.5_H3K4me3.mergeBAM",
-        "results_10M/logs/E15.5_H3K4me3.mergeBAM",
-        "results_10M/logs/input_E10.5_H3K4me3.mergeBAM",
-        "results_10M/logs/input_E11.5_H3K4me3.mergeBAM",
-        "results_10M/logs/input_E12.5_H3K4me3.mergeBAM",
-        "results_10M/logs/input_E13.5_H3K4me3.mergeBAM",
-        "results_10M/logs/input_E15.5_H3K4me3.mergeBAM",
-        "results_10M/qc/H3K4me3_multibamsum.npz",
-        "results_10M/qc/H3K4me3_multibamsum.tab",
-        "results_10M/qc/H3K4me3_pearsoncor_multibamsum.png",
-        "results_10M/qc/H3K4me3_pearsoncor_multibamsum_matrix.txt",
-        expand("results_10M/qc/{sample}_{stage}_{mark}.SeqDepthNorm.bw", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        "results_10M/qc/H3K4me3_multiBAM_fingerprint.png",
-        "results_10M/qc/H3K4me3_multiBAM_fingerprint_metrics.txt",
-        "results_10M/qc/H3K4me3_multiBAM_fingerprint_rawcounts.txt",
-        "results_10M/qc/H3K4me3_plot_coverage.png",
-        "results_10M/qc/H3K4me3_plot_coverage_rawcounts.tab",
-        #expand("results_10M/bwa/{sample}_{stage}_{mark}_q30.dupmark.tmp.bam", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        #expand("results_10M/logs/{sample}_{stage}_{mark}.pbc.sort", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        #expand("results_10M/qc/{sample}_{stage}_{mark}.pbc.qc", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        #expand("results_10M/qc/{sample}_{stage}_{mark}_filt_15Mreads.SE.cc.qc",zip, sample=all_samples, stage=STAGE, mark=MARK),
-        #expand("results_10M/qc/{sample}_{stage}_{mark}_filt_15Mreads.SE.cc.plot.pdf", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        expand("results_10M/macs2/{case}_vs_{control}_{stage}_{mark}_macs2_peaks.narrowPeak", zip, case=IPS, control=INPUTS, stage=STAGE, mark=MARK),
-        expand("results_10M/macs2/{case}_vs_{control}_{stage}_{mark}_macs2_peaks.xls", zip, case=IPS, control=INPUTS, stage=STAGE, mark=MARK),
-        expand("results_10M/macs2/{case}_vs_{control}_{stage}_{mark}_macs2_summits.bed", zip, case=IPS, control=INPUTS, stage=STAGE, mark=MARK),
-        #expand("results_10M/logs/{case}_vs_{control}_{stage}_{mark}_call_peaks_macs2.log", zip, case=IPS, control=INPUTS, stage=STAGE, mark=MARK),
-        expand("results_10M/bwa/{case}_{stage}_{mark}_q30.sorted.dedup.bed", zip, case=IPS, stage=STAGE, mark=MARK),
-        expand("results_10M/logs/{case}_{stage}_{mark}.bamToBed", zip, case=IPS, stage=STAGE, mark=MARK),
-        expand("results_10M/qc/{case}_vs_{control}_{stage}_{mark}.frip.txt", zip, case=IPS, control=INPUTS, stage=STAGE, mark=MARK),
-        directory("results_10M/macs2/pooled/"),
-        "results_10M/macs2/H3K4me3_E10.5_overlap.narrowPeak",
-        "results_10M/macs2/H3K4me3_E11.5_overlap.narrowPeak",
-        "results_10M/macs2/H3K4me3_E12.5_overlap.narrowPeak",
-        "results_10M/macs2/H3K4me3_E13.5_overlap.narrowPeak",
-        "results_10M/macs2/H3K4me3_E14.5_overlap.narrowPeak",
-        "results_10M/macs2/H3K4me3_E15.5_overlap.narrowPeak",
-        "results_10M/macs2/H3K4me3_E10.5_overlap.frip",
-        "results_10M/macs2/H3K4me3_E11.5_overlap.frip",
-        "results_10M/macs2/H3K4me3_E12.5_overlap.frip",
-        "results_10M/macs2/H3K4me3_E13.5_overlap.frip",
-        "results_10M/macs2/H3K4me3_E14.5_overlap.frip",
-        "results_10M/macs2/H3K4me3_E15.5_overlap.frip"
-        #directory("results_10M/multiqc/multiqc_report_data/"),
-        # "results_10M/multiqc/multiqc_report.html"
+        expand("output/bam_files/{sample}_{stage}_{mark}_q30.sorted.bam", zip, sample=all_samples, stage=STAGE, mark=MARK),
+        expand("output/bam_files/{sample}_{stage}_{mark}_q30.dupmark.bam", zip, sample=all_samples, stage=STAGE, mark=MARK),
+        expand("output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bam", zip, sample=all_samples, stage=STAGE, mark=MARK),
+        expand("output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bai", zip, sample=all_samples, stage=STAGE, mark=MARK),
+        expand("output/qc/{sample}_{stage}_{mark}.dedup.flagstat.qc", zip, sample=all_samples, stage=STAGE, mark=MARK),
+        expand("output/qc/{sample}_{stage}_{mark}.dupmark.flagstat.qc", zip, sample=all_samples, stage=STAGE, mark=MARK),
+        expand("output/qc/{sample}_{stage}_{mark}.q30.flagstat.qc", zip, sample=all_samples, stage=STAGE, mark=MARK),
+        expand("output/qc/{sample}_{stage}_{mark}.unfiltered.flagstat.qc", zip, sample=all_samples, stage=STAGE, mark=MARK),
+        "output/bam_files/E10.5_H3K4me3_q30.sorted.pooled.dedup.bam",
+        "output/bam_files/E11.5_H3K4me3_q30.sorted.pooled.dedup.bam",
+        "output/bam_files/E12.5_H3K4me3_q30.sorted.pooled.dedup.bam",
+        "output/bam_files/E13.5_H3K4me3_q30.sorted.pooled.dedup.bam",
+        "output/bam_files/E14.5_H3K4me3_q30.sorted.pooled.dedup.bam",
+        "output/bam_files/E15.5_H3K4me3_q30.sorted.pooled.dedup.bam",
+        "output/bam_files/input_E10.5_H3K4me3_q30.sorted.dedup.bam",
+        "output/bam_files/input_E11.5_H3K4me3_q30.sorted.dedup.bam",
+        "output/bam_files/input_E12.5_H3K4me3_q30.sorted.dedup.bam",
+        "output/bam_files/input_E13.5_H3K4me3_q30.sorted.dedup.bam",
+        "output/bam_files/input_E14.5_H3K4me3_q30.sorted.dedup.bam",
+        "output/bam_files/input_E15.5_H3K4me3_q30.sorted.dedup.bam",
+        "output/logs/E10.5_H3K4me3.mergeBAM",
+        "output/logs/E11.5_H3K4me3.mergeBAM",
+        "output/logs/E12.5_H3K4me3.mergeBAM",
+        "output/logs/E13.5_H3K4me3.mergeBAM",
+        "output/logs/E14.5_H3K4me3.mergeBAM",
+        "output/logs/E15.5_H3K4me3.mergeBAM",
+        "output/logs/input_E10.5_H3K4me3.mergeBAM",
+        "output/logs/input_E11.5_H3K4me3.mergeBAM",
+        "output/logs/input_E12.5_H3K4me3.mergeBAM",
+        "output/logs/input_E13.5_H3K4me3.mergeBAM",
+        "output/logs/input_E15.5_H3K4me3.mergeBAM",
+        "output/qc/H3K4me3_multibamsum_mouse.npz",
+        "output/qc/H3K4me3_multibamsum_mouse.tab",
+        "output/qc/H3K4me3_pearsoncor_multibamsum_mouse.png",
+        "output/qc/H3K4me3_pearsoncor_multibamsum_matrix_mouse.txt",
+        expand("output/qc/{sample}_{stage}_{mark}.SeqDepthNorm_mouse.bw", zip, sample=all_samples, stage=STAGE, mark=MARK),
+        "output/qc/H3K4me3_multiBAM_fingerprint_mouse.png",
+        "output/qc/H3K4me3_multiBAM_fingerprint_metrics_mouse.txt",
+        "output/qc/H3K4me3_multiBAM_fingerprint_rawcounts_mouse.txt",
+        "output/qc/H3K4me3_plot_coverage_mouse.png",
+        "output/qc/H3K4me3_plot_coverage_rawcounts_mouse.tab",
+        expand("output/bam_files/{sample}_{stage}_{mark}_q30.dupmark.tmp.bam", zip, sample=all_samples, stage=STAGE, mark=MARK),
+        expand("output/logs/{sample}_{stage}_{mark}.pbc.sort", zip, sample=all_samples, stage=STAGE, mark=MARK),
+        expand("output/qc/{sample}_{stage}_{mark}.pbc.qc", zip, sample=all_samples, stage=STAGE, mark=MARK),
+        expand("output/qc/{sample}_{stage}_{mark}_filt_15Mreads.SE.cc.qc",zip, sample=all_samples, stage=STAGE, mark=MARK),
+        expand("output/qc/{sample}_{stage}_{mark}_filt_15Mreads.SE.cc.plot.pdf", zip, sample=all_samples, stage=STAGE, mark=MARK),
+        expand("output/peaks/{case}_vs_{control}_{stage}_{mark}_macs2_peaks.narrowPeak", zip, case=IPS, control=INPUTS, stage=STAGE, mark=MARK),
+        expand("output/peaks/{case}_vs_{control}_{stage}_{mark}_macs2_peaks.xls", zip, case=IPS, control=INPUTS, stage=STAGE, mark=MARK),
+        expand("output/peaks/{case}_vs_{control}_{stage}_{mark}_macs2_summits.bed", zip, case=IPS, control=INPUTS, stage=STAGE, mark=MARK),
+        expand("output/logs/{case}_vs_{control}_{stage}_{mark}_call_peaks_macs2.log", zip, case=IPS, control=INPUTS, stage=STAGE, mark=MARK),
+        expand("output/bam_files/{case}_{stage}_{mark}_q30.sorted.dedup.bed", zip, case=IPS, stage=STAGE, mark=MARK),
+        expand("output/logs/{case}_{stage}_{mark}.bamToBed", zip, case=IPS, stage=STAGE, mark=MARK),
+        expand("output/qc/{case}_vs_{control}_{stage}_{mark}.frip.txt", zip, case=IPS, control=INPUTS, stage=STAGE, mark=MARK),
+        directory("output/peaks/pooled/"),
+        "output/peaks/H3K4me3_E10.5_overlap.narrowPeak",
+        "output/peaks/H3K4me3_E11.5_overlap.narrowPeak",
+        "output/peaks/H3K4me3_E12.5_overlap.narrowPeak",
+        "output/peaks/H3K4me3_E13.5_overlap.narrowPeak",
+        "output/peaks/H3K4me3_E14.5_overlap.narrowPeak",
+        "output/peaks/H3K4me3_E15.5_overlap.narrowPeak",
+        "output/peaks/H3K4me3_E10.5_overlap.frip",
+        "output/peaks/H3K4me3_E11.5_overlap.frip",
+        "output/peaks/H3K4me3_E12.5_overlap.frip",
+        "output/peaks/H3K4me3_E13.5_overlap.frip",
+        "output/peaks/H3K4me3_E14.5_overlap.frip",
+        "output/peaks/H3K4me3_E15.5_overlap.frip"
 
 # ===============================================================================================
 #  1. FASTQC
@@ -156,86 +152,86 @@ rule all:
 
 rule filter:
     input:
-        "results_10M/bwa/{sample}_{stage}_{mark}.bam"
+        "output/bam_files/{sample}_{stage}_{mark}.bam"
     output:
-        "results_10M/bwa/{sample}_{stage}_{mark}_q30.sorted.bam"
+        "output/bam_files/{sample}_{stage}_{mark}_q30.sorted.bam"
     log:
-        "results_10M/logs/{sample}_{stage}_{mark}.filter"
+        "output/logs/{sample}_{stage}_{mark}.filter"
     shell:
         "samtools view -b -F 1804 -q 30 {input} | samtools sort -o {output} - 2> {log}"
 
 rule markDups:
     input:
-        "results_10M/bwa/{sample}_{stage}_{mark}_q30.sorted.bam"
+        "output/bam_files/{sample}_{stage}_{mark}_q30.sorted.bam"
     output:
-        bam="results_10M/bwa/{sample}_{stage}_{mark}_q30.dupmark.bam",
-        dupQC="results_10M/bwa/{sample}_{stage}_{mark}.dupmark.qc"
+        bam="output/bam_files/{sample}_{stage}_{mark}_q30.dupmark.bam",
+        dupQC="output/bam_files/{sample}_{stage}_{mark}.dupmark.qc"
     log:
-        "results_10M/logs/{sample}_{stage}_{mark}.dedup"
+        "output/logs/{sample}_{stage}_{mark}.dedup"
     shell:
         "picard MarkDuplicates I={input} O={output.bam} \
         METRICS_FILE={output.dupQC} REMOVE_DUPLICATES=false ASSUME_SORTED=true 2> {log}"
 
 rule dedup:
     input:
-        "results_10M/bwa/{sample}_{stage}_{mark}_q30.dupmark.bam"
+        "output/bam_files/{sample}_{stage}_{mark}_q30.dupmark.bam"
     output:
-        "results_10M/bwa/{sample}_{stage}_{mark}_q30.sorted.dedup.bam"
+        "output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bam"
     log:
-        "results_10M/logs/{sample}_{stage}_{mark}.dedup"
+        "output/logs/{sample}_{stage}_{mark}.dedup"
     shell:
         "samtools view -F 1804 -b {input} | samtools sort -o {output} - 2> {log}"
 
 rule indexBam:
     input:
-        "results_10M/bwa/{sample}_{stage}_{mark}_q30.sorted.dedup.bam"
+        "output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bam"
     output:
-        "results_10M/bwa/{sample}_{stage}_{mark}_q30.sorted.dedup.bai"
+        "output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bai"
     log:
-        "results_10M/logs/{sample}_{stage}_{mark}.indexBam"
+        "output/logs/{sample}_{stage}_{mark}.indexBam"
     shell:
         "samtools index {input} {output} 2> {log}"
 
 rule mergeBAMreplicates:
     input:
-        E10 = ["results_10M/bwa/ENCFF124UYX_E10.5_H3K4me3_q30.sorted.dedup.bam", "results_10M/bwa/ENCFF045IPK_E10.5_H3K4me3_q30.sorted.dedup.bam"],
-        E11 = ["results_10M/bwa/ENCFF760QYZ_E11.5_H3K4me3_q30.sorted.dedup.bam", "results_10M/bwa/ENCFF717QDV_E11.5_H3K4me3_q30.sorted.dedup.bam"],
-        E12 = ["results_10M/bwa/ENCFF182ZPF_E12.5_H3K4me3_q30.sorted.dedup.bam", "results_10M/bwa/ENCFF941QJZ_E12.5_H3K4me3_q30.sorted.dedup.bam"],
-        E13 = ["results_10M/bwa/ENCFF485UDC_E13.5_H3K4me3_q30.sorted.dedup.bam", "results_10M/bwa/ENCFF124TAB_E13.5_H3K4me3_q30.sorted.dedup.bam"],
-        E14 = ["results_10M/bwa/ENCFF724DMU_E14.5_H3K4me3_q30.sorted.dedup.bam", "results_10M/bwa/ENCFF665QBJ_E14.5_H3K4me3_q30.sorted.dedup.bam"],
-        E15 = ["results_10M/bwa/ENCFF258KCR_E15.5_H3K4me3_q30.sorted.dedup.bam", "results_10M/bwa/ENCFF401BKM_E15.5_H3K4me3_q30.sorted.dedup.bam"],
-        E10C = ["results_10M/bwa/ENCFF157KEH_E10.5_H3K4me3_q30.sorted.dedup.bam", "results_10M/bwa/ENCFF825AVI_E10.5_H3K4me3_q30.sorted.dedup.bam"],
-        E11C = ["results_10M/bwa/ENCFF184CUE_E11.5_H3K4me3_q30.sorted.dedup.bam", "results_10M/bwa/ENCFF376FGM_E11.5_H3K4me3_q30.sorted.dedup.bam"],
-        E12C = ["results_10M/bwa/ENCFF203JQV_E12.5_H3K4me3_q30.sorted.dedup.bam", "results_10M/bwa/ENCFF058AUT_E12.5_H3K4me3_q30.sorted.dedup.bam"],
-        E13C = ["results_10M/bwa/ENCFF117QRC_E13.5_H3K4me3_q30.sorted.dedup.bam", "results_10M/bwa/ENCFF248PGK_E13.5_H3K4me3_q30.sorted.dedup.bam"],
-        E14C = ["results_10M/bwa/ENCFF784ORI_E14.5_H3K4me3_q30.sorted.dedup.bam", "results_10M/bwa/ENCFF002HZV_E14.5_H3K4me3_q30.sorted.dedup.bam"],
-        E15C = ["results_10M/bwa/ENCFF727QTS_E15.5_H3K4me3_q30.sorted.dedup.bam", "results_10M/bwa/ENCFF182XFG_E15.5_H3K4me3_q30.sorted.dedup.bam"],
+        E10 = ["output/bam_files/ENCFF124UYX_E10.5_H3K4me3_q30.sorted.dedup.bam", "output/bam_files/ENCFF045IPK_E10.5_H3K4me3_q30.sorted.dedup.bam"],
+        E11 = ["output/bam_files/ENCFF760QYZ_E11.5_H3K4me3_q30.sorted.dedup.bam", "output/bam_files/ENCFF717QDV_E11.5_H3K4me3_q30.sorted.dedup.bam"],
+        E12 = ["output/bam_files/ENCFF182ZPF_E12.5_H3K4me3_q30.sorted.dedup.bam", "output/bam_files/ENCFF941QJZ_E12.5_H3K4me3_q30.sorted.dedup.bam"],
+        E13 = ["output/bam_files/ENCFF485UDC_E13.5_H3K4me3_q30.sorted.dedup.bam", "output/bam_files/ENCFF124TAB_E13.5_H3K4me3_q30.sorted.dedup.bam"],
+        E14 = ["output/bam_files/ENCFF724DMU_E14.5_H3K4me3_q30.sorted.dedup.bam", "output/bam_files/ENCFF665QBJ_E14.5_H3K4me3_q30.sorted.dedup.bam"],
+        E15 = ["output/bam_files/ENCFF258KCR_E15.5_H3K4me3_q30.sorted.dedup.bam", "output/bam_files/ENCFF401BKM_E15.5_H3K4me3_q30.sorted.dedup.bam"],
+        E10C = ["output/bam_files/ENCFF157KEH_E10.5_H3K4me3_q30.sorted.dedup.bam", "output/bam_files/ENCFF825AVI_E10.5_H3K4me3_q30.sorted.dedup.bam"],
+        E11C = ["output/bam_files/ENCFF184CUE_E11.5_H3K4me3_q30.sorted.dedup.bam", "output/bam_files/ENCFF376FGM_E11.5_H3K4me3_q30.sorted.dedup.bam"],
+        E12C = ["output/bam_files/ENCFF203JQV_E12.5_H3K4me3_q30.sorted.dedup.bam", "output/bam_files/ENCFF058AUT_E12.5_H3K4me3_q30.sorted.dedup.bam"],
+        E13C = ["output/bam_files/ENCFF117QRC_E13.5_H3K4me3_q30.sorted.dedup.bam", "output/bam_files/ENCFF248PGK_E13.5_H3K4me3_q30.sorted.dedup.bam"],
+        E14C = ["output/bam_files/ENCFF784ORI_E14.5_H3K4me3_q30.sorted.dedup.bam", "output/bam_files/ENCFF002HZV_E14.5_H3K4me3_q30.sorted.dedup.bam"],
+        E15C = ["output/bam_files/ENCFF727QTS_E15.5_H3K4me3_q30.sorted.dedup.bam", "output/bam_files/ENCFF182XFG_E15.5_H3K4me3_q30.sorted.dedup.bam"],
     output:
-        E10 = "results_10M/bwa/E10.5_H3K4me3_q30.sorted.pooled.dedup.bam",
-        E11 = "results_10M/bwa/E11.5_H3K4me3_q30.sorted.pooled.dedup.bam",
-        E12 = "results_10M/bwa/E12.5_H3K4me3_q30.sorted.pooled.dedup.bam",
-        E13 = "results_10M/bwa/E13.5_H3K4me3_q30.sorted.pooled.dedup.bam",
-        E14 = "results_10M/bwa/E14.5_H3K4me3_q30.sorted.pooled.dedup.bam",
-        E15 = "results_10M/bwa/E15.5_H3K4me3_q30.sorted.pooled.dedup.bam",
-        E10C = "results_10M/bwa/input_E10.5_H3K4me3_q30.sorted.dedup.bam",
-        E11C = "results_10M/bwa/input_E11.5_H3K4me3_q30.sorted.dedup.bam",
-        E12C = "results_10M/bwa/input_E12.5_H3K4me3_q30.sorted.dedup.bam",
-        E13C = "results_10M/bwa/input_E13.5_H3K4me3_q30.sorted.dedup.bam",
-        E14C = "results_10M/bwa/input_E14.5_H3K4me3_q30.sorted.dedup.bam",
-        E15C = "results_10M/bwa/input_E15.5_H3K4me3_q30.sorted.dedup.bam"
+        E10 = "output/bam_files/E10.5_H3K4me3_q30.sorted.pooled.dedup.bam",
+        E11 = "output/bam_files/E11.5_H3K4me3_q30.sorted.pooled.dedup.bam",
+        E12 = "output/bam_files/E12.5_H3K4me3_q30.sorted.pooled.dedup.bam",
+        E13 = "output/bam_files/E13.5_H3K4me3_q30.sorted.pooled.dedup.bam",
+        E14 = "output/bam_files/E14.5_H3K4me3_q30.sorted.pooled.dedup.bam",
+        E15 = "output/bam_files/E15.5_H3K4me3_q30.sorted.pooled.dedup.bam",
+        E10C = "output/bam_files/input_E10.5_H3K4me3_q30.sorted.dedup.bam",
+        E11C = "output/bam_files/input_E11.5_H3K4me3_q30.sorted.dedup.bam",
+        E12C = "output/bam_files/input_E12.5_H3K4me3_q30.sorted.dedup.bam",
+        E13C = "output/bam_files/input_E13.5_H3K4me3_q30.sorted.dedup.bam",
+        E14C = "output/bam_files/input_E14.5_H3K4me3_q30.sorted.dedup.bam",
+        E15C = "output/bam_files/input_E15.5_H3K4me3_q30.sorted.dedup.bam"
     log:
-        E10 = "results_10M/logs/E10.5_H3K4me3.mergeBAM",
-        E11 = "results_10M/logs/E11.5_H3K4me3.mergeBAM",
-        E12 = "results_10M/logs/E12.5_H3K4me3.mergeBAM",
-        E13 = "results_10M/logs/E13.5_H3K4me3.mergeBAM",
-        E14 = "results_10M/logs/E14.5_H3K4me3.mergeBAM",
-        E15 = "results_10M/logs/E15.5_H3K4me3.mergeBAM",
-        E10C = "results_10M/logs/input_E10.5_H3K4me3.mergeBAM",
-        E11C = "results_10M/logs/input_E11.5_H3K4me3.mergeBAM",
-        E12C = "results_10M/logs/input_E12.5_H3K4me3.mergeBAM",
-        E13C = "results_10M/logs/input_E13.5_H3K4me3.mergeBAM",
-        E14C = "results_10M/logs/input_E14.5_H3K4me3.mergeBAM",
-        E15C = "results_10M/logs/input_E15.5_H3K4me3.mergeBAM"
+        E10 = "output/logs/E10.5_H3K4me3.mergeBAM",
+        E11 = "output/logs/E11.5_H3K4me3.mergeBAM",
+        E12 = "output/logs/E12.5_H3K4me3.mergeBAM",
+        E13 = "output/logs/E13.5_H3K4me3.mergeBAM",
+        E14 = "output/logs/E14.5_H3K4me3.mergeBAM",
+        E15 = "output/logs/E15.5_H3K4me3.mergeBAM",
+        E10C = "output/logs/input_E10.5_H3K4me3.mergeBAM",
+        E11C = "output/logs/input_E11.5_H3K4me3.mergeBAM",
+        E12C = "output/logs/input_E12.5_H3K4me3.mergeBAM",
+        E13C = "output/logs/input_E13.5_H3K4me3.mergeBAM",
+        E14C = "output/logs/input_E14.5_H3K4me3.mergeBAM",
+        E15C = "output/logs/input_E15.5_H3K4me3.mergeBAM"
     run:
         shell("samtools merge {output.E10} {input.E10} 2> {log.E10}")
         shell("samtools merge {output.E11} {input.E11} 2> {log.E11}")
@@ -260,15 +256,15 @@ rule mergeBAMreplicates:
 
 rule mappingStats:
     input:
-        a="results_10M/bwa/{sample}_{stage}_{mark}_q30.sorted.dedup.bam",
-        #b="results_10M/bwa/{sample}_{stage}_{mark}_q30.dupmark.bam",
-        #c="results_10M/bwa/{sample}_{stage}_{mark}_q30.sorted.bam",
-        #d="results_10M/bwa/{sample}_{stage}_{mark}.bam"
+        a="output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bam",
+        #b="output/bam_files/{sample}_{stage}_{mark}_q30.dupmark.bam",
+        #c="output/bam_files/{sample}_{stage}_{mark}_q30.sorted.bam",
+        #d="output/bam_files/{sample}_{stage}_{mark}.bam"
     output:
-        a="results_10M/qc/{sample}_{stage}_{mark}.dedup.flagstat.qc",
-        #b="results_10M/qc/{sample}_{stage}_{mark}.dupmark.flagstat.qc",
-        #c="results_10M/qc/{sample}_{stage}_{mark}.q30.flagstat.qc",
-        #d="results_10M/qc/{sample}_{stage}_{mark}.unfiltered.flagstat.qc",
+        a="output/qc/{sample}_{stage}_{mark}.dedup.flagstat.qc",
+        #b="output/qc/{sample}_{stage}_{mark}.dupmark.flagstat.qc",
+        #c="output/qc/{sample}_{stage}_{mark}.q30.flagstat.qc",
+        #d="output/qc/{sample}_{stage}_{mark}.unfiltered.flagstat.qc",
     run:
         shell("samtools flagstat {input.a} > {output.a}")
         #shell("samtools flagstat {input.b} > {output.b}")
@@ -278,21 +274,21 @@ rule mappingStats:
 
 rule sort_name:
      input:
-         "results_10M/bwa/{sample}_{stage}_{mark}_q30.dupmark.bam"
+         "output/bam_files/{sample}_{stage}_{mark}_q30.dupmark.bam"
      output:
-         tmp = "results_10M/bwa/{sample}_{stage}_{mark}_q30.dupmark.tmp.bam"
+         tmp = "output/bam_files/{sample}_{stage}_{mark}_q30.dupmark.tmp.bam"
      log:
-         "results_10M/logs/{sample}_{stage}_{mark}.pbc.sort"
+         "output/logs/{sample}_{stage}_{mark}.pbc.sort"
      run:
          shell("samtools sort -n {input} -o {output.tmp} 2> {log}")
 
 rule estimate_lib_complexity:
      input:
-         "results_10M/bwa/{sample}_{stage}_{mark}_q30.dupmark.tmp.bam"
+         "output/bam_files/{sample}_{stage}_{mark}_q30.dupmark.tmp.bam"
      output:
-         qc = "results_10M/qc/{sample}_{stage}_{mark}.pbc.qc",
+         qc = "output/qc/{sample}_{stage}_{mark}.pbc.qc",
      log:
-         "results_10M/logs/{sample}_{stage}_{mark}.pbc"
+         "output/logs/{sample}_{stage}_{mark}.pbc"
      shell:
          """
          bedtools bamtobed -i {input} \
@@ -321,13 +317,13 @@ rule estimate_lib_complexity:
 
 rule deeptools_summary:
     input:
-        expand(["results_10M/bwa/{sample}_{stage}_{mark}_q30.sorted.dedup.bam"], zip, sample=all_samples, stage=STAGE, mark = MARK)
+        expand(["output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bam"], zip, sample=all_samples, stage=STAGE, mark = MARK)
     output:
-        sum="results_10M/qc/H3K4me3_multibamsum.npz",
-        counts="results_10M/qc/H3K4me3_multibamsum.tab"
+        sum="output/qc/H3K4me3_multibamsum.npz",
+        counts="output/qc/H3K4me3_multibamsum.tab"
     threads: 32
     log:
-        "results_10M/logs/H3K4me3_multisummary.deepTools"
+        "output/logs/H3K4me3_multisummary.deepTools"
     shell:
         " multiBamSummary bins \
         -p {threads} \
@@ -337,12 +333,12 @@ rule deeptools_summary:
         --outRawCounts {output.counts} 2> {log}"
 
 rule deeptools_correlation:
-    input: "results_10M/qc/H3K4me3_multibamsum.npz"
+    input: "output/qc/H3K4me3_multibamsum.npz"
     output:
-        fig="results_10M/qc/H3K4me3_pearsoncor_multibamsum.png",
-        matrix="results_10M/qc/H3K4me3_pearsoncor_multibamsum_matrix.txt"
+        fig="output/qc/H3K4me3_pearsoncor_multibamsum.png",
+        matrix="output/qc/H3K4me3_pearsoncor_multibamsum_matrix.txt"
     log:
-        "results_10M/logs/H3K4me3_correlation.deepTools"
+        "output/logs/H3K4me3_correlation.deepTools"
     shell:
         "plotCorrelation \
         --corData {input} \
@@ -356,26 +352,26 @@ rule deeptools_correlation:
 
 rule deeptools_coverage:
     input:
-        bam = "results_10M/bwa/{sample}_{stage}_{mark}_q30.sorted.dedup.bam",
-        bai = "results_10M/bwa/{sample}_{stage}_{mark}_q30.sorted.dedup.bai"
+        bam = "output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bam",
+        bai = "output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bai"
     output:
-        "results_10M/qc/{sample}_{stage}_{mark}.SeqDepthNorm.bw"
+        "output/qc/{sample}_{stage}_{mark}.SeqDepthNorm.bw"
     log:
-        "results_10M/logs/{sample}_{stage}_{mark}_coverage.deepTools"
+        "output/logs/{sample}_{stage}_{mark}_coverage.deepTools"
     shell:
         "bamCoverage --bam {input.bam} --binSize 10 --normalizeUsing RPGC --effectiveGenomeSize 2308125349 --numberOfProcessors 4 -o {output} 2> {log}"
 
 rule deeptools_fingerprint:
     input:
-        bam = expand(["results_10M/bwa/{sample}_{stage}_{mark}_q30.sorted.dedup.bam"], zip, sample=all_samples, stage=STAGE, mark = MARK),
-        bai = expand(["results_10M/bwa/{sample}_{stage}_{mark}_q30.sorted.dedup.bai"], zip, sample=all_samples, stage=STAGE, mark = MARK)
+        bam = expand(["output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bam"], zip, sample=all_samples, stage=STAGE, mark = MARK),
+        bai = expand(["output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bai"], zip, sample=all_samples, stage=STAGE, mark = MARK)
     output:
-        fig="results_10M/qc/H3K4me3_multiBAM_fingerprint.png",
-        metrics="results_10M/qc/H3K4me3_multiBAM_fingerprint_metrics.txt",
-        rawcounts="results_10M/qc/H3K4me3_multiBAM_fingerprint_rawcounts.txt"
+        fig="output/qc/H3K4me3_multiBAM_fingerprint.png",
+        metrics="output/qc/H3K4me3_multiBAM_fingerprint_metrics.txt",
+        rawcounts="output/qc/H3K4me3_multiBAM_fingerprint_rawcounts.txt"
     threads: 32
     log:
-        "results_10M/logs/H3K4me3_fingerprint.deepTools"
+        "output/logs/H3K4me3_fingerprint.deepTools"
     shell:
         "plotFingerprint -p {threads} \
         -b {input.bam} \
@@ -388,13 +384,13 @@ rule deeptools_fingerprint:
 
 rule deeptools_plotCoverage:
     input:
-        bam = expand(["results_10M/bwa/{sample}_{stage}_{mark}_q30.sorted.dedup.bam"], zip, sample=all_samples, stage=STAGE, mark=MARK),
-        bai = expand(["results_10M/bwa/{sample}_{stage}_{mark}_q30.sorted.dedup.bai"], zip, sample=all_samples, stage=STAGE, mark=MARK)
+        bam = expand(["output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bam"], zip, sample=all_samples, stage=STAGE, mark=MARK),
+        bai = expand(["output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bai"], zip, sample=all_samples, stage=STAGE, mark=MARK)
     output:
-        fig="results_10M/qc/H3K4me3_plot_coverage.png",
-        rawcounts="results_10M/qc/H3K4me3_plot_coverage_rawcounts.tab"
+        fig="output/qc/H3K4me3_plot_coverage.png",
+        rawcounts="output/qc/H3K4me3_plot_coverage_rawcounts.tab"
     log:
-        "results_10M/logs/H3K4me3_plotCoverage.deepTools"
+        "output/logs/H3K4me3_plotCoverage.deepTools"
     shell:
         "plotCoverage --bamfiles {input.bam} --plotFile {output.fig} \
         -n 1000000 \
@@ -409,9 +405,9 @@ rule deeptools_plotCoverage:
 
 rule bamtobed_crossC:
     input:
-        "results_10M/bwa/{sample}_{stage}_{mark}_q30.dupmark.bam"
+        "output/bam_files/{sample}_{stage}_{mark}_q30.dupmark.bam"
     output:
-        tagAlign = "results_10M/bed/{sample}_{stage}_{mark}_q30_SE.tagAlign.gz"
+        tagAlign = "output/bed/{sample}_{stage}_{mark}_q30_SE.tagAlign.gz"
     shell:
         """
         bedtools bamtobed -i {input} | \
@@ -423,10 +419,10 @@ rule bamtobed_crossC:
 ## Estimate read length from first 100 reads
 rule subsample_aligned_reads:
     input:
-        "results_10M/bed/{sample}_{stage}_{mark}_q30_SE.tagAlign.gz"
+        "output/bed/{sample}_{stage}_{mark}_q30_SE.tagAlign.gz"
     output:
-        subsample = "results_10M/bed/{sample}_{stage}_{mark}.filt.sample.15Mreads.SE.tagAlign.gz",
-        tmp = "results_10M/bed/{sample}_{stage}_{mark}_R1_trimmed_q30_SE.tagAlign.tmp"
+        subsample = "output/bed/{sample}_{stage}_{mark}.filt.sample.15Mreads.SE.tagAlign.gz",
+        tmp = "output/bed/{sample}_{stage}_{mark}_R1_trimmed_q30_SE.tagAlign.tmp"
     params:
         nreads= 15000000
     run:
@@ -445,12 +441,12 @@ rule subsample_aligned_reads:
 
 rule cross_correlation_SSP:
     input:
-        "results_10M/bed/{sample}_{stage}_{mark}.filt.sample.15Mreads.SE.tagAlign.gz"
+        "output/bed/{sample}_{stage}_{mark}.filt.sample.15Mreads.SE.tagAlign.gz"
     output:
-        CC_SCORES_FILE="results_10M/qc/{sample}_{stage}_{mark}_filt_15Mreads.SE.cc.qc",
-        CC_PLOT_FILE="results_10M/qc/{sample}_{stage}_{mark}_filt_15Mreads.SE.cc.plot.pdf"
+        CC_SCORES_FILE="output/qc/{sample}_{stage}_{mark}_filt_15Mreads.SE.cc.qc",
+        CC_PLOT_FILE="output/qc/{sample}_{stage}_{mark}_filt_15Mreads.SE.cc.plot.pdf"
     log:
-        "results_10M/logs/{sample}_{stage}_{mark}_filt_15Mreads.SE.spp.log"
+        "output/logs/{sample}_{stage}_{mark}_filt_15Mreads.SE.spp.log"
     params:
         EXCLUSION_RANGE_MIN=-500,
         EXCLUSION_RANGE_MAX=85
@@ -468,46 +464,46 @@ rule cross_correlation_SSP:
 
 rule call_peaks_macs2:
     input:
-        control = "results_10M/bwa/{control}_{stage}_{mark}_q30.sorted.dedup.bam",
-        case = "results_10M/bwa/{case}_{stage}_{mark}_q30.sorted.dedup.bam"
+        control = "output/bam_files/{control}_{stage}_{mark}_q30.sorted.dedup.bam",
+        case = "output/bam_files/{case}_{stage}_{mark}_q30.sorted.dedup.bam"
     output:
-        "results_10M/macs2/{case}_vs_{control}_{stage}_{mark}_macs2_peaks.xls",
-        "results_10M/macs2/{case}_vs_{control}_{stage}_{mark}_macs2_summits.bed",
-        "results_10M/macs2/{case}_vs_{control}_{stage}_{mark}_macs2_peaks.narrowPeak",
+        "output/peaks/{case}_vs_{control}_{stage}_{mark}_macs2_peaks.xls",
+        "output/peaks/{case}_vs_{control}_{stage}_{mark}_macs2_summits.bed",
+        "output/peaks/{case}_vs_{control}_{stage}_{mark}_macs2_peaks.narrowPeak",
     log:
-        "results_10M/logs/{case}_vs_{control}_{stage}_{mark}_call_peaks_macs2.log"
+        "output/logs/{case}_vs_{control}_{stage}_{mark}_call_peaks_macs2.log"
     params:
         name = "{case}_vs_{control}_{stage}_{mark}_macs2",
     shell:
         " macs2 callpeak -f BAM -t {input.case} \
         -c {input.control} --keep-dup all \
-        --outdir results_10M/macs2/ -p 0.01 \
+        --outdir output/peaks/ -p 0.01 \
         -n {params.name} \
         -g mm 2> {log} "
 
 rule call_peaks_macs2_pooled_replicates:
     input:
-        E10 = "results_10M/bwa/E10.5_H3K4me3_q30.sorted.pooled.dedup.bam",
-        E11 = "results_10M/bwa/E11.5_H3K4me3_q30.sorted.pooled.dedup.bam",
-        E12 = "results_10M/bwa/E12.5_H3K4me3_q30.sorted.pooled.dedup.bam",
-        E13 = "results_10M/bwa/E13.5_H3K4me3_q30.sorted.pooled.dedup.bam",
-        E14 = "results_10M/bwa/E14.5_H3K4me3_q30.sorted.pooled.dedup.bam",
-        E15 = "results_10M/bwa/E15.5_H3K4me3_q30.sorted.pooled.dedup.bam",
-        E10C = "results_10M/bwa/input_E10.5_H3K4me3_q30.sorted.dedup.bam",
-        E11C = "results_10M/bwa/input_E11.5_H3K4me3_q30.sorted.dedup.bam",
-        E12C = "results_10M/bwa/input_E12.5_H3K4me3_q30.sorted.dedup.bam",
-        E13C = "results_10M/bwa/input_E13.5_H3K4me3_q30.sorted.dedup.bam",
-        E14C = "results_10M/bwa/input_E14.5_H3K4me3_q30.sorted.dedup.bam",
-        E15C = "results_10M/bwa/input_E15.5_H3K4me3_q30.sorted.dedup.bam"
+        E10 = "output/bam_files/E10.5_H3K4me3_q30.sorted.pooled.dedup.bam",
+        E11 = "output/bam_files/E11.5_H3K4me3_q30.sorted.pooled.dedup.bam",
+        E12 = "output/bam_files/E12.5_H3K4me3_q30.sorted.pooled.dedup.bam",
+        E13 = "output/bam_files/E13.5_H3K4me3_q30.sorted.pooled.dedup.bam",
+        E14 = "output/bam_files/E14.5_H3K4me3_q30.sorted.pooled.dedup.bam",
+        E15 = "output/bam_files/E15.5_H3K4me3_q30.sorted.pooled.dedup.bam",
+        E10C = "output/bam_files/input_E10.5_H3K4me3_q30.sorted.dedup.bam",
+        E11C = "output/bam_files/input_E11.5_H3K4me3_q30.sorted.dedup.bam",
+        E12C = "output/bam_files/input_E12.5_H3K4me3_q30.sorted.dedup.bam",
+        E13C = "output/bam_files/input_E13.5_H3K4me3_q30.sorted.dedup.bam",
+        E14C = "output/bam_files/input_E14.5_H3K4me3_q30.sorted.dedup.bam",
+        E15C = "output/bam_files/input_E15.5_H3K4me3_q30.sorted.dedup.bam"
     output:
-        directory("results_10M/macs2/pooled/")
+        directory("output/peaks/pooled/")
     log:
-        E10 = "results_10M/qc/E10.5_H3K4me3.pooled.macs2",
-        E11 = "results_10M/qc/E11.5_H3K4me3.pooled.macs2",
-        E12 = "results_10M/qc/E12.5_H3K4me3.pooled.macs2",
-        E13 = "results_10M/qc/E13.5_H3K4me3.pooled.macs2",
-        E14 = "results_10M/qc/E14.5_H3K4me3.pooled.macs2",
-        E15 = "results_10M/qc/E15.5_H3K4me3.pooled.macs2"
+        E10 = "output/qc/E10.5_H3K4me3.pooled.macs2",
+        E11 = "output/qc/E11.5_H3K4me3.pooled.macs2",
+        E12 = "output/qc/E12.5_H3K4me3.pooled.macs2",
+        E13 = "output/qc/E13.5_H3K4me3.pooled.macs2",
+        E14 = "output/qc/E14.5_H3K4me3.pooled.macs2",
+        E15 = "output/qc/E15.5_H3K4me3.pooled.macs2"
     params:
         E10 = "E10.5_H3K4me3.pooled.macs2",
         E11 = "E11.5_H3K4me3.pooled.macs2",
@@ -518,32 +514,32 @@ rule call_peaks_macs2_pooled_replicates:
     run:
         shell("macs2 callpeak -f BAM -t {input.E10} \
         -c {input.E10C} --keep-dup all \
-        --outdir results_10M/macs2/ -p 0.01 \
+        --outdir output/peaks/ -p 0.01 \
         -n {params.E10} \
         -g mm 2> {log.E10}" )
         shell("macs2 callpeak -f BAM -t {input.E11} \
         -c {input.E11C} --keep-dup all \
-        --outdir results_10M/macs2/ -p 0.01 \
+        --outdir output/peaks/ -p 0.01 \
         -n {params.E11} \
         -g mm 2> {log.E11}" )
         shell("macs2 callpeak -f BAM -t {input.E12} \
         -c {input.E12C} --keep-dup all \
-        --outdir results_10M/macs2/ -p 0.01 \
+        --outdir output/peaks/ -p 0.01 \
         -n {params.E12} \
         -g mm 2> {log.E12}" )
         shell("macs2 callpeak -f BAM -t {input.E13} \
         -c {input.E13C} --keep-dup all \
-        --outdir results_10M/macs2/ -p 0.01 \
+        --outdir output/peaks/ -p 0.01 \
         -n {params.E13} \
         -g mm 2> {log.E13}" )
         shell("macs2 callpeak -f BAM -t {input.E14} \
         -c {input.E14C} --keep-dup all \
-        --outdir results_10M/macs2/ -p 0.01 \
+        --outdir output/peaks/ -p 0.01 \
         -n {params.E14} \
         -g mm 2> {log.E14}" )
         shell("macs2 callpeak -f BAM -t {input.E15} \
         -c {input.E15C} --keep-dup all \
-        --outdir results_10M/macs2/ -p 0.01 \
+        --outdir output/peaks/ -p 0.01 \
         -n {params.E15} \
         -g mm 2> {log.E15}" )
 
@@ -556,21 +552,21 @@ rule call_peaks_macs2_pooled_replicates:
 ## Convert BAM to tagAlign file for calculating FRiP QC metric (Fraction of reads in peaks)
 rule bamToBed:
     input:
-        "results_10M/bwa/{case}_{stage}_{mark}_q30.sorted.dedup.bam"
+        "output/bam_files/{case}_{stage}_{mark}_q30.sorted.dedup.bam"
     output:
-        "results_10M/bwa/{case}_{stage}_{mark}_q30.sorted.dedup.bed"
+        "output/bam_files/{case}_{stage}_{mark}_q30.sorted.dedup.bed"
     log:
-        "results_10M/logs/{case}_{stage}_{mark}.bamToBed"
+        "output/logs/{case}_{stage}_{mark}.bamToBed"
     shell:
         "samtools sort -n {input} | bedtools bamtobed -i - > {output}"
 
 # ## Fraction of reads in peaks
 rule frip:
     input:
-        bed = "results_10M/bwa/{case}_{stage}_{mark}_q30.sorted.dedup.bed",
-        peak = "results_10M/macs2/{case}_vs_{control}_{stage}_{mark}_macs2_peaks.narrowPeak"
+        bed = "output/bam_files/{case}_{stage}_{mark}_q30.sorted.dedup.bed",
+        peak = "output/peaks/{case}_vs_{control}_{stage}_{mark}_macs2_peaks.narrowPeak"
     output:
-        "results_10M/qc/{case}_vs_{control}_{stage}_{mark}.frip.txt"
+        "output/qc/{case}_vs_{control}_{stage}_{mark}.frip.txt"
     shell:
         "python2.7 scripts/encode_frip.py {input.bed} {input.peak} > {output}"
 
@@ -584,25 +580,25 @@ rule frip:
 
 rule overlap_peaks:
     input:
-        E10= ["results_10M/macs2/ENCFF124UYX_vs_ENCFF157KEH_E10.5_H3K4me3_macs2_peaks.narrowPeak", "results_10M/macs2/ENCFF045IPK_vs_ENCFF825AVI_E10.5_H3K4me3_macs2_peaks.narrowPeak"],
-        E11= ["results_10M/macs2/ENCFF760QYZ_vs_ENCFF184CUE_E11.5_H3K4me3_macs2_peaks.narrowPeak", "results_10M/macs2/ENCFF717QDV_vs_ENCFF376FGM_E11.5_H3K4me3_macs2_peaks.narrowPeak"],
-        E12= ["results_10M/macs2/ENCFF941QJZ_vs_ENCFF058AUT_E12.5_H3K4me3_macs2_peaks.narrowPeak", "results_10M/macs2/ENCFF182ZPF_vs_ENCFF203JQV_E12.5_H3K4me3_macs2_peaks.narrowPeak"],
-        E13= ["results_10M/macs2/ENCFF485UDC_vs_ENCFF117QRC_E13.5_H3K4me3_macs2_peaks.narrowPeak", "results_10M/macs2/ENCFF124TAB_vs_ENCFF248PGK_E13.5_H3K4me3_macs2_peaks.narrowPeak"],
-        E14= ["results_10M/macs2/ENCFF665QBJ_vs_ENCFF002HZV_E14.5_H3K4me3_macs2_peaks.narrowPeak", "results_10M/macs2/ENCFF724DMU_vs_ENCFF784ORI_E14.5_H3K4me3_macs2_peaks.narrowPeak"],
-        E15= ["results_10M/macs2/ENCFF401BKM_vs_ENCFF182XFG_E15.5_H3K4me3_macs2_peaks.narrowPeak", "results_10M/macs2/ENCFF258KCR_vs_ENCFF727QTS_E15.5_H3K4me3_macs2_peaks.narrowPeak"],
-        E10_pooled="results_10M/macs2/E10.5_H3K4me3.pooled.macs2_peaks.narrowPeak",
-        E11_pooled="results_10M/macs2/E11.5_H3K4me3.pooled.macs2_peaks.narrowPeak",
-        E12_pooled="results_10M/macs2/E12.5_H3K4me3.pooled.macs2_peaks.narrowPeak",
-        E13_pooled="results_10M/macs2/E13.5_H3K4me3.pooled.macs2_peaks.narrowPeak",
-        E14_pooled="results_10M/macs2/E14.5_H3K4me3.pooled.macs2_peaks.narrowPeak",
-        E15_pooled="results_10M/macs2/E15.5_H3K4me3.pooled.macs2_peaks.narrowPeak",
+        E10= ["output/peaks/ENCFF124UYX_vs_ENCFF157KEH_E10.5_H3K4me3_macs2_peaks.narrowPeak", "output/peaks/ENCFF045IPK_vs_ENCFF825AVI_E10.5_H3K4me3_macs2_peaks.narrowPeak"],
+        E11= ["output/peaks/ENCFF760QYZ_vs_ENCFF184CUE_E11.5_H3K4me3_macs2_peaks.narrowPeak", "output/peaks/ENCFF717QDV_vs_ENCFF376FGM_E11.5_H3K4me3_macs2_peaks.narrowPeak"],
+        E12= ["output/peaks/ENCFF941QJZ_vs_ENCFF058AUT_E12.5_H3K4me3_macs2_peaks.narrowPeak", "output/peaks/ENCFF182ZPF_vs_ENCFF203JQV_E12.5_H3K4me3_macs2_peaks.narrowPeak"],
+        E13= ["output/peaks/ENCFF485UDC_vs_ENCFF117QRC_E13.5_H3K4me3_macs2_peaks.narrowPeak", "output/peaks/ENCFF124TAB_vs_ENCFF248PGK_E13.5_H3K4me3_macs2_peaks.narrowPeak"],
+        E14= ["output/peaks/ENCFF665QBJ_vs_ENCFF002HZV_E14.5_H3K4me3_macs2_peaks.narrowPeak", "output/peaks/ENCFF724DMU_vs_ENCFF784ORI_E14.5_H3K4me3_macs2_peaks.narrowPeak"],
+        E15= ["output/peaks/ENCFF401BKM_vs_ENCFF182XFG_E15.5_H3K4me3_macs2_peaks.narrowPeak", "output/peaks/ENCFF258KCR_vs_ENCFF727QTS_E15.5_H3K4me3_macs2_peaks.narrowPeak"],
+        E10_pooled="output/peaks/E10.5_H3K4me3.pooled.macs2_peaks.narrowPeak",
+        E11_pooled="output/peaks/E11.5_H3K4me3.pooled.macs2_peaks.narrowPeak",
+        E12_pooled="output/peaks/E12.5_H3K4me3.pooled.macs2_peaks.narrowPeak",
+        E13_pooled="output/peaks/E13.5_H3K4me3.pooled.macs2_peaks.narrowPeak",
+        E14_pooled="output/peaks/E14.5_H3K4me3.pooled.macs2_peaks.narrowPeak",
+        E15_pooled="output/peaks/E15.5_H3K4me3.pooled.macs2_peaks.narrowPeak",
     output:
-        E10= "results_10M/macs2/H3K4me3_E10.5_overlap.narrowPeak",
-        E11= "results_10M/macs2/H3K4me3_E11.5_overlap.narrowPeak",
-        E12= "results_10M/macs2/H3K4me3_E12.5_overlap.narrowPeak",
-        E13= "results_10M/macs2/H3K4me3_E13.5_overlap.narrowPeak",
-        E14= "results_10M/macs2/H3K4me3_E14.5_overlap.narrowPeak",
-        E15= "results_10M/macs2/H3K4me3_E15.5_overlap.narrowPeak"
+        E10= "output/peaks/H3K4me3_E10.5_overlap.narrowPeak",
+        E11= "output/peaks/H3K4me3_E11.5_overlap.narrowPeak",
+        E12= "output/peaks/H3K4me3_E12.5_overlap.narrowPeak",
+        E13= "output/peaks/H3K4me3_E13.5_overlap.narrowPeak",
+        E14= "output/peaks/H3K4me3_E14.5_overlap.narrowPeak",
+        E15= "output/peaks/H3K4me3_E15.5_overlap.narrowPeak"
     run:
         shell("python2.7 scripts/overlap_peaks.py {input.E10} {input.E10_pooled} {output.E10}")
         shell("python2.7 scripts/overlap_peaks.py {input.E11} {input.E11_pooled} {output.E11}")
@@ -614,25 +610,25 @@ rule overlap_peaks:
 
 rule overlap_frip:
     input:
-        E10bam = "results_10M/bwa/E10.5_H3K4me3_q30.sorted.pooled.dedup.bam",
-        E11bam = "results_10M/bwa/E11.5_H3K4me3_q30.sorted.pooled.dedup.bam",
-        E12bam = "results_10M/bwa/E12.5_H3K4me3_q30.sorted.pooled.dedup.bam",
-        E13bam = "results_10M/bwa/E13.5_H3K4me3_q30.sorted.pooled.dedup.bam",
-        E14bam = "results_10M/bwa/E14.5_H3K4me3_q30.sorted.pooled.dedup.bam",
-        E15bam = "results_10M/bwa/E15.5_H3K4me3_q30.sorted.pooled.dedup.bam",
-        E10bed = "results_10M/macs2/H3K4me3_E10.5_overlap.narrowPeak",
-        E11bed = "results_10M/macs2/H3K4me3_E11.5_overlap.narrowPeak",
-        E12bed = "results_10M/macs2/H3K4me3_E12.5_overlap.narrowPeak",
-        E13bed = "results_10M/macs2/H3K4me3_E13.5_overlap.narrowPeak",
-        E14bed = "results_10M/macs2/H3K4me3_E14.5_overlap.narrowPeak",
-        E15bed = "results_10M/macs2/H3K4me3_E15.5_overlap.narrowPeak"
+        E10bam = "output/bam_files/E10.5_H3K4me3_q30.sorted.pooled.dedup.bam",
+        E11bam = "output/bam_files/E11.5_H3K4me3_q30.sorted.pooled.dedup.bam",
+        E12bam = "output/bam_files/E12.5_H3K4me3_q30.sorted.pooled.dedup.bam",
+        E13bam = "output/bam_files/E13.5_H3K4me3_q30.sorted.pooled.dedup.bam",
+        E14bam = "output/bam_files/E14.5_H3K4me3_q30.sorted.pooled.dedup.bam",
+        E15bam = "output/bam_files/E15.5_H3K4me3_q30.sorted.pooled.dedup.bam",
+        E10bed = "output/peaks/H3K4me3_E10.5_overlap.narrowPeak",
+        E11bed = "output/peaks/H3K4me3_E11.5_overlap.narrowPeak",
+        E12bed = "output/peaks/H3K4me3_E12.5_overlap.narrowPeak",
+        E13bed = "output/peaks/H3K4me3_E13.5_overlap.narrowPeak",
+        E14bed = "output/peaks/H3K4me3_E14.5_overlap.narrowPeak",
+        E15bed = "output/peaks/H3K4me3_E15.5_overlap.narrowPeak"
     output:
-        E10bed = "results_10M/macs2/H3K4me3_E10.5_overlap.frip",
-        E11bed = "results_10M/macs2/H3K4me3_E11.5_overlap.frip",
-        E12bed = "results_10M/macs2/H3K4me3_E12.5_overlap.frip",
-        E13bed = "results_10M/macs2/H3K4me3_E13.5_overlap.frip",
-        E14bed = "results_10M/macs2/H3K4me3_E14.5_overlap.frip",
-        E15bed = "results_10M/macs2/H3K4me3_E15.5_overlap.frip"
+        E10bed = "output/peaks/H3K4me3_E10.5_overlap.frip",
+        E11bed = "output/peaks/H3K4me3_E11.5_overlap.frip",
+        E12bed = "output/peaks/H3K4me3_E12.5_overlap.frip",
+        E13bed = "output/peaks/H3K4me3_E13.5_overlap.frip",
+        E14bed = "output/peaks/H3K4me3_E14.5_overlap.frip",
+        E15bed = "output/peaks/H3K4me3_E15.5_overlap.frip"
     run:
         shell("python2.7 scripts/encode_frip.py {input.E10bam} {input.E10bed} > {output.E10bed}")
         shell("python2.7 scripts/encode_frip.py {input.E11bam} {input.E11bed} > {output.E11bed}")
@@ -640,65 +636,3 @@ rule overlap_frip:
         shell("python2.7 scripts/encode_frip.py {input.E13bam} {input.E13bed} > {output.E13bed}")
         shell("python2.7 scripts/encode_frip.py {input.E14bam} {input.E14bed} > {output.E14bed}")
         shell("python2.7 scripts/encode_frip.py {input.E15bam} {input.E15bed} > {output.E15bed}")
-
-
-
-
-# ===============================================================================================
-#  10. Combine all QC into multiqc output
-# ===============================================================================================
-#
-# rule multiqc:
-#     input:
-        # fastqc
-    #     expand("results_10M/fastqc/{sample}_R1_fastqc.html", sample=all_samples),
-    #     expand("results_10M/fastqc/{sample}_R2_fastqc.html", sample=all_samples),
-    #     expand("results_10M/fastqc/{sample}_R1_fastqc.zip", sample=all_samples),
-    #     expand("results_10M/fastqc/{sample}_R2_fastqc.zip", sample=all_samples),
-    #     # bwa
-    #     expand("results_10M/logs/{sample}.align", sample=all_samples),
-    #     expand("results_10M/logs/{sample}.flagstat.qc", sample=all_samples),
-    #     # preseq
-    #     expand("results_10M/preseq/{sample}.ccurve.txt", sample=all_samples),
-    #     # picard
-    #     expand("results_10M/picard/{sample}_est_lib_complex_metrics.txt", sample=all_samples),
-    #     # deepTools
-    #     "results_10M/deeptools/multibamsum.npz",
-    #     "results_10M/deeptools/multibamsum.tab",
-    #     "results_10M/deeptools/pearsoncor_multibamsum.png",
-    #     "results_10M/deeptools/pearsoncor_multibamsum_matrix.txt",
-    #     expand("results_10M/deeptools/{sample}.SeqDepthNorm.bw", sample=all_samples),
-    #     "results_10M/deeptools/multiBAM_fingerprint.png",
-    #     "results_10M/deeptools/multiBAM_fingerprint_metrics.txt",
-    #     "results_10M/deeptools/multiBAM_fingerprint_rawcounts.txt",
-    #     "results_10M/deeptools/plot_coverage.png",
-    #     "results_10M/deeptools/plot_coverage_rawcounts.tab",
-    #     "results_10M/deeptools/bamPEFragmentSize_hist.png",
-    #     "results_10M/deeptools/bamPEFragmentSize_rawcounts.tab",
-    #     # phantomPeaks
-    #     expand("results_10M/phantomPeaks/{sample}.spp.pdf", sample = IPS),
-    #     expand("results_10M/phantomPeaks/{sample}.spp.Rdata", sample = IPS),
-    #     expand("results_10M/phantomPeaks/{sample}.spp.out", sample = IPS),
-    #     # macs2
-    #     expand("results_10M/macs2/{case}_vs_{control}_macs2_peaks.narrowPeak", zip, case=IPS, control=INPUTS),
-    #     expand("results_10M/macs2/{case}_vs_{control}_macs2_peaks.xls", zip, case=IPS, control=INPUTS),
-    #     expand("results_10M/macs2/{case}_vs_{control}_macs2_summits.bed", zip, case=IPS, control=INPUTS),
-    #     expand("results_10M/macs2/{case}-vs-{control}-narrowpeak-count_mqc.json", zip, case=IPS, control=INPUTS),
-    #     expand("results_10M/frip/{case}.frip.txt", case=IPS)
-    # params:
-    #     "results_10M/fastqc/",
-    #     "results_10M/bwa/",
-    #     "results_10M/logs/",
-    #     "results_10M/deeptools/",
-    #     "results_10M/macs2/",
-    #     "results_10M/phantomPeaks/",
-    #     "results_10M/frip/",
-    #     "results_10M/picard/"
-    # output:
-    #     directory("results_10M/multiqc/multiqc_report_data/"),
-    #     "results_10M/multiqc/multiqc_report.html",
-    # log:
-    #     "results_10M/logs/multiqc.log"
-    # shell:
-    #     "multiqc -f {params} -m fastqc -m samtools -m picard -m preseq -m deeptools -m phantompeakqualtools -m macs2 -o results_10M/multiqc/ \
-    #     -n multiqc_report.html 2> {log}"
