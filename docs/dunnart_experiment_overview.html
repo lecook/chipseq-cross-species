@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>dunnart_experiment_overview.knit.md</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">chipseq_cross_species</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/lecook/chipseq-cross-species">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2022-02-28
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>chipseq-cross-species/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree8a0eef12edd3cac71500ea5f16b306bb6e792d01targetblank8a0eef1a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/8a0eef12edd3cac71500ea5f16b306bb6e792d01" target="_blank">8a0eef1</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree8a0eef12edd3cac71500ea5f16b306bb6e792d01targetblank8a0eef1a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/8a0eef12edd3cac71500ea5f16b306bb6e792d01" target="_blank">8a0eef1</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .RData
+    Ignored:    .Rhistory
+    Ignored:    analysis/.RData
+    Ignored:    analysis/.Rhistory
+    Ignored:    data/genomic_data/
+    Ignored:    output/annotations/
+    Ignored:    output/filtered_peaks/
+    Ignored:    output/peaks/
+    Ignored:    output/plots/
+    Ignored:    results/
+
+Untracked files:
+    Untracked:  .snakemake/
+    Untracked:  code/trimfastq.py
+    Untracked:  data/raw_reads/
+    Untracked:  output/bam_files/
+    Untracked:  output/logs/
+    Untracked:  output/qc/
+    Untracked:  slurm-33561861.out
+    Untracked:  slurm-33561862.out
+    Untracked:  slurm-33561863.out
+    Untracked:  slurm-33561864.out
+    Untracked:  slurm-33561865.out
+    Untracked:  slurm-33561866.out
+    Untracked:  slurm-33562143.out
+    Untracked:  slurm-33562145.out
+    Untracked:  slurm-33562162.out
+    Untracked:  slurm-33562331.out
+    Untracked:  slurm-33562332.out
+
+Unstaged changes:
+    Modified:   .gitignore
+    Deleted:    code/dunnart_peak_calling/trimfastq.py
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/dunnart_experiment_overview.Rmd</code>) and HTML (<code>docs/dunnart_experiment_overview.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/8a0eef12edd3cac71500ea5f16b306bb6e792d01/analysis/dunnart_experiment_overview.Rmd" target="_blank">8a0eef1</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-02-28
+</td>
+<td>
+first commit
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="dunnart-chip-seq-experiment" class="section level1">
+<h1>Dunnart ChIP-seq experiment</h1>
+<div id="experimental-design" class="section level2">
+<h2>Experimental design</h2>
+<p><strong>H3K4me3</strong></p>
+<ul>
+<li>Signature of active promoters.</li>
+<li>Closely linked with TSSs.</li>
+<li>Active, and prefers promoters to enhancers</li>
+</ul>
+<p><strong>H3K27ac</strong></p>
+<ul>
+<li>Signature of active and poised enhancers</li>
+<li>Active, and prefers enhancers to promoters</li>
+</ul>
+<p><strong>Pouch young heads were pooled to generate 2 replicates</strong></p>
+<table>
+<colgroup>
+<col width="17%" />
+<col width="9%" />
+<col width="12%" />
+<col width="12%" />
+<col width="10%" />
+<col width="10%" />
+<col width="8%" />
+<col width="5%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>collection date</th>
+<th>PY ID</th>
+<th>weight (g)</th>
+<th>head_shape</th>
+<th>maternal</th>
+<th>paternal</th>
+<th>litter</th>
+<th>sex</th>
+<th>replicate pool</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>17/09/2018</td>
+<td>Fr113.1</td>
+<td>0.014</td>
+<td>flat head</td>
+<td>Fr113</td>
+<td>My76</td>
+<td>1</td>
+<td></td>
+<td>A</td>
+</tr>
+<tr class="even">
+<td>17/09/2018</td>
+<td>Fr113.2</td>
+<td>0.016</td>
+<td>flat head</td>
+<td>Fr113</td>
+<td>My76</td>
+<td>1</td>
+<td></td>
+<td>A</td>
+</tr>
+<tr class="odd">
+<td>17/09/2018</td>
+<td>Fr113.3</td>
+<td>0.0145</td>
+<td>flat head</td>
+<td>Fr113</td>
+<td>My76</td>
+<td>1</td>
+<td></td>
+<td>A</td>
+</tr>
+<tr class="even">
+<td>17/09/2018</td>
+<td>Fr113.4</td>
+<td>0.0162</td>
+<td>flat head</td>
+<td>Fr113</td>
+<td>My76</td>
+<td>1</td>
+<td></td>
+<td>A</td>
+</tr>
+<tr class="odd">
+<td>14/11/2018</td>
+<td>Fb148.1</td>
+<td>0.016</td>
+<td>round head</td>
+<td>Fb148</td>
+<td>Mg120</td>
+<td>2</td>
+<td></td>
+<td>B</td>
+</tr>
+<tr class="even">
+<td>14/11/2018</td>
+<td>Fb148.2</td>
+<td>0.016</td>
+<td>round head</td>
+<td>Fb148</td>
+<td>Mg120</td>
+<td>2</td>
+<td></td>
+<td>B</td>
+</tr>
+<tr class="odd">
+<td>14/11/2018</td>
+<td>Fb148.3</td>
+<td>0.016</td>
+<td>round head</td>
+<td>Fb148</td>
+<td>Mg120</td>
+<td>2</td>
+<td></td>
+<td>B</td>
+</tr>
+<tr class="even">
+<td>14/11/2018</td>
+<td>Fb148.4</td>
+<td>0.016</td>
+<td>round head</td>
+<td>Fb148</td>
+<td>Mg120</td>
+<td>2</td>
+<td></td>
+<td>B</td>
+</tr>
+<tr class="odd">
+<td>9/01/2019</td>
+<td>Fg123.1</td>
+<td>0.0155</td>
+<td>flat head</td>
+<td>Fg123</td>
+<td>Mr89</td>
+<td>3</td>
+<td></td>
+<td>B</td>
+</tr>
+<tr class="even">
+<td>9/01/2019</td>
+<td>Fg123.2</td>
+<td>0.0155</td>
+<td>flat head</td>
+<td>Fg123</td>
+<td>Mr89</td>
+<td>3</td>
+<td></td>
+<td>B</td>
+</tr>
+<tr class="odd">
+<td>9/01/2019</td>
+<td>Fg123.3</td>
+<td>0.0155</td>
+<td>flat head</td>
+<td>Fg123</td>
+<td>Mr89</td>
+<td>3</td>
+<td></td>
+<td>B</td>
+</tr>
+<tr class="even">
+<td>9/01/2019</td>
+<td>Fg123.4</td>
+<td>0.0155</td>
+<td>flat head</td>
+<td>Fg123</td>
+<td>Mr89</td>
+<td>3</td>
+<td></td>
+<td>B</td>
+</tr>
+<tr class="odd">
+<td>9/01/2019</td>
+<td>Fg123.5</td>
+<td>0.0155</td>
+<td>flat head</td>
+<td>Fg123</td>
+<td>Mr89</td>
+<td>3</td>
+<td></td>
+<td>B</td>
+</tr>
+<tr class="even">
+<td>9/01/2019</td>
+<td>Fg123.6</td>
+<td>0.0155</td>
+<td>flat head</td>
+<td>Fg123</td>
+<td>Mr89</td>
+<td>3</td>
+<td></td>
+<td>B</td>
+</tr>
+<tr class="odd">
+<td>16/01/2019</td>
+<td>Fb148.5</td>
+<td>0.014</td>
+<td>flat head</td>
+<td>Fb148</td>
+<td>Mg120</td>
+<td>4</td>
+<td></td>
+<td>A</td>
+</tr>
+<tr class="even">
+<td>16/01/2019</td>
+<td>Fb148.3</td>
+<td>0.015</td>
+<td>flat head</td>
+<td>Fb148</td>
+<td>Mg120</td>
+<td>4</td>
+<td></td>
+<td>A</td>
+</tr>
+<tr class="odd">
+<td>16/01/2019</td>
+<td>Fb148.4</td>
+<td>0.015</td>
+<td>flat head</td>
+<td>Fb148</td>
+<td>Mg120</td>
+<td>4</td>
+<td></td>
+<td>A</td>
+</tr>
+<tr class="even">
+<td>16/01/2019</td>
+<td>Fb148.1</td>
+<td>0.015</td>
+<td>flat head</td>
+<td>Fb148</td>
+<td>Mg120</td>
+<td>4</td>
+<td></td>
+<td>A</td>
+</tr>
+<tr class="odd">
+<td>16/01/2019</td>
+<td>Fb148.7</td>
+<td>0.014</td>
+<td>flat head</td>
+<td>Fb148</td>
+<td>Mg120</td>
+<td>4</td>
+<td></td>
+<td>A</td>
+</tr>
+<tr class="even">
+<td>16/01/2019</td>
+<td>Fb148.2</td>
+<td>0.014</td>
+<td>flat head</td>
+<td>Fb148</td>
+<td>Mg120</td>
+<td>4</td>
+<td></td>
+<td>A</td>
+</tr>
+<tr class="odd">
+<td>16/01/2019</td>
+<td>Fb148.6</td>
+<td>0.014</td>
+<td>flat head</td>
+<td>Fb148</td>
+<td>Mg120</td>
+<td>4</td>
+<td></td>
+<td>A</td>
+</tr>
+<tr class="even">
+<td>24/09/2019</td>
+<td>Fw263.1</td>
+<td>0.0164</td>
+<td>round head</td>
+<td>Fw263</td>
+<td>Mw270</td>
+<td>5</td>
+<td></td>
+<td>A</td>
+</tr>
+<tr class="odd">
+<td>24/09/2019</td>
+<td>Fw263.2</td>
+<td>0.015</td>
+<td>round head</td>
+<td>Fw263</td>
+<td>Mw270</td>
+<td>5</td>
+<td></td>
+<td>A</td>
+</tr>
+<tr class="even">
+<td>24/09/2019</td>
+<td>Fw263.3</td>
+<td>0.0157</td>
+<td>round head</td>
+<td>Fw263</td>
+<td>Mw270</td>
+<td>5</td>
+<td></td>
+<td>A</td>
+</tr>
+<tr class="odd">
+<td>24/09/2019</td>
+<td>Fw263.4</td>
+<td>0.0176</td>
+<td>round head</td>
+<td>Fw263</td>
+<td>Mw270</td>
+<td>5</td>
+<td></td>
+<td>A</td>
+</tr>
+<tr class="even">
+<td>24/09/2019</td>
+<td>Fw263.5</td>
+<td>0.0176</td>
+<td>round head</td>
+<td>Fw263</td>
+<td>Mw270</td>
+<td>5</td>
+<td></td>
+<td>A</td>
+</tr>
+<tr class="odd">
+<td>24/09/2019</td>
+<td>Fw263.6</td>
+<td>0.0146</td>
+<td>round head</td>
+<td>Fw263</td>
+<td>Mw270</td>
+<td>5</td>
+<td></td>
+<td>A</td>
+</tr>
+<tr class="even">
+<td>24/09/2019</td>
+<td>Fw263.7</td>
+<td>0.0173</td>
+<td>round head</td>
+<td>Fw263</td>
+<td>Mw270</td>
+<td>5</td>
+<td></td>
+<td>A</td>
+</tr>
+<tr class="odd">
+<td>23/10/2019</td>
+<td>Fb197.1</td>
+<td>0.0137</td>
+<td>flat head</td>
+<td>Fb197</td>
+<td>My234</td>
+<td>6</td>
+<td>M</td>
+<td>B</td>
+</tr>
+<tr class="even">
+<td>23/10/2019</td>
+<td>Fb197.2</td>
+<td>0.0112</td>
+<td>flat head</td>
+<td>Fb197</td>
+<td>My234</td>
+<td>6</td>
+<td>M</td>
+<td>B</td>
+</tr>
+<tr class="odd">
+<td>23/10/2019</td>
+<td>Fb197.3</td>
+<td>0.0132</td>
+<td>flat head</td>
+<td>Fb197</td>
+<td>My234</td>
+<td>6</td>
+<td>M</td>
+<td>B</td>
+</tr>
+<tr class="even">
+<td>23/10/2019</td>
+<td>Fb197.4</td>
+<td>0.0114</td>
+<td>flat head</td>
+<td>Fb197</td>
+<td>My234</td>
+<td>6</td>
+<td>M</td>
+<td>B</td>
+</tr>
+<tr class="odd">
+<td>23/10/2019</td>
+<td>Fb197.5</td>
+<td>0.0098</td>
+<td>flat head</td>
+<td>Fb197</td>
+<td>My234</td>
+<td>6</td>
+<td>F</td>
+<td>B</td>
+</tr>
+<tr class="even">
+<td>23/10/2019</td>
+<td>Fb197.6</td>
+<td>0.0121</td>
+<td>flat head</td>
+<td>Fb197</td>
+<td>My234</td>
+<td>6</td>
+<td>F</td>
+<td>B</td>
+</tr>
+<tr class="odd">
+<td>23/10/2019</td>
+<td>Fb197.7</td>
+<td>0.0118</td>
+<td>flat head</td>
+<td>Fb197</td>
+<td>My234</td>
+<td>6</td>
+<td>F</td>
+<td>B</td>
+</tr>
+<tr class="even">
+<td>23/10/2019</td>
+<td>Fb197.8</td>
+<td>0.0116</td>
+<td>flat head</td>
+<td>Fb197</td>
+<td>My234</td>
+<td>6</td>
+<td>F</td>
+<td>B</td>
+</tr>
+<tr class="odd">
+<td>23/10/2019</td>
+<td>Fb197.9</td>
+<td>0.0115</td>
+<td>flat head</td>
+<td>Fb197</td>
+<td>My234</td>
+<td>6</td>
+<td>F</td>
+<td>B</td>
+</tr>
+<tr class="even">
+<td>29/10/2019</td>
+<td>Fb255.1</td>
+<td>0.0186</td>
+<td>round head</td>
+<td>Fb255</td>
+<td>My234</td>
+<td>7</td>
+<td>F</td>
+<td>B</td>
+</tr>
+<tr class="odd">
+<td>29/10/2019</td>
+<td>Fb255.2</td>
+<td>0.0157</td>
+<td>round head</td>
+<td>Fb255</td>
+<td>My234</td>
+<td>7</td>
+<td>F</td>
+<td>B</td>
+</tr>
+<tr class="even">
+<td>29/10/2019</td>
+<td>Fb255.3</td>
+<td>0.019</td>
+<td>round head</td>
+<td>Fb255</td>
+<td>My234</td>
+<td>7</td>
+<td>M</td>
+<td>B</td>
+</tr>
+<tr class="odd">
+<td>29/10/2019</td>
+<td>Fb255.4</td>
+<td>0.0187</td>
+<td>round head</td>
+<td>Fb255</td>
+<td>My234</td>
+<td>7</td>
+<td>F</td>
+<td>B</td>
+</tr>
+<tr class="even">
+<td>29/10/2019</td>
+<td>Fw264.1</td>
+<td>0.0182</td>
+<td>round head</td>
+<td>Fw264</td>
+<td>My234</td>
+<td>8</td>
+<td>F</td>
+<td>A</td>
+</tr>
+<tr class="odd">
+<td>29/10/2019</td>
+<td>Fw264.2</td>
+<td>0.0185</td>
+<td>round head</td>
+<td>Fw264</td>
+<td>My234</td>
+<td>8</td>
+<td>F</td>
+<td>A</td>
+</tr>
+<tr class="even">
+<td>29/10/2019</td>
+<td>Fw264.3</td>
+<td>0.0168</td>
+<td>round head</td>
+<td>Fw264</td>
+<td>My234</td>
+<td>8</td>
+<td>M</td>
+<td>A</td>
+</tr>
+<tr class="odd">
+<td>29/10/2019</td>
+<td>Fw264.4</td>
+<td>0.0187</td>
+<td>round head</td>
+<td>Fw264</td>
+<td>My234</td>
+<td>8</td>
+<td>M</td>
+<td>A</td>
+</tr>
+<tr class="even">
+<td>19/11/2019</td>
+<td>Fb148.1</td>
+<td>0.017</td>
+<td>round head</td>
+<td>Fb148</td>
+<td>My234</td>
+<td>9</td>
+<td>F</td>
+<td>B</td>
+</tr>
+<tr class="odd">
+<td>19/11/2019</td>
+<td>Fb148.2</td>
+<td>0.018</td>
+<td>round head</td>
+<td>Fb148</td>
+<td>My234</td>
+<td>9</td>
+<td>M</td>
+<td>B</td>
+</tr>
+<tr class="even">
+<td>19/11/2019</td>
+<td>Fb148.3</td>
+<td>0.019</td>
+<td>round head</td>
+<td>Fb148</td>
+<td>My234</td>
+<td>9</td>
+<td>F</td>
+<td>B</td>
+</tr>
+<tr class="odd">
+<td>19/11/2019</td>
+<td>Fb148.4</td>
+<td>0.018</td>
+<td>round head</td>
+<td>Fb148</td>
+<td>My234</td>
+<td>9</td>
+<td>M</td>
+<td>B</td>
+</tr>
+<tr class="even">
+<td>27/11/2019</td>
+<td>Fb198.1</td>
+<td>0.013</td>
+<td>flat head</td>
+<td>Fb198</td>
+<td>My234</td>
+<td>10</td>
+<td>F</td>
+<td>A</td>
+</tr>
+<tr class="odd">
+<td>27/11/2019</td>
+<td>Fb198.2</td>
+<td>0.016</td>
+<td>flat head</td>
+<td>Fb198</td>
+<td>My234</td>
+<td>10</td>
+<td>F</td>
+<td>A</td>
+</tr>
+<tr class="even">
+<td>27/11/2019</td>
+<td>Fb198.3</td>
+<td>0.012</td>
+<td>flat head</td>
+<td>Fb198</td>
+<td>My234</td>
+<td>10</td>
+<td>F</td>
+<td>A</td>
+</tr>
+<tr class="odd">
+<td>27/11/2019</td>
+<td>Fb198.5</td>
+<td>0.015</td>
+<td>flat head</td>
+<td>Fb198</td>
+<td>My234</td>
+<td>10</td>
+<td>M</td>
+<td>A</td>
+</tr>
+</tbody>
+</table>
+<p></br></p>
+<p>Experiment performed according to manufacturers instructions for the <strong>MAGnify™ Chromatin Immunoprecipitation System (492024)</strong>.</p>
+<p>H3K4me3 antibody (ab8580) - <a href="https://www.abcam.com/histone-h3-tri-methyl-k4-antibody-chip-grade-ab8580.html" class="uri">https://www.abcam.com/histone-h3-tri-methyl-k4-antibody-chip-grade-ab8580.html</a></p>
+<p>H3K27ac antibody (ab4729) - <a href="https://www.abcam.com/histone-h3-acetyl-k27-antibody-chip-grade-ab4729.html" class="uri">https://www.abcam.com/histone-h3-acetyl-k27-antibody-chip-grade-ab4729.html</a></p>
+<p>DNA fragments isolated after pull down were sequenced by GENEWIZ (China). Paired-end sequencing at a depth of 40 million reads.</p>
+<p></br></p>
+<table>
+<thead>
+<tr class="header">
+<th>sample ID</th>
+<th>replicate pool</th>
+<th>pull down</th>
+<th>concentration (ng/uL)</th>
+<th>amount (ug)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A1</td>
+<td>A</td>
+<td>input control</td>
+<td>0.39</td>
+<td>58.5</td>
+</tr>
+<tr class="even">
+<td>A2</td>
+<td>A</td>
+<td>H3K4me3</td>
+<td>0.258</td>
+<td>38.7</td>
+</tr>
+<tr class="odd">
+<td>A3</td>
+<td>A</td>
+<td>H3K27ac</td>
+<td>1.61</td>
+<td>241.5</td>
+</tr>
+<tr class="even">
+<td>B1</td>
+<td>B</td>
+<td>input control</td>
+<td>0.295</td>
+<td>44.25</td>
+</tr>
+<tr class="odd">
+<td>B2</td>
+<td>B</td>
+<td>H3K4me3</td>
+<td>0.242</td>
+<td>36.3</td>
+</tr>
+<tr class="even">
+<td>B3</td>
+<td>B</td>
+<td>H3K27ac</td>
+<td>2.33</td>
+<td>349.5</td>
+</tr>
+</tbody>
+</table>
+<p></br></p>
+</div>
+<div id="sequencing" class="section level2">
+<h2>Sequencing</h2>
+<p>Library construction and sequencing performed by GENEWIZ. Raw data (Pass Filter Data) was processed by adapter trimming and low quality read removal using NGS quality control software Cutadapt (v1.9.1) to generate clean data for subsequent analysis. software:Cutadapt(version 1.9.1) The process includes the following steps:/ 1. remove the adapter sequences; 2. remove the 5 ‘or 3’ end bases of quality scores below 20; 3. remove the reads in which ‘N’ is above 10%; 4. remove reads that are less than 75 bp long after trimming.</p>
+<p>The statistics of raw data is summarized in the table below.</p>
+<p>Table. Raw data statistics</p>
+<table>
+<thead>
+<tr class="header">
+<th>Sample</th>
+<th>length</th>
+<th>Reads</th>
+<th>Bases</th>
+<th>Q20(%)</th>
+<th>Q30(%)</th>
+<th>GC(%)</th>
+<th>N(ppm)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A-1</td>
+<td>150.00</td>
+<td>130587134</td>
+<td>19588070100</td>
+<td>97.95</td>
+<td>95.35</td>
+<td>36.18</td>
+<td>1.79</td>
+</tr>
+<tr class="even">
+<td>A-2</td>
+<td>150.00</td>
+<td>103324742</td>
+<td>15498711300</td>
+<td>96.83</td>
+<td>93.28</td>
+<td>51.24</td>
+<td>1.65</td>
+</tr>
+<tr class="odd">
+<td>A-3</td>
+<td>150.00</td>
+<td>131071676</td>
+<td>19660751400</td>
+<td>97.04</td>
+<td>93.71</td>
+<td>50.57</td>
+<td>1.67</td>
+</tr>
+<tr class="even">
+<td>B-1</td>
+<td>150.00</td>
+<td>111574640</td>
+<td>16736196000</td>
+<td>97.27</td>
+<td>93.12</td>
+<td>36.35</td>
+<td>0.94</td>
+</tr>
+<tr class="odd">
+<td>B-2</td>
+<td>150.00</td>
+<td>114146802</td>
+<td>17122020300</td>
+<td>95.59</td>
+<td>89.93</td>
+<td>52.60</td>
+<td>0.90</td>
+</tr>
+<tr class="even">
+<td>B-3</td>
+<td>150.00</td>
+<td>104714846</td>
+<td>15707226900</td>
+<td>95.89</td>
+<td>90.50</td>
+<td>50.02</td>
+<td>0.88</td>
+</tr>
+</tbody>
+</table>
+<p>The statistics of processed data is summarized in the table below.</p>
+<p>Table. Filtered data statistics</p>
+<table>
+<thead>
+<tr class="header">
+<th>Sample</th>
+<th>length</th>
+<th>Reads</th>
+<th>Bases</th>
+<th>Q20(%)</th>
+<th>Q30(%)</th>
+<th>GC(%)</th>
+<th>N(ppm)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A-1</td>
+<td>147.44</td>
+<td>130494346</td>
+<td>19239781217</td>
+<td>98.30</td>
+<td>95.83</td>
+<td>36.06</td>
+<td>1.55</td>
+</tr>
+<tr class="even">
+<td>A-2</td>
+<td>147.09</td>
+<td>103188262</td>
+<td>15177774139</td>
+<td>97.58</td>
+<td>94.25</td>
+<td>51.19</td>
+<td>1.41</td>
+</tr>
+<tr class="odd">
+<td>A-3</td>
+<td>147.00</td>
+<td>130913300</td>
+<td>19244653341</td>
+<td>97.76</td>
+<td>94.65</td>
+<td>50.54</td>
+<td>1.44</td>
+</tr>
+<tr class="even">
+<td>B-1</td>
+<td>146.92</td>
+<td>111529316</td>
+<td>16386102716</td>
+<td>97.63</td>
+<td>93.63</td>
+<td>36.16</td>
+<td>0.82</td>
+</tr>
+<tr class="odd">
+<td>B-2</td>
+<td>146.50</td>
+<td>114021348</td>
+<td>16704280185</td>
+<td>96.49</td>
+<td>91.10</td>
+<td>52.51</td>
+<td>0.77</td>
+</tr>
+<tr class="even">
+<td>B-3</td>
+<td>146.92</td>
+<td>104607414</td>
+<td>15368815013</td>
+<td>96.72</td>
+<td>91.59</td>
+<td>49.94</td>
+<td>0.77</td>
+</tr>
+</tbody>
+</table>
+<p>Column explain:<br />
+(1) Sample: Sample name<br />
+(2) length: Average length of the reads<br />
+(3) Reads: Read count<br />
+(4) Bases: Base count<br />
+(5) Q20, Q30: The percentage of bases with quality scores (Qphred) higher than 20 or 30<br />
+(6) GC%: The percentage of G+C in the reads<br />
+(7) N(ppm): The number of base ‘N’ per million bases.<br />
+</p>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
