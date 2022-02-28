@@ -36,16 +36,14 @@ with open(config['SAMPLES'], "r") as f:
         MARK.append(row[2])
 f.close()
 
-print(IPS)
-print(INPUTS)
-print(MARK)
 ## multiple samples may use the same control input files
 unique_inputs = list(set(INPUTS))
+print(unique_inputs)
 #unique_marks = list(set(MARK))
 
 ## combine all samples
 all_samples = IPS + unique_inputs
-
+print(all_samples)
 # ===============================================================================================
 #        Output targets
 # ===============================================================================================
