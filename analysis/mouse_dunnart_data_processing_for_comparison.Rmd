@@ -1,0 +1,32 @@
+---
+title: "mouse_dunnart_data_processing_for_comparison"
+author: "lecook"
+date: "2022-02-23"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+
+
+
+
+## Normalise dunnart and mouse BAM files to 10M reads 
+
+This is so we can compare to mouse peaks.
+
+Based on https://davemcg.github.io/post/easy-bam-downsampling/ script for doing this. 
+
+Run script in the directory with the files you want to subsample.
+
+```{bash eval=FALse}
+bash subsample.sh
+```
+
+
+## Introduction
+
+```{r}
+
+```
+

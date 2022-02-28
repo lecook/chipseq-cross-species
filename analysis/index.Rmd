@@ -24,7 +24,11 @@ This project involves a number of analysis for the generation of ChIP-seq data f
 
 * [Dunnart data pre-processing](dunnart_data_processing.html)
 
+Outlines read mapping, filtering, QC and peak calling.
+
 * Mouse data pre-processing
+
+Outlines filtering aligned reads from ENCODE, QC and peak calling.
 
 ## Data analyses
 
