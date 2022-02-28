@@ -44,6 +44,7 @@ print(unique_inputs)
 ## combine all samples
 all_samples = IPS + unique_inputs
 print(all_samples)
+
 # ===============================================================================================
 #        Output targets
 # ===============================================================================================
@@ -81,7 +82,7 @@ rule all:
         "output/qc/multibamsum.tab",
         "output/qc/pearsoncor_multibamsum.png",
         "output/qc/pearsoncor_multibamsum_matrix.txt",
-        expand("results/qc/{sample}.SeqDepthNorm.bw", sample=all_samples),
+        expand("output/qc/{sample}.SeqDepthNorm.bw", sample=all_samples),
         "output/qc/multiBAM_fingerprint.png",
         "output/qc/multiBAM_fingerprint_metrics.txt",
         "output/qc/multiBAM_fingerprint_rawcounts.txt",
@@ -120,7 +121,7 @@ rule fastqc:
     log:
         "output/logs/{sample}.fastqc"
     shell:
-        "fastqc {input} -t 6 --extract --outdir=results/qc/ 2> {log}"
+        "fastqc {input} -t 6 --extract --outdir=output/qc/ 2> {log}"
 
 # ===============================================================================================
 #  2. ALIGNMENT
@@ -175,9 +176,9 @@ rule markDups:
         dupQC="output/qc/{sample}.dup.qc"
     log:
         "output/logs/{sample}.dupmark"
-    shell:
-        "picard MarkDuplicates I={input} O={output.bam} \
-        METRICS_FILE={output.dupQC} REMOVE_DUPLICATES=FALSE ASSUME_SORTED=true 2> {log}"
+    run:
+        shell("picard MarkDuplicates I={input} O={output.bam} \
+        METRICS_FILE={output.dupQC} REMOVE_DUPLICATES=FALSE ASSUME_SORTED=true 2> {log}")
 
 rule dedup:
     input:
@@ -250,9 +251,9 @@ rule downsample_bam:
         "output/bam_files/{sample}_PPq30.sorted.dupmark_downSampled.bam"
     log:
         "output/logs/{sample}.downsample"
-    shell:
-        "picard DownsampleSam I={input} O={output} P=0.35 \
-         2> {log}"
+    run:
+        shell("picard DownsampleSam I={input} O={output} P=0.35 \
+         2> {log}")
 
 rule preseq:
     input:
@@ -294,15 +295,15 @@ rule estimate_lib_complexity:
         qc = "output/qc/{sample}.pbc.qc",
     log:
         "output/logs/{sample}.pbc"
-    shell:
-        """
+    run:
+        shell("
         bedtools bamtobed -bedpe -i {input} \
         | awk 'BEGIN{{OFS="\\t"}}{{print $1,$2,$4,$6,$9,$10}}' \
         | sort | uniq -c \
         | awk 'BEGIN{{mt=0;m0=0;m1=0;m2=0}} ($1==1){{m1=m1+1}} ($1==2){{m2=m2+1}} \
         {{m0=m0+1}} {{mt=mt+$1}} END{{printf "%d\\t%d\\t%d\\t%d\\t%f\\t%f\\t%f\\n" ,mt,m0,m1,m2,m0/mt,m1/m0,m1/m2}}' \
         > {output.qc}
-        """
+        ")
 
 ## convert to bedPE
 ## print read 1 scaffold, read 1 start coordinate, read 2 scaffold, read 2 end coordinate, strand read 1, strand read 2
@@ -331,13 +332,13 @@ rule deeptools_summary:
     threads: 32
     log:
         "output/logs/multisummary.deepTools"
-    shell:
-        " multiBamSummary bins \
+    run:
+        shell("multiBamSummary bins \
         -p {threads} \
         -b {input.bam} \
         --centerReads \
         -out {output.sum} \
-        --outRawCounts {output.counts} 2> {log}"
+        --outRawCounts {output.counts} 2> {log}")
 
 rule deeptools_correlation:
     input: "output/qc/multibamsum.npz"
@@ -346,8 +347,8 @@ rule deeptools_correlation:
         matrix="output/qc/pearsoncor_multibamsum_matrix.txt"
     log:
         "output/logs/correlation.deepTools"
-    shell:
-        "plotCorrelation \
+    run:
+        shell("plotCorrelation \
         --corData {input} \
         --plotFile {output.fig} \
         --outFileCorMatrix {output.matrix} \
@@ -355,7 +356,7 @@ rule deeptools_correlation:
         --whatToPlot heatmap \
         --skipZeros \
         --plotNumbers \
-        --colorMap #264653 #2A9D8F #E9C46A #F4A261 #E76F51 2> {log}"
+        --colorMap #264653 #2A9D8F #E9C46A #F4A261 #E76F51 2> {log}")
 
 rule deeptools_coverage:
     input:
@@ -365,14 +366,14 @@ rule deeptools_coverage:
         "output/qc/{sample}.SeqDepthNorm.bw"
     log:
         "output/logs/{sample}_coverage.deepTools"
-    shell:
-        """bamCoverage --bam {input.bam}  --binSize 10 \
+    run:
+        shell("bamCoverage --bam {input.bam}  --binSize 10 \
         --normalizeUsing RPGC \
         --effectiveGenomeSize 2740338543 \
         --extendReads \
         --legendLocation none
         --colors #264653 #2A9D8F #E9C46A #F4A261 #E76F51
-        -o {output} 2> {log}"""
+        -o {output} 2> {log}")
 
 rule deeptools_fingerprint:
     input:
@@ -385,15 +386,15 @@ rule deeptools_fingerprint:
     threads: 32
     log:
         "output/logs/fingerprint.deepTools"
-    shell:
-        """plotFingerprint -p {threads} \
+    run:
+        shell("plotFingerprint -p {threads} \
         -b {input.bam} \
         --plotFile {output.fig} \
         --outQualityMetrics {output.metrics} \
         --outRawCounts {output.rawcounts} \
         --minMappingQuality 30 \
         --skipZeros \
-        --centerReads 2> {log}"""
+        --centerReads 2> {log}")
 
 rule deeptools_bamPEFragmentSize:
     input:
@@ -404,11 +405,11 @@ rule deeptools_bamPEFragmentSize:
         rawcounts="output/qc/bamPEFragmentSize_rawcounts.tab"
     log:
         "output/logs/bamPEFragmentSize.deepTools"
-    shell:
-        """bamPEFragmentSize \
+    run:
+        shell("bamPEFragmentSize \
         -hist {output.fig} \
         --outRawFragmentLengths {output.rawcounts} \
-        -b {input.bam} 2> {log}"""
+        -b {input.bam} 2> {log}")
 
 # ===============================================================================================
 #  6. Cross-correlation scores - following ENCODE code
@@ -436,9 +437,9 @@ rule align_trimmed_read1:
         index="data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr"
     log:
         "output/logs/{sample}_align_trimmed_read1.log"
-    shell:
-        """bowtie2 -x {params.index} -U {input} 2> {log} | \
-        samtools view -Su - | samtools sort -o {output} - 2> {log}"""
+    run:
+        shell("bowtie2 -x {params.index} -U {input} 2> {log} | \
+        samtools view -Su - | samtools sort -o {output} - 2> {log}")
 
 ## Filter alignment but don't dedup
 
@@ -528,7 +529,7 @@ rule call_peaks_macs2:
     shell:
         """macs2 callpeak -f BAMPE -t {input.case} \
         -c {input.control} --keep-dup all \
-        --outdir results/macs2/  \
+        --outdir output/peaks/  \
         -n {params.name} \
         -g 2740338543 2> {log}"""
 
@@ -553,12 +554,12 @@ rule call_peaks_macs2_pooled_replicates:
     run:
         shell(" macs2 callpeak -f BAMPE -t {input.H3K4me3} \
         -c {input.input} --keep-dup all \
-        --outdir results/macs2/ \
+        --outdir output/peaks/ \
         -n {params.H3K4me3} \
         -g 2740338543 2> {log.H3K4me3} ")
         shell("macs2 callpeak -f BAMPE -t {input.H3K27ac} \
         -c {input.input} --keep-dup all \
-        --outdir results/macs2/ -p 0.01 \
+        --outdir output/peaks/ -p 0.01 \
         -n {params.H3K27ac} \
         -g 2740338543 2> {log.H3K27ac} ")
 
