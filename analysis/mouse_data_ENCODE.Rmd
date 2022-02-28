@@ -1,0 +1,40 @@
+---
+title: "Mouse ChIP-seq data from ENCODE"
+author: "lecook"
+date: "2022-02-23"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+# Mouse ChIP-seq data from ENCODE
+Unfiltered aligned reads downloaded from https://www.encodeproject.org/search/?type=Experiment&control_type!=*&status=released&perturbed=false&searchTerm=mouse+chipseq&target.label=H3K4me3&target.label=H3K27ac&biosample_ontology.term_name=embryonic+facial+prominence
+
+Table. ENCODE mouse embryonic facial prominence ChIP-seq accession numbers and details used in study.
+
+|  <br> **replicate**  | **antibody**  | **stage**  | **accession**  | **input control**  | **file type**        | **seq reads** | **strain background**  | **biosample ID**  | **biosample description**                          | **lab/references**                                |
+| :------------------: | :-----------: | :--------: | :------------: | :----------------: | :------------------: | :-----------: | :--------------------: | :---------------: | :------------------------------------------------: | :-----------------------------------------------: |
+| 1                    | H3K27ac       | E10\.5     | ENCFF213EBC    | ENCFF157KEH        | unfiltered BAM       | SE50nt        | C57BL/6                | ENCBS938XWJ       | Embryonic facial prominence <br> from 69 mice      | Bing Ren, UCSD                                    |
+| 2                    | H3K27ac       | E10\.5     | ENCFF548BRR    | ENCFF825AVI        | unfiltered BAM       | SE50nt        | C57BL/6                | ENCBS199YOQ       | Embryonic facial prominence <br> from 51 mice      | Bing Ren, UCSD                                    |
+| 1                    | H3K27ac       | E11\.5     | ENCFF512SFE    | ENCFF184CUE        | unfiltered BAM       | SE36nt        | C57BL/6                | ENCBS141GPQ       | Embryonic facial prominence <br> from 109 mice     | Bing Ren, UCSD                                    |
+| 2                    | H3K27ac       | E11\.5     | ENCFF515PKL    | ENCFF376FGM        | unfiltered BAM       | SE36nt        | C57BL/6                | ENCBS468NAL       | Embryonic facial prominence <br> from 88 mice      | Bing Ren, UCSD                                    |
+| 1                    | H3K27ac       | E12\.5     | ENCFF394TZN    | ENCFF203JQV        | unfiltered BAM       | SE50nt        | C57BL/6                | ENCBS047UII       | Embryonic facial prominence <br> from 120 mice     | Bing Ren, UCSD                                    |
+| 2                    | H3K27ac       | E12\.5     | ENCFF011NFM    | ENCFF058AUT        | unfiltered BAM       | SE50nt        | C57BL/6                | ENCBS399GYO       | Embryonic facial prominence <br> from 88 mice      | Bing Ren, UCSD                                    |
+| 1                    | H3K27ac       | E13\.5     | ENCFF194ORC    | ENCFF117QRC        | unfiltered BAM       | SE50nt        | C57BL/6                | ENCBS764ZZN       | Embryonic facial prominence <br> from 62 mice      | Bing Ren, UCSD                                    |
+| 2                    | H3K27ac       | E13\.5     | ENCFF290ZNF    | ENCFF248PGK        | unfiltered BAM       | SE50nt        | C57BL/6                | ENCBS847MIW       | Embryonic facial prominence <br> from 66 mice      | Bing Ren, UCSD                                    |
+| 1                    | H3K27ac       | E14\.5     | ENCFF327VAO    | ENCFF784ORI        | unfiltered BAM       | SE36nt        | C57BL/6                | ENCBS012AAA       | Embryonic facial prominence <br> from 24 mice      | Bing Ren, UCSD                                    |
+| 2                    | H3K27ac       | E14\.5     | ENCFF902HAR    | ENCFF002HZV        | unfiltered BAM       | SE36nt        | C57BL/6                | ENCBS012AAA       | Embryonic facial prominence <br> from 24 mice      | Bing Ren, UCSD                                    |
+| 1                    | H3K27ac       | E15\.5     | ENCFF584JFB    | ENCFF727QTS        | unfiltered BAM       | SE50nt        | C57BL/6                | ENCBS543BPM       | Embryonic facial prominence <br> from 78 mice      | Bing Ren, UCSD                                    |
+| 2                    | H3K27ac       | E15\.5     | ENCFF707WKL    | ENCFF182XFG        | unfiltered BAM       | SE50nt        | C57BL/6                | ENCBS900XQR       | Embryonic facial prominence <br> from 62 mice      | Bing Ren, UCSD                                    |
+| 1                    | H3K4me3       | E10\.5     | ENCFF124UYX    | ENCFF157KEH        | unfiltered BAM       | SE50nt        | C57BL/6                | ENCBS938XWJ       | Embryonic facial prominence <br> from 69 mice      | Bing Ren, UCSD                                    |
+| 2                    | H3K4me3       | E10\.5     | ENCFF045IPK    | ENCFF825AVI        | unfiltered BAM       | SE50nt        | C57BL/6                | ENCBS199YOQ       | Embryonic facial prominence <br> from 51 mice      | Bing Ren, UCSD                                    |
+| 1                    | H3K4me3       | E11\.5     | ENCFF760QYZ    | ENCFF184CUE        | unfiltered BAM       | SE36nt        | C57BL/6                | ENCBS141GPQ       | Embryonic facial prominence <br> from 109 mice     | Bing Ren, UCSD                                    |
+| 2                    | H3K4me3       | E11\.5     | ENCFF717QDV    | ENCFF376FGM        | unfiltered BAM       | SE36nt        | C57BL/6                | ENCBS468NAL       | Embryonic facial prominence <br> from 88 mice      | Bing Ren, UCSD                                    |
+| 1                    | H3K4me3       | E12\.5     | ENCFF182ZPF    | ENCFF203JQV        | unfiltered BAM       | SE50nt        | C57BL/6                | ENCBS047UII       | Embryonic facial prominence <br> from 120 mice     | Bing Ren, UCSD                                    |
+| 2                    | H3K4me3       | E12\.5     | ENCFF941QJZ    | ENCFF058AUT        | unfiltered BAM       | SE50nt        | C57BL/6                | ENCBS399GYO       | Embryonic facial prominence <br> from 88 mice      | Bing Ren, UCSD                                    |
+| 1                    | H3K4me3       | E13\.5     | ENCFF485UDC    | ENCFF117QRC        | unfiltered BAM       | SE50nt        | C57BL/6                | ENCBS764ZZN       | Embryonic facial prominence <br> from 62 mice      | Bing Ren, UCSD                                    |
+| 2                    | H3K4me3       | E13\.5     | ENCFF124TAB    | ENCFF248PGK        | unfiltered BAM       | SE50nt        | C57BL/6                | ENCBS847MIW       | Embryonic facial prominence <br> from 66 mice      | Bing Ren, UCSD                                    |
+| 1                    | H3K4me3       | E14\.5     | ENCFF724DMU    | ENCFF784ORI        | unfiltered BAM       | SE36nt        | C57BL/6                | ENCBS012AAA       | Embryonic facial prominence <br> from 24 mice      | Bing Ren, UCSD                                    |
+| 2                    | H3K4me3       | E14\.5     | ENCFF665QBJ    | ENCFF002HZV        | unfiltered BAM       | SE36nt        | C57BL/6                | ENCBS024AAA       | Embryonic facial prominence <br> from 34 mice      | Bing Ren, UCSD                                    |
+| 1                    | H3K4me3       | E15\.5     | ENCFF258KCR    | ENCFF727QTS        | unfiltered BAM       | SE50nt        | C57BL/6                | ENCBS543BPM       | Embryonic facial prominence <br> from 78 mice      | Bing Ren, UCSD                                    |
+| 2                    | H3K4me3       | E15\.5     | ENCFF401BKM    | ENCFF182XFG        | unfiltered BAM       | SE50nt        | C57BL/6                | ENCBS900XQR       | Embryonic facial prominence <br> from 62 mice      | Bing Ren, UCSD                                    |
