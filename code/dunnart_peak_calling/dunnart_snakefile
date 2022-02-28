@@ -13,8 +13,6 @@
     # 7. Call narrow peaks (MACS2)
     # 8. Peak QC
     # 9. Create consensus peaksets
-    # 10. Present QC for raw read, alignment, peak-calling in MultiQC (this part is a work in progress)
-
 
 configfile: "code/configs/config.yaml"
 # Contains sample and genome information
@@ -73,8 +71,8 @@ rule all:
         expand("output/qc/{sample}.extrap.txt", sample=all_samples),
         expand("output/logs/{sample}.ccurve.preseq", sample=all_samples),
         expand("output/logs/{sample}.extrap.preseq", sample=all_samples),
-       #expand("output/qc/{sample}_est_lib_complex_metrics.txt", sample=all_samples),
-       #expand("output/logs/{sample}.picardLibComplexity", sample=all_samples),
+        expand("output/qc/{sample}_est_lib_complex_metrics.txt", sample=all_samples),
+        expand("output/logs/{sample}.picardLibComplexity", sample=all_samples),
         expand("output/bam_files/{sample}_PPq30.sorted.dupmark_downSampled.tmp.bam",sample=all_samples),
         expand("output/bam_files/{sample}_PPq30.sorted.dupmark_downSampled.bam",sample=all_samples),
         expand("output/qc/{sample}.pbc.qc", sample=all_samples),
@@ -272,9 +270,9 @@ rule get_picard_complexity_metrics:
     input:
         "output/bam_files/{sample}_PPq30.sorted.dupmark.bam"
     output:
-        "output/qc/{sample}.est_lib_complex_metrics.txt"
+        "output/qc/{sample}_est_lib_complex_metrics.txt"
     log:
-        "output/logs/{sample}.downSampled.picardLibComplexity"
+        "output/logs/{sample}.picardLibComplexity"
     shell:
         "picard -Xmx6G EstimateLibraryComplexity INPUT={input} OUTPUT={output} USE_JDK_DEFLATER=TRUE USE_JDK_INFLATER=TRUE VERBOSITY=ERROR"
 
