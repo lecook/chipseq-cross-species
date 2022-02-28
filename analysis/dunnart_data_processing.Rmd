@@ -25,8 +25,11 @@ conda activate chip
 ```
 
 ## Run snakemake from command line
+
 Cluster configuration file: code/configs/cluster.json
+
 Sample configuration file: code/configs/config.yaml
+
 Sample text file: code/configs/SSR.text
 
 ```{bash eval=FALSE}
@@ -36,6 +39,7 @@ snakemake --snakemakefile code/dunnart_peak_calling/dunnart_snakefile -j 6 --clu
 
 ## Effective genome length
 We can approximate effective genome size for various read lengths using the khmer program and `unique-kmers.py`. This will estimate the number of unique kmers (for a specified length kmer) which can be used to infer the total uniquely mappable genome. (I.e it doesn't include highly repetitive regions). https://khmer.readthedocs.io/en/v2.1.1/user/scripts.html
+
 This was a suggestion of deepTools: https://deeptools.readthedocs.io/en/latest/content/feature/effectiveGenomeSize.html
 
 ```{bash eval=FALSE}
@@ -68,9 +72,22 @@ Build index:
 bowtie2-build Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr.fa Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr
 ```
 
-## Align reads and filter using samtools and Picard 
+## Align and filter dunnart reads
+
+Uses samtools and picards MarkDuplicates to remove low quality reads. This is based on and in accordance with the ENCODE Guidelines and pipeline (https://github.com/ENCODE-DCC/chip-seq-pipeline2)
+
+__Library Complexity ChIP-seq Standards:__
+
+| PBC1 | PBC2 | Bottlenecking level | NRF | Complexity | Flag colors |
+|:-:|:-:|:-:|:-:|:-:|:-:|
+| < 0.5 | < 1 | Severe | < 0.5 | Concerning | Orange |
+| 0.5 ≤ PBC1 < 0.8 | 1 ≤ PBC2 < 3 | Moderate | 0.5 ≤ NRF < 0.8 | Acceptable | Yellow |
+| 0.8 ≤ PBC1 < 0.9 | 3 ≤ PBC2 < 10 | Mild | 0.8 ≤ NRF < 0.9 | Compliant | None |
+| ≥ 0.9 | ≥ 10 | None | > 0.9 | Ideal | None |
+
 See full snakemake script for details: code/dunnart_peak_calling/dunnart_snakefile.
 
+Table. Read alignment quality metrics before and aftering filtering steps
 |  <br>                                                                                |               | **read counts**                                             |                    |                      |            |             |              |
 | :----------------------------------------------------------------------------------: | :-----------: | :---------------------------------------------------------: | :----------------: | :------------------: | :--------: | :---------: | :----------: |
 | **Sample**                                                                           | **Antibody**  | *bowtie2 alignment*                                         | *filtered reads\^*  | *remove duplicates*  | **NRF\***  | **PBC1\***  | **PBC2\***   |
@@ -80,6 +97,76 @@ See full snakemake script for details: code/dunnart_peak_calling/dunnart_snakefi
 | B-1                                                                                  | input         | 111574640                                                   | 72303316           | 44433864             | 0\.820313  | 0\.819974   | 5\.545324    |
 | B-2                                                                                  | H3K4me3       | 114146802                                                   | 67048994           | 42357180             | 0\.831032  | 0\.830749   | 5\.898224    |
 | B-3                                                                                  | H3K27ac       | 104714846                                                   | 66615704           | 43939460             | 0\.847255  | 0\.847022   | 6\.529168    |
-|                                                                                      |               |                                                             |                    |                      |            |             |              |
-| \* calculated from a subsample of ~10-15M aligned reads prior to removing duplicates |               |                                                             |                    |                      |            |             |              |
-| ̂ excluded low quality (MAPQ  30) and orphaned reads                                 |               |                                                             |                    |                      |            |             |              |
+
+* calculated from a subsample of ~10-15M aligned reads prior to removing duplicates
+
+^ excluded low quality (MAPQ  30) and orphaned reads
+
+## Read QC with deepTools
+
+### Plot correlation between BAM files
+`plotCorrelation` computes the overall similarity between two or more files based on read coverage (or other scores) within genomic regions.
+
+This helps to determine whether the different sample types can be separated, i.e., samples of different conditions are expected to be more dissimilar to each other than replicates within the same condition.
+
+```{r}
+include_graphics("output/qc/pearsoncor_multibamsum.png")
+```
+
+### Fingerprint plots 
+This tool samples indexed BAM files and plots a profile of cumulative read coverages for each. All reads overlapping a window (bin) of the specified length are counted; these counts are sorted and the cumulative sum is finally plotted.
+
+It determines how well the signal in the ChIP-seq sample can be differentiated from the background distribution of reads in the control sample.
+
+An ideal input with perfect uniform distribution of reads along the genome (i.e. without enrichments in open chromatin etc.) and infinite sequencing coverage should generate a straight diagonal line. A very specific and strong ChIP enrichment will be indicated by a prominent and steep rise of the cumulative sum towards the highest rank. This means that a big chunk of reads from the ChIP sample is located in few bins which corresponds to high, narrow enrichments typically seen for transcription factors.
+
+```{r}
+include_graphics("output/qc/multiBAM_fingerprint.png")
+```
+
+### BAM PE fragment size
+
+This tool calculates the fragment sizes for read pairs given a BAM file from paired-end sequencing. Several regions are sampled depending on the size of the genome and number of processors to estimate thesummary statistics on the fragment lengths.
+
+```{r}
+include_graphics("output/qc/bamPEFragmentSize_hist.png")
+```
+
+## Cross-correlation analysis
+Information from: https://docs.google.com/document/d/1lG_Rd7fnYgRpSIqrIfuVlAz2dW1VaSQThzk836Db99c/edit
+
+This set of programs operate on mapped Illumina single-end read datasets in tagAlign or BAM format. Because my data is paired-end I need to only use the forward read.
+
+A high-quality ChIP-seq experiment will produce significant clustering of enriched DNA sequence tags/reads at locations bound by the protein of interest; the expectation is that we can observe a bimodal enrichment of reads (sequence tags) on both the forward and the reverse strands.
+
+Cross-correlation analysis is done on a filtered (but not-deduped) and subsampled BAM. There is a special fastq trimming for cross-correlation analysis. Read1 fastq is trimmed to 50bp first using trimfastq.py (last modified 2017/11/08, https://github.com/ENCODE-DCC/chip-seq-pipeline2/blob/master/src/trimfastq.py). And then it is separately mapped as SE. Reads are filtered but duplicates are not removed. Then 15 million reads are randomly sampled and used for cross-correlation analysis.
+
+ENCODE standards:
+
+| col. | abbreviation     | description                                                                                         |
+|------|------------------|-----------------------------------------------------------------------------------------------------|
+| 1    | Filename         | tagAlign/BAM filename                                                                               |
+| 2    | numReads         | effective sequencing depth i.e. total number of mapped reads in input file                          |
+| 3    | estFragLen       | comma separated strand cross-correlation peak(s) in decreasing order of correlation.                |
+| 4    | corr_estFragLen  | comma separated strand cross-correlation value(s) in decreasing order (COL2 follows the same order) |
+| 5    | phantomPeak      | Read length/phantom peak strand shift                                                               |
+| 6    | corr_phantomPeak | Correlation value at phantom peak                                                                   |
+| 7    | argmin_corr      | strand shift at which cross-correlation is lowest                                                   |
+| 8    | min_corr         | minimum value of cross-correlation                                                                  |
+| 9    | NSC              | Normalized strand cross-correlation coefficient (NSC) = COL4 / COL8                                 |
+| 10   | RSC              | Relative strand cross-correlation coefficient (RSC) = (COL4 - COL8) / (COL6 - COL8)                 |
+| 11   | QualityTag       | Quality tag based on thresholded RSC (codes= -2:veryLow, -1:Low, 0:Medium, 1:High, 2:veryHigh)      |
+
+
+NSC; NSC>1.1 (higher values indicate more enrichment; 1 = no enrichment)
+
+RSC; RSC>0.8 (0 = no signal; <1 low quality ChIP; >1 high enrichment
+
+Quality tag based on thresholded RSC (codes: -2:veryLow,-1:Low,0:Medium,1:High; 2:veryHigh)
+
+## Peak QC 
+
+### Fraction of reads in peaks
+
+### Consensus peaksets for biological replicates
+
