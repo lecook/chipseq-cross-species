@@ -4,17 +4,6 @@ Link to project [website] - WORK IN PROGRESS
 
 [website]: https://lecook.github.io/chipseq-cross-species/
 
-
-
-## Mouse ChIP-seq data
-<details><summary>Experimental design</summary>
-<p>
-  
-balhbalh
-  
-</p>
-</details>
-
 ## Data management
 ```
 chipseq-cross-species/
