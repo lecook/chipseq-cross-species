@@ -28,7 +28,7 @@ INPUTS = []
 MARK = []
 
 with open(config['SAMPLES'], "r") as f:
-    reader = csv.reader(f, delimiter = "\t")
+    reader = csv.reader(f, delimiter = ",")
     header = next(reader)
     for row in reader:
         print(row)
