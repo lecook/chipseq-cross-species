@@ -10,19 +10,28 @@ editor_options:
 
 Laura Cook
 
+# Workflow and analysis of comparative craniofacial ChIP-seq work in the fat-tailed dunnart and mouse
+
 This project involves a number of analysis for the generation of ChIP-seq data for the fat-tailed dunnart for comparison with the exisiting mouse data in ENCODE.
 
-# Data
+## Data
 
-# Data preparation
+## Data preparation
+
 * [Dunnart data pre-processing](dunnart_data_processing.html)
+
 * [Mouse data pre-processing]
 
-# Analyses:
-* Whole genome alignment between mouse and dunnart
-* Dunnart peak characterisation
-* [Cross-species peak comparisons](cross-species-peak-comparison.html)
-	+ Peak level
-	+ Gene level
-	+ Incorporating temporal mouse gene expression data
+## Analyses:
 
+* Whole genome alignment between mouse and dunnart
+
+* Dunnart peak characterisation
+
+* [Cross-species peak comparisons](cross-species-peak-comparison.html)
+
+	+ Peak level
+	
+	+ Gene level
+	
+	+ Incorporating temporal mouse gene expression data
