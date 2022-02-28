@@ -1,7 +1,7 @@
-name: "chipseq_cross_species"
+name: chipseq_cross_species
 output_dir: ../docs
 navbar:
-  title: "chipseq_cross_species"
+  title: chipseq_cross_species
   left:
   - text: Home
     href: index.html
@@ -9,6 +9,10 @@ navbar:
     href: about.html
   - text: License
     href: license.html
+  right:
+  - icon: fab fa-github
+    text: Source code
+    href: https://github.com/lecook/chipseq-cross-species
 output:
   workflowr::wflow_html:
     toc: yes

@@ -1,8 +1,8 @@
 # chipseq_cross_species
 
-Link to project [website]
+Link to project [website] - WORK IN PROGRESS
 
-[website]: https://github.com/lecook/chipseq-cross-species/index.html
+[website]: https://lecook.github.io/chipseq-cross-species/
 
 ## Dunnart ChIP-seq data
 <details><summary>Experimental design</summary>
