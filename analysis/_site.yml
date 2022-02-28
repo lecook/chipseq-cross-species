@@ -12,7 +12,7 @@ navbar:
   right:
   - icon: fab fa-github
     text: Source code
-    href: https://github.com/lauracook/
+    href: https://github.com/lecook/
 output:
   workflowr::wflow_html:
     toc: yes
