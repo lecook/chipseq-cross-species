@@ -13,7 +13,7 @@
 
 <meta name="date" content="2022-02-23" />
 
-<title>Dunnart ChIP-seq experiment</title>
+<title>Mouse ChIP-seq data from ENCODE</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -355,7 +355,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Dunnart ChIP-seq experiment</h1>
+<h1 class="title toc-ignore">Mouse ChIP-seq data from ENCODE</h1>
 <h4 class="author">lecook</h4>
 <h4 class="date">2022-02-23</h4>
 
@@ -468,7 +468,7 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/dunnart_experiment_overview.Rmd</code>) and HTML (<code>docs/dunnart_experiment_overview.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/mouse_data_ENCODE.Rmd</code>) and HTML (<code>docs/mouse_data_ENCODE.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -497,7 +497,7 @@ Message
 Rmd
 </td>
 <td>
-<a href="https://github.com/lecook/chipseq-cross-species/blob/bf8fac9ae9ff292e4764f6dd11608faad53c8354/analysis/dunnart_experiment_overview.Rmd" target="_blank">bf8fac9</a>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/bf8fac9ae9ff292e4764f6dd11608faad53c8354/analysis/mouse_data_ENCODE.Rmd" target="_blank">bf8fac9</a>
 </td>
 <td>
 lecook
@@ -511,33 +511,16 @@ updated
 </tr>
 <tr>
 <td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/6134b21a4152be1e3538d732c95044d5186d6065/docs/dunnart_experiment_overview.html" target="_blank">6134b21</a>
-</td>
-<td>
-lecook
-</td>
-<td>
-2022-02-28
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
 Rmd
 </td>
 <td>
-<a href="https://github.com/lecook/chipseq-cross-species/blob/8a0eef12edd3cac71500ea5f16b306bb6e792d01/analysis/dunnart_experiment_overview.Rmd" target="_blank">8a0eef1</a>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/f1c4e622d65e2d5a4ed075607399131efceda776/analysis/mouse_data_ENCODE.Rmd" target="_blank">f1c4e62</a>
 </td>
 <td>
 lecook
 </td>
 <td>
-2022-02-28
+2022-03-01
 </td>
 <td>
 first commit
@@ -550,865 +533,354 @@ first commit
 </div>
 </div>
 </div>
-<div id="dunnart-chip-seq-experiment" class="section level1">
-<h1>Dunnart ChIP-seq experiment</h1>
-<div id="experimental-design" class="section level2">
-<h2>Experimental design</h2>
-<p><strong>H3K4me3</strong></p>
-<ul>
-<li>Signature of active promoters.</li>
-<li>Closely linked with TSSs.</li>
-<li>Active, and prefers promoters to enhancers</li>
-</ul>
-<p><strong>H3K27ac</strong></p>
-<ul>
-<li>Signature of active and poised enhancers</li>
-<li>Active, and prefers enhancers to promoters</li>
-</ul>
-<p><strong>Pouch young heads were pooled to generate 2 replicates</strong></p>
+<div id="mouse-chip-seq-data-from-encode" class="section level1">
+<h1>Mouse ChIP-seq data from ENCODE</h1>
+<p>Unfiltered aligned reads downloaded from <a href="https://www.encodeproject.org/search/?type=Experiment&amp;control_type!=*&amp;status=released&amp;perturbed=false&amp;searchTerm=mouse+chipseq&amp;target.label=H3K4me3&amp;target.label=H3K27ac&amp;biosample_ontology.term_name=embryonic+facial+prominence" class="uri">https://www.encodeproject.org/search/?type=Experiment&amp;control_type!=*&amp;status=released&amp;perturbed=false&amp;searchTerm=mouse+chipseq&amp;target.label=H3K4me3&amp;target.label=H3K27ac&amp;biosample_ontology.term_name=embryonic+facial+prominence</a></p>
+<p>Table. ENCODE mouse embryonic facial prominence ChIP-seq accession numbers and details used in study.</p>
 <table>
 <colgroup>
-<col width="17%" />
-<col width="9%" />
-<col width="12%" />
-<col width="12%" />
-<col width="10%" />
-<col width="10%" />
 <col width="8%" />
 <col width="5%" />
-<col width="16%" />
+<col width="4%" />
+<col width="5%" />
+<col width="7%" />
+<col width="8%" />
+<col width="5%" />
+<col width="8%" />
+<col width="6%" />
+<col width="20%" />
+<col width="19%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th>collection date</th>
-<th>PY ID</th>
-<th>weight (g)</th>
-<th>head_shape</th>
-<th>maternal</th>
-<th>paternal</th>
-<th>litter</th>
-<th>sex</th>
-<th>replicate pool</th>
+<th align="center"><br> <strong>replicate</strong></th>
+<th align="center"><strong>antibody</strong></th>
+<th align="center"><strong>stage</strong></th>
+<th align="center"><strong>accession</strong></th>
+<th align="center"><strong>input control</strong></th>
+<th align="center"><strong>file type</strong></th>
+<th align="center"><strong>seq reads</strong></th>
+<th align="center"><strong>strain background</strong></th>
+<th align="center"><strong>biosample ID</strong></th>
+<th align="center"><strong>biosample description</strong></th>
+<th align="center"><strong>lab/references</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>17/09/2018</td>
-<td>Fr113.1</td>
-<td>0.014</td>
-<td>flat head</td>
-<td>Fr113</td>
-<td>My76</td>
-<td>1</td>
-<td></td>
-<td>A</td>
+<td align="center">1</td>
+<td align="center">H3K27ac</td>
+<td align="center">E10.5</td>
+<td align="center">ENCFF213EBC</td>
+<td align="center">ENCFF157KEH</td>
+<td align="center">unfiltered BAM</td>
+<td align="center">SE50nt</td>
+<td align="center">C57BL/6</td>
+<td align="center">ENCBS938XWJ</td>
+<td align="center">Embryonic facial prominence <br> from 69 mice</td>
+<td align="center">Bing Ren, UCSD</td>
 </tr>
 <tr class="even">
-<td>17/09/2018</td>
-<td>Fr113.2</td>
-<td>0.016</td>
-<td>flat head</td>
-<td>Fr113</td>
-<td>My76</td>
-<td>1</td>
-<td></td>
-<td>A</td>
+<td align="center">2</td>
+<td align="center">H3K27ac</td>
+<td align="center">E10.5</td>
+<td align="center">ENCFF548BRR</td>
+<td align="center">ENCFF825AVI</td>
+<td align="center">unfiltered BAM</td>
+<td align="center">SE50nt</td>
+<td align="center">C57BL/6</td>
+<td align="center">ENCBS199YOQ</td>
+<td align="center">Embryonic facial prominence <br> from 51 mice</td>
+<td align="center">Bing Ren, UCSD</td>
 </tr>
 <tr class="odd">
-<td>17/09/2018</td>
-<td>Fr113.3</td>
-<td>0.0145</td>
-<td>flat head</td>
-<td>Fr113</td>
-<td>My76</td>
-<td>1</td>
-<td></td>
-<td>A</td>
+<td align="center">1</td>
+<td align="center">H3K27ac</td>
+<td align="center">E11.5</td>
+<td align="center">ENCFF512SFE</td>
+<td align="center">ENCFF184CUE</td>
+<td align="center">unfiltered BAM</td>
+<td align="center">SE36nt</td>
+<td align="center">C57BL/6</td>
+<td align="center">ENCBS141GPQ</td>
+<td align="center">Embryonic facial prominence <br> from 109 mice</td>
+<td align="center">Bing Ren, UCSD</td>
 </tr>
 <tr class="even">
-<td>17/09/2018</td>
-<td>Fr113.4</td>
-<td>0.0162</td>
-<td>flat head</td>
-<td>Fr113</td>
-<td>My76</td>
-<td>1</td>
-<td></td>
-<td>A</td>
+<td align="center">2</td>
+<td align="center">H3K27ac</td>
+<td align="center">E11.5</td>
+<td align="center">ENCFF515PKL</td>
+<td align="center">ENCFF376FGM</td>
+<td align="center">unfiltered BAM</td>
+<td align="center">SE36nt</td>
+<td align="center">C57BL/6</td>
+<td align="center">ENCBS468NAL</td>
+<td align="center">Embryonic facial prominence <br> from 88 mice</td>
+<td align="center">Bing Ren, UCSD</td>
 </tr>
 <tr class="odd">
-<td>14/11/2018</td>
-<td>Fb148.1</td>
-<td>0.016</td>
-<td>round head</td>
-<td>Fb148</td>
-<td>Mg120</td>
-<td>2</td>
-<td></td>
-<td>B</td>
+<td align="center">1</td>
+<td align="center">H3K27ac</td>
+<td align="center">E12.5</td>
+<td align="center">ENCFF394TZN</td>
+<td align="center">ENCFF203JQV</td>
+<td align="center">unfiltered BAM</td>
+<td align="center">SE50nt</td>
+<td align="center">C57BL/6</td>
+<td align="center">ENCBS047UII</td>
+<td align="center">Embryonic facial prominence <br> from 120 mice</td>
+<td align="center">Bing Ren, UCSD</td>
 </tr>
 <tr class="even">
-<td>14/11/2018</td>
-<td>Fb148.2</td>
-<td>0.016</td>
-<td>round head</td>
-<td>Fb148</td>
-<td>Mg120</td>
-<td>2</td>
-<td></td>
-<td>B</td>
+<td align="center">2</td>
+<td align="center">H3K27ac</td>
+<td align="center">E12.5</td>
+<td align="center">ENCFF011NFM</td>
+<td align="center">ENCFF058AUT</td>
+<td align="center">unfiltered BAM</td>
+<td align="center">SE50nt</td>
+<td align="center">C57BL/6</td>
+<td align="center">ENCBS399GYO</td>
+<td align="center">Embryonic facial prominence <br> from 88 mice</td>
+<td align="center">Bing Ren, UCSD</td>
 </tr>
 <tr class="odd">
-<td>14/11/2018</td>
-<td>Fb148.3</td>
-<td>0.016</td>
-<td>round head</td>
-<td>Fb148</td>
-<td>Mg120</td>
-<td>2</td>
-<td></td>
-<td>B</td>
+<td align="center">1</td>
+<td align="center">H3K27ac</td>
+<td align="center">E13.5</td>
+<td align="center">ENCFF194ORC</td>
+<td align="center">ENCFF117QRC</td>
+<td align="center">unfiltered BAM</td>
+<td align="center">SE50nt</td>
+<td align="center">C57BL/6</td>
+<td align="center">ENCBS764ZZN</td>
+<td align="center">Embryonic facial prominence <br> from 62 mice</td>
+<td align="center">Bing Ren, UCSD</td>
 </tr>
 <tr class="even">
-<td>14/11/2018</td>
-<td>Fb148.4</td>
-<td>0.016</td>
-<td>round head</td>
-<td>Fb148</td>
-<td>Mg120</td>
-<td>2</td>
-<td></td>
-<td>B</td>
+<td align="center">2</td>
+<td align="center">H3K27ac</td>
+<td align="center">E13.5</td>
+<td align="center">ENCFF290ZNF</td>
+<td align="center">ENCFF248PGK</td>
+<td align="center">unfiltered BAM</td>
+<td align="center">SE50nt</td>
+<td align="center">C57BL/6</td>
+<td align="center">ENCBS847MIW</td>
+<td align="center">Embryonic facial prominence <br> from 66 mice</td>
+<td align="center">Bing Ren, UCSD</td>
 </tr>
 <tr class="odd">
-<td>9/01/2019</td>
-<td>Fg123.1</td>
-<td>0.0155</td>
-<td>flat head</td>
-<td>Fg123</td>
-<td>Mr89</td>
-<td>3</td>
-<td></td>
-<td>B</td>
+<td align="center">1</td>
+<td align="center">H3K27ac</td>
+<td align="center">E14.5</td>
+<td align="center">ENCFF327VAO</td>
+<td align="center">ENCFF784ORI</td>
+<td align="center">unfiltered BAM</td>
+<td align="center">SE36nt</td>
+<td align="center">C57BL/6</td>
+<td align="center">ENCBS012AAA</td>
+<td align="center">Embryonic facial prominence <br> from 24 mice</td>
+<td align="center">Bing Ren, UCSD</td>
 </tr>
 <tr class="even">
-<td>9/01/2019</td>
-<td>Fg123.2</td>
-<td>0.0155</td>
-<td>flat head</td>
-<td>Fg123</td>
-<td>Mr89</td>
-<td>3</td>
-<td></td>
-<td>B</td>
+<td align="center">2</td>
+<td align="center">H3K27ac</td>
+<td align="center">E14.5</td>
+<td align="center">ENCFF902HAR</td>
+<td align="center">ENCFF002HZV</td>
+<td align="center">unfiltered BAM</td>
+<td align="center">SE36nt</td>
+<td align="center">C57BL/6</td>
+<td align="center">ENCBS012AAA</td>
+<td align="center">Embryonic facial prominence <br> from 24 mice</td>
+<td align="center">Bing Ren, UCSD</td>
 </tr>
 <tr class="odd">
-<td>9/01/2019</td>
-<td>Fg123.3</td>
-<td>0.0155</td>
-<td>flat head</td>
-<td>Fg123</td>
-<td>Mr89</td>
-<td>3</td>
-<td></td>
-<td>B</td>
+<td align="center">1</td>
+<td align="center">H3K27ac</td>
+<td align="center">E15.5</td>
+<td align="center">ENCFF584JFB</td>
+<td align="center">ENCFF727QTS</td>
+<td align="center">unfiltered BAM</td>
+<td align="center">SE50nt</td>
+<td align="center">C57BL/6</td>
+<td align="center">ENCBS543BPM</td>
+<td align="center">Embryonic facial prominence <br> from 78 mice</td>
+<td align="center">Bing Ren, UCSD</td>
 </tr>
 <tr class="even">
-<td>9/01/2019</td>
-<td>Fg123.4</td>
-<td>0.0155</td>
-<td>flat head</td>
-<td>Fg123</td>
-<td>Mr89</td>
-<td>3</td>
-<td></td>
-<td>B</td>
+<td align="center">2</td>
+<td align="center">H3K27ac</td>
+<td align="center">E15.5</td>
+<td align="center">ENCFF707WKL</td>
+<td align="center">ENCFF182XFG</td>
+<td align="center">unfiltered BAM</td>
+<td align="center">SE50nt</td>
+<td align="center">C57BL/6</td>
+<td align="center">ENCBS900XQR</td>
+<td align="center">Embryonic facial prominence <br> from 62 mice</td>
+<td align="center">Bing Ren, UCSD</td>
 </tr>
 <tr class="odd">
-<td>9/01/2019</td>
-<td>Fg123.5</td>
-<td>0.0155</td>
-<td>flat head</td>
-<td>Fg123</td>
-<td>Mr89</td>
-<td>3</td>
-<td></td>
-<td>B</td>
+<td align="center">1</td>
+<td align="center">H3K4me3</td>
+<td align="center">E10.5</td>
+<td align="center">ENCFF124UYX</td>
+<td align="center">ENCFF157KEH</td>
+<td align="center">unfiltered BAM</td>
+<td align="center">SE50nt</td>
+<td align="center">C57BL/6</td>
+<td align="center">ENCBS938XWJ</td>
+<td align="center">Embryonic facial prominence <br> from 69 mice</td>
+<td align="center">Bing Ren, UCSD</td>
 </tr>
 <tr class="even">
-<td>9/01/2019</td>
-<td>Fg123.6</td>
-<td>0.0155</td>
-<td>flat head</td>
-<td>Fg123</td>
-<td>Mr89</td>
-<td>3</td>
-<td></td>
-<td>B</td>
+<td align="center">2</td>
+<td align="center">H3K4me3</td>
+<td align="center">E10.5</td>
+<td align="center">ENCFF045IPK</td>
+<td align="center">ENCFF825AVI</td>
+<td align="center">unfiltered BAM</td>
+<td align="center">SE50nt</td>
+<td align="center">C57BL/6</td>
+<td align="center">ENCBS199YOQ</td>
+<td align="center">Embryonic facial prominence <br> from 51 mice</td>
+<td align="center">Bing Ren, UCSD</td>
 </tr>
 <tr class="odd">
-<td>16/01/2019</td>
-<td>Fb148.5</td>
-<td>0.014</td>
-<td>flat head</td>
-<td>Fb148</td>
-<td>Mg120</td>
-<td>4</td>
-<td></td>
-<td>A</td>
+<td align="center">1</td>
+<td align="center">H3K4me3</td>
+<td align="center">E11.5</td>
+<td align="center">ENCFF760QYZ</td>
+<td align="center">ENCFF184CUE</td>
+<td align="center">unfiltered BAM</td>
+<td align="center">SE36nt</td>
+<td align="center">C57BL/6</td>
+<td align="center">ENCBS141GPQ</td>
+<td align="center">Embryonic facial prominence <br> from 109 mice</td>
+<td align="center">Bing Ren, UCSD</td>
 </tr>
 <tr class="even">
-<td>16/01/2019</td>
-<td>Fb148.3</td>
-<td>0.015</td>
-<td>flat head</td>
-<td>Fb148</td>
-<td>Mg120</td>
-<td>4</td>
-<td></td>
-<td>A</td>
+<td align="center">2</td>
+<td align="center">H3K4me3</td>
+<td align="center">E11.5</td>
+<td align="center">ENCFF717QDV</td>
+<td align="center">ENCFF376FGM</td>
+<td align="center">unfiltered BAM</td>
+<td align="center">SE36nt</td>
+<td align="center">C57BL/6</td>
+<td align="center">ENCBS468NAL</td>
+<td align="center">Embryonic facial prominence <br> from 88 mice</td>
+<td align="center">Bing Ren, UCSD</td>
 </tr>
 <tr class="odd">
-<td>16/01/2019</td>
-<td>Fb148.4</td>
-<td>0.015</td>
-<td>flat head</td>
-<td>Fb148</td>
-<td>Mg120</td>
-<td>4</td>
-<td></td>
-<td>A</td>
+<td align="center">1</td>
+<td align="center">H3K4me3</td>
+<td align="center">E12.5</td>
+<td align="center">ENCFF182ZPF</td>
+<td align="center">ENCFF203JQV</td>
+<td align="center">unfiltered BAM</td>
+<td align="center">SE50nt</td>
+<td align="center">C57BL/6</td>
+<td align="center">ENCBS047UII</td>
+<td align="center">Embryonic facial prominence <br> from 120 mice</td>
+<td align="center">Bing Ren, UCSD</td>
 </tr>
 <tr class="even">
-<td>16/01/2019</td>
-<td>Fb148.1</td>
-<td>0.015</td>
-<td>flat head</td>
-<td>Fb148</td>
-<td>Mg120</td>
-<td>4</td>
-<td></td>
-<td>A</td>
+<td align="center">2</td>
+<td align="center">H3K4me3</td>
+<td align="center">E12.5</td>
+<td align="center">ENCFF941QJZ</td>
+<td align="center">ENCFF058AUT</td>
+<td align="center">unfiltered BAM</td>
+<td align="center">SE50nt</td>
+<td align="center">C57BL/6</td>
+<td align="center">ENCBS399GYO</td>
+<td align="center">Embryonic facial prominence <br> from 88 mice</td>
+<td align="center">Bing Ren, UCSD</td>
 </tr>
 <tr class="odd">
-<td>16/01/2019</td>
-<td>Fb148.7</td>
-<td>0.014</td>
-<td>flat head</td>
-<td>Fb148</td>
-<td>Mg120</td>
-<td>4</td>
-<td></td>
-<td>A</td>
+<td align="center">1</td>
+<td align="center">H3K4me3</td>
+<td align="center">E13.5</td>
+<td align="center">ENCFF485UDC</td>
+<td align="center">ENCFF117QRC</td>
+<td align="center">unfiltered BAM</td>
+<td align="center">SE50nt</td>
+<td align="center">C57BL/6</td>
+<td align="center">ENCBS764ZZN</td>
+<td align="center">Embryonic facial prominence <br> from 62 mice</td>
+<td align="center">Bing Ren, UCSD</td>
 </tr>
 <tr class="even">
-<td>16/01/2019</td>
-<td>Fb148.2</td>
-<td>0.014</td>
-<td>flat head</td>
-<td>Fb148</td>
-<td>Mg120</td>
-<td>4</td>
-<td></td>
-<td>A</td>
+<td align="center">2</td>
+<td align="center">H3K4me3</td>
+<td align="center">E13.5</td>
+<td align="center">ENCFF124TAB</td>
+<td align="center">ENCFF248PGK</td>
+<td align="center">unfiltered BAM</td>
+<td align="center">SE50nt</td>
+<td align="center">C57BL/6</td>
+<td align="center">ENCBS847MIW</td>
+<td align="center">Embryonic facial prominence <br> from 66 mice</td>
+<td align="center">Bing Ren, UCSD</td>
 </tr>
 <tr class="odd">
-<td>16/01/2019</td>
-<td>Fb148.6</td>
-<td>0.014</td>
-<td>flat head</td>
-<td>Fb148</td>
-<td>Mg120</td>
-<td>4</td>
-<td></td>
-<td>A</td>
+<td align="center">1</td>
+<td align="center">H3K4me3</td>
+<td align="center">E14.5</td>
+<td align="center">ENCFF724DMU</td>
+<td align="center">ENCFF784ORI</td>
+<td align="center">unfiltered BAM</td>
+<td align="center">SE36nt</td>
+<td align="center">C57BL/6</td>
+<td align="center">ENCBS012AAA</td>
+<td align="center">Embryonic facial prominence <br> from 24 mice</td>
+<td align="center">Bing Ren, UCSD</td>
 </tr>
 <tr class="even">
-<td>24/09/2019</td>
-<td>Fw263.1</td>
-<td>0.0164</td>
-<td>round head</td>
-<td>Fw263</td>
-<td>Mw270</td>
-<td>5</td>
-<td></td>
-<td>A</td>
+<td align="center">2</td>
+<td align="center">H3K4me3</td>
+<td align="center">E14.5</td>
+<td align="center">ENCFF665QBJ</td>
+<td align="center">ENCFF002HZV</td>
+<td align="center">unfiltered BAM</td>
+<td align="center">SE36nt</td>
+<td align="center">C57BL/6</td>
+<td align="center">ENCBS024AAA</td>
+<td align="center">Embryonic facial prominence <br> from 34 mice</td>
+<td align="center">Bing Ren, UCSD</td>
 </tr>
 <tr class="odd">
-<td>24/09/2019</td>
-<td>Fw263.2</td>
-<td>0.015</td>
-<td>round head</td>
-<td>Fw263</td>
-<td>Mw270</td>
-<td>5</td>
-<td></td>
-<td>A</td>
+<td align="center">1</td>
+<td align="center">H3K4me3</td>
+<td align="center">E15.5</td>
+<td align="center">ENCFF258KCR</td>
+<td align="center">ENCFF727QTS</td>
+<td align="center">unfiltered BAM</td>
+<td align="center">SE50nt</td>
+<td align="center">C57BL/6</td>
+<td align="center">ENCBS543BPM</td>
+<td align="center">Embryonic facial prominence <br> from 78 mice</td>
+<td align="center">Bing Ren, UCSD</td>
 </tr>
 <tr class="even">
-<td>24/09/2019</td>
-<td>Fw263.3</td>
-<td>0.0157</td>
-<td>round head</td>
-<td>Fw263</td>
-<td>Mw270</td>
-<td>5</td>
-<td></td>
-<td>A</td>
-</tr>
-<tr class="odd">
-<td>24/09/2019</td>
-<td>Fw263.4</td>
-<td>0.0176</td>
-<td>round head</td>
-<td>Fw263</td>
-<td>Mw270</td>
-<td>5</td>
-<td></td>
-<td>A</td>
-</tr>
-<tr class="even">
-<td>24/09/2019</td>
-<td>Fw263.5</td>
-<td>0.0176</td>
-<td>round head</td>
-<td>Fw263</td>
-<td>Mw270</td>
-<td>5</td>
-<td></td>
-<td>A</td>
-</tr>
-<tr class="odd">
-<td>24/09/2019</td>
-<td>Fw263.6</td>
-<td>0.0146</td>
-<td>round head</td>
-<td>Fw263</td>
-<td>Mw270</td>
-<td>5</td>
-<td></td>
-<td>A</td>
-</tr>
-<tr class="even">
-<td>24/09/2019</td>
-<td>Fw263.7</td>
-<td>0.0173</td>
-<td>round head</td>
-<td>Fw263</td>
-<td>Mw270</td>
-<td>5</td>
-<td></td>
-<td>A</td>
-</tr>
-<tr class="odd">
-<td>23/10/2019</td>
-<td>Fb197.1</td>
-<td>0.0137</td>
-<td>flat head</td>
-<td>Fb197</td>
-<td>My234</td>
-<td>6</td>
-<td>M</td>
-<td>B</td>
-</tr>
-<tr class="even">
-<td>23/10/2019</td>
-<td>Fb197.2</td>
-<td>0.0112</td>
-<td>flat head</td>
-<td>Fb197</td>
-<td>My234</td>
-<td>6</td>
-<td>M</td>
-<td>B</td>
-</tr>
-<tr class="odd">
-<td>23/10/2019</td>
-<td>Fb197.3</td>
-<td>0.0132</td>
-<td>flat head</td>
-<td>Fb197</td>
-<td>My234</td>
-<td>6</td>
-<td>M</td>
-<td>B</td>
-</tr>
-<tr class="even">
-<td>23/10/2019</td>
-<td>Fb197.4</td>
-<td>0.0114</td>
-<td>flat head</td>
-<td>Fb197</td>
-<td>My234</td>
-<td>6</td>
-<td>M</td>
-<td>B</td>
-</tr>
-<tr class="odd">
-<td>23/10/2019</td>
-<td>Fb197.5</td>
-<td>0.0098</td>
-<td>flat head</td>
-<td>Fb197</td>
-<td>My234</td>
-<td>6</td>
-<td>F</td>
-<td>B</td>
-</tr>
-<tr class="even">
-<td>23/10/2019</td>
-<td>Fb197.6</td>
-<td>0.0121</td>
-<td>flat head</td>
-<td>Fb197</td>
-<td>My234</td>
-<td>6</td>
-<td>F</td>
-<td>B</td>
-</tr>
-<tr class="odd">
-<td>23/10/2019</td>
-<td>Fb197.7</td>
-<td>0.0118</td>
-<td>flat head</td>
-<td>Fb197</td>
-<td>My234</td>
-<td>6</td>
-<td>F</td>
-<td>B</td>
-</tr>
-<tr class="even">
-<td>23/10/2019</td>
-<td>Fb197.8</td>
-<td>0.0116</td>
-<td>flat head</td>
-<td>Fb197</td>
-<td>My234</td>
-<td>6</td>
-<td>F</td>
-<td>B</td>
-</tr>
-<tr class="odd">
-<td>23/10/2019</td>
-<td>Fb197.9</td>
-<td>0.0115</td>
-<td>flat head</td>
-<td>Fb197</td>
-<td>My234</td>
-<td>6</td>
-<td>F</td>
-<td>B</td>
-</tr>
-<tr class="even">
-<td>29/10/2019</td>
-<td>Fb255.1</td>
-<td>0.0186</td>
-<td>round head</td>
-<td>Fb255</td>
-<td>My234</td>
-<td>7</td>
-<td>F</td>
-<td>B</td>
-</tr>
-<tr class="odd">
-<td>29/10/2019</td>
-<td>Fb255.2</td>
-<td>0.0157</td>
-<td>round head</td>
-<td>Fb255</td>
-<td>My234</td>
-<td>7</td>
-<td>F</td>
-<td>B</td>
-</tr>
-<tr class="even">
-<td>29/10/2019</td>
-<td>Fb255.3</td>
-<td>0.019</td>
-<td>round head</td>
-<td>Fb255</td>
-<td>My234</td>
-<td>7</td>
-<td>M</td>
-<td>B</td>
-</tr>
-<tr class="odd">
-<td>29/10/2019</td>
-<td>Fb255.4</td>
-<td>0.0187</td>
-<td>round head</td>
-<td>Fb255</td>
-<td>My234</td>
-<td>7</td>
-<td>F</td>
-<td>B</td>
-</tr>
-<tr class="even">
-<td>29/10/2019</td>
-<td>Fw264.1</td>
-<td>0.0182</td>
-<td>round head</td>
-<td>Fw264</td>
-<td>My234</td>
-<td>8</td>
-<td>F</td>
-<td>A</td>
-</tr>
-<tr class="odd">
-<td>29/10/2019</td>
-<td>Fw264.2</td>
-<td>0.0185</td>
-<td>round head</td>
-<td>Fw264</td>
-<td>My234</td>
-<td>8</td>
-<td>F</td>
-<td>A</td>
-</tr>
-<tr class="even">
-<td>29/10/2019</td>
-<td>Fw264.3</td>
-<td>0.0168</td>
-<td>round head</td>
-<td>Fw264</td>
-<td>My234</td>
-<td>8</td>
-<td>M</td>
-<td>A</td>
-</tr>
-<tr class="odd">
-<td>29/10/2019</td>
-<td>Fw264.4</td>
-<td>0.0187</td>
-<td>round head</td>
-<td>Fw264</td>
-<td>My234</td>
-<td>8</td>
-<td>M</td>
-<td>A</td>
-</tr>
-<tr class="even">
-<td>19/11/2019</td>
-<td>Fb148.1</td>
-<td>0.017</td>
-<td>round head</td>
-<td>Fb148</td>
-<td>My234</td>
-<td>9</td>
-<td>F</td>
-<td>B</td>
-</tr>
-<tr class="odd">
-<td>19/11/2019</td>
-<td>Fb148.2</td>
-<td>0.018</td>
-<td>round head</td>
-<td>Fb148</td>
-<td>My234</td>
-<td>9</td>
-<td>M</td>
-<td>B</td>
-</tr>
-<tr class="even">
-<td>19/11/2019</td>
-<td>Fb148.3</td>
-<td>0.019</td>
-<td>round head</td>
-<td>Fb148</td>
-<td>My234</td>
-<td>9</td>
-<td>F</td>
-<td>B</td>
-</tr>
-<tr class="odd">
-<td>19/11/2019</td>
-<td>Fb148.4</td>
-<td>0.018</td>
-<td>round head</td>
-<td>Fb148</td>
-<td>My234</td>
-<td>9</td>
-<td>M</td>
-<td>B</td>
-</tr>
-<tr class="even">
-<td>27/11/2019</td>
-<td>Fb198.1</td>
-<td>0.013</td>
-<td>flat head</td>
-<td>Fb198</td>
-<td>My234</td>
-<td>10</td>
-<td>F</td>
-<td>A</td>
-</tr>
-<tr class="odd">
-<td>27/11/2019</td>
-<td>Fb198.2</td>
-<td>0.016</td>
-<td>flat head</td>
-<td>Fb198</td>
-<td>My234</td>
-<td>10</td>
-<td>F</td>
-<td>A</td>
-</tr>
-<tr class="even">
-<td>27/11/2019</td>
-<td>Fb198.3</td>
-<td>0.012</td>
-<td>flat head</td>
-<td>Fb198</td>
-<td>My234</td>
-<td>10</td>
-<td>F</td>
-<td>A</td>
-</tr>
-<tr class="odd">
-<td>27/11/2019</td>
-<td>Fb198.5</td>
-<td>0.015</td>
-<td>flat head</td>
-<td>Fb198</td>
-<td>My234</td>
-<td>10</td>
-<td>M</td>
-<td>A</td>
+<td align="center">2</td>
+<td align="center">H3K4me3</td>
+<td align="center">E15.5</td>
+<td align="center">ENCFF401BKM</td>
+<td align="center">ENCFF182XFG</td>
+<td align="center">unfiltered BAM</td>
+<td align="center">SE50nt</td>
+<td align="center">C57BL/6</td>
+<td align="center">ENCBS900XQR</td>
+<td align="center">Embryonic facial prominence <br> from 62 mice</td>
+<td align="center">Bing Ren, UCSD</td>
 </tr>
 </tbody>
 </table>
-<p></br></p>
-<p>Experiment performed according to manufacturers instructions for the <strong>MAGnify™ Chromatin Immunoprecipitation System (492024)</strong>.</p>
-<p>H3K4me3 antibody (ab8580) - <a href="https://www.abcam.com/histone-h3-tri-methyl-k4-antibody-chip-grade-ab8580.html" class="uri">https://www.abcam.com/histone-h3-tri-methyl-k4-antibody-chip-grade-ab8580.html</a></p>
-<p>H3K27ac antibody (ab4729) - <a href="https://www.abcam.com/histone-h3-acetyl-k27-antibody-chip-grade-ab4729.html" class="uri">https://www.abcam.com/histone-h3-acetyl-k27-antibody-chip-grade-ab4729.html</a></p>
-<p>DNA fragments isolated after pull down were sequenced by GENEWIZ (China). Paired-end sequencing at a depth of 40 million reads.</p>
-<p></br></p>
-<table>
-<thead>
-<tr class="header">
-<th>sample ID</th>
-<th>replicate pool</th>
-<th>pull down</th>
-<th>concentration (ng/uL)</th>
-<th>amount (ug)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>A1</td>
-<td>A</td>
-<td>input control</td>
-<td>0.39</td>
-<td>58.5</td>
-</tr>
-<tr class="even">
-<td>A2</td>
-<td>A</td>
-<td>H3K4me3</td>
-<td>0.258</td>
-<td>38.7</td>
-</tr>
-<tr class="odd">
-<td>A3</td>
-<td>A</td>
-<td>H3K27ac</td>
-<td>1.61</td>
-<td>241.5</td>
-</tr>
-<tr class="even">
-<td>B1</td>
-<td>B</td>
-<td>input control</td>
-<td>0.295</td>
-<td>44.25</td>
-</tr>
-<tr class="odd">
-<td>B2</td>
-<td>B</td>
-<td>H3K4me3</td>
-<td>0.242</td>
-<td>36.3</td>
-</tr>
-<tr class="even">
-<td>B3</td>
-<td>B</td>
-<td>H3K27ac</td>
-<td>2.33</td>
-<td>349.5</td>
-</tr>
-</tbody>
-</table>
-<p></br></p>
-</div>
-<div id="sequencing" class="section level2">
-<h2>Sequencing</h2>
-<p>Library construction and sequencing performed by GENEWIZ. Raw data (Pass Filter Data) was processed by adapter trimming and low quality read removal using NGS quality control software Cutadapt (v1.9.1) to generate clean data for subsequent analysis. software:Cutadapt(version 1.9.1) The process includes the following steps:/ 1. remove the adapter sequences; 2. remove the 5 ‘or 3’ end bases of quality scores below 20; 3. remove the reads in which ‘N’ is above 10%; 4. remove reads that are less than 75 bp long after trimming.</p>
-<p>The statistics of raw data is summarized in the table below.</p>
-<p>Table. Raw data statistics</p>
-<table>
-<thead>
-<tr class="header">
-<th>Sample</th>
-<th>length</th>
-<th>Reads</th>
-<th>Bases</th>
-<th>Q20(%)</th>
-<th>Q30(%)</th>
-<th>GC(%)</th>
-<th>N(ppm)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>A-1</td>
-<td>150.00</td>
-<td>130587134</td>
-<td>19588070100</td>
-<td>97.95</td>
-<td>95.35</td>
-<td>36.18</td>
-<td>1.79</td>
-</tr>
-<tr class="even">
-<td>A-2</td>
-<td>150.00</td>
-<td>103324742</td>
-<td>15498711300</td>
-<td>96.83</td>
-<td>93.28</td>
-<td>51.24</td>
-<td>1.65</td>
-</tr>
-<tr class="odd">
-<td>A-3</td>
-<td>150.00</td>
-<td>131071676</td>
-<td>19660751400</td>
-<td>97.04</td>
-<td>93.71</td>
-<td>50.57</td>
-<td>1.67</td>
-</tr>
-<tr class="even">
-<td>B-1</td>
-<td>150.00</td>
-<td>111574640</td>
-<td>16736196000</td>
-<td>97.27</td>
-<td>93.12</td>
-<td>36.35</td>
-<td>0.94</td>
-</tr>
-<tr class="odd">
-<td>B-2</td>
-<td>150.00</td>
-<td>114146802</td>
-<td>17122020300</td>
-<td>95.59</td>
-<td>89.93</td>
-<td>52.60</td>
-<td>0.90</td>
-</tr>
-<tr class="even">
-<td>B-3</td>
-<td>150.00</td>
-<td>104714846</td>
-<td>15707226900</td>
-<td>95.89</td>
-<td>90.50</td>
-<td>50.02</td>
-<td>0.88</td>
-</tr>
-</tbody>
-</table>
-<p>The statistics of processed data is summarized in the table below.</p>
-<p>Table. Filtered data statistics</p>
-<table>
-<thead>
-<tr class="header">
-<th>Sample</th>
-<th>length</th>
-<th>Reads</th>
-<th>Bases</th>
-<th>Q20(%)</th>
-<th>Q30(%)</th>
-<th>GC(%)</th>
-<th>N(ppm)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>A-1</td>
-<td>147.44</td>
-<td>130494346</td>
-<td>19239781217</td>
-<td>98.30</td>
-<td>95.83</td>
-<td>36.06</td>
-<td>1.55</td>
-</tr>
-<tr class="even">
-<td>A-2</td>
-<td>147.09</td>
-<td>103188262</td>
-<td>15177774139</td>
-<td>97.58</td>
-<td>94.25</td>
-<td>51.19</td>
-<td>1.41</td>
-</tr>
-<tr class="odd">
-<td>A-3</td>
-<td>147.00</td>
-<td>130913300</td>
-<td>19244653341</td>
-<td>97.76</td>
-<td>94.65</td>
-<td>50.54</td>
-<td>1.44</td>
-</tr>
-<tr class="even">
-<td>B-1</td>
-<td>146.92</td>
-<td>111529316</td>
-<td>16386102716</td>
-<td>97.63</td>
-<td>93.63</td>
-<td>36.16</td>
-<td>0.82</td>
-</tr>
-<tr class="odd">
-<td>B-2</td>
-<td>146.50</td>
-<td>114021348</td>
-<td>16704280185</td>
-<td>96.49</td>
-<td>91.10</td>
-<td>52.51</td>
-<td>0.77</td>
-</tr>
-<tr class="even">
-<td>B-3</td>
-<td>146.92</td>
-<td>104607414</td>
-<td>15368815013</td>
-<td>96.72</td>
-<td>91.59</td>
-<td>49.94</td>
-<td>0.77</td>
-</tr>
-</tbody>
-</table>
-<p>Column explain:<br />
-(1) Sample: Sample name<br />
-(2) length: Average length of the reads<br />
-(3) Reads: Read count<br />
-(4) Bases: Base count<br />
-(5) Q20, Q30: The percentage of bases with quality scores (Qphred) higher than 20 or 30<br />
-(6) GC%: The percentage of G+C in the reads<br />
-(7) N(ppm): The number of base ‘N’ per million bases.<br />
-</p>
-</div>
 </div>
 
 

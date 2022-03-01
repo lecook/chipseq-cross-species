@@ -13,7 +13,7 @@
 
 <meta name="date" content="2022-02-23" />
 
-<title>Dunnart ChIP-seq data pre-processing</title>
+<title>mouse_dunnart_data_processing_for_comparison</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -355,7 +355,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Dunnart ChIP-seq data pre-processing</h1>
+<h1 class="title toc-ignore">mouse_dunnart_data_processing_for_comparison</h1>
 <h4 class="author">lecook</h4>
 <h4 class="date">2022-02-23</h4>
 
@@ -528,7 +528,7 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/dunnart_data_processing.Rmd</code>) and HTML (<code>docs/dunnart_data_processing.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/mouse_dunnart_data_processing_for_comparison.Rmd</code>) and HTML (<code>docs/mouse_dunnart_data_processing_for_comparison.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -557,7 +557,24 @@ Message
 Rmd
 </td>
 <td>
-<a href="https://github.com/lecook/chipseq-cross-species/blob/e69f5512379cb1185f85dff6bded43ddca1237d7/analysis/dunnart_data_processing.Rmd" target="_blank">e69f551</a>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/784c4ec58b95a43c697b2249147c5a13fa503e82/analysis/mouse_dunnart_data_processing_for_comparison.Rmd" target="_blank">784c4ec</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-01
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/bf8fac9ae9ff292e4764f6dd11608faad53c8354/analysis/mouse_dunnart_data_processing_for_comparison.Rmd" target="_blank">bf8fac9</a>
 </td>
 <td>
 lecook
@@ -574,7 +591,7 @@ updated
 Rmd
 </td>
 <td>
-<a href="https://github.com/lecook/chipseq-cross-species/blob/5fb3661d2eb6bfa7968354bd435070ebf80e7a21/analysis/dunnart_data_processing.Rmd" target="_blank">5fb3661</a>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/5fb3661d2eb6bfa7968354bd435070ebf80e7a21/analysis/mouse_dunnart_data_processing_for_comparison.Rmd" target="_blank">5fb3661</a>
 </td>
 <td>
 lecook
@@ -591,7 +608,7 @@ clean up
 Rmd
 </td>
 <td>
-<a href="https://github.com/lecook/chipseq-cross-species/blob/9aa0925728dd7ad1d6fb64dfff484bc6794739c0/analysis/dunnart_data_processing.Rmd" target="_blank">9aa0925</a>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/c2eeed7fdd41366e809bacad538f2e5afed933cf/analysis/mouse_dunnart_data_processing_for_comparison.Rmd" target="_blank">c2eeed7</a>
 </td>
 <td>
 lecook
@@ -600,160 +617,7 @@ lecook
 2022-02-28
 </td>
 <td>
-updated
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/277f9e450a12bc300ab2677db8b2640355fb7c53/docs/dunnart_data_processing.html" target="_blank">277f9e4</a>
-</td>
-<td>
-lecook
-</td>
-<td>
-2022-02-28
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/072d4e4a258999fb4b217a6e9b063ed950504bf3/docs/dunnart_data_processing.html" target="_blank">072d4e4</a>
-</td>
-<td>
-lecook
-</td>
-<td>
-2022-02-28
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/fc2805319d09230ecf9d007aa69d51fc34069b27/docs/dunnart_data_processing.html" target="_blank">fc28053</a>
-</td>
-<td>
-lecook
-</td>
-<td>
-2022-02-28
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/08852744cc90c2fb59845baab99e011c767fbe5c/docs/dunnart_data_processing.html" target="_blank">0885274</a>
-</td>
-<td>
-lecook
-</td>
-<td>
-2022-02-28
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/ba5cb47f8f03435189678977b388ad37040c35f3/docs/dunnart_data_processing.html" target="_blank">ba5cb47</a>
-</td>
-<td>
-lecook
-</td>
-<td>
-2022-02-28
-</td>
-<td>
-build html
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/lecook/chipseq-cross-species/blob/369a400fe152f78f6e805fdc2cb53fa491ef6b74/analysis/dunnart_data_processing.Rmd" target="_blank">369a400</a>
-</td>
-<td>
-lecook
-</td>
-<td>
-2022-02-28
-</td>
-<td>
-updated
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/lecook/chipseq-cross-species/blob/ce570a13c90367373965502a716749fc3ea8f22d/analysis/dunnart_data_processing.Rmd" target="_blank">ce570a1</a>
-</td>
-<td>
-lecook
-</td>
-<td>
-2022-02-28
-</td>
-<td>
-removed non-dedup index bam from rule all
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/lecook/chipseq-cross-species/blob/5882c3506b6138e3e4b9babfa2fa493435e89393/analysis/dunnart_data_processing.Rmd" target="_blank">5882c35</a>
-</td>
-<td>
-lecook
-</td>
-<td>
-2022-02-25
-</td>
-<td>
-test
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/lecook/chipseq-cross-species/blob/1fa92d9e841739434d4e6cffcca1d57dfebcf651/analysis/dunnart_data_processing.Rmd" target="_blank">1fa92d9</a>
-</td>
-<td>
-lecook
-</td>
-<td>
-2022-02-23
-</td>
-<td>
-add analysis files
+debugged
 </td>
 </tr>
 </tbody>
@@ -763,49 +627,15 @@ add analysis files
 </div>
 </div>
 </div>
-<div id="snakemake-pipeline" class="section level1">
-<h1>Snakemake pipeline</h1>
-<p>For full snakemake script see code/dunnart_peak_calling/dunnart_snakefile.</p>
-<div id="create-conda-environment" class="section level2">
-<h2>Create conda environment</h2>
-<pre class="bash"><code># create conda environment with all packages and dependencies
-conda create --name chip bowtie2 samtools picard deeptools multiqc phantompeakqualtools preseq macs2 bedtools fastqc pybedtools
-
-# save environment to a yaml file
-conda env export &gt; chip_environment.yml
-
-# activate environment before running pipeline
-conda activate chip</code></pre>
+<div id="pipeline-for-mouse-and-dunnart-peak-calling" class="section level1">
+<h1>Pipeline for mouse and dunnart peak calling</h1>
+<div id="download-mouse-unfiltered-alignments-from-encode" class="section level2">
+<h2>Download mouse unfiltered alignments from ENCODE</h2>
+<p>See <a href="mouse_data_ENCODE.html">mouse_data_ENCODE</a> for details on these samples.</p>
+<pre class="bash"><code>xargs -L 1 curl -O -J -L &lt; ENCODE_files.txt</code></pre>
 </div>
-<div id="run-snakemake-from-command-line" class="section level2">
-<h2>Run snakemake from command line</h2>
-<p>Cluster configuration file: code/configs/cluster.json</p>
-<p>Sample configuration file: code/configs/config.yaml</p>
-<p>Sample text file: code/configs/SSR.text</p>
-<pre class="bash"><code>module load snakemake/6.6.1
-snakemake --snakemakefile code/dunnart_peak_calling/dunnart_snakefile -j 6 --cluster-config envs/cluster.json --cluster &quot;sbatch -A {cluster.account} -t {cluster.time} -p {cluster.partition} --nodes {cluster.nodes} --ntasks {cluster.ntasks} --mem {cluster.mem}&quot; &amp;</code></pre>
-</div>
-<div id="effective-genome-length" class="section level2">
-<h2>Effective genome length</h2>
-<p>We can approximate effective genome size for various read lengths using the khmer program and <code>unique-kmers.py</code>. This will estimate the number of unique kmers (for a specified length kmer) which can be used to infer the total uniquely mappable genome. (I.e it doesn’t include highly repetitive regions). <a href="https://khmer.readthedocs.io/en/v2.1.1/user/scripts.html" class="uri">https://khmer.readthedocs.io/en/v2.1.1/user/scripts.html</a></p>
-<p>This was a suggestion of deepTools: <a href="https://deeptools.readthedocs.io/en/latest/content/feature/effectiveGenomeSize.html" class="uri">https://deeptools.readthedocs.io/en/latest/content/feature/effectiveGenomeSize.html</a></p>
-<pre class="bash"><code>module load pip/21.2.4-python-3.8.6
-pip2.7 install khmer</code></pre>
-<p>Run <code>unique-kmers.py</code> on dunnart genome for read length of 150bp:</p>
-<pre class="bash"><code>/usr/local/bin/unique-kmers.py -k 150 Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr.fa</code></pre>
-<pre><code>Estimated number of unique 150-mers in /Users/lauracook/../../Volumes/macOS/genomes/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr.fasta: 2740338543
-Total estimated number of unique 150-mers: 2740338543</code></pre>
-</div>
-<div id="indexing-genome-file" class="section level2">
-<h2>Indexing genome file</h2>
-<p>Load modules:</p>
-<pre class="bash"><code>module load gcc/8.3.0
-module load bowtie2/2.3.5.1</code></pre>
-<p>Build index:</p>
-<pre class="bash"><code>bowtie2-build Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr.fa Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr</code></pre>
-</div>
-<div id="align-and-filter-dunnart-reads" class="section level2">
-<h2>Align and filter dunnart reads</h2>
+<div id="filter-mouse-alignments" class="section level2">
+<h2>Filter mouse alignments</h2>
 <p>Uses samtools and picards MarkDuplicates to remove low quality reads. This is based on and in accordance with the ENCODE Guidelines and pipeline (<a href="https://github.com/ENCODE-DCC/chip-seq-pipeline2" class="uri">https://github.com/ENCODE-DCC/chip-seq-pipeline2</a>)</p>
 <p><strong>Library Complexity ChIP-seq Standards:</strong></p>
 <table>
@@ -854,12 +684,482 @@ module load bowtie2/2.3.5.1</code></pre>
 </tr>
 </tbody>
 </table>
-<p>See full snakemake script for details: code/dunnart_peak_calling/dunnart_snakefile.</p>
-<p>Table. Read alignment quality metrics before and aftering filtering steps | <br> | | <strong>read counts</strong> | | | | | | | :———————————————————————————-: | :———–: | :———————————————————: | :—————-: | :——————: | :——–: | :———: | :———-: | | <strong>Sample</strong> | <strong>Antibody</strong> | <em>bowtie2 alignment</em> | <em>filtered reads^</em> | <em>remove duplicates</em> | <strong>NRF*</strong> | <strong>PBC1*</strong> | <strong>PBC2*</strong> | | A-1 | input | 130587134 | 87165286 | 47645260 | 0.773602 | 0.774519 | 4.45728 | | A-2 | H3K4me3 | 103324742 | 62678360 | 35617708 | 0.789709 | 0.789661 | 4.754989 | | A-3 | H3K27ac | 131071676 | 86503078 | 45700530 | 0.761768 | 0.761687 | 4.196586 | | B-1 | input | 111574640 | 72303316 | 44433864 | 0.820313 | 0.819974 | 5.545324 | | B-2 | H3K4me3 | 114146802 | 67048994 | 42357180 | 0.831032 | 0.830749 | 5.898224 | | B-3 | H3K27ac | 104714846 | 66615704 | 43939460 | 0.847255 | 0.847022 | 6.529168 |</p>
+<p>See full snakemake script for details: code/mouse_peak_calling/mouse_H3K4me3 and code/mouse_peak_calling/mouse_H3K27ac</p>
+<p>Table. Read alignment quality metrics before and aftering filtering steps</p>
+<table>
+<colgroup>
+<col width="17%" />
+<col width="2%" />
+<col width="2%" />
+<col width="3%" />
+<col width="55%" />
+<col width="5%" />
+<col width="5%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right"></th>
+<th align="left"></th>
+<th align="left"></th>
+<th align="left"></th>
+<th align="right"><strong>read counts </strong></th>
+<th align="right"></th>
+<th align="right"></th>
+<th align="right"></th>
+<th align="right"></th>
+<th align="right"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right"><strong>replicate</strong></td>
+<td align="left"><strong>antibody</strong></td>
+<td align="left"><strong>stage</strong></td>
+<td align="left"><strong>accession ID</strong></td>
+<td align="right"><em>bwa </em> <br> <em>alignment</em></td>
+<td align="right"><em>filtered </em> <br> <em>readŝ</em></td>
+<td align="right"><em>remove </em> <br> <em>duplicates</em></td>
+<td align="right"><strong>NRF*</strong></td>
+<td align="right"><strong>PBC1*</strong></td>
+<td align="right"><strong>PBC2*</strong></td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">H3K27ac</td>
+<td align="left">E10.5</td>
+<td align="left">ENCFF213EBC</td>
+<td align="right">86919825</td>
+<td align="right">74296920</td>
+<td align="right">61061524</td>
+<td align="right">0.83</td>
+<td align="right">0.83</td>
+<td align="right">5.53</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="left">H3K27ac</td>
+<td align="left">E10.5</td>
+<td align="left">ENCFF548BRR</td>
+<td align="right">49113729</td>
+<td align="right">43572898</td>
+<td align="right">38069875</td>
+<td align="right">0.88</td>
+<td align="right">0.88</td>
+<td align="right">8.03</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">H3K27ac</td>
+<td align="left">E11.5</td>
+<td align="left">ENCFF512SFE</td>
+<td align="right">1714339</td>
+<td align="right">12827968</td>
+<td align="right">11879316</td>
+<td align="right">0.93</td>
+<td align="right">0.93</td>
+<td align="right">13.76</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="left">H3K27ac</td>
+<td align="left">E11.5</td>
+<td align="left">ENCFF515PKL</td>
+<td align="right">18419756</td>
+<td align="right">13753883</td>
+<td align="right">11961286</td>
+<td align="right">0.88</td>
+<td align="right">0.88</td>
+<td align="right">7.7</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">H3K27ac</td>
+<td align="left">E12.5</td>
+<td align="left">ENCFF011NFM</td>
+<td align="right">41510259</td>
+<td align="right">32754035</td>
+<td align="right">28442356</td>
+<td align="right">0.88</td>
+<td align="right">0.88</td>
+<td align="right">7.55</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">H3K27ac</td>
+<td align="left">E13.5</td>
+<td align="left">ENCFF194ORC</td>
+<td align="right">47508791</td>
+<td align="right">39115139</td>
+<td align="right">23235076</td>
+<td align="right">0.64</td>
+<td align="right">0.62</td>
+<td align="right">2.49</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">H3K27ac</td>
+<td align="left">E13.5</td>
+<td align="left">ENCFF290ZNF</td>
+<td align="right">46476048</td>
+<td align="right">37416425</td>
+<td align="right">26624266</td>
+<td align="right">0.74</td>
+<td align="right">0.73</td>
+<td align="right">3.52</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">H3K27ac</td>
+<td align="left">E14.5</td>
+<td align="left">ENCFF327VAO</td>
+<td align="right">37480089</td>
+<td align="right">30104464</td>
+<td align="right">19228162</td>
+<td align="right">0.66</td>
+<td align="right">0.64</td>
+<td align="right">2.53</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">H3K27ac</td>
+<td align="left">E14.5</td>
+<td align="left">ENCFF902HAR</td>
+<td align="right">27840473</td>
+<td align="right">22156787</td>
+<td align="right">15203030</td>
+<td align="right">0.69</td>
+<td align="right">0.67</td>
+<td align="right">2.68</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">H3K27ac</td>
+<td align="left">E15.5</td>
+<td align="left">ENCFF584JFB</td>
+<td align="right">51675307</td>
+<td align="right">40125566</td>
+<td align="right">35551034</td>
+<td align="right">0.9</td>
+<td align="right">0.9</td>
+<td align="right">9.61</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">H3K27ac</td>
+<td align="left">E15.5</td>
+<td align="left">ENCFF707WKL</td>
+<td align="right">38499223</td>
+<td align="right">30334974</td>
+<td align="right">27522173</td>
+<td align="right">0.92</td>
+<td align="right">0.92</td>
+<td align="right">11.76</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">H3K4me3</td>
+<td align="left">E10.5</td>
+<td align="left">ENCFF124UYX</td>
+<td align="right">74283697</td>
+<td align="right">65480729</td>
+<td align="right">47429840</td>
+<td align="right">0.73</td>
+<td align="right">0.76</td>
+<td align="right">4.51</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">H3K4me3</td>
+<td align="left">E10.5</td>
+<td align="left">ENCFF045IPK</td>
+<td align="right">39305102</td>
+<td align="right">34283317</td>
+<td align="right">27327155</td>
+<td align="right">0.8</td>
+<td align="right">0.82</td>
+<td align="right">5.7</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">H3K4me3</td>
+<td align="left">E11.5</td>
+<td align="left">ENCFF760QYZ</td>
+<td align="right">24048599</td>
+<td align="right">17547752</td>
+<td align="right">16515484</td>
+<td align="right">0.95</td>
+<td align="right">0.95</td>
+<td align="right">20.21</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">H3K4me3</td>
+<td align="left">E11.5</td>
+<td align="left">ENCFF717QDV</td>
+<td align="right">19425608</td>
+<td align="right">14136366</td>
+<td align="right">13504654</td>
+<td align="right">0.96</td>
+<td align="right">0.97</td>
+<td align="right">26.71</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">H3K4me3</td>
+<td align="left">E12.5</td>
+<td align="left">ENCFF182ZPF</td>
+<td align="right">37674883</td>
+<td align="right">30140587</td>
+<td align="right">26489691</td>
+<td align="right">0.89</td>
+<td align="right">0.89</td>
+<td align="right">9.29</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">H3K4me3</td>
+<td align="left">E12.5</td>
+<td align="left">ENCFF941QJZ</td>
+<td align="right">38463605</td>
+<td align="right">29985012</td>
+<td align="right">26459778</td>
+<td align="right">0.89</td>
+<td align="right">0.9</td>
+<td align="right">9.44</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">H3K4me3</td>
+<td align="left">E13.5</td>
+<td align="left">ENCFF485UDC</td>
+<td align="right">47478873</td>
+<td align="right">38287309</td>
+<td align="right">33094082</td>
+<td align="right">0.89</td>
+<td align="right">0.9</td>
+<td align="right">10.81</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">H3K4me3</td>
+<td align="left">E13.5</td>
+<td align="left">ENCFF124TAB</td>
+<td align="right">47598002</td>
+<td align="right">38139564</td>
+<td align="right">33020017</td>
+<td align="right">0.89</td>
+<td align="right">0.91</td>
+<td align="right">11.12</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">H3K4me3</td>
+<td align="left">E14.5</td>
+<td align="left">ENCFF724DMU</td>
+<td align="right">25402316</td>
+<td align="right">18964886</td>
+<td align="right">17278836</td>
+<td align="right">0.92</td>
+<td align="right">0.93</td>
+<td align="right">13.9</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">H3K4me3</td>
+<td align="left">E14.5</td>
+<td align="left">ENCFF665QBJ</td>
+<td align="right">28852674</td>
+<td align="right">22484958</td>
+<td align="right">19804325</td>
+<td align="right">0.9</td>
+<td align="right">0.9</td>
+<td align="right">10.56</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">H3K4me3</td>
+<td align="left">E15.5</td>
+<td align="left">ENCFF258KCR</td>
+<td align="right">55588923</td>
+<td align="right">44138244</td>
+<td align="right">38278946</td>
+<td align="right">0.89</td>
+<td align="right">0.91</td>
+<td align="right">12.05</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">H3K4me3</td>
+<td align="left">E15.5</td>
+<td align="left">ENCFF401BKM</td>
+<td align="right">42617927</td>
+<td align="right">34005723</td>
+<td align="right">29687861</td>
+<td align="right">0.9</td>
+<td align="right">0.91</td>
+<td align="right">12.13</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">input control</td>
+<td align="left">E10.5</td>
+<td align="left">ENCFF157KEH</td>
+<td align="right">75962416</td>
+<td align="right">57382820</td>
+<td align="right">55915261</td>
+<td align="right">0.98</td>
+<td align="right">0.98</td>
+<td align="right">45.2</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">input control</td>
+<td align="left">E10.5</td>
+<td align="left">ENCFF825AVI</td>
+<td align="right">70250734</td>
+<td align="right">53358758</td>
+<td align="right">51796823</td>
+<td align="right">0.98</td>
+<td align="right">0.98</td>
+<td align="right">38.64</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">input control</td>
+<td align="left">E11.5</td>
+<td align="left">ENCFF184CUE</td>
+<td align="right">14581637</td>
+<td align="right">10190363</td>
+<td align="right">10031334</td>
+<td align="right">0.99</td>
+<td align="right">0.99</td>
+<td align="right">69.67</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">input control</td>
+<td align="left">E11.5</td>
+<td align="left">ENCFF376FGM</td>
+<td align="right">16001082</td>
+<td align="right">11239845</td>
+<td align="right">11033934</td>
+<td align="right">0.99</td>
+<td align="right">0.99</td>
+<td align="right">59.63</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">input control</td>
+<td align="left">E12.5</td>
+<td align="left">ENCFF203JQV</td>
+<td align="right">74367126</td>
+<td align="right">54966177</td>
+<td align="right">52895081</td>
+<td align="right">0.97</td>
+<td align="right">0.97</td>
+<td align="right">29.47</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">input control</td>
+<td align="left">E12.5</td>
+<td align="left">ENCFF058AUT</td>
+<td align="right">68220307</td>
+<td align="right">50400902</td>
+<td align="right">48480815</td>
+<td align="right">0.97</td>
+<td align="right">0.97</td>
+<td align="right">29.1</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">input control</td>
+<td align="left">E13.5</td>
+<td align="left">ENCFF117QRC</td>
+<td align="right">77084648</td>
+<td align="right">56275163</td>
+<td align="right">53582563</td>
+<td align="right">0.97</td>
+<td align="right">0.97</td>
+<td align="right">30.93</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">input control</td>
+<td align="left">E13.5</td>
+<td align="left">ENCFF248PGK</td>
+<td align="right">66492732</td>
+<td align="right">48343406</td>
+<td align="right">46564874</td>
+<td align="right">0.98</td>
+<td align="right">0.98</td>
+<td align="right">38.51</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">input control</td>
+<td align="left">E14.5</td>
+<td align="left">ENCFF784ORI</td>
+<td align="right">35480589</td>
+<td align="right">25431770</td>
+<td align="right">24573359</td>
+<td align="right">0.97</td>
+<td align="right">0.97</td>
+<td align="right">32.34</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">input control</td>
+<td align="left">E14.5</td>
+<td align="left">ENCFF002HZV</td>
+<td align="right">33021720</td>
+<td align="right">23658223</td>
+<td align="right">23199516</td>
+<td align="right">0.99</td>
+<td align="right">0.99</td>
+<td align="right">57.52</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">input control</td>
+<td align="left">E15.5</td>
+<td align="left">ENCFF727QTS</td>
+<td align="right">72318210</td>
+<td align="right">51828288</td>
+<td align="right">50444903</td>
+<td align="right">0.98</td>
+<td align="right">0.99</td>
+<td align="right">52.73</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">input control</td>
+<td align="left">E15.5</td>
+<td align="left">ENCFF182XFG</td>
+<td align="right">86322714</td>
+<td align="right">63335464</td>
+<td align="right">60305840</td>
+<td align="right">0.97</td>
+<td align="right">0.97</td>
+<td align="right">28.35</td>
+</tr>
+</tbody>
+</table>
 <ul>
-<li>calculated from a subsample of ~10-15M aligned reads prior to removing duplicates</li>
+<li>calculated from a subsample of ~10-15M aligned reads prior to removing MarkDuplicates</li>
 </ul>
-<p>^ excluded low quality (MAPQ 30) and orphaned reads</p>
+<p>̂ excluded low quality (MAPQ30) and orphaned reads</p>
+</div>
+<div id="normalise-dunnart-and-mouse-bam-files-to-10m-reads" class="section level2">
+<h2>Normalise dunnart and mouse BAM files to 10M reads</h2>
+<p>This is so we can compare to mouse peaks.</p>
+<p>Based on <a href="https://davemcg.github.io/post/easy-bam-downsampling/" class="uri">https://davemcg.github.io/post/easy-bam-downsampling/</a> script for doing this.</p>
+<p>Run script in the directory with the files you want to subsample.</p>
+<pre class="bash"><code>cd output/bam_files/
+bash subsample.sh</code></pre>
 </div>
 <div id="read-qc-with-deeptools" class="section level2">
 <h2>Read QC with deepTools</h2>
@@ -867,7 +1167,8 @@ module load bowtie2/2.3.5.1</code></pre>
 <h3>Plot correlation between BAM files</h3>
 <p><code>plotCorrelation</code> computes the overall similarity between two or more files based on read coverage (or other scores) within genomic regions.</p>
 <p>This helps to determine whether the different sample types can be separated, i.e., samples of different conditions are expected to be more dissimilar to each other than replicates within the same condition.</p>
-<pre class="r"><code>include_graphics(&quot;output/qc/pearsoncor_multibamsum.png&quot;)</code></pre>
+<pre class="r"><code>include_graphics(&quot;output/qc/pearsoncor_multibamsum_dunnart_downSampled.png&quot;)
+include_graphics(&quot;output/qc/pearsoncor_multibamsum_dunnart_downSampled.png&quot;)</code></pre>
 </div>
 <div id="fingerprint-plots" class="section level3">
 <h3>Fingerprint plots</h3>
@@ -880,97 +1181,6 @@ module load bowtie2/2.3.5.1</code></pre>
 <h3>BAM PE fragment size</h3>
 <p>This tool calculates the fragment sizes for read pairs given a BAM file from paired-end sequencing. Several regions are sampled depending on the size of the genome and number of processors to estimate thesummary statistics on the fragment lengths.</p>
 <pre class="r"><code>include_graphics(&quot;output/qc/bamPEFragmentSize_hist.png&quot;)</code></pre>
-</div>
-</div>
-<div id="cross-correlation-analysis" class="section level2">
-<h2>Cross-correlation analysis</h2>
-<p>Information from: <a href="https://docs.google.com/document/d/1lG_Rd7fnYgRpSIqrIfuVlAz2dW1VaSQThzk836Db99c/edit" class="uri">https://docs.google.com/document/d/1lG_Rd7fnYgRpSIqrIfuVlAz2dW1VaSQThzk836Db99c/edit</a></p>
-<p>This set of programs operate on mapped Illumina single-end read datasets in tagAlign or BAM format. Because my data is paired-end I need to only use the forward read.</p>
-<p>A high-quality ChIP-seq experiment will produce significant clustering of enriched DNA sequence tags/reads at locations bound by the protein of interest; the expectation is that we can observe a bimodal enrichment of reads (sequence tags) on both the forward and the reverse strands.</p>
-<p>Cross-correlation analysis is done on a filtered (but not-deduped) and subsampled BAM. There is a special fastq trimming for cross-correlation analysis. Read1 fastq is trimmed to 50bp first using trimfastq.py (last modified 2017/11/08, <a href="https://github.com/ENCODE-DCC/chip-seq-pipeline2/blob/master/src/trimfastq.py" class="uri">https://github.com/ENCODE-DCC/chip-seq-pipeline2/blob/master/src/trimfastq.py</a>). And then it is separately mapped as SE. Reads are filtered but duplicates are not removed. Then 15 million reads are randomly sampled and used for cross-correlation analysis.</p>
-<p>ENCODE standards:</p>
-<table>
-<colgroup>
-<col width="4%" />
-<col width="14%" />
-<col width="80%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>col.</th>
-<th>abbreviation</th>
-<th>description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td>Filename</td>
-<td>tagAlign/BAM filename</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>numReads</td>
-<td>effective sequencing depth i.e. total number of mapped reads in input file</td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td>estFragLen</td>
-<td>comma separated strand cross-correlation peak(s) in decreasing order of correlation.</td>
-</tr>
-<tr class="even">
-<td>4</td>
-<td>corr_estFragLen</td>
-<td>comma separated strand cross-correlation value(s) in decreasing order (COL2 follows the same order)</td>
-</tr>
-<tr class="odd">
-<td>5</td>
-<td>phantomPeak</td>
-<td>Read length/phantom peak strand shift</td>
-</tr>
-<tr class="even">
-<td>6</td>
-<td>corr_phantomPeak</td>
-<td>Correlation value at phantom peak</td>
-</tr>
-<tr class="odd">
-<td>7</td>
-<td>argmin_corr</td>
-<td>strand shift at which cross-correlation is lowest</td>
-</tr>
-<tr class="even">
-<td>8</td>
-<td>min_corr</td>
-<td>minimum value of cross-correlation</td>
-</tr>
-<tr class="odd">
-<td>9</td>
-<td>NSC</td>
-<td>Normalized strand cross-correlation coefficient (NSC) = COL4 / COL8</td>
-</tr>
-<tr class="even">
-<td>10</td>
-<td>RSC</td>
-<td>Relative strand cross-correlation coefficient (RSC) = (COL4 - COL8) / (COL6 - COL8)</td>
-</tr>
-<tr class="odd">
-<td>11</td>
-<td>QualityTag</td>
-<td>Quality tag based on thresholded RSC (codes= -2:veryLow, -1:Low, 0:Medium, 1:High, 2:veryHigh)</td>
-</tr>
-</tbody>
-</table>
-<p>NSC; NSC&gt;1.1 (higher values indicate more enrichment; 1 = no enrichment)</p>
-<p>RSC; RSC&gt;0.8 (0 = no signal; &lt;1 low quality ChIP; &gt;1 high enrichment</p>
-<p>Quality tag based on thresholded RSC (codes: -2:veryLow,-1:Low,0:Medium,1:High; 2:veryHigh)</p>
-</div>
-<div id="peak-qc" class="section level2">
-<h2>Peak QC</h2>
-<div id="fraction-of-reads-in-peaks" class="section level3">
-<h3>Fraction of reads in peaks</h3>
-</div>
-<div id="consensus-peaksets-for-biological" class="section level3">
-<h3>Consensus peaksets for biological</h3>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">

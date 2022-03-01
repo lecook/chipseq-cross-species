@@ -13,3 +13,7 @@ data/*.gz
 data/*.md5
 data/md5*
 data/genomic_data/*
+output/plots/*
+output/bam_files/*
+output/filtered_peaks/*
+output/logs/*
