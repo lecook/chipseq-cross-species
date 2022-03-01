@@ -102,7 +102,8 @@ rule all:
         "output/peaks/H3K4me3_overlap_default.narrowPeak",
         "output/peaks/H3K27ac_overlap_default.narrowPeak",
         "output/qc/H3K4me3_overlap_default.frip",
-        "output/qc/H3K27ac_overlap_default.frip"
+        "output/qc/H3K27ac_overlap_default.frip",
+        "output/peaks/"
 
 # ===============================================================================================
 #  1. FASTQC
@@ -520,12 +521,12 @@ rule call_peaks_macs2:
         "output/logs/{case}_vs_{control}_call_peaks_macs2_default.log"
     params:
         name = "{case}_vs_{control}_macs2_default",
-    shell:
-        """macs2 callpeak -f BAMPE -t {input.case} \
+    run:
+        shell("macs2 callpeak -f BAMPE -t {input.case} \
         -c {input.control} --keep-dup all \
         --outdir output/peaks/  \
         -n {params.name} \
-        -g 2740338543 2> {log}"""
+        -g 2740338543 2> {log}")
 
 rule call_peaks_macs2_pooled_replicates:
     input:
