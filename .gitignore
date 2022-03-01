@@ -17,3 +17,5 @@ output/plots/*
 output/bam_files/*
 output/filtered_peaks/*
 output/logs/*
+output/peaks/*
+output/annotations/*

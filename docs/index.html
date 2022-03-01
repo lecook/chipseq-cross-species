@@ -333,16 +333,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreee69f5512379cb1185f85dff6bded43ddca1237d7targetblanke69f551a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/e69f5512379cb1185f85dff6bded43ddca1237d7" target="_blank">e69f551</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree451d5a2860500555c9c5d1f38b759e2c0c2bd795targetblank451d5a2a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/451d5a2860500555c9c5d1f38b759e2c0c2bd795" target="_blank">451d5a2</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreee69f5512379cb1185f85dff6bded43ddca1237d7targetblanke69f551a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree451d5a2860500555c9c5d1f38b759e2c0c2bd795targetblank451d5a2a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/e69f5512379cb1185f85dff6bded43ddca1237d7" target="_blank">e69f551</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/451d5a2860500555c9c5d1f38b759e2c0c2bd795" target="_blank">451d5a2</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -355,7 +355,9 @@ Ignored files:
     Ignored:    analysis/.Rhistory
     Ignored:    data/genomic_data/
     Ignored:    output/annotations/
+    Ignored:    output/bam_files/
     Ignored:    output/filtered_peaks/
+    Ignored:    output/logs/
     Ignored:    output/plots/
     Ignored:    results/
 
@@ -367,12 +369,9 @@ Untracked files:
     Untracked:  code/slurmjob.stdout
     Untracked:  code/trimfastq.py
     Untracked:  data/raw_reads/
-    Untracked:  output/bam_files/
-    Untracked:  output/logs/
     Untracked:  output/qc/
 
 Unstaged changes:
-    Modified:   .gitignore
     Deleted:    code/dunnart_peak_calling/trimfastq.py
 
 </code></pre>
@@ -412,6 +411,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/9d9a99533caf5d7803ed5576afd8786ef296a7ea/analysis/index.Rmd" target="_blank">9d9a995</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-01
+</td>
+<td>
+udpated
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/275d2299013a6db02d57b94c22d287788ec16d15/docs/index.html" target="_blank">275d229</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -714,7 +747,7 @@ Start workflowr project.
 <h2>Data</h2>
 <ul>
 <li><p><a href="dunnart_experiment_overview.html">Dunnart experimental design and data generation</a></p></li>
-<li><p>Mouse data from ENCODE</p></li>
+<li><p><a href="mouse_data_ENCODE.html">Mouse data from ENCODE</a></p></li>
 </ul>
 </div>
 <div id="data-preparation-and-peak-calling" class="section level2">
@@ -724,7 +757,7 @@ Start workflowr project.
 </ul>
 <p>Outlines read mapping, filtering, QC and peak calling.</p>
 <ul>
-<li>Mouse data pre-processing</li>
+<li><a href="mouse_dunnart_data_processing_for_comparison.html">Normalised mouse and dunnart read pre-processing</a></li>
 </ul>
 <p>Outlines filtering aligned reads from ENCODE, QC and peak calling.</p>
 </div>
