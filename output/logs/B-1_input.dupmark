@@ -1,0 +1,188 @@
+INFO	2022-02-28 22:39:47	MarkDuplicates	
+
+********** NOTE: Picard's command line syntax is changing.
+**********
+********** For more information, please see:
+********** https://github.com/broadinstitute/picard/wiki/Command-Line-Syntax-Transition-For-Users-(Pre-Transition)
+**********
+********** The command line looks like this in the new syntax:
+**********
+**********    MarkDuplicates -I output/bam_files/B-1_input_PPq30.sorted.bam -O output/bam_files/B-1_input_PPq30.sorted.dupmark.bam -METRICS_FILE output/qc/B-1_input.dup.qc -REMOVE_DUPLICATES FALSE -ASSUME_SORTED true
+**********
+
+
+22:39:47.532 INFO  NativeLibraryLoader - Loading libgkl_compression.so from jar:file:/home/lecook/.conda/envs/chip/share/picard-2.23.1-0/picard.jar!/com/intel/gkl/native/libgkl_compression.so
+[Mon Feb 28 22:39:47 AEDT 2022] MarkDuplicates INPUT=[output/bam_files/B-1_input_PPq30.sorted.bam] OUTPUT=output/bam_files/B-1_input_PPq30.sorted.dupmark.bam METRICS_FILE=output/qc/B-1_input.dup.qc REMOVE_DUPLICATES=false ASSUME_SORTED=true    MAX_SEQUENCES_FOR_DISK_READ_ENDS_MAP=50000 MAX_FILE_HANDLES_FOR_READ_ENDS_MAP=8000 SORTING_COLLECTION_SIZE_RATIO=0.25 TAG_DUPLICATE_SET_MEMBERS=false REMOVE_SEQUENCING_DUPLICATES=false TAGGING_POLICY=DontTag CLEAR_DT=true DUPLEX_UMI=false ADD_PG_TAG_TO_READS=true DUPLICATE_SCORING_STRATEGY=SUM_OF_BASE_QUALITIES PROGRAM_RECORD_ID=MarkDuplicates PROGRAM_GROUP_NAME=MarkDuplicates READ_NAME_REGEX=<optimized capture of last three ':' separated fields as numeric values> OPTICAL_DUPLICATE_PIXEL_DISTANCE=100 MAX_OPTICAL_DUPLICATE_SET_SIZE=300000 VERBOSITY=INFO QUIET=false VALIDATION_STRINGENCY=STRICT COMPRESSION_LEVEL=5 MAX_RECORDS_IN_RAM=500000 CREATE_INDEX=false CREATE_MD5_FILE=false GA4GH_CLIENT_SECRETS=client_secrets.json USE_JDK_DEFLATER=false USE_JDK_INFLATER=false
+[Mon Feb 28 22:39:47 AEDT 2022] Executing as lecook@spartan-bm067.hpc.unimelb.edu.au on Linux 3.10.0-1160.36.2.el7.x86_64 amd64; OpenJDK 64-Bit Server VM 1.8.0_152-release-1056-b12; Deflater: Intel; Inflater: Intel; Provider GCS is not available; Picard version: 2.23.1
+INFO	2022-02-28 22:39:47	MarkDuplicates	Start of doWork freeMemory: 501658864; totalMemory: 514850816; maxMemory: 1908932608
+INFO	2022-02-28 22:39:47	MarkDuplicates	Reading input file and constructing read end information.
+INFO	2022-02-28 22:39:47	MarkDuplicates	Will retain up to 6916422 data points before spilling to disk.
+INFO	2022-02-28 22:39:51	MarkDuplicates	Read     1,000,000 records.  Elapsed time: 00:00:03s.  Time for last 1,000,000:    3s.  Last read position: scaffold00001_pilon_pilon:36,586,824
+INFO	2022-02-28 22:39:51	MarkDuplicates	Tracking 4 as yet unmatched pairs. 4 records in RAM.
+INFO	2022-02-28 22:39:54	MarkDuplicates	Read     2,000,000 records.  Elapsed time: 00:00:07s.  Time for last 1,000,000:    3s.  Last read position: scaffold00001_pilon_pilon:75,646,857
+INFO	2022-02-28 22:39:54	MarkDuplicates	Tracking 4 as yet unmatched pairs. 4 records in RAM.
+INFO	2022-02-28 22:39:59	MarkDuplicates	Read     3,000,000 records.  Elapsed time: 00:00:12s.  Time for last 1,000,000:    5s.  Last read position: scaffold00002_pilon_pilon:14,813,089
+INFO	2022-02-28 22:39:59	MarkDuplicates	Tracking 0 as yet unmatched pairs. 0 records in RAM.
+INFO	2022-02-28 22:40:02	MarkDuplicates	Read     4,000,000 records.  Elapsed time: 00:00:15s.  Time for last 1,000,000:    3s.  Last read position: scaffold00002_pilon_pilon:52,706,683
+INFO	2022-02-28 22:40:02	MarkDuplicates	Tracking 0 as yet unmatched pairs. 0 records in RAM.
+INFO	2022-02-28 22:40:08	MarkDuplicates	Read     5,000,000 records.  Elapsed time: 00:00:20s.  Time for last 1,000,000:    5s.  Last read position: scaffold00002_pilon_pilon:92,743,230
+INFO	2022-02-28 22:40:08	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:40:11	MarkDuplicates	Read     6,000,000 records.  Elapsed time: 00:00:23s.  Time for last 1,000,000:    3s.  Last read position: scaffold00002_pilon_pilon:131,778,376
+INFO	2022-02-28 22:40:11	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:40:16	MarkDuplicates	Read     7,000,000 records.  Elapsed time: 00:00:29s.  Time for last 1,000,000:    5s.  Last read position: scaffold00002_pilon_pilon:170,040,660
+INFO	2022-02-28 22:40:16	MarkDuplicates	Tracking 4 as yet unmatched pairs. 4 records in RAM.
+INFO	2022-02-28 22:40:20	MarkDuplicates	Read     8,000,000 records.  Elapsed time: 00:00:32s.  Time for last 1,000,000:    3s.  Last read position: scaffold00002_pilon_pilon:210,819,824
+INFO	2022-02-28 22:40:20	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:40:26	MarkDuplicates	Read     9,000,000 records.  Elapsed time: 00:00:38s.  Time for last 1,000,000:    5s.  Last read position: scaffold00002_pilon_pilon:247,749,051
+INFO	2022-02-28 22:40:26	MarkDuplicates	Tracking 4 as yet unmatched pairs. 4 records in RAM.
+INFO	2022-02-28 22:40:28	MarkDuplicates	Read    10,000,000 records.  Elapsed time: 00:00:41s.  Time for last 1,000,000:    2s.  Last read position: scaffold00002_pilon_pilon:285,719,020
+INFO	2022-02-28 22:40:28	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:40:31	MarkDuplicates	Read    11,000,000 records.  Elapsed time: 00:00:44s.  Time for last 1,000,000:    3s.  Last read position: scaffold00002_pilon_pilon:323,238,220
+INFO	2022-02-28 22:40:31	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:40:35	MarkDuplicates	Read    12,000,000 records.  Elapsed time: 00:00:47s.  Time for last 1,000,000:    3s.  Last read position: scaffold00002_pilon_pilon:360,738,621
+INFO	2022-02-28 22:40:35	MarkDuplicates	Tracking 6 as yet unmatched pairs. 6 records in RAM.
+INFO	2022-02-28 22:40:41	MarkDuplicates	Read    13,000,000 records.  Elapsed time: 00:00:53s.  Time for last 1,000,000:    6s.  Last read position: scaffold00002_pilon_pilon:399,344,307
+INFO	2022-02-28 22:40:41	MarkDuplicates	Tracking 6 as yet unmatched pairs. 6 records in RAM.
+INFO	2022-02-28 22:40:48	MarkDuplicates	Read    14,000,000 records.  Elapsed time: 00:01:00s.  Time for last 1,000,000:    7s.  Last read position: scaffold00002_pilon_pilon:436,816,632
+INFO	2022-02-28 22:40:48	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:40:51	MarkDuplicates	Read    15,000,000 records.  Elapsed time: 00:01:04s.  Time for last 1,000,000:    3s.  Last read position: scaffold00003_pilon_pilon:32,064,325
+INFO	2022-02-28 22:40:51	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:40:54	MarkDuplicates	Read    16,000,000 records.  Elapsed time: 00:01:07s.  Time for last 1,000,000:    3s.  Last read position: scaffold00004_pilon_pilon:10,441,560
+INFO	2022-02-28 22:40:54	MarkDuplicates	Tracking 0 as yet unmatched pairs. 0 records in RAM.
+INFO	2022-02-28 22:40:57	MarkDuplicates	Read    17,000,000 records.  Elapsed time: 00:01:10s.  Time for last 1,000,000:    2s.  Last read position: scaffold00004_pilon_pilon:47,382,380
+INFO	2022-02-28 22:40:57	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:41:03	MarkDuplicates	Read    18,000,000 records.  Elapsed time: 00:01:16s.  Time for last 1,000,000:    6s.  Last read position: scaffold00005_pilon_pilon:5,284,708
+INFO	2022-02-28 22:41:03	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:41:07	MarkDuplicates	Read    19,000,000 records.  Elapsed time: 00:01:19s.  Time for last 1,000,000:    3s.  Last read position: scaffold00005_pilon_pilon:42,177,629
+INFO	2022-02-28 22:41:07	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:41:10	MarkDuplicates	Read    20,000,000 records.  Elapsed time: 00:01:22s.  Time for last 1,000,000:    3s.  Last read position: scaffold00006_pilon_pilon:25,171,671
+INFO	2022-02-28 22:41:10	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:41:15	MarkDuplicates	Read    21,000,000 records.  Elapsed time: 00:01:27s.  Time for last 1,000,000:    4s.  Last read position: scaffold00007_pilon_pilon:21,630,730
+INFO	2022-02-28 22:41:15	MarkDuplicates	Tracking 6 as yet unmatched pairs. 6 records in RAM.
+INFO	2022-02-28 22:41:18	MarkDuplicates	Read    22,000,000 records.  Elapsed time: 00:01:30s.  Time for last 1,000,000:    3s.  Last read position: scaffold00008_pilon_pilon:28,021,562
+INFO	2022-02-28 22:41:18	MarkDuplicates	Tracking 4 as yet unmatched pairs. 4 records in RAM.
+INFO	2022-02-28 22:41:21	MarkDuplicates	Read    23,000,000 records.  Elapsed time: 00:01:33s.  Time for last 1,000,000:    3s.  Last read position: scaffold00009_pilon_pilon:34,080,721
+INFO	2022-02-28 22:41:21	MarkDuplicates	Tracking 4 as yet unmatched pairs. 4 records in RAM.
+INFO	2022-02-28 22:41:26	MarkDuplicates	Read    24,000,000 records.  Elapsed time: 00:01:39s.  Time for last 1,000,000:    5s.  Last read position: scaffold00010_pilon_pilon:6,734,952
+INFO	2022-02-28 22:41:26	MarkDuplicates	Tracking 0 as yet unmatched pairs. 0 records in RAM.
+INFO	2022-02-28 22:41:30	MarkDuplicates	Read    25,000,000 records.  Elapsed time: 00:01:42s.  Time for last 1,000,000:    3s.  Last read position: scaffold00010_pilon_pilon:46,056,196
+INFO	2022-02-28 22:41:30	MarkDuplicates	Tracking 0 as yet unmatched pairs. 0 records in RAM.
+INFO	2022-02-28 22:41:33	MarkDuplicates	Read    26,000,000 records.  Elapsed time: 00:01:45s.  Time for last 1,000,000:    3s.  Last read position: scaffold00012_pilon_pilon:894,274
+INFO	2022-02-28 22:41:33	MarkDuplicates	Tracking 0 as yet unmatched pairs. 0 records in RAM.
+INFO	2022-02-28 22:41:36	MarkDuplicates	Read    27,000,000 records.  Elapsed time: 00:01:48s.  Time for last 1,000,000:    3s.  Last read position: scaffold00013_pilon_pilon:10,270,122
+INFO	2022-02-28 22:41:36	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:41:43	MarkDuplicates	Read    28,000,000 records.  Elapsed time: 00:01:55s.  Time for last 1,000,000:    6s.  Last read position: scaffold00014_pilon_pilon:20,529,231
+INFO	2022-02-28 22:41:43	MarkDuplicates	Tracking 4 as yet unmatched pairs. 4 records in RAM.
+INFO	2022-02-28 22:41:46	MarkDuplicates	Read    29,000,000 records.  Elapsed time: 00:01:58s.  Time for last 1,000,000:    3s.  Last read position: scaffold00015_pilon_pilon:17,302,689
+INFO	2022-02-28 22:41:46	MarkDuplicates	Tracking 0 as yet unmatched pairs. 0 records in RAM.
+INFO	2022-02-28 22:41:50	MarkDuplicates	Read    30,000,000 records.  Elapsed time: 00:02:02s.  Time for last 1,000,000:    4s.  Last read position: scaffold00017_pilon_pilon:1,780,077
+INFO	2022-02-28 22:41:50	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:41:53	MarkDuplicates	Read    31,000,000 records.  Elapsed time: 00:02:05s.  Time for last 1,000,000:    2s.  Last read position: scaffold00017_pilon_pilon:41,002,720
+INFO	2022-02-28 22:41:53	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:41:56	MarkDuplicates	Read    32,000,000 records.  Elapsed time: 00:02:08s.  Time for last 1,000,000:    3s.  Last read position: scaffold00019_pilon_pilon:418,972
+INFO	2022-02-28 22:41:56	MarkDuplicates	Tracking 0 as yet unmatched pairs. 0 records in RAM.
+INFO	2022-02-28 22:41:59	MarkDuplicates	Read    33,000,000 records.  Elapsed time: 00:02:11s.  Time for last 1,000,000:    3s.  Last read position: scaffold00020_pilon_pilon:12,958,576
+INFO	2022-02-28 22:41:59	MarkDuplicates	Tracking 8 as yet unmatched pairs. 8 records in RAM.
+INFO	2022-02-28 22:42:02	MarkDuplicates	Read    34,000,000 records.  Elapsed time: 00:02:14s.  Time for last 1,000,000:    2s.  Last read position: scaffold00021_pilon_pilon:2,958,915
+INFO	2022-02-28 22:42:02	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:42:07	MarkDuplicates	Read    35,000,000 records.  Elapsed time: 00:02:19s.  Time for last 1,000,000:    4s.  Last read position: scaffold00022_pilon_pilon:9,914,469
+INFO	2022-02-28 22:42:07	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:42:10	MarkDuplicates	Read    36,000,000 records.  Elapsed time: 00:02:22s.  Time for last 1,000,000:    3s.  Last read position: scaffold00024_pilon_pilon:1,940,898
+INFO	2022-02-28 22:42:10	MarkDuplicates	Tracking 0 as yet unmatched pairs. 0 records in RAM.
+INFO	2022-02-28 22:42:13	MarkDuplicates	Read    37,000,000 records.  Elapsed time: 00:02:25s.  Time for last 1,000,000:    2s.  Last read position: scaffold00025_pilon_pilon:8,101,498
+INFO	2022-02-28 22:42:13	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:42:18	MarkDuplicates	Read    38,000,000 records.  Elapsed time: 00:02:31s.  Time for last 1,000,000:    5s.  Last read position: scaffold00027_pilon_pilon:4,028,434
+INFO	2022-02-28 22:42:18	MarkDuplicates	Tracking 0 as yet unmatched pairs. 0 records in RAM.
+INFO	2022-02-28 22:42:21	MarkDuplicates	Read    39,000,000 records.  Elapsed time: 00:02:34s.  Time for last 1,000,000:    2s.  Last read position: scaffold00028_pilon_pilon:11,294,494
+INFO	2022-02-28 22:42:21	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:42:24	MarkDuplicates	Read    40,000,000 records.  Elapsed time: 00:02:37s.  Time for last 1,000,000:    3s.  Last read position: scaffold00029_pilon_pilon:30,277,931
+INFO	2022-02-28 22:42:24	MarkDuplicates	Tracking 6 as yet unmatched pairs. 6 records in RAM.
+INFO	2022-02-28 22:42:28	MarkDuplicates	Read    41,000,000 records.  Elapsed time: 00:02:40s.  Time for last 1,000,000:    3s.  Last read position: scaffold00031_pilon_pilon:8,600,428
+INFO	2022-02-28 22:42:28	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:42:34	MarkDuplicates	Read    42,000,000 records.  Elapsed time: 00:02:47s.  Time for last 1,000,000:    6s.  Last read position: scaffold00033_pilon_pilon:8,738,129
+INFO	2022-02-28 22:42:34	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:42:37	MarkDuplicates	Read    43,000,000 records.  Elapsed time: 00:02:50s.  Time for last 1,000,000:    3s.  Last read position: scaffold00034_pilon_pilon:10,379,968
+INFO	2022-02-28 22:42:37	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:42:40	MarkDuplicates	Read    44,000,000 records.  Elapsed time: 00:02:53s.  Time for last 1,000,000:    3s.  Last read position: scaffold00036_pilon_pilon:12,872,454
+INFO	2022-02-28 22:42:40	MarkDuplicates	Tracking 0 as yet unmatched pairs. 0 records in RAM.
+INFO	2022-02-28 22:42:43	MarkDuplicates	Read    45,000,000 records.  Elapsed time: 00:02:56s.  Time for last 1,000,000:    2s.  Last read position: scaffold00038_pilon_pilon:5,611,677
+INFO	2022-02-28 22:42:43	MarkDuplicates	Tracking 4 as yet unmatched pairs. 4 records in RAM.
+INFO	2022-02-28 22:42:49	MarkDuplicates	Read    46,000,000 records.  Elapsed time: 00:03:01s.  Time for last 1,000,000:    5s.  Last read position: scaffold00040_pilon_pilon:8,357,257
+INFO	2022-02-28 22:42:49	MarkDuplicates	Tracking 12 as yet unmatched pairs. 12 records in RAM.
+INFO	2022-02-28 22:42:52	MarkDuplicates	Read    47,000,000 records.  Elapsed time: 00:03:04s.  Time for last 1,000,000:    3s.  Last read position: scaffold00042_pilon_pilon:13,743,983
+INFO	2022-02-28 22:42:52	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:42:55	MarkDuplicates	Read    48,000,000 records.  Elapsed time: 00:03:07s.  Time for last 1,000,000:    2s.  Last read position: scaffold00045_pilon_pilon:934,974
+INFO	2022-02-28 22:42:55	MarkDuplicates	Tracking 0 as yet unmatched pairs. 0 records in RAM.
+INFO	2022-02-28 22:43:00	MarkDuplicates	Read    49,000,000 records.  Elapsed time: 00:03:12s.  Time for last 1,000,000:    4s.  Last read position: scaffold00047_pilon_pilon:8,024,874
+INFO	2022-02-28 22:43:00	MarkDuplicates	Tracking 4 as yet unmatched pairs. 4 records in RAM.
+INFO	2022-02-28 22:43:03	MarkDuplicates	Read    50,000,000 records.  Elapsed time: 00:03:15s.  Time for last 1,000,000:    3s.  Last read position: scaffold00050_pilon_pilon:7,120,025
+INFO	2022-02-28 22:43:03	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:43:06	MarkDuplicates	Read    51,000,000 records.  Elapsed time: 00:03:18s.  Time for last 1,000,000:    2s.  Last read position: scaffold00053_pilon_pilon:5,137,702
+INFO	2022-02-28 22:43:06	MarkDuplicates	Tracking 4 as yet unmatched pairs. 4 records in RAM.
+INFO	2022-02-28 22:43:09	MarkDuplicates	Read    52,000,000 records.  Elapsed time: 00:03:21s.  Time for last 1,000,000:    3s.  Last read position: scaffold00055_pilon_pilon:9,090,975
+INFO	2022-02-28 22:43:09	MarkDuplicates	Tracking 0 as yet unmatched pairs. 0 records in RAM.
+INFO	2022-02-28 22:43:12	MarkDuplicates	Read    53,000,000 records.  Elapsed time: 00:03:24s.  Time for last 1,000,000:    3s.  Last read position: scaffold00058_pilon_pilon:6,760,699
+INFO	2022-02-28 22:43:12	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:43:15	MarkDuplicates	Read    54,000,000 records.  Elapsed time: 00:03:27s.  Time for last 1,000,000:    3s.  Last read position: scaffold00061_pilon_pilon:800,414
+INFO	2022-02-28 22:43:15	MarkDuplicates	Tracking 4 as yet unmatched pairs. 4 records in RAM.
+INFO	2022-02-28 22:43:22	MarkDuplicates	Read    55,000,000 records.  Elapsed time: 00:03:34s.  Time for last 1,000,000:    6s.  Last read position: scaffold00064_pilon_pilon:5,369,256
+INFO	2022-02-28 22:43:22	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:43:29	MarkDuplicates	Read    56,000,000 records.  Elapsed time: 00:03:41s.  Time for last 1,000,000:    6s.  Last read position: scaffold00068_pilon_pilon:3,769,591
+INFO	2022-02-28 22:43:29	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:43:32	MarkDuplicates	Read    57,000,000 records.  Elapsed time: 00:03:44s.  Time for last 1,000,000:    3s.  Last read position: scaffold00071_pilon_pilon:1,660,987
+INFO	2022-02-28 22:43:32	MarkDuplicates	Tracking 4 as yet unmatched pairs. 4 records in RAM.
+INFO	2022-02-28 22:43:35	MarkDuplicates	Read    58,000,000 records.  Elapsed time: 00:03:48s.  Time for last 1,000,000:    3s.  Last read position: scaffold00076_pilon_pilon:1,051,272
+INFO	2022-02-28 22:43:35	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:43:38	MarkDuplicates	Read    59,000,000 records.  Elapsed time: 00:03:50s.  Time for last 1,000,000:    2s.  Last read position: scaffold00079_pilon_pilon:13,815,024
+INFO	2022-02-28 22:43:38	MarkDuplicates	Tracking 6 as yet unmatched pairs. 6 records in RAM.
+INFO	2022-02-28 22:43:43	MarkDuplicates	Read    60,000,000 records.  Elapsed time: 00:03:56s.  Time for last 1,000,000:    5s.  Last read position: scaffold00084_pilon_pilon:6,282,905
+INFO	2022-02-28 22:43:43	MarkDuplicates	Tracking 4 as yet unmatched pairs. 4 records in RAM.
+INFO	2022-02-28 22:43:46	MarkDuplicates	Read    61,000,000 records.  Elapsed time: 00:03:59s.  Time for last 1,000,000:    3s.  Last read position: scaffold00090_pilon_pilon:3,466,639
+INFO	2022-02-28 22:43:46	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:43:49	MarkDuplicates	Read    62,000,000 records.  Elapsed time: 00:04:02s.  Time for last 1,000,000:    2s.  Last read position: scaffold00095_pilon_pilon:3,775,950
+INFO	2022-02-28 22:43:49	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:43:54	MarkDuplicates	Read    63,000,000 records.  Elapsed time: 00:04:06s.  Time for last 1,000,000:    4s.  Last read position: scaffold00100_pilon_pilon:5,323,781
+INFO	2022-02-28 22:43:54	MarkDuplicates	Tracking 0 as yet unmatched pairs. 0 records in RAM.
+INFO	2022-02-28 22:43:57	MarkDuplicates	Read    64,000,000 records.  Elapsed time: 00:04:09s.  Time for last 1,000,000:    3s.  Last read position: scaffold00108_pilon_pilon:1,298,030
+INFO	2022-02-28 22:43:57	MarkDuplicates	Tracking 0 as yet unmatched pairs. 0 records in RAM.
+INFO	2022-02-28 22:44:00	MarkDuplicates	Read    65,000,000 records.  Elapsed time: 00:04:12s.  Time for last 1,000,000:    2s.  Last read position: scaffold00115_pilon_pilon:3,069,205
+INFO	2022-02-28 22:44:00	MarkDuplicates	Tracking 4 as yet unmatched pairs. 4 records in RAM.
+INFO	2022-02-28 22:44:03	MarkDuplicates	Read    66,000,000 records.  Elapsed time: 00:04:16s.  Time for last 1,000,000:    3s.  Last read position: scaffold00124_pilon_pilon:1,396,734
+INFO	2022-02-28 22:44:03	MarkDuplicates	Tracking 6 as yet unmatched pairs. 6 records in RAM.
+INFO	2022-02-28 22:44:06	MarkDuplicates	Read    67,000,000 records.  Elapsed time: 00:04:18s.  Time for last 1,000,000:    2s.  Last read position: scaffold00133_pilon_pilon:3,755,230
+INFO	2022-02-28 22:44:06	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:44:09	MarkDuplicates	Read    68,000,000 records.  Elapsed time: 00:04:21s.  Time for last 1,000,000:    3s.  Last read position: scaffold00145_pilon_pilon:2,591,859
+INFO	2022-02-28 22:44:09	MarkDuplicates	Tracking 0 as yet unmatched pairs. 0 records in RAM.
+INFO	2022-02-28 22:44:16	MarkDuplicates	Read    69,000,000 records.  Elapsed time: 00:04:28s.  Time for last 1,000,000:    6s.  Last read position: scaffold00159_pilon_pilon:2,503,159
+INFO	2022-02-28 22:44:16	MarkDuplicates	Tracking 0 as yet unmatched pairs. 0 records in RAM.
+INFO	2022-02-28 22:44:23	MarkDuplicates	Read    70,000,000 records.  Elapsed time: 00:04:35s.  Time for last 1,000,000:    7s.  Last read position: scaffold00177_pilon_pilon:1,328,129
+INFO	2022-02-28 22:44:23	MarkDuplicates	Tracking 2 as yet unmatched pairs. 2 records in RAM.
+INFO	2022-02-28 22:44:26	MarkDuplicates	Read    71,000,000 records.  Elapsed time: 00:04:38s.  Time for last 1,000,000:    3s.  Last read position: scaffold00205_pilon_pilon:562,403
+INFO	2022-02-28 22:44:26	MarkDuplicates	Tracking 4 as yet unmatched pairs. 4 records in RAM.
+INFO	2022-02-28 22:44:28	MarkDuplicates	Read    72,000,000 records.  Elapsed time: 00:04:41s.  Time for last 1,000,000:    2s.  Last read position: scaffold00262_pilon_pilon:276,905
+INFO	2022-02-28 22:44:28	MarkDuplicates	Tracking 0 as yet unmatched pairs. 0 records in RAM.
+INFO	2022-02-28 22:44:29	MarkDuplicates	Read 72303316 records. 0 pairs never matched.
+INFO	2022-02-28 22:44:31	MarkDuplicates	After buildSortedReadEndLists freeMemory: 2097216808; totalMemory: 2115502080; maxMemory: 2115502080
+INFO	2022-02-28 22:44:31	MarkDuplicates	Will retain up to 66109440 duplicate indices before spilling to disk.
+INFO	2022-02-28 22:44:31	MarkDuplicates	Traversing read pair information and detecting duplicates.
+INFO	2022-02-28 22:44:42	MarkDuplicates	Traversing fragment information and detecting duplicates.
+INFO	2022-02-28 22:44:54	MarkDuplicates	Sorting list of duplicate records.
+INFO	2022-02-28 22:44:55	MarkDuplicates	After generateDuplicateIndexes freeMemory: 1570333352; totalMemory: 2117599232; maxMemory: 2117599232
+INFO	2022-02-28 22:44:55	MarkDuplicates	Marking 27869452 records as duplicates.
+INFO	2022-02-28 22:44:55	MarkDuplicates	Found 2280480 optical duplicate clusters.
+INFO	2022-02-28 22:44:55	MarkDuplicates	Reads are assumed to be ordered by: coordinate
+INFO	2022-02-28 22:46:17	MarkDuplicates	Written    10,000,000 records.  Elapsed time: 00:01:22s.  Time for last 10,000,000:   82s.  Last read position: scaffold00002_pilon_pilon:285,719,020
+INFO	2022-02-28 22:47:37	MarkDuplicates	Written    20,000,000 records.  Elapsed time: 00:02:42s.  Time for last 10,000,000:   79s.  Last read position: scaffold00006_pilon_pilon:25,171,671
+INFO	2022-02-28 22:48:58	MarkDuplicates	Written    30,000,000 records.  Elapsed time: 00:04:02s.  Time for last 10,000,000:   80s.  Last read position: scaffold00017_pilon_pilon:1,780,077
+INFO	2022-02-28 22:50:18	MarkDuplicates	Written    40,000,000 records.  Elapsed time: 00:05:23s.  Time for last 10,000,000:   80s.  Last read position: scaffold00029_pilon_pilon:30,277,931
+INFO	2022-02-28 22:51:38	MarkDuplicates	Written    50,000,000 records.  Elapsed time: 00:06:43s.  Time for last 10,000,000:   79s.  Last read position: scaffold00050_pilon_pilon:7,120,025
+INFO	2022-02-28 22:52:58	MarkDuplicates	Written    60,000,000 records.  Elapsed time: 00:08:03s.  Time for last 10,000,000:   80s.  Last read position: scaffold00084_pilon_pilon:6,282,905
+INFO	2022-02-28 22:54:18	MarkDuplicates	Written    70,000,000 records.  Elapsed time: 00:09:23s.  Time for last 10,000,000:   80s.  Last read position: scaffold00177_pilon_pilon:1,328,129
+INFO	2022-02-28 22:54:37	MarkDuplicates	Writing complete. Closing input iterator.
+INFO	2022-02-28 22:54:37	MarkDuplicates	Duplicate Index cleanup.
+INFO	2022-02-28 22:54:37	MarkDuplicates	Getting Memory Stats.
+INFO	2022-02-28 22:54:37	MarkDuplicates	Before output close freeMemory: 2127524720; totalMemory: 2146959360; maxMemory: 2146959360
+INFO	2022-02-28 22:54:37	MarkDuplicates	Closed outputs. Getting more Memory Stats.
+INFO	2022-02-28 22:54:37	MarkDuplicates	After output close freeMemory: 2127524720; totalMemory: 2146959360; maxMemory: 2146959360
+[Mon Feb 28 22:54:37 AEDT 2022] picard.sam.markduplicates.MarkDuplicates done. Elapsed time: 14.83 minutes.
+Runtime.totalMemory()=2146959360
