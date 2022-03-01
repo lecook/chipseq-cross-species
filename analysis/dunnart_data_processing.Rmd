@@ -109,7 +109,7 @@ Table. Read alignment quality metrics before and aftering filtering steps
 
 This helps to determine whether the different sample types can be separated, i.e., samples of different conditions are expected to be more dissimilar to each other than replicates within the same condition.
 
-```{r}
+```{r eval=FALSE}
 include_graphics("output/qc/pearsoncor_multibamsum.png")
 ```
 
@@ -120,7 +120,7 @@ It determines how well the signal in the ChIP-seq sample can be differentiated f
 
 An ideal input with perfect uniform distribution of reads along the genome (i.e. without enrichments in open chromatin etc.) and infinite sequencing coverage should generate a straight diagonal line. A very specific and strong ChIP enrichment will be indicated by a prominent and steep rise of the cumulative sum towards the highest rank. This means that a big chunk of reads from the ChIP sample is located in few bins which corresponds to high, narrow enrichments typically seen for transcription factors.
 
-```{r}
+```{r eval=FALSE}
 include_graphics("output/qc/multiBAM_fingerprint.png")
 ```
 
@@ -128,7 +128,7 @@ include_graphics("output/qc/multiBAM_fingerprint.png")
 
 This tool calculates the fragment sizes for read pairs given a BAM file from paired-end sequencing. Several regions are sampled depending on the size of the genome and number of processors to estimate thesummary statistics on the fragment lengths.
 
-```{r}
+```{r eval=FALSE}
 include_graphics("output/qc/bamPEFragmentSize_hist.png")
 ```
 
