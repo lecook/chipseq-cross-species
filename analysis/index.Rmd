@@ -18,7 +18,7 @@ This project involves a number of analysis for the generation of ChIP-seq data f
 
 * [Dunnart experimental design and data generation](dunnart_experiment_overview.html)
 
-* Mouse data from ENCODE
+* [Mouse data from ENCODE](mouse_data_ENCODE.html)
 
 ## Data preparation and peak calling
 
@@ -26,7 +26,7 @@ This project involves a number of analysis for the generation of ChIP-seq data f
 
 Outlines read mapping, filtering, QC and peak calling.
 
-* Mouse data pre-processing
+* [Normalised mouse and dunnart read pre-processing](mouse_dunnart_data_processing_for_comparison.html)
 
 Outlines filtering aligned reads from ENCODE, QC and peak calling.
 

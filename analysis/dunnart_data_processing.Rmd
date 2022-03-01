@@ -98,7 +98,7 @@ Table. Read alignment quality metrics before and aftering filtering steps
 | B-2                                                                                  | H3K4me3       | 114146802                                                   | 67048994           | 42357180             | 0\.831032  | 0\.830749   | 5\.898224    |
 | B-3                                                                                  | H3K27ac       | 104714846                                                   | 66615704           | 43939460             | 0\.847255  | 0\.847022   | 6\.529168    |
 
-* calculated from a subsample of ~10-15M aligned reads prior to removing duplicates
+\* calculated from a subsample of ~10-15M aligned reads prior to removing duplicates
 
 ^ excluded low quality (MAPQ  30) and orphaned reads
 
