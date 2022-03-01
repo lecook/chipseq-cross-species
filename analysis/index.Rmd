@@ -24,22 +24,22 @@ This project involves a number of analysis for the generation of ChIP-seq data f
 
 * [Dunnart data pre-processing](dunnart_data_processing.html)
 
-Outlines read mapping, filtering, QC and peak calling.
+    + Outlines read mapping, filtering, QC and peak calling.
 
 * [Normalised mouse and dunnart read pre-processing](mouse_dunnart_data_processing_for_comparison.html)
 
-Outlines filtering aligned reads from ENCODE, QC and peak calling.
+    + Outlines filtering aligned reads from ENCODE, QC and peak calling.
 
 ## Data analyses
 
-* Whole genome alignment between mouse and dunnart
+* [Whole genome alignment between mouse and dunnart](whole_genome_alignment.html)
 
-* Dunnart peak characterisation
+* [Dunnart peak characterisation](dunnart_peak_characterisation.html)
 
 * [Cross-species peak comparisons](cross-species-peak-comparison.html)
 
-	+ Peak level
+	+ [Peak level](peak_level_comparisons.html)
 	
-	+ Gene level
+	+ [Gene level](gene_level_comparisons.html)
 	
-	+ Incorporating temporal mouse gene expression data
+	+ [Incorporating temporal mouse gene expression data](tcseq_expression_analysis.html)

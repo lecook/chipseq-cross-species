@@ -1,0 +1,13 @@
+"https://www.encodeproject.org/metadata/?files.analyses.title=ENCODE3+mm10&files.output_type=unfiltered+alignments&files.file_type=bam&files.file_format=bam&type=Experiment&cart=%2Fcarts%2Febfa6e82-485f-4798-aa7b-758b607859cf%2F&files.processed=true"
+https://www.encodeproject.org/files/ENCFF825AVI/@@download/ENCFF825AVI.bam
+https://www.encodeproject.org/files/ENCFF157KEH/@@download/ENCFF157KEH.bam
+https://www.encodeproject.org/files/ENCFF203JQV/@@download/ENCFF203JQV.bam
+https://www.encodeproject.org/files/ENCFF058AUT/@@download/ENCFF058AUT.bam
+https://www.encodeproject.org/files/ENCFF184CUE/@@download/ENCFF184CUE.bam
+https://www.encodeproject.org/files/ENCFF376FGM/@@download/ENCFF376FGM.bam
+https://www.encodeproject.org/files/ENCFF182XFG/@@download/ENCFF182XFG.bam
+https://www.encodeproject.org/files/ENCFF727QTS/@@download/ENCFF727QTS.bam
+https://www.encodeproject.org/files/ENCFF117QRC/@@download/ENCFF117QRC.bam
+https://www.encodeproject.org/files/ENCFF248PGK/@@download/ENCFF248PGK.bam
+https://www.encodeproject.org/files/ENCFF002HZV/@@download/ENCFF002HZV.bam
+https://www.encodeproject.org/files/ENCFF784ORI/@@download/ENCFF784ORI.bam

@@ -1,15 +1,8 @@
 ---
-title: "Whole genome alignment between the mouse and dunnart"
+title: "Cross-species comparisons for genes with peaks"
 author: "lecook"
 date: "2022-02-23"
 output: workflowr::wflow_html
 editor_options:
   chunk_output_type: console
 ---
-
-## Introduction
-
-```{r}
-
-```
-

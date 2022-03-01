@@ -1,15 +1,8 @@
 ---
-title: "Whole genome alignment between the mouse and dunnart"
+title: "Incorporating temporal gene expression into analysis of genes with peaks"
 author: "lecook"
 date: "2022-02-23"
 output: workflowr::wflow_html
 editor_options:
   chunk_output_type: console
 ---
-
-## Introduction
-
-```{r}
-
-```
-

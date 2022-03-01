@@ -1,5 +1,5 @@
 ---
-title: "mouse_dunnart_data_processing_for_comparison"
+title: "Processing mouse and dunnart data for comparison"
 author: "lecook"
 date: "2022-02-23"
 output: workflowr::wflow_html
