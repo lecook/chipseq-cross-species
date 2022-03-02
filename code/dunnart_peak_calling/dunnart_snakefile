@@ -595,6 +595,8 @@ rule frip:
         peak = "output/peaks/{case}_vs_{control}_macs2_default_peaks.narrowPeak"
     output:
         "output/qc/{case}_vs_{control}.frip_default.txt"
+    log:
+        "output/logs/{case}_vs_{control}.frip"
     shell:
         "python2.7 code/encode_frip.py {input.bed} {input.peak} > {output}"
 
