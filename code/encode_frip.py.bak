@@ -27,14 +27,14 @@ num_lines_overlap = 0
 # determine how many lines in overlap file
 for line in overlap:
     num_lines_overlap += 1
-print('Number of reads that intersect with peaks = ', num_lines_overlap)
+print 'Number of reads that intersect with peaks = ', num_lines_overlap
 
 num_lines_bed = 0
 
 # determine how many lines in original bed file
 for line in bed:
     num_lines_bed +=1
-print('Number of total reads = ', num_lines_bed)
+print 'Number of total reads = ', num_lines_bed
 
 # print the fraction of peaks in aligned reads
-print('Fraction of Reads in Peak = ', str(float(num_lines_overlap)/float(num_lines_bed)))
+print 'Fraction of Reads in Peak = ', str(float(num_lines_overlap)/float(num_lines_bed))
