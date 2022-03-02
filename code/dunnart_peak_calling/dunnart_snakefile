@@ -360,14 +360,15 @@ rule deeptools_coverage:
         "output/qc/{sample}.SeqDepthNorm.bw"
     log:
         "output/logs/{sample}_coverage.deepTools"
-    shell:
-        """bamCoverage --bam {input.bam}  --binSize 10 \
+    run:
+        shell("bamCoverage --bam {input.bam} --binSize 10 \
         --normalizeUsing RPGC \
         --effectiveGenomeSize 2740338543 \
         --extendReads \
-        --legendLocation none
-        --colors #264653 #2A9D8F #E9C46A #F4A261 #E76F51
-        -o {output} 2> {log}"""
+        --legendLocation none \
+        -o {output} \
+        --colors #264653 #2A9D8F #E9C46A #F4A261 #E76F51 \
+         2> {log}")
 
 rule deeptools_fingerprint:
     input:
