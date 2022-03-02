@@ -365,9 +365,7 @@ rule deeptools_coverage:
         --normalizeUsing RPGC \
         --effectiveGenomeSize 2740338543 \
         --extendReads \
-        --legendLocation none \
         -o {output} \
-        --colors #264653 #2A9D8F #E9C46A #F4A261 #E76F51 \
          2> {log}")
 
 rule deeptools_fingerprint:
