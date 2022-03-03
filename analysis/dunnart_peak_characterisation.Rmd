@@ -686,6 +686,13 @@ enhancer_setdiff_terms = go_cluster@compareClusterResult[go_cluster@compareClust
 ```
 
 
+> Note: Look at using sourcing for calling R functions that I use across different analyses.
+> Create a script of R functions called utils.R
+```{r, eval=FALSE}
+if(exists("my_function", mode = "function"))
+    source("utils.R")
+```
+
 <!-- # Peak length vs distance from TSS and peak intensity vs distance from TSS
 peak.counts <- df2 %>% as.data.frame() %>% group_by(geneId, group, geneLength) %>%
     summarise(count = n(), .groups = 'drop') %>% as.data.table()
