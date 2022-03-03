@@ -55,9 +55,9 @@ rule all:
         "output/qc/multiBAM_fingerprint_rawcounts_dunnart_downSampled.txt",
         "output/qc/bamPEFragmentSize_hist_dunnart_downSampled.png",
         "output/qc/bamPEFragmentSize_rawcounts_dunnart_downSampled.tab",
-        expand("output/peaks/{case}_vs_{control}_macs2_default_peaks_downSampled.narrowPeak", zip, case=IPS, control=INPUTS),
-        expand("output/peaks/{case}_vs_{control}_macs2_default_peaks_downSampled.xls", zip, case=IPS, control=INPUTS),
-        expand("output/peaks/{case}_vs_{control}_macs2_default_summits_downSampled.bed", zip, case=IPS, control=INPUTS),
+        expand("output/peaks/{case}_vs_{control}_macs2_default_peaks_dunnart_downSampled.narrowPeak", zip, case=IPS, control=INPUTS),
+        expand("output/peaks/{case}_vs_{control}_macs2_default_peaks_dunnart_downSampled.xls", zip, case=IPS, control=INPUTS),
+        expand("output/peaks/{case}_vs_{control}_macs2_default_summits_dunnart_downSampled.bed", zip, case=IPS, control=INPUTS),
         expand("output/qc/{case}-vs-{control}-narrowpeak-count_mqc_dunnart_downSampled.json", zip, case=IPS, control=INPUTS),
         expand("output/bam_files/{case}_dunnart_downSampled.bedpe", case=IPS),
         expand("output/logs/{case}_dunnart_downSampled.bamToBed", case=IPS),
@@ -245,7 +245,7 @@ rule call_peaks_macs2_pooled_replicates:
 # peak counts in a format that multiqc can handle
 rule get_narrow_peak_counts_for_multiqc:
     input:
-        peaks = "output/peaks/{case}_vs_{control}_macs2_peaks_dunnart_downSampled.narrowPeak"
+        peaks = "output/peaks/{case}_vs_{control}_macs2_default_peaks_dunnart_downSampled.narrowPeak"
     output:
         "output/qc/{case}-vs-{control}-narrowpeak-count_mqc_dunnart_downSampled.json"
     params:
