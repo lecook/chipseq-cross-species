@@ -557,8 +557,8 @@ annotatePeaks.pl output/filtered_peaks/cluster1_promoters.narrowPeak smiCra1 -gf
 annotatePeaks.pl output/filtered_peaks/cluster2_promoters.narrowPeak smiCra1 -gff Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr2.gff -CpG -cons > output/annotations/cluster2_promoters_homerAnnot.txt
 annotatePeaks.pl output/filtered_peaks/cluster3_promoters.narrowPeak smiCra1 -gff Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr2.gff -CpG -cons > output/annotations/cluster3_promoters_homerAnnot.txt
 
-annotatePeaks.pl output/peaks/dunnart_promoters.narrowPeak smiCra1 -gff data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr2.gff -CpG -cons > output/annotations/dunnart_promoters_homerAnnot.txt
-annotatePeaks.pl output/peaks/dunnart_enhancers.narrowPeak smiCra1 -gff data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr2.gff -CpG -cons > output/annotations/dunnart_enhancers_homerAnnot.txt 
+annotatePeaks.pl output/peaks/dunnart_promoter_peaks.narrowPeak smiCra1 -gff data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr2.gff -CpG -cons > output/annotations/dunnart_promoters_homerAnnot.txt
+annotatePeaks.pl output/peaks/dunnart_enhancer_peaks.narrowPeak smiCra1 -gff data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr2.gff -CpG -cons > output/annotations/dunnart_enhancers_homerAnnot.txt 
 ```
 
 
