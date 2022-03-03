@@ -493,7 +493,7 @@ rule cross_correlation_SSP:
         EXCLUSION_RANGE_MIN=-500,
         EXCLUSION_RANGE_MAX=60
     shell:
-        "Rscript scripts/run_spp.R -c={input} -savp={output.CC_PLOT_FILE} -out={output.CC_SCORES_FILE} -x={params.EXCLUSION_RANGE_MIN}:{params.EXCLUSION_RANGE_MAX} 2> {log}"
+        "Rscript code/run_spp.R -c={input} -savp={output.CC_PLOT_FILE} -out={output.CC_SCORES_FILE} -x={params.EXCLUSION_RANGE_MIN}:{params.EXCLUSION_RANGE_MAX} 2> {log}"
 
 #
 # CC_SCORE FILE format
