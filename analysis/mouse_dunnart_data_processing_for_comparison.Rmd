@@ -180,79 +180,121 @@ Table. Peak calling quality metrics for mouse ChIP-seq peaks after peak calling 
 
 #### Dunnart
 ```{bash}
-less output/peaks/A-3_H3K27ac_vs_A-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
-less output/peaks/A-2_H3K4me3_vs_A-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
-less output/peaks/B-3_H3K27ac_vs_B-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
-less output/peaks/B-2_H3K4me3_vs_B-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
+echo "Number of peaks A3 H3K27ac dunnart" | less output/peaks/A-3_H3K27ac_vs_A-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
+echo "Number of peaks A2 H3K4me3 dunnart" | less output/peaks/A-2_H3K4me3_vs_A-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
+echo "Number of peaks B3 H3K27ac dunnart" | less output/peaks/B-3_H3K27ac_vs_B-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
+echo "Number of peaks B2 H3K4me3 dunnart" | less output/peaks/B-2_H3K4me3_vs_B-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
 ```
 
 #### Mouse
+H3K4me3
 ```{bash}
+echo "Number of peaks rep 1 E10.5 H3K4me3 | less output/peaks/ENCFF124UYX_vs_ENCFF157KEH_E10.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo "Number of peaks rep 2 E10.5 H3K4me3 | less output/peaks/ENCFF045IPK_vs_ENCFF825AVI_E10.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo "Number of peaks rep 1 E11.5 H3K4me3 | less output/peaks/ENCFF760QYZ_vs_ENCFF184CUE_E11.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo "Number of peaks rep 2 E11.5 H3K4me3 | less output/peaks/ENCFF717QDV_vs_ENCFF376FGM_E11.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo "Number of peaks rep 1 E12.5 H3K4me3 | less output/peaks/ENCFF941QJZ_vs_ENCFF058AUT_E12.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo "Number of peaks rep 2 E12.5 H3K4me3 | less output/peaks/ENCFF182ZPF_vs_ENCFF203JQV_E12.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo "Number of peaks rep 1 E13.5 H3K4me3 | less output/peaks/ENCFF485UDC_vs_ENCFF117QRC_E13.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo "Number of peaks rep 2 E13.5 H3K4me3 | less output/peaks/ENCFF124TAB_vs_ENCFF248PGK_E13.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo "Number of peaks rep 1 E14.5 H3K4me3 | less output/peaks/ENCFF665QBJ_vs_ENCFF002HZV_E14.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo "Number of peaks rep 2 E14.5 H3K4me3 | less output/peaks/ENCFF724DMU_vs_ENCFF784ORI_E14.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo "Number of peaks rep 1 E15.5 H3K4me3 | less output/peaks/ENCFF401BKM_vs_ENCFF182XFG_E15.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo "Number of peaks rep 2 E15.5 H3K4me3 | less output/peaks/ENCFF258KCR_vs_ENCFF727QTS_E15.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+```
 
+H3K27ac
+```{bash}
+echo "Number of peaks rep 1 E10.5 H3K27ac | less output/peaks/ENCFF213EBC_vs_ENCFF157KEH_E10.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo "Number of peaks rep 2 E10.5 H3K27ac | less output/peaks/ENCFF548BRR_vs_ENCFF825AVI_E10.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo "Number of peaks rep 1 E11.5 H3K27ac | less output/peaks/ENCFF512SFE_vs_ENCFF184CUE_E11.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo "Number of peaks rep 2 E11.5 H3K27ac | less output/peaks/ENCFF515PKL_vs_ENCFF376FGM_E11.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo "Number of peaks rep 1 E12.5 H3K27ac | less output/peaks/ENCFF011NFM_vs_ENCFF058AUT_E12.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo "Number of peaks rep 2 E12.5 H3K27ac | less output/peaks/ENCFF394TZN_vs_ENCFF203JQV_E12.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo "Number of peaks rep 1 E13.5 H3K27ac | less output/peaks/ENCFF194ORC_vs_ENCFF117QRC_E13.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo "Number of peaks rep 2 E13.5 H3K27ac | less output/peaks/ENCFF290ZNF_vs_ENCFF248PGK_E13.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo "Number of peaks rep 1 E14.5 H3K27ac | less output/peaks/ENCFF902HAR_vs_ENCFF002HZV_E14.5_H3K27ac_macs2_peaks.narrowPeak | wc -l 
+echo "Number of peaks rep 2 E14.5 H3K27ac | less output/peaks/ENCFF327VAO_vs_ENCFF784ORI_E14.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo "Number of peaks rep 1 E15.5 H3K27ac | less output/peaks/ENCFF707WKL_vs_ENCFF182XFG_E15.5_H3K27ac_macs2_peaks.narrowPeak | wc -l 
+echo "Number of peaks rep 2 E15.5 H3K27ac | less output/peaks/ENCFF584JFB_vs_ENCFF727QTS_E15.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
 ```
 
 ### Consensus peaksets for biological replicates
 #### Number of consensus peaks 
 ##### Dunnart
 ```{bash}
-less output/peaks/H3K4me3_overlap_default_dunnart_downSampled.narrowPeak | wc -l
-less output/peaks/H3K27ac_overlap_default_dunnart_downSampled.narrowPeak | wc -l
+echo "Number of consensus H3K4me3 dunnart peaks" | less output/peaks/H3K4me3_overlap_default_dunnart_downSampled.narrowPeak | wc -l
+echo "Number of consensus H3K27ac dunnart peaks" | less less output/peaks/H3K27ac_overlap_default_dunnart_downSampled.narrowPeak | wc -l
 ```
 
 ##### Mouse
+```{bash}
+echo "Number of consensus H3K4me3 mouse E10.5 peaks" | less output/peaks/H3K4me3_E10.5_overlap.narrowPeak | wc -l
+echo "Number of consensus H3K4me3 mouse E11.5 peaks" | less output/peaks/H3K4me3_E11.5_overlap.narrowPeak | wc -l
+echo "Number of consensus H3K4me3 mouse E12.5 peaks" | less output/peaks/H3K4me3_E12.5_overlap.narrowPeak | wc -l
+echo "Number of consensus H3K4me3 mouse E13.5 peaks" | less output/peaks/H3K4me3_E13.5_overlap.narrowPeak | wc -l
+echo "Number of consensus H3K4me3 mouse E14.5 peaks" | less output/peaks/H3K4me3_E14.5_overlap.narrowPeak | wc -l
+echo "Number of consensus H3K4me3 mouse E15.5 peaks" | less output/peaks/H3K4me3_E15.5_overlap.narrowPeak | wc -l
+echo "Number of consensus H3K27ac mouse E10.5 peaks" | less output/peaks/H3K27ac_E10.5_overlap.narrowPeak | wc -l
+echo "Number of consensus H3K27ac mouse E11.5 peaks" | less output/peaks/H3K27ac_E11.5_overlap.narrowPeak | wc -l
+echo "Number of consensus H3K27ac mouse E12.5 peaks" | less output/peaks/H3K27ac_E12.5_overlap.narrowPeak | wc -l
+echo "Number of consensus H3K27ac mouse E13.5 peaks" | less output/peaks/H3K27ac_E13.5_overlap.narrowPeak | wc -l
+echo "Number of consensus H3K27ac mouse E14.5 peaks" | less output/peaks/H3K27ac_E14.5_overlap.narrowPeak | wc -l
+echo "Number of consensus H3K27ac mouse E15.5 peaks" | less output/peaks/H3K27ac_E15.5_overlap.narrowPeak | wc -l
+```
 
 # Consensus peaks and grouping into putative enhancers and promoters
 
 Find uniquely H3K4me3 sites (i.e. peaks that don't overlap with H3K27ac):
 
 ```{bash}
-bedtools intersect -v -a H3K4me3_E10.5_overlap.narrowPeak -b H3K27ac_E10.5_overlap.narrowPeak > H3K4me3_E10.5_only.narrowPeak
-bedtools intersect -v -a H3K4me3_E11.5_overlap.narrowPeak -b H3K27ac_E11.5_overlap.narrowPeak > H3K4me3_E11.5_only.narrowPeak
-bedtools intersect -v -a H3K4me3_E12.5_overlap.narrowPeak -b H3K27ac_E12.5_overlap.narrowPeak > H3K4me3_E12.5_only.narrowPeak
-bedtools intersect -v -a H3K4me3_E13.5_overlap.narrowPeak -b H3K27ac_E13.5_overlap.narrowPeak > H3K4me3_E13.5_only.narrowPeak
-bedtools intersect -v -a H3K4me3_E14.5_overlap.narrowPeak -b H3K27ac_E14.5_overlap.narrowPeak > H3K4me3_E14.5_only.narrowPeak
-bedtools intersect -v -a H3K4me3_E15.5_overlap.narrowPeak -b H3K27ac_E15.5_overlap.narrowPeak > H3K4me3_E15.5_only.narrowPeak
+bedtools intersect -v -a output/peaks/H3K4me3_E10.5_overlap.narrowPeak -b output/peaks/H3K27ac_E10.5_overlap.narrowPeak > output/peaks/H3K4me3_E10.5_only.narrowPeak
+bedtools intersect -v -a output/peaks/H3K4me3_E11.5_overlap.narrowPeak -b output/peaks/H3K27ac_E11.5_overlap.narrowPeak > output/peaks/H3K4me3_E11.5_only.narrowPeak
+bedtools intersect -v -a output/peaks/H3K4me3_E12.5_overlap.narrowPeak -b output/peaks/H3K27ac_E12.5_overlap.narrowPeak > output/peaks/H3K4me3_E12.5_only.narrowPeak
+bedtools intersect -v -a output/peaks/H3K4me3_E13.5_overlap.narrowPeak -b output/peaks/H3K27ac_E13.5_overlap.narrowPeak > output/peaks/H3K4me3_E13.5_only.narrowPeak
+bedtools intersect -v -a output/peaks/H3K4me3_E14.5_overlap.narrowPeak -b output/peaks/H3K27ac_E14.5_overlap.narrowPeak > output/peaks/H3K4me3_E14.5_only.narrowPeak
+bedtools intersect -v -a output/peaks/H3K4me3_E15.5_overlap.narrowPeak -b output/peaks/H3K27ac_E15.5_overlap.narrowPeak > output/peaks/H3K4me3_E15.5_only.narrowPeak
 
 ```
 
 Find unique H3K27ac sites (i.e. peaks that don't overlap with H3K4me3):
 
 ```{bash}
-bedtools intersect -v -a H3K27ac_E10.5_overlap.narrowPeak -b H3K4me3_E10.5_overlap.narrowPeak > H3K27ac_E10.5_only.narrowPeak
-bedtools intersect -v -a H3K27ac_E11.5_overlap.narrowPeak -b H3K4me3_E11.5_overlap.narrowPeak > H3K27ac_E11.5_only.narrowPeak
-bedtools intersect -v -a H3K27ac_E12.5_overlap.narrowPeak -b H3K4me3_E12.5_overlap.narrowPeak > H3K27ac_E12.5_only.narrowPeak
-bedtools intersect -v -a H3K27ac_E13.5_overlap.narrowPeak -b H3K4me3_E13.5_overlap.narrowPeak > H3K27ac_E13.5_only.narrowPeak
-bedtools intersect -v -a H3K27ac_E14.5_overlap.narrowPeak -b H3K4me3_E14.5_overlap.narrowPeak > H3K27ac_E14.5_only.narrowPeak
-bedtools intersect -v -a H3K27ac_E15.5_overlap.narrowPeak -b H3K4me3_E15.5_overlap.narrowPeak > H3K27ac_E15.5_only.narrowPeak
+bedtools intersect -v -a output/peaks/H3K27ac_E10.5_overlap.narrowPeak -b output/peaks/H3K4me3_E10.5_overlap.narrowPeak > output/peaks/H3K27ac_E10.5_only.narrowPeak
+bedtools intersect -v -a output/peaks/H3K27ac_E11.5_overlap.narrowPeak -b output/peaks/H3K4me3_E11.5_overlap.narrowPeak > output/peaks/H3K27ac_E11.5_only.narrowPeak
+bedtools intersect -v -a output/peaks/H3K27ac_E12.5_overlap.narrowPeak -b output/peaks/H3K4me3_E12.5_overlap.narrowPeak > output/peaks/H3K27ac_E12.5_only.narrowPeak
+bedtools intersect -v -a output/peaks/H3K27ac_E13.5_overlap.narrowPeak -b output/peaks/H3K4me3_E13.5_overlap.narrowPeak > output/peaks/H3K27ac_E13.5_only.narrowPeak
+bedtools intersect -v -a output/peaks/H3K27ac_E14.5_overlap.narrowPeak -b output/peaks/H3K4me3_E14.5_overlap.narrowPeak > output/peaks/H3K27ac_E14.5_only.narrowPeak
+bedtools intersect -v -a output/peaks/H3K27ac_E15.5_overlap.narrowPeak -b output/peaks/H3K4me3_E15.5_overlap.narrowPeak > output/peaks/H3K27ac_E15.5_only.narrowPeak
 ```
 
 Find peaks common between H3K27ac & H3K4me3 with a reciprocal overlap of at least 50%.
 ```{bash}
-bedtools intersect -f 0.5 -r -a H3K4me3_E10.5_overlap.narrowPeak -b H3K27ac_E10.5_overlap.narrowPeak > H3K4me3_and_H3K27ac_E10.5.narrowPeak
-bedtools intersect -f 0.5 -r -a H3K4me3_E11.5_overlap.narrowPeak -b H3K27ac_E11.5_overlap.narrowPeak > H3K4me3_and_H3K27ac_E11.5.narrowPeak
-bedtools intersect -f 0.5 -r -a H3K4me3_E12.5_overlap.narrowPeak -b H3K27ac_E12.5_overlap.narrowPeak > H3K4me3_and_H3K27ac_E12.5.narrowPeak
-bedtools intersect -f 0.5 -r -a H3K4me3_E13.5_overlap.narrowPeak -b H3K27ac_E13.5_overlap.narrowPeak > H3K4me3_and_H3K27ac_E13.5.narrowPeak
-bedtools intersect -f 0.5 -r -a H3K4me3_E14.5_overlap.narrowPeak -b H3K27ac_E14.5_overlap.narrowPeak > H3K4me3_and_H3K27ac_E14.5.narrowPeak
-bedtools intersect -f 0.5 -r -a H3K4me3_E15.5_overlap.narrowPeak -b H3K27ac_E15.5_overlap.narrowPeak > H3K4me3_and_H3K27ac_E15.5.narrowPeak
+bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_E10.5_overlap.narrowPeak -b output/peaks/H3K27ac_E10.5_overlap.narrowPeak > output/peaks/H3K4me3_and_H3K27ac_E10.5.narrowPeak
+bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_E11.5_overlap.narrowPeak -b output/peaks/H3K27ac_E11.5_overlap.narrowPeak > output/peaks/H3K4me3_and_H3K27ac_E11.5.narrowPeak
+bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_E12.5_overlap.narrowPeak -b output/peaks/H3K27ac_E12.5_overlap.narrowPeak > output/peaks/H3K4me3_and_H3K27ac_E12.5.narrowPeak
+bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_E13.5_overlap.narrowPeak -b output/peaks/H3K27ac_E13.5_overlap.narrowPeak > output/peaks/H3K4me3_and_H3K27ac_E13.5.narrowPeak
+bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_E14.5_overlap.narrowPeak -b output/peaks/H3K27ac_E14.5_overlap.narrowPeak > output/peaks/H3K4me3_and_H3K27ac_E14.5.narrowPeak
+bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_E15.5_overlap.narrowPeak -b output/peaks/H3K27ac_E15.5_overlap.narrowPeak > output/peaks/H3K4me3_and_H3K27ac_E15.5.narrowPeak
 ```
 
 Combine peak files
 
 ```{bash}
-cat H3K4me3_E10.5_only.narrowPeak H3K4me3_and_H3K27ac_E10.5.narrowPeak | sort -k 4,4 > E10.5_promoter_peaks.narrowPeak
-cat H3K4me3_E11.5_only.narrowPeak H3K4me3_and_H3K27ac_E11.5.narrowPeak | sort -k 4,4 > E11.5_promoter_peaks.narrowPeak
-cat H3K4me3_E12.5_only.narrowPeak H3K4me3_and_H3K27ac_E12.5.narrowPeak | sort -k 4,4 > E12.5_promoter_peaks.narrowPeak
-cat H3K4me3_E13.5_only.narrowPeak H3K4me3_and_H3K27ac_E13.5.narrowPeak | sort -k 4,4 > E13.5_promoter_peaks.narrowPeak
-cat H3K4me3_E14.5_only.narrowPeak H3K4me3_and_H3K27ac_E14.5.narrowPeak | sort -k 4,4 > E14.5_promoter_peaks.narrowPeak
-cat H3K4me3_E15.5_only.narrowPeak H3K4me3_and_H3K27ac_E15.5.narrowPeak | sort -k 4,4 > E15.5_promoter_peaks.narrowPeak
+cat output/peaks/H3K4me3_E10.5_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac_E10.5.narrowPeak | sort -k 4,4 > output/peaks/E10.5_promoter_peaks.narrowPeak
+cat output/peaks/H3K4me3_E11.5_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac_E11.5.narrowPeak | sort -k 4,4 > output/peaks/E11.5_promoter_peaks.narrowPeak
+cat output/peaks/H3K4me3_E12.5_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac_E12.5.narrowPeak | sort -k 4,4 > output/peaks/E12.5_promoter_peaks.narrowPeak
+cat output/peaks/H3K4me3_E13.5_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac_E13.5.narrowPeak | sort -k 4,4 > output/peaks/E13.5_promoter_peaks.narrowPeak
+cat output/peaks/H3K4me3_E14.5_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac_E14.5.narrowPeak | sort -k 4,4 > output/peaks/E14.5_promoter_peaks.narrowPeak
+cat output/peaks/H3K4me3_E15.5_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac_E15.5.narrowPeak | sort -k 4,4 > output/peaks/E15.5_promoter_peaks.narrowPeak
 
 
-cat H3K27ac_E10.5_only.narrowPeak | sort -k 4,4 > E10.5_enhancer_peaks.narrowPeak
-cat H3K27ac_E11.5_only.narrowPeak | sort -k 4,4 > E11.5_enhancer_peaks.narrowPeak
-cat H3K27ac_E12.5_only.narrowPeak | sort -k 4,4 > E12.5_enhancer_peaks.narrowPeak
-cat H3K27ac_E13.5_only.narrowPeak | sort -k 4,4 > E13.5_enhancer_peaks.narrowPeak
-cat H3K27ac_E14.5_only.narrowPeak | sort -k 4,4 > E14.5_enhancer_peaks.narrowPeak
-cat H3K27ac_E15.5_only.narrowPeak | sort -k 4,4 > E15.5_enhancer_peaks.narrowPeak
+cat output/peaks/H3K27ac_E10.5_only.narrowPeak | sort -k 4,4 > output/peaks/E10.5_enhancer_peaks.narrowPeak
+cat output/peaks/H3K27ac_E11.5_only.narrowPeak | sort -k 4,4 > output/peaks/E11.5_enhancer_peaks.narrowPeak
+cat output/peaks/H3K27ac_E12.5_only.narrowPeak | sort -k 4,4 > output/peaks/E12.5_enhancer_peaks.narrowPeak
+cat output/peaks/H3K27ac_E13.5_only.narrowPeak | sort -k 4,4 > output/peaks/E13.5_enhancer_peaks.narrowPeak
+cat output/peaks/H3K27ac_E14.5_only.narrowPeak | sort -k 4,4 > output/peaks/E14.5_enhancer_peaks.narrowPeak
+cat output/peaks/H3K27ac_E15.5_only.narrowPeak | sort -k 4,4 > output/peaks/E15.5_enhancer_peaks.narrowPeak
 
 ```
 

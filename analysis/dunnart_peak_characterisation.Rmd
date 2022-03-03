@@ -634,7 +634,7 @@ go_cluster <- setReadable(
         geneCluster = genes, 
         fun = enrichGO, 
         ont="BP",
-        universe = bg, 
+        #universe = bg, 
         keyType="ENSEMBL", 
         pvalueCutoff = 0.001, 
         OrgDb = org.Mm.eg.db),
