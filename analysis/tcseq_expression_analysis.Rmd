@@ -6,3 +6,573 @@ output: workflowr::wflow_html
 editor_options:
   chunk_output_type: console
 ---
+
+## Load libraries
+
+```{r}
+library(TCseq)
+library(vegan)
+library(UpSetR)
+library(tidyverse)
+library(RColorBrewer)
+library(ggplot2)
+library(data.table)
+library(dplyr)
+library(biomaRt)
+library(limma)
+library(Glimma)
+library(edgeR)
+library(purrr)
+library(EnsDb.Mmusculus.v79)
+edb <- EnsDb.Mmusculus.v79
+library(GeneStructureTools)
+library(ggfortify)
+library(Repitools)
+library(org.Mm.eg.db)
+library(GenomicFeatures)
+library(GOSemSim)
+library(clusterProfiler)
+library(enrichplot)
+set.seed(5)
+```
+## Data
+
+
+
+## Set up directories
+
+```{r}
+setwd("/data/gpfs/projects/punim0586/lecook/chipseq-cross-species")
+plot_dir = "output/plots"
+output_dir = "output/rnaseq"
+```
+
+## Pre-processing count data from ENCODE
+### Import the gene counts from ENCODE
+
+```{r}
+fileList = "output/rnaseq"
+files =list.files(fileList, pattern= ".tsv", full.names=T) # create list of files in directory
+```
+
+### Create DGE object with counts and ENSEMBL gene ids
+- RSEM output is as expected/estimated counts. 
+- This involves using expectation-maximization (or similar) to try to apportion multimapping reads in the most likely manner. 
+- This can also be used to get isoform-level metrics. 
+- Estimated counts are typically presented in TPMs and/or estimated counts. 
+- TPMs are length normalized, while estimated counts are not.
+
+```{r}
+mm10.face.genes <- readDGE(files, columns=c(1,5)) # read in counts from RSEM, column 1,3 and 4 are the geneID, gene length and count
+head(mm10.face.genes)
+```
+
+### Clean up sample names and add group details
+
+```{r}
+samplenames <- substring(colnames(mm10.face.genes), 26, nchar(colnames(mm10.face.genes))) # keep only ID and group in name
+colnames(mm10.face.genes) <- samplenames
+group <- as.factor(c("E11.5", "E15.5", "E13.5", "E10.5", "E11.5",
+                        "E13.5", "E14.5", "E12.5", "E10.5", "E15.5", "E12.5", "E14.5")) # add groups
+mm10.face.genes$samples$group <- group
+```
+
+### Density plot for unfiltered counts 
+
+```{r}
+cpm.norm <- cpm(mm10.face.genes, normalized.lib.sizes=TRUE, log=TRUE) 
+dim(cpm.norm)
+
+P = plotDensities(cpm.norm, group=mm10.face.genes$samples$group) 
+print(P)
+
+pdf((paste0(plot_dir,"cpm.density_mm10.face.genes.pdf", sep=''))
+plotDensities(cpm.norm, group=mm10.face.genes$samples$group) 
+abline(v=1)
+dev.off()
+```
+
+## Filter counts, must be logcpm > 1 in both biological replicates at each stage
+
+```{r}
+mm10.face.genes.filtered <- mm10.face.genes[rowSums(cpm.norm[,c(1,5)] > 1) >= 2 | rowSums(cpm.norm[,c(2,10)] > 1) >= 2 | 
+                                            rowSums(cpm.norm[,c(3,6)] > 1) >= 2 | rowSums(cpm.norm[,c(4,9)] > 1) >= 2 |
+                                            rowSums(cpm.norm[,c(7,12)] > 1) >= 2 | rowSums(cpm.norm[,c(8,11)] > 1) >= 2, ] 
+dim(mm10.face.genes.filtered) # number of genes remaining
+
+mm10.face.genes.filtered.counts.df = as.data.frame(mm10.face.genes.filtered$counts)
+geneIds = rownames(mm10.face.genes.filtered$counts)
+mm10.face.genes.filtered.counts.df$geneID = geneIds
+write.table(mm10.face.genes.filtered.counts.df, file = "logcpm1.filtered.density_mm10.face.genes.txt", sep="\t", quote=F, row.names=F, col.names = T)
+pdf((paste0(plot_dir,"cpm.filtered.density_mm10.face.genes.pdf",sep=''))
+plotDensities(cpm(mm10.face.genes.filtered, normalized.lib.sizes=TRUE, log=TRUE), group=mm10.face.genes$samples$group)
+dev.off()
+
+P = plotDensities(cpm(mm10.face.genes.filtered, normalized.lib.sizes=TRUE, log=TRUE), group=mm10.face.genes$samples$group)
+print(P)
+```
+
+### Normalise to library size and save counts as log counts per million
+
+```{r}
+lcpm = cpm(mm10.face.genes.filtered, normalized.lib.sizes=TRUE, log=TRUE)
+```
+
+### Plot MDS and PCAs based on stages
+
+```{r}
+col.group <- group
+levels(col.group) <-  brewer.pal(nlevels(col.group), "Set1")
+col.group <- as.character(col.group)
+pdf(paste0(plot_dir,"cpm.filtered.mds.pdf", sep=''))
+plotMDS(lcpm, labels=group, col=col.group)
+title(main="Sample groups")
+dev.off()
+print(plotMDS(lcpm, labels=group, col=col.group))
+
+pca = prcomp(t(lcpm) scale=T, center=T)
+pdf(paste0(plot_dir,"cpm.filtered.pca.pdf",sep=''))
+autplot(pca, log=TRUE)
+dev.off()
+
+print(autplot(pca, log=TRUE))
+```
+Based on the PCA and MDS plots there seems to be good clustering of the stages together and separation of stages that may be indicative of temporal dependent gene expression patterns.
+
+### Remove version from ENSEMBL ids
+```{r}
+mm10.face.genes.filtered$genes <- removeVersion(mm10.face.genes.filtered$genes)
+rownames(mm10.face.genes.filtered$counts) <- removeVersion(rownames(mm10.face.genes.filtered$counts))
+```
+
+## Time course sequencing data analysis (TCseq)
+
+### Set up the design 
+```{r}
+design = data.frame(sampleID = c("ENCFF720JIN_E10.5", "ENCFF031RGW_E11.5", "ENCFF644ENR_E12.5", "ENCFF406BLP_E13.5", "ENCFF932AJG_E14.5", "ENCFF040ZOW_E15.5", 
+                                 "ENCFF336PNI_E10.5", "ENCFF343KWN_E11.5", "ENCFF908DRV_E12.5", "ENCFF241MSH_E13.5", "ENCFF584VXS_E14.5", "ENCFF745ACD_E15.5"),
+                    group = c(1,2,3,4,5,6,1,2,3,4,5,6), 
+                    timepoint = c("10","11","12","13","14","15","10","11","12","13","14","15"))
+```
+
+```{r}
+head(mm10.face.genes.filtered$counts)
+counts = mm10.face.genes.filtered$counts[,c(9,1,8,6,12,2,4,5,11,3,7,10)]
+dt = as.data.table(counts)
+matrix = as.matrix(dt)
+rownames(matrix) = rownames(counts)
+
+counts = ceiling(matrix) # round to integers 
+
+genomicFeature = genes(edb) # extract gene annotation information from EnsDb
+dt=annoGR2DF(genomicFeature) # convert to dataframe
+dt_subset = subset(dt, gene_id %in% rownames(counts)) # subset for IDs in RNA-seq dataset
+# 15348 genes, lose 603 genes
+
+count_subset = subset(counts, rownames(counts) %in% dt_subset$gene_id) 
+
+genomicFeature = data.frame(id = dt_subset$gene_id, chr=dt_subset$chr, 
+                            start = dt_subset$start, end = dt_subset$end)
+
+tca = TCA(design, count_subset, genomicFeature)
+tca <- DBanalysis(tca)
+# performs differetial analysis by fitting read counts to a negative binomial generalized
+# linear model
+
+DBresult(tca)
+tca <- timecourseTable(tca, value = "expression", norm.method = "cpm", filter = TRUE, abs.fold = 2)
+tcaTabledf = as.data.frame(tca@tcTable)
+tcaTablerownames = rownames(tca@tcTable)
+tcaTabledf$geneID = tcaTablerownames
+write.table(tcaTabledf, file = "timecourse.table.absFC2.mm10.face.genes.txt", sep="\t", quote=F, row.names=T, col.names = T)
+# abs.fold = 0, 15057 genes
+# abs.fold = 0.5, 13432 genes
+# abs.fold = 1, 8199 genes
+
+```
+
+### Determining the optimal division of clusters using a number of different methods
+1. SSE - sum of squared error SSE is defined as the sum of the squared distance between each member of a cluster and its cluster centroid.
+2. Calinski criterion is similar to finding ratio of between-cluster-variance/within-cluster-variance.
+3. Plot clusterno vs values (=BC/WC)
+4. Gap statistic
+
+#### Sum of squared error
+```{r}
+tcTable_matrix = as.matrix(tca@tcTable)
+
+## SSE
+tot_wss <- c()
+for(i in 1:20)
+{
+  cl <- kmeans(data,centers = i, iter.max = 1000)
+  tot_wss[i] <- cl$tot.withinss
+}
+tot_wss
+
+p = plot(x=1:20,
+     y=tot_wss,
+     type = "b",
+     xlab = "Number of clusters",
+     ylab = "Within groups sum of squares")  
+print(p)
+pdf(paste0(plot_dir,"sum.of.squared.error.pdf", sep=''))
+p
+dev.off()
+```
+4-5 clusters optimal
+
+#### Calinksi method
+```{r}
+fit <- cascadeKM(tcTable_matrix, 1, 10, iter = 1000)
+print(plot(fit, sortg = TRUE, grpmts.plot = TRUE))
+
+pdf("calikski.bestfit.clusters.cpm.pdf")
+print(p)
+dev.off()
+
+calinski.best <- as.numeric(which.max(fit$results[2,]))
+calinski.best
+```
+5 is the best fit for number of clusters
+
+
+#### Gap statistic
+```{r}
+gap = clusGap(tcTable_matrix, kmeans, 10, B=30)
+print(plot(gap, main = "Gap statistic"))
+
+pdf(paste0(plot_dir, "gap.statistic.kmeans.pdf", sep=''))
+plot(gap, main = "Gap statistic")
+abline(v=which.max(gap$Tab[,3]), lty = 2)
+dev.off()
+```
+
+### Time clustering
+- cmeans clustering is soft clustering (also known as fuzzy clustering)
+- a data point can be assigned to multiple clusters
+- membership values are used to indicate to what degree a data point belongs to each cluster
+
+```{r}
+tca <- timeclust(tca, algo = "cm", k =5, standardize = TRUE)
+
+write.table(tca@clusterRes@membership, file = "membership.values.diffExp.cmeans.clustering.mm10.face.genes.txt", sep="\t", quote=F, row.names=T, col.names = T)
+write.table(tca@clusterRes@cluster, file = "diffExp.absFC2.cmeans.clustering.mm10.face.genes.txt", sep="\t", quote=F, row.names=T, col.names = T)
+```
+
+#### Plot timeclusters for gene expression data
+```{r}
+print(timeclustplot(tca, value = "z-score(log CPM)", cols=2))
+pdf(paste0(plot_dir,"timecluster.mm10expression.cmeans.cpm_FC2.pdf", sep=''))
+timeclustplot(tca, value = "z-score(log CPM)", cols=2)
+dev.off()
+```
+
+## Compare peaks to differentially expressed gene clusters
+### Import dunnart and mouse genes from peaks to compare to
+
+```{r}
+enh_dir = "output/peaks"
+pro_dir = "output/peaks"
+```
+
+Number of genes with peaks in merged promoters and enhancers
+- E15.5 = 16207 total with duplicate genes, 10817 unique
+- E14.5 = 19782 total with duplicate genes, 12053 unique
+- E13.5 = 26616 total with duplicate genes, 12949 unique
+- E12.5 =  16418 total with duplicate genes, 11381 unique
+- E11.5 = 13577 total with duplicate genes, 10465 unique
+- E10.5 = 21008 total with duplicate genes, 12288 unique
+- Edunnart = 27899 total with duplicate genes, 9022 unique
+
+```{r}
+compare.to.clusters <- function(dir, peakComparison, upsetMatrix, dunnart, E10, E11, E12, E13, E14, E15){
+    annot = list.files(dir, pattern= ".txt", full.names=T) # create list of files in directory
+    annot = as.list(annot)
+    annot = lapply(annot, function(x) fread(x, header=TRUE, sep="\t", quote = "", na.strings=c("", "NA"), fill=TRUE)) # read in all files
+    names(annot) = c("dunnart","E10.5","E11.5","E12.5", "E13.5","E14.5", "E15.5")
+    annot = lapply(annot, function(x) x=setnames(x, old="geneId", new="mouseensembl", skip_absent=TRUE) %>% as.data.table())
+    annot.subset = lapply(annot, function(x) x %>% dplyr::select(mouseensembl) %>% as.data.table() %>% unique())
+    annot.subset = Map(mutate, annot.subset, stage = names(annot.subset))
+
+    # join cluster data from above
+    clusters = as.data.frame(clustCluster(tca@clusterRes))
+    colnames(clusters) = "cluster"
+    cluster <- tibble::rownames_to_column(clusters, "mouseensembl") %>% as.data.table()# add rownames as a column
+    cluster.split = split(cluster, by="cluster")
+    merged.datalist = append(cluster.split, annot.subset)
+    fulljoin.datalist <- merged.datalist %>% purrr::reduce(full_join, by = "mouseensembl")  # join all dataframes by ensembl geneID
+    fulljoin.datalist[is.na(fulljoin.datalist)] <- 0
+    fulljoin.datalist = as.data.frame(fulljoin.datalist)
+    colnames(fulljoin.datalist) = c("geneid", names(merged.datalist))
+    geneId = fulljoin.datalist$geneid
+
+    upset.df = data.frame(lapply(fulljoin.datalist[,2:13], function(x) as.numeric(x!="0")))
+    rownames(upset.df) = geneId
+    colnames(upset.df) = c("c3", "c5", "c2", "c4", "c1", "dunnart", "E10.5", "E11.5", "E12.5", "E13.5", "E14.5", "E15.5")
+    write.table(upset.df, upsetMatrix, sep="\t", quote=F, row.names=T, col.names = T)
+    write.table(fulljoin.datalist, peakComparison, sep="\t", quote=F, row.names=T, col.names = T)
+
+    pdf(paste0(plot_dir,dunnart,sep=""))
+    print(upset(upset.df, set_size.angles = 45, 
+        order.by="freq", text.scale = 2,empty.intersections = "off",
+        sets = c("dunnart", "c1","c2","c3","c4","c5"), 
+        intersections = list(list("dunnart", "c1"), list("dunnart", "c2"), list("dunnart", "c3"),
+                            list("dunnart", "c4"), list("dunnart", "c5")),
+        nsets=6, keep.order = T, mainbar.y.label = "number of genes"
+        ))
+    dev.off()
+
+    pdf(paste0(plot_dir,E10,sep=""))
+    print(upset(upset.df, set_size.angles = 45, 
+        order.by="freq", text.scale = 2,empty.intersections = "off",
+        sets = c("E10.5", "c1","c2","c3","c4","c5"), 
+        intersections = list(list("E10.5", "c1"), list("E10.5", "c2"), list("E10.5", "c3"),
+                            list("E10.5", "c4"), list("E10.5", "c5")),
+        nsets=6, keep.order = T, mainbar.y.label = "number of genes"
+        ))
+    dev.off()
+
+    pdf(paste0(plot_dir,E11,sep=""))
+    print(upset(upset.df, set_size.angles = 45, 
+        order.by="freq", text.scale = 2,empty.intersections = "off",
+        sets = c("E11.5", "c1","c2","c3","c4","c5"), 
+        intersections = list(list("E11.5", "c1"), list("E11.5", "c2"), list("E11.5", "c3"),
+                            list("E11.5", "c4"), list("E11.5", "c5")),
+        nsets=6, keep.order = T, mainbar.y.label = "number of genes"
+        ))
+    dev.off()
+
+    pdf(paste0(plot_dir,E12,sep=""))
+    print(upset(upset.df, set_size.angles = 45, 
+        order.by="freq", text.scale = 2,empty.intersections = "off",
+        sets = c("E12.5", "c1","c2","c3","c4","c5"), 
+        intersections = list(list("E12.5", "c1"), list("E12.5", "c2"), list("E12.5", "c3"),
+                            list("E12.5", "c4"), list("E12.5", "c5")),
+        nsets=6, keep.order = T, mainbar.y.label = "number of genes"
+        ))
+    dev.off()
+
+    pdf(paste0(plot_dir,E13,sep=""))
+    print(upset(upset.df, set_size.angles = 45, 
+        order.by="freq", text.scale = 2,empty.intersections = "off",
+        sets = c("E13.5", "c1","c2","c3","c4","c5"), 
+        intersections = list(list("E13.5", "c1"), list("E13.5", "c2"), list("E13.5", "c3"),
+                            list("E13.5", "c4"), list("E13.5", "c5")),
+        nsets=6, keep.order = T, mainbar.y.label = "number of genes"
+        ))
+    dev.off()
+
+    pdf(paste0(plot_dir,E14,sep=""))
+    print(upset(upset.df, set_size.angles = 45, 
+        order.by="freq", text.scale = 2,empty.intersections = "off",
+        sets = c("E14.5", "c1","c2","c3","c4","c5"), 
+        intersections = list(list("E14.5", "c1"), list("E14.5", "c2"), list("E14.5", "c3"),
+                            list("E14.5", "c4"), list("E14.5", "c5")),
+        nsets=6, keep.order = T, mainbar.y.label = "number of genes"
+        ))
+    dev.off()
+
+    pdf(paste0(plot_dir,E15,sep=""))
+    print(upset(upset.df, set_size.angles = 45, 
+        order.by="freq", text.scale = 2,empty.intersections = "off",
+        sets = c("E15.5", "c1","c2","c3","c4","c5"), 
+        intersections = list(list("E15.5", "c1"), list("E15.5", "c2"), list("E15.5", "c3"),
+                            list("E15.5", "c4"), list("E15.5", "c5")),
+        nsets=6, keep.order = T, mainbar.y.label = "number of genes"
+        ))
+    dev.off()
+    return(fulljoin.datalist)
+}
+```
+
+```{r}
+enhancers = compare.to.clusters(dir = enh_dir,
+peakComparison = "enhancer_peak_comparison_to_clusters.txt",
+upsetMatrix = "enhancer_upset_matrix_comparison_to_clusters.txt",
+dunnart = "dunnart_enhancer_comparison_to_clusters.pdf")
+```
+[Dunnart genes with enhancer-associated peaks compared to temporal gene expression clusters](output/plots/dunnart_enhancer_comparison_to_clusters.pdf)
+
+```{r}
+promoters = compare.to.clusters(dir = pro_dir,
+peakComparison = "promoter_peak_comparison_to_clusters.txt",
+upsetMatrix = "promoter_upset_matrix_comparison_to_clusters.txt",
+dunnart = "dunnart_promoter_comparison_to_clusters.pdf")
+```
+
+[Dunnart genes with promoter-associated peaks compared to temporal gene expression clusters](output/plots/dunnart_promoter_comparison_to_clusters.pdf)
+
+## Hypergeometric testing for enrichment of dunnart genes with peaks in clusters
+
+ x, q: vector of quantiles representing the number of white balls <br>
+           drawn without replacement from an urn which contains both <br>
+           black and white balls.
+
+        m: the number of white balls in the urn.
+
+        n: the number of black balls in the urn.
+
+        k: the number of balls drawn from the urn, hence must be in
+           0,1,..., m+n.
+
+ q = genes with dunnart peaks and in cluster
+ m = genes in cluster
+ n = genes not in cluster ~15000  (doesn't matter if there is a peak or not)
+ k = dunnart genes with peaks that also have expression data
+
+ phyper(q, m, n, k, lower.tail= FALSE)
+
+```{r}
+dt = as.data.table(promoters)
+dt$geneid = promoters$geneid
+names(dt) = c("geneid", "c3", "c5", "c2", "c4", "c1", "dunnart", "E10.5", "E11.5", "E12.5", "E13.5", "E14.5", "E15.5")
+
+gene_ids = rownames(tca@counts)
+all_DGE_genes = tca@counts %>% as.data.table()
+all_DGE_genes$mouseensembl = gene_ids
+
+genes_with_dunnart_peaks_enhancers = fread("cross_species/peakAnnotation/consensus/enhancers/annotation/dunnart_enhancer_annotationConvertedIDs.txt")
+genes_with_dunnart_peaks_promoters = fread("cross_species/peakAnnotation/consensus/promoters/clustered/cluster1_promoters_annotationConvertedIDs.txt")
+genes_with_dunnart_peaks = rbind(genes_with_dunnart_peaks_enhancers, genes_with_dunnart_peaks_promoters, fill=TRUE)
+
+
+DGE_genes_with_dunnart_peaks = list(genes_with_dunnart_peaks, all_DGE_genes) %>% 
+                                lapply(function(x) x %>% dplyr::select(mouseensembl) %>% unlist(recursive = FALSE))
+DGE_genes_with_dunnart_peaks = intersect(DGE_genes_with_dunnart_peaks[[1]], DGE_genes_with_dunnart_peaks[[2]])
+
+gene_ids = rownames(tca@tcTable)
+logFC2_DGE_genes = tca@tcTable %>% as.data.table()
+logFC2_DGE_genes$mouseensembl = gene_ids
+logFC2_DGE_genes_with_dunnart_peaks = list(genes_with_dunnart_peaks, logFC2_DGE_genes) %>% 
+                                lapply(function(x) x %>% dplyr::select(mouseensembl) %>% unlist(recursive = TRUE, use.names=FALSE))
+logFC2_DGE_genes_with_dunnart_peaks = intersect(logFC2_DGE_genes_with_dunnart_peaks[[1]], logFC2_DGE_genes_with_dunnart_peaks[[2]])
+
+
+test_count_table <- function(x, column){
+    c <- dt %>% filter(x[[column]] == column) 
+    c1 = count(c, c1)
+    c2 = count(c, c2)
+    c3 = count(c, c3)
+    c4 = count(c, c4)
+    c5 = count(c, c5)
+    k = sum(c1$n[2], c2$n[2], c3$n[2], c4$n[2], c5$n[2]) # k = all genes with dunnart peaks and assigned to a cluster
+    clusters = c("c1", "c2", "c3", "c4", "c5")
+    q = c(c1$n[2], c2$n[2], c3$n[2], c4$n[2], c5$n[2])
+    # k = rep(c(length(DGE_genes_with_dunnart_peaks)), 5)
+    #k = c(c1$n[1]-c1$n[2], c2$n[1]-c2$n[2],c3$n[1]-c3$n[2],c4$n[1]-c4$n[2],c5$n[1]-c5$n[2])
+    # k = c(all-c1$n[2], all-c2$n[2], all-c3$n[2], all-c4$n[2], all-c5$n[2]) # or is this k?
+    count_table = data.frame(clusters, q, k) %>% as.data.table()
+}
+dunnart = test_count_table(dt, "dunnart")
+
+bkgrd_count_table <- function(x){
+    c1 = count(x, c1)
+    c2 = count(x, c2)
+    c3 = count(x, c3)
+    c4 = count(x, c4)
+    c5 = count(x, c5)
+    all = sum(c1$n[2], c2$n[2], c3$n[2], c4$n[2], c5$n[2])
+    clusters = c("c1", "c2", "c3", "c4", "c5")
+    m = c(c1$n[2], c2$n[2], c3$n[2], c4$n[2], c5$n[2])
+    n = c(all-c1$n[2], all-c2$n[2], all-c3$n[2], 
+                        all-c4$n[2], all-c5$n[2])
+    # n = c(15348 - c1$n[2], 15348 - c2$n[2], 15348 - c3$n[2], 15348 - c4$n[2], 15348 - c5$n[2])
+    count_table = data.frame(clusters, m, n) %>% as.data.table()
+}
+bkgrd = bkgrd_count_table(dt)
+
+concatenate_df=function(x){
+  bkgrd=bkgrd
+  test=copy(x)
+  combine=test[bkgrd,on='clusters',nomatch=0]
+    return(combine)
+}
+
+dunnart_vs_bkgrd=concatenate_df(dunnart)
+
+# phyper(q, m, n, k, lower.tail = TRUE, log.p = FALSE)
+hyper_p = lapply(dunnart_vs_bkgrd, function(x) {x$hyper_p = with(x, phyper(q,m,n, k, lower.tail= FALSE));return(x)})
+hyper_p = Map(mutate, hyper_p, comparison = names(hyper_p)) 
+hyper_p = rbindlist(hyper_p,)
+
+pvalues_table=data.table(pval=hyper_p$hyper_p) ## then this converts the list of pvalues into a column (orders are maintained, so the first pval refers to the fisrt row in the input dataframe and so on)
+pvalues_table=pvalues_table[
+    ,adj_p:=p.adjust(pval,method = 'bonferroni')][ ## this creates another column with the adj_pvalues 
+      ,log10_p_adjust:=-log10(adj_p)
+      ][ 
+        ,significant_score:=ifelse(`adj_p`<=0.0001,'****',
+                                   ifelse(`adj_p`>0.0001 &`adj_p`<=0.001,'***',
+                                          ifelse(`adj_p`>0.001 & `adj_p`<=0.01,'**',
+                                                 ifelse(`adj_p`>0.01 & `adj_p`<=0.05,'*',' '))))
+        ] ## this is just for quick visualisation/subsecting of only the significant ones  
+
+hyper_p_adjusted = cbind(hyper_p, pvalues_table)
+write.table(hyper_p_adjusted, file="hyper_p_adjusted_promoters.txt", sep="\t", quote=FALSE, row.names=FALSE)
+kable(hyper_p_adjusted, caption="Adjusted pvalues for enrichment analysis")
+```
+
+## Gene Ontology on differentially expressed clusters
+
+```{r}
+mmGO = godata('org.Mm.eg.db', ont="BP") 
+
+cluster.tibble <- tibble::rownames_to_column(clusters) %>% as.data.table()# add rownames as a column
+cluster.split = split(cluster.tibble, by="clustCluster(tca@clusterRes)")
+
+genes = lapply(cluster.split, function(i) as.list(i[,-2]))
+genes = lapply(genes, function(x) unlist(x, recursive = TRUE, use.names=FALSE))
+names(genes) = c("c3", "c5", "c2", "c4", "c1")
+
+cluster_subset = list(genes$c2, genes$c4)
+names(cluster_subset)  = c("cluster 2", "cluster 4")
+# compare cluster GO enrichment
+go_cluster = compareCluster(
+     geneCluster = cluster_subset, 
+        fun = enrichGO, 
+        ont="BP",
+        keyType = "ENSEMBL",
+        pvalueCutoff = 0.05, 
+        OrgDb = org.Mm.eg.db)
+
+ck = pairwise_termsim(go_cluster, method = "Wang", semData=mmGO)
+
+
+
+cluster2_go = enrichGO(gene =genes$c4,
+                 keyType = "ENSEMBL",
+                 OrgDb = org.Mm.eg.db,
+                 ont = "BP",
+                 #universe = bg,
+                 pAdjustMethod = "BH",
+                 pvalueCutoff = 0.01,
+                 readable = TRUE)
+write.table(cluster2_go, file="cluster2_enrichGO.txt", sep="\t", quote=F, row.names=F)
+write.table(cluster2_go, file="cluster2_enrichGO.txt", sep="\t", quote=F, row.names=F)
+
+suppressWarnings(gene.df <- bitr(geneID=genes$c2, fromType="ENSEMBL", toType="ENTREZID", OrgDb="org.Mm.eg.db" ))
+  
+  ## kegg analysis
+kk <- enrichKEGG(gene = gene.df$ENTREZID, organism = "mmu", pvalueCutoff=0.01)
+write.table(kk, file="cluster2_enrichGO.txt", sep="\t", quote=F, row.names=F)
+
+## barplot
+pdf(paste0(plot_dir, "tcseq_cluster4_gene_ontology_fc2_barplot.pdf", sep=''), width = 8, height = 9)
+print(barplot(cluster2_go, showCategory = 20) + 
+scale_color_viridis() +
+theme(axis.text.x = element_text(angle = 45, hjust=1)))
+dev.off()
+
+pdf(paste0(plot_dir, "tcseq_cluster2_kegg_fc2_barplot.pdf", sep=''), width = 9, height = 5)
+print(barplot(kk, showCategory = 15) + 
+scale_color_viridis() +
+theme(axis.text.x = element_text(angle = 45, hjust=1)))
+dev.off()
+
+## Dotplot
+pdf(paste0(plot_dir, "tcseq_cluster2_cluster4_gene_ontology_fc2.pdf", sep=''), width = 10, height = 10)
+print(dotplot(ck, showCategory = 20) + 
+scale_color_viridis() +
+theme(axis.text.x = element_text(angle = 45, hjust=1)))
+dev.off()
+```

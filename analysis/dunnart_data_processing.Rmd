@@ -15,7 +15,7 @@ For full snakemake script see code/dunnart_peak_calling/dunnart_snakefile.
 
 ```{bash eval=FALSE}
 # create conda environment with all packages and dependencies
-conda create --name chip python=3 bowtie2 samtools picard deeptools multiqc phantompeakqualtools preseq macs2 bedtools fastqc snakemake numpy
+conda create --name chip bowtie2 samtools picard deeptools multiqc phantompeakqualtools preseq macs2 bedtools fastqc snakemake numpy pybedtools
 
 # save environment to a yaml file
 conda env export > chip_environment.yml
@@ -88,15 +88,15 @@ __Library Complexity ChIP-seq Standards:__
 See full snakemake script for details: code/dunnart_peak_calling/dunnart_snakefile.
 
 Table. Read alignment quality metrics before and aftering filtering steps
-|  <br>                                                                                |               | **read counts**                                             |                    |                      |            |             |              |
-| :----------------------------------------------------------------------------------: | :-----------: | :---------------------------------------------------------: | :----------------: | :------------------: | :--------: | :---------: | :----------: |
-| **Sample**                                                                           | **Antibody**  | *bowtie2 alignment*                                         | *filtered reads\^*  | *remove duplicates*  | **NRF\***  | **PBC1\***  | **PBC2\***   |
-| A-1                                                                                  | input         | 130587134                                                   | 87165286           | 47645260             | 0\.773602  | 0\.774519   | 4\.45728     |
-| A-2                                                                                  | H3K4me3       | 103324742                                                   | 62678360           | 35617708             | 0\.789709  | 0\.789661   | 4\.754989    |
-| A-3                                                                                  | H3K27ac       | 131071676                                                   | 86503078           | 45700530             | 0\.761768  | 0\.761687   | 4\.196586    |
-| B-1                                                                                  | input         | 111574640                                                   | 72303316           | 44433864             | 0\.820313  | 0\.819974   | 5\.545324    |
-| B-2                                                                                  | H3K4me3       | 114146802                                                   | 67048994           | 42357180             | 0\.831032  | 0\.830749   | 5\.898224    |
-| B-3                                                                                  | H3K27ac       | 104714846                                                   | 66615704           | 43939460             | 0\.847255  | 0\.847022   | 6\.529168    |
+|  <br>            |               | **read counts**        |                    |                      |            |             |              |
+| :--------------: | :-----------: | :--------------------: | :----------------: | :------------------: | :--------: | :---------: | :----------: |
+| **Sample**       | **Antibody**  | *bowtie2 alignment*    | *filtered reads\^* | *remove duplicates*  | **NRF\***  | **PBC1\***  | **PBC2\***   |
+| A-1              | input         | 130587134              | 87165286           | 47645260             | 0\.773602  | 0\.774519   | 4\.45728     |
+| A-2              | H3K4me3       | 103324742              | 62678360           | 35617708             | 0\.789709  | 0\.789661   | 4\.754989    |
+| A-3              | H3K27ac       | 131071676              | 86503078           | 45700530             | 0\.761768  | 0\.761687   | 4\.196586    |
+| B-1              | input         | 111574640              | 72303316           | 44433864             | 0\.820313  | 0\.819974   | 5\.545324    |
+| B-2              | H3K4me3       | 114146802              | 67048994           | 42357180             | 0\.831032  | 0\.830749   | 5\.898224    |
+| B-3              | H3K27ac       | 104714846              | 66615704           | 43939460             | 0\.847255  | 0\.847022   | 6\.529168    |
 
 \* calculated from a subsample of ~10-15M aligned reads prior to removing duplicates
 
@@ -198,13 +198,86 @@ kable(B3, caption="B3 input control cross-correlation analysis")
 
 ## Peak QC 
 
+Number of peaks 
 
+```{bash}
+less A-3_H3K27ac_vs_A-1_input_macs2_default_peaks.narrowPeak | wc -l
+```
 
+```{bash}
+less A-2_H3K4me3_vs_A-1_input_macs2_default_peaks.narrowPeak | wc -l
+```
+
+```{bash}
+less B-3_H3K27ac_vs_B-1_input_macs2_default_peaks.narrowPeak | wc -l
+```
+
+```{bash}
+less B-2_H3K4me3_vs_B-1_input_macs2_default_peaks.narrowPeak | wc -l
+```
 
 ### Fraction of reads in peaks
 
+```{r}
+A2 = fread("output/qc/A-2_H3K4me3_vs_A-1_input.frip_default.txt")
+A3 = fread("output/qc/A-3_H3K27ac_vs_A-1_input.frip_default.txt")
+B2 = fread("output/qc/B-2_H3K4me3_vs_B-1_input.frip_default.txt")
+B3 = fread("output/qc/B-3_H3K27ac_vs_B-1_input.frip_default.txt")
+```
 
+```{r echo=FALSE}
+kable(A2, caption="A2 H3K4me3 fraction of reads in peaks")
+```
 
+```{r echo=FALSE}
+kable(A3, caption="A3 H3K27ac fraction of reads in peaks")
+```
 
-### Consensus peaksets for biological
+```{r echo=FALSE}
+kable(B2, caption="B2 H3K4me3 fraction of reads in peaks")
+```
 
+```{r echo=FALSE}
+kable(B3, caption="B3 H3K27ac fraction of reads in peaks")
+```
+
+### Consensus peaksets for biological replicates
+Number of consensus peaks 
+
+```{bash}
+less output/peaks/H3K4me3_overlap_default.narrowPeak | wc -l
+```
+
+```{bash}
+less output/peaks/H3K27ac_overlap_default.narrowPeak | wc -l
+```
+
+## Group peaks into promoter- and enhancer- associated peaks
+
+Find uniquely H3K4me3 sites (i.e. peaks that don't overlap with H3K27ac):
+
+```{bash}
+bedtools intersect -v -a H3K4me3_overlap.narrowPeak -b H3K27ac_overlap.narrowPeak > H3K4me3_only.narrowPeak
+less H3K4me3_only.narrowPeak | wc -l
+```
+
+Find unique H3K27ac sites (i.e. peaks that don't overlap with H3K4me3):
+```{bash}
+bedtools intersect -v -a H3K27ac_overlap.narrowPeak -b H3K4me3_overlap.narrowPeak > H3K27ac_only.narrowPeak
+less H3K27ac_only.narrowPeak | wc -l
+```
+
+Find peaks common between H3K27ac & H3K4me3 with a reciprocal overlap of at least 50%.
+```{bash}
+bedtools intersect -f 0.5 -r -a H3K4me3_overlap.narrowPeak -b H3K27ac_overlap.narrowPeak > H3K4me3_and_H3K27ac.narrowPeak
+less H3K4me3_and_H3K27ac.narrowPeak | wc -l
+```
+
+Combine files
+
+```{bash}
+cat H3K4me3_only.narrowPeak H3K4me3_and_H3K27ac.narrowPeak | sort -k 4,4 > dunnart_promoter_peaks.narrowPeak
+cat H3K27ac_only.narrowPeak | sort -k 4,4 > dunnart_enhancer_peaks.narrowPeak
+less dunnart_promoter_peaks.narrowPeak | wc -l
+less dunnart_enhancer_peaks.narrowPeak | wc -l
+```
