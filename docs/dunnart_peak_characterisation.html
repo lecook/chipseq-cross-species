@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="lecook" />
+
+<meta name="date" content="2022-02-23" />
+
+<title>Dunnart peak characterisation</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">chipseq_cross_species</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/lecook/chipseq-cross-species">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Dunnart peak characterisation</h1>
+<h4 class="author">lecook</h4>
+<h4 class="date">2022-02-23</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2022-03-03
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>chipseq-cross-species/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220209code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20220209)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20220209code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20220209)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreefaabd9522c06ff8f990736dbddcc55871fdc363dtargetblankfaabd95a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/faabd9522c06ff8f990736dbddcc55871fdc363d" target="_blank">faabd95</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreefaabd9522c06ff8f990736dbddcc55871fdc363dtargetblankfaabd95a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/faabd9522c06ff8f990736dbddcc55871fdc363d" target="_blank">faabd95</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .RData
+    Ignored:    .Rhistory
+    Ignored:    analysis/.RData
+    Ignored:    analysis/.Rhistory
+    Ignored:    data/genomic_data/
+    Ignored:    output/annotations/
+    Ignored:    output/bam_files/
+    Ignored:    output/filtered_peaks/
+    Ignored:    output/logs/
+    Ignored:    output/peaks/
+    Ignored:    output/plots/
+    Ignored:    output/qc/A-1_input.SeqDepthNorm.bw
+    Ignored:    output/qc/A-1_input.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/A-1_input.ccurve.txt
+    Ignored:    output/qc/A-1_input.extrap.txt
+    Ignored:    output/qc/A-1_input_R1_trimmed.fastq.gz
+    Ignored:    output/qc/A-1_input_est_lib_complex_metrics.txt
+    Ignored:    output/qc/A-2_H3K4me3.SeqDepthNorm.bw
+    Ignored:    output/qc/A-2_H3K4me3.ccurve.txt
+    Ignored:    output/qc/A-2_H3K4me3.extrap.txt
+    Ignored:    output/qc/A-2_H3K4me3_R1_trimmed.fastq.gz
+    Ignored:    output/qc/A-2_H3K4me3_est_lib_complex_metrics.txt
+    Ignored:    output/qc/A-2_H3K4me3_vs_A-1_input.frip_default.txt
+    Ignored:    output/qc/A-2_H3K4me3_vs_B-1_input.frip_default.txt
+    Ignored:    output/qc/A-3_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/A-3_H3K27ac.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/A-3_H3K27ac.ccurve.txt
+    Ignored:    output/qc/A-3_H3K27ac.extrap.txt
+    Ignored:    output/qc/A-3_H3K27ac_R1_trimmed.fastq.gz
+    Ignored:    output/qc/A-3_H3K27ac_est_lib_complex_metrics.txt
+    Ignored:    output/qc/A-3_H3K27ac_vs_A-1_input.frip_default.txt
+    Ignored:    output/qc/A-3_H3K27ac_vs_B-1_input.frip_default.txt
+    Ignored:    output/qc/B-1_input.SeqDepthNorm.bw
+    Ignored:    output/qc/B-1_input.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/B-1_input.ccurve.txt
+    Ignored:    output/qc/B-1_input.extrap.txt
+    Ignored:    output/qc/B-1_input_R1_trimmed.fastq.gz
+    Ignored:    output/qc/B-1_input_est_lib_complex_metrics.txt
+    Ignored:    output/qc/B-2_H3K4me3.SeqDepthNorm.bw
+    Ignored:    output/qc/B-2_H3K4me3.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/B-2_H3K4me3.ccurve.txt
+    Ignored:    output/qc/B-2_H3K4me3.extrap.txt
+    Ignored:    output/qc/B-2_H3K4me3_R1_trimmed.fastq.gz
+    Ignored:    output/qc/B-2_H3K4me3_est_lib_complex_metrics.txt
+    Ignored:    output/qc/B-2_H3K4me3_vs_A-1_input.frip_default.txt
+    Ignored:    output/qc/B-2_H3K4me3_vs_B-1_input.frip_default.txt
+    Ignored:    output/qc/B-3_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/B-3_H3K27ac.ccurve.txt
+    Ignored:    output/qc/B-3_H3K27ac.extrap.txt
+    Ignored:    output/qc/B-3_H3K27ac_R1_trimmed.fastq.gz
+    Ignored:    output/qc/B-3_H3K27ac_est_lib_complex_metrics.txt
+    Ignored:    output/qc/B-3_H3K27ac_vs_A-1_input.frip_default.txt
+    Ignored:    output/qc/B-3_H3K27ac_vs_B-1_input.frip_default.txt
+    Ignored:    output/qc/bamPEFragmentSize_rawcounts.tab
+    Ignored:    output/qc/multiBAM_fingerprint_metrics.txt
+    Ignored:    output/qc/multiBAM_fingerprint_rawcounts.txt
+    Ignored:    output/qc/multibamsum.npz
+    Ignored:    output/qc/multibamsum.tab
+    Ignored:    output/qc/multibamsum_dunnart_downSampled.npz
+    Ignored:    output/qc/multibamsum_dunnart_downSampled.tab
+    Ignored:    output/qc/pearsoncor_multibamsum_matrix.txt
+    Ignored:    results/
+
+Untracked files:
+    Untracked:  .snakemake/
+    Untracked:  Rplots.pdf
+    Untracked:  code/basic_wrapper.slurm
+    Untracked:  code/configs/metadata.tsv
+    Untracked:  code/slurmjob.stderr
+    Untracked:  code/slurmjob.stdout
+    Untracked:  code/trimfastq.py
+    Untracked:  data/raw_reads/
+    Untracked:  output/qc/H3K27ac_overlap_default.frip
+    Untracked:  output/rnaseq/
+    Untracked:  slurm-33664196.out
+    Untracked:  slurm-33664197.out
+    Untracked:  slurm-33664198.out
+    Untracked:  slurm-33664199.out
+    Untracked:  slurm-33664200.out
+    Untracked:  slurm-33664201.out
+    Untracked:  slurm-33664202.out
+    Untracked:  slurm-33664203.out
+    Untracked:  slurm-33664204.out
+    Untracked:  slurm-33664205.out
+    Untracked:  slurm-33664206.out
+    Untracked:  slurm-33664207.out
+    Untracked:  test.pdf
+
+Unstaged changes:
+    Deleted:    code/dunnart_peak_calling/trimfastq.py
+    Modified:   output/qc/H3K4me3_overlap_default.frip
+    Deleted:    output/qc/bamPEFragmentSize_hist.png
+    Deleted:    output/qc/multiBAM_fingerprint.png
+    Deleted:    output/qc/pearsoncor_multibamsum.png
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/dunnart_peak_characterisation.Rmd</code>) and HTML (<code>docs/dunnart_peak_characterisation.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/faabd9522c06ff8f990736dbddcc55871fdc363d/analysis/dunnart_peak_characterisation.Rmd" target="_blank">faabd95</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-03
+</td>
+<td>
+updated
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/732d33757bf47ee77ecafbb85da1907f7d338621/analysis/dunnart_peak_characterisation.Rmd" target="_blank">732d337</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-03
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/c59139059bb726d4394ad0295e563098ef9dce80/analysis/dunnart_peak_characterisation.Rmd" target="_blank">c591390</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-03
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/0be985e6bc760ef099fe8c4b478be185490ef1a5/analysis/dunnart_peak_characterisation.Rmd" target="_blank">0be985e</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-03
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/4b8f21ea750fda7833fd2d0c45bba4d8203c986f/analysis/dunnart_peak_characterisation.Rmd" target="_blank">4b8f21e</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-03
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/2103ae7d50dd723698bf11af8da5e04882dcda03/analysis/dunnart_peak_characterisation.Rmd" target="_blank">2103ae7</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-03
+</td>
+<td>
+updates
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/1c82c339c0232cb7c55b4de2e38c5c6db274a046/analysis/dunnart_peak_characterisation.Rmd" target="_blank">1c82c33</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-03
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/ad3170444a60dd87271714cf744f473755c37295/analysis/dunnart_peak_characterisation.Rmd" target="_blank">ad31704</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-03
+</td>
+<td>
+updated
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/9c5a61a3b614055a14b1a31a28f79dcd79e59d4f/analysis/dunnart_peak_characterisation.Rmd" target="_blank">9c5a61a</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-02-27
+</td>
+<td>
+Merge branch ‘master’ of <a href="https://github.com/lecook/chipseq-cross-species" class="uri">https://github.com/lecook/chipseq-cross-species</a> into master
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/1ffd9c3da6625741e0a0fd4b67a02fff139c8809/analysis/dunnart_peak_characterisation.Rmd" target="_blank">1ffd9c3</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-02-27
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/84a98f958620fe09d69e7bad7fc39f90dfcb81b6/analysis/dunnart_peak_characterisation.Rmd" target="_blank">84a98f9</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-02-27
+</td>
+<td>
+change directories
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/8d4d8a50daa86ed1e9fc19f8148946e9242aca7c/analysis/dunnart_peak_characterisation.Rmd" target="_blank">8d4d8a5</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-02-27
+</td>
+<td>
+convert code to workflowr
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/38f2f832b1acb75497e8eae6bc6d63fbc4892b12/analysis/dunnart_peak_characterisation.Rmd" target="_blank">38f2f83</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-02-25
+</td>
+<td>
+add code to workflowr
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/1fa92d9e841739434d4e6cffcca1d57dfebcf651/analysis/dunnart_peak_characterisation.Rmd" target="_blank">1fa92d9</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-02-23
+</td>
+<td>
+add analysis files
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>This analysis looks through various features of the dunnart peaks including peak intensity, lengths, distance to TSS and nearest gene calls.</p>
+</div>
+<div id="load-libraries" class="section level1">
+<h1>Load libraries</h1>
+<pre class="r"><code>library(GenomicRanges)
+library(GenomicFeatures)
+library(rtracklayer)
+library(AnnotationForge)
+library(clusterProfiler)
+library(ChIPseeker)
+library(ggpubr)
+library(AnnotationDbi)
+library(AnnotationHub)
+library(org.Mm.eg.db)
+library(plyr)
+library(tidyverse)
+library(RColorBrewer)
+library(ggplot2)
+library(data.table)
+library(ggridges)
+library(reshape2)
+library(RColorBrewer)
+library(VennDiagram)
+library(viridis)
+library(hrbrthemes)
+library(gghalves)
+library(multcompView)
+library(factoextra)
+library(NbClust)</code></pre>
+</div>
+<div id="set-up" class="section level1">
+<h1>Set up</h1>
+<p>Set fonts, plot and output directories etc.</p>
+<pre class="r"><code>plot_dir = &quot;output/plots/&quot;
+fullPeak_dir = &quot;output/peaks/&quot;
+annot_dir = &quot;output/annotations/&quot;
+filterPeaks_dir = &quot;output/filtered_peaks/&quot;
+
+## Set the fonts up so that each plot is the saved the same way.
+font = theme(axis.text.x = element_text(size = 25),
+        axis.text.y = element_text(size = 25),  
+        axis.title.x = element_text(size = 25),
+        axis.title.y = element_text(size = 25), 
+        legend.title=element_text(size=25), legend.text=element_text(size=25))</code></pre>
+</div>
+<div id="peak-features" class="section level1">
+<h1>Peak features</h1>
+<div id="peak-counts-intensity-and-length." class="section level2">
+<h2>Peak counts, intensity and length.</h2>
+<pre class="r"><code>unfilteredPeakFeatures &lt;- function(fileList, combined.tbl.stack, peak.length.plot, peak.intensity.plot){
+    files =list.files(fileList, pattern=&quot;*r_peaks.narrowPeak|*_only.narrowPeak|*overlap_default.narrowPeak|*and_H3K27ac.narrowPeak&quot;, full.names=T) # create list of files in directory
+    files = as.list(files)
+    data = lapply(files, function(x) fread(x, header=FALSE, sep=&quot;\t&quot;, quote = &quot;&quot;, na.strings=c(&quot;&quot;, &quot;NA&quot;)))
+    names(data) = c(&quot;enhancers&quot;,&quot;promoters&quot;,&quot;H3K27ac_only&quot;,&quot;H3K27ac&quot;,&quot;H3K4me3_H3K27ac&quot;, &quot;H3K4me3_only&quot;,&quot;H3K4me3&quot;)
+    df1 = Map(mutate, data, group = names(data))
+    df1$H3K27ac_only$cre = &quot;enhancers&quot;
+    df1$H3K4me3_only$cre = &quot;promoters&quot;
+    df1$H3K4me3_H3K27ac$cre = &quot;promoters&quot;
+
+    fullPeaks = rbind(df1$enhancers, df1$promoters, df1$H3K27ac, df1$H3K4me3)
+    combinedPeaks = rbind(df1$H3K27ac_only, df1$H3K4me3_H3K27ac, df1$H3K4me3_only)
+        
+    ## Plot stacked bar graph with number of peaks for each histone mark
+    combined.tbl &lt;- with(combinedPeaks, table(group, cre))
+    combined.tbl &lt;- as.data.frame(combined.tbl)
+    p = ggplot(combined.tbl, aes(factor(cre), Freq, fill=group)) + 
+      geom_bar(position=position_stack(reverse = TRUE), stat=&quot;identity&quot;) +
+      scale_fill_manual(values = c(&quot;#FF9D40&quot;,  &quot;#37B6CE&quot;, &quot;#04859D&quot;))  + 
+      theme_minimal() + ylab(&quot;Number of peaks&quot;) +
+      xlab(&quot;&quot;)
+    pdf(file=paste0(plot_dir, combined.tbl.stack), width = 10, height = 7)
+    print(p)
+    dev.off()
+    p
+
+    # Peak lengths for H3K4me3 and H3K27ac
+    fullPeaks$length &lt;- (fullPeaks$V3 - fullPeaks$V2)
+    level_order &lt;- c(&#39;promoter&#39;, &#39;enhancer&#39;, &#39;H3K4me3&#39;, &#39;H3K27ac&#39;)
+
+    ## Plot peak lengths
+    p = ggplot(fullPeaks, aes(factor(group), y = log10(length)))+ geom_violin(aes(fill=factor(group), color=factor(group))) + geom_boxplot(aes(color=factor(group)), width = .15, 
+    outlier.shape = NA,
+    position = position_dodge(width=.1)
+    ) + theme_bw() + xlab(&quot;&quot;) + ylab(&quot;Log10 Peak Length&quot;) 
+
+    p &lt;- ggplot(fullPeaks, aes(factor(group, level = level_order), y = log10(length))) + 
+    geom_half_violin(aes(fill=factor(group), color=factor(group)),
+    side = &quot;r&quot;, 
+    position = &quot;dodge&quot;
+    )+
+    geom_boxplot(aes(color=factor(group)),
+    width = .15, 
+    outlier.shape = NA,
+    fill=c(&quot;#FCF8EC&quot;,&quot;#FCF8EC&quot;,&quot;#F5F6F7&quot;,&quot;#E4F3F1&quot;),
+    position = position_dodge(width=.1)
+    ) +
+    coord_cartesian(xlim = c(1.2, NA), clip = &quot;off&quot;) + theme_bw() + xlab(&quot;&quot;) + ylab(&quot;Log10 Peak Length&quot;) 
+    pdf(file=paste0(plot_dir, peak.length.plot), width = 10, height = 7)
+    print(p +  scale_color_manual(values = c(&quot;#E9C46A&quot;,&quot;#E9C46A&quot;,&quot;#264653&quot;,&quot;#2A9D8F&quot;)) +
+    scale_fill_manual(values = c(&quot;#F1DAA2&quot;,&quot;#F1DAA2&quot;,&quot;#AEBABF&quot;,&quot;#7AC2B9&quot;)) + coord_flip())
+    dev.off()
+
+    print(p +  scale_color_manual(values = c(&quot;#E9C46A&quot;,&quot;#E9C46A&quot;,&quot;#264653&quot;,&quot;#2A9D8F&quot;)) +
+    scale_fill_manual(values = c(&quot;#F1DAA2&quot;,&quot;#F1DAA2&quot;,&quot;#AEBABF&quot;,&quot;#7AC2B9&quot;)) + coord_flip())
+
+    ## Plot peak intensity
+    p &lt;- ggplot(fullPeaks, aes(factor(group, level = level_order), y = log10(V7))) + 
+    geom_half_violin(aes(fill=factor(group), color=factor(group)),
+    side = &quot;r&quot;, 
+    position = &quot;dodge&quot;
+    )+
+    geom_boxplot(aes(color=factor(group)),
+    width = .15, 
+    outlier.shape = NA,
+    fill=c(&quot;#FCF8EC&quot;,&quot;#FCF8EC&quot;,&quot;#F5F6F7&quot;,&quot;#E4F3F1&quot;),
+    position = position_dodge(width=.1)
+    ) +
+    coord_cartesian(xlim = c(1.2, NA), clip = &quot;off&quot;) + theme_bw() + xlab(&quot;&quot;) + ylab(&quot;Log10 Peak Intensity&quot;) 
+    pdf(file=paste0(plot_dir, peak.intensity.plot), width = 10, height = 7)
+    print(p +  scale_color_manual(values = c(&quot;#E9C46A&quot;,&quot;#E9C46A&quot;,&quot;#264653&quot;,&quot;#2A9D8F&quot;)) +
+    scale_fill_manual(values = c(&quot;#F1DAA2&quot;,&quot;#F1DAA2&quot;,&quot;#AEBABF&quot;,&quot;#7AC2B9&quot;)) + coord_flip())
+    dev.off()  
+
+    print(p +  scale_color_manual(values = c(&quot;#E9C46A&quot;,&quot;#E9C46A&quot;,&quot;#264653&quot;,&quot;#2A9D8F&quot;)) +
+    scale_fill_manual(values = c(&quot;#F1DAA2&quot;,&quot;#F1DAA2&quot;,&quot;#AEBABF&quot;,&quot;#7AC2B9&quot;)) + coord_flip())
+}
+
+unfilteredPeakFeatures(fileList = fullPeak_dir, combined.tbl.stack= &quot;dunnart_combined_stacked.pdf&quot;,
+peak.length.plot = &quot;dunnart_fullPeaks_length.pdf&quot;, peak.intensity.plot = &quot;dunnart_fullPeaks_intensity.pdf&quot;)</code></pre>
+<p><img src="figure/dunnart_peak_characterisation.Rmd/unfiltered-peak-features-1.svg" width="672" style="display: block; margin: auto;" /><img src="figure/dunnart_peak_characterisation.Rmd/unfiltered-peak-features-2.svg" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="annotate-dunnart-peaks" class="section level1">
+<h1>Annotate dunnart peaks</h1>
+<p>The easiest way to call the nearest genes for the peaks in the dunnart is to use the ChIPseeker package (Guangchuang Yu 2021) as it allows easy integration of non-model organism genomes and has well documented instructions on incorporating BYO genomes with the package. To use the ChIPseeker to annotate peaks, firstly a txdb is needed for the dunnart annotation file. A TxDb class is a container for storing transcript annotations. The dunnart genome doesn’t have a de novo annotation so instead the Tasmanian devil annotation (RefSeq) has been lifted over to the dunnart genome using LiftOff (<a href="https://github.com/agshumate/Liftoff" class="uri">https://github.com/agshumate/Liftoff</a>).</p>
+<div id="build-the-annotation-files-for-the-dunnart" class="section level2">
+<h2>Build the annotation files for the dunnart</h2>
+<pre class="r"><code>smiCra_txdb &lt;- makeTxDbFromGFF(&quot;data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr2.gff&quot;)</code></pre>
+</div>
+<div id="gene-id-conversion-tables" class="section level2">
+<h2>Gene ID conversion tables</h2>
+<p>For downstream analyses, conversion tables between gene databases and between species is needed. This is because the ENSEMBL/ENTREZ IDs for the Tasmanian Devil have fewer links to databases such as GO terms etc. For this I have two conversion tables: 1. Converts Tasmanian devil RefSeq to Tasmanian Devil ENSEMBL IDs 2. Convert Tasmanian Devil ENSEMBL IDs to mouse ENSEMBL IDs</p>
+<pre class="r"><code>## geneID conversion tables
+df2 &lt;- read.table(&quot;output/annotations/devil_to_mouse_ensembl.txt&quot;, header=TRUE, sep=&quot;\t&quot;) ## conversion table for devil ENSEMBL to mouse ENSEMBL
+df3 &lt;- read.table(&quot;output/annotations/refseq_to_ensembl.txt&quot;, header=TRUE, sep=&quot;\t&quot;) ## convertsion table for devil refseq to devil ENSEMBL</code></pre>
+</div>
+<div id="annotate-peak-files-with-chipseeker" class="section level2">
+<h2>Annotate peak files with ChIPseeker</h2>
+<pre class="r"><code>annotatePeaks &lt;- function(peak, outFile, outFile1, outFile2, GOenrich, kegg){
+  
+  # Annotate peak file based on dunnart GFF
+  peakAnno &lt;- annotatePeak(peak = peak, tssRegion = c(-3000, 3000), TxDb = smiCra_txdb)
+
+  # Write annotation to file
+  write.table(peakAnno, file=paste0(annot_dir, outFile), sep=&quot;\t&quot;, quote=F, row.names=F)
+  
+  peakAnnoDF &lt;- as.data.frame(peakAnno, row.names = NULL)
+  # # Convert refseq IDs and geneIDs to devil ensembl IDs
+
+  peakAnnoDF$ensemblgeneID &lt;- df2$Gene.stable.ID[match(unlist(peakAnnoDF$geneId), df2$Gene.name)]
+  peakAnnoDF$ensemblgeneID = replace(peakAnnoDF$ensemblgeneID,is.na(peakAnnoDF$ensemblgeneID),&quot;-&quot;)
+  peakAnnoDF$transcriptIdAltered &lt;- gsub(&quot;\\..*&quot;,&quot;&quot;, peakAnnoDF$transcriptId)
+  peakAnnoDF$refseqID &lt;- df3$Ensembl.Gene.ID[match(unlist(peakAnnoDF$transcriptIdAltered), df3$RefSeq.mRNA.Accession)]
+  peakAnnoDF$refseqID = replace(peakAnnoDF$refseqID,is.na(peakAnnoDF$refseqID),&quot;-&quot;)
+  peakAnnoDF$combined &lt;- ifelse(peakAnnoDF$refseqID == &quot;-&quot;, peakAnnoDF$ensemblgeneID, peakAnnoDF$refseqID)
+  peakAnnoDF$combined[peakAnnoDF$combined == as.character(&quot;-&quot;)] &lt;- NA
+
+  peakAnnoDF &lt;- peakAnnoDF[!is.na(peakAnnoDF$combined),]
+  write.table(peakAnnoDF, paste0(annot_dir, outFile2), sep=&quot;\t&quot;, quote=F, row.names=F)
+  # # Convert devil ensembl to mouse ensembl
+  peakAnnoDF$mouseensembl &lt;- df2$Mouse.gene.stable.ID[match(unlist(peakAnnoDF$combined), df2$Gene.stable.ID)]
+  # # Write annotation with converted IDs 
+  peakAnnoDF$mouseensembl[peakAnnoDF$mouseensembl == as.character(&quot;&quot;)] &lt;- NA
+  peakAnnoDF &lt;- peakAnnoDF[!is.na(peakAnnoDF$mouseensembl),]
+  write.table(peakAnnoDF, paste0(annot_dir, outFile1), sep=&quot;\t&quot;, quote=F, row.names=F)
+
+  # # GO enrichment analysis
+  GO &lt;- enrichGO(gene = peakAnnoDF$mouseensembl,
+                  keyType = &quot;ENSEMBL&quot;,
+                  OrgDb = org.Mm.eg.db,
+                  ont = &quot;BP&quot;,
+                  pAdjustMethod = &quot;fdr&quot;,
+                  qvalueCutoff = 0.01,
+                  readable = TRUE)
+  write.table(GO, paste0(annot_dir, GOenrich), sep=&quot;\t&quot;, quote=F, row.names=F)
+  
+  # convert mouse ensembl to entrezID
+  suppressWarnings(gene.df &lt;- bitr(geneID=peakAnnoDF$mouseensembl, fromType=&quot;ENSEMBL&quot;, toType=&quot;ENTREZID&quot;, OrgDb=&quot;org.Mm.eg.db&quot; ))
+  
+  # ## kegg analysis
+  kk &lt;- enrichKEGG(gene = gene.df$ENTREZID, organism = &quot;mmu&quot;, pAdjustMethod = &quot;fdr&quot;,
+                  qvalueCutoff = 0.01, universe = )
+  write.table(kk, paste0(annot_dir, kegg), sep=&quot;\t&quot;, quote=F, row.names=F)
+}
+
+
+### Enhancer-associated peaks annotation
+annotatePeaks(peak = paste0(fullPeak_dir, &quot;dunnart_enhancer_peaks.narrowPeak&quot;), outFile = &quot;dunnart_enhancer_annotation.txt&quot;, 
+  outFile1 = &quot;dunnart_enhancer_annotationConvertedIDs.txt&quot;, GOenrich = &quot;enhancer_mm10GOenrich.txt&quot;, 
+  kegg=&quot;enhancer_KEGG.txt&quot;, outFile2 = &quot;dunnart_enhancer_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-03 21:45:02 
+&gt;&gt; preparing features information...         2022-03-03 21:45:03 
+&gt;&gt; identifying nearest features...       2022-03-03 21:45:03 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-03 21:45:04 
+&gt;&gt; assigning genomic annotation...       2022-03-03 21:45:04 
+&gt;&gt; assigning chromosome lengths          2022-03-03 21:45:13 
+&gt;&gt; done...                   2022-03-03 21:45:13 </code></pre>
+<pre class="r"><code>### Promoter-associated peaks annotation
+annotatePeaks(peak = paste0(fullPeak_dir, &quot;dunnart_promoter_peaks.narrowPeak&quot;), outFile = &quot;dunnart_promoter_annotation.txt&quot;, 
+  outFile1 = &quot;dunnart_promoter_annotationConvertedIDs.txt&quot; , GOenrich = &quot;promoter_mm10GOenrich.txt&quot;, 
+  kegg=&quot;promoter_KEGG.txt&quot;, outFile2 = &quot;dunnart_promoter_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-03 21:46:18 
+&gt;&gt; preparing features information...         2022-03-03 21:46:18 
+&gt;&gt; identifying nearest features...       2022-03-03 21:46:18 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-03 21:46:19 
+&gt;&gt; assigning genomic annotation...       2022-03-03 21:46:19 
+&gt;&gt; assigning chromosome lengths          2022-03-03 21:46:21 
+&gt;&gt; done...                   2022-03-03 21:46:21 </code></pre>
+<pre class="r"><code>### H3K4me3-associated peaks annotation
+annotatePeaks(peak = paste0(fullPeak_dir, &quot;H3K4me3_overlap_default.narrowPeak&quot;), outFile = &quot;dunnart_H3K4me3_annotation.txt&quot;, 
+  outFile1 = &quot;dunnart_H3K4me3_annotationConvertedIDs.txt&quot; , GOenrich = &quot;H3K4me3_mm10GOenrich.txt&quot;, 
+  kegg=&quot;H3K4me3_KEGG.txt&quot;, outFile2 = &quot;dunnart_H3K4me3_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-03 21:47:00 
+&gt;&gt; preparing features information...         2022-03-03 21:47:01 
+&gt;&gt; identifying nearest features...       2022-03-03 21:47:01 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-03 21:47:02 
+&gt;&gt; assigning genomic annotation...       2022-03-03 21:47:02 
+&gt;&gt; assigning chromosome lengths          2022-03-03 21:47:04 
+&gt;&gt; done...                   2022-03-03 21:47:04 </code></pre>
+<pre class="r"><code>### H3K27ac-associated peaks annotation
+annotatePeaks(peak = paste0(fullPeak_dir, &quot;H3K27ac_overlap_default.narrowPeak&quot;), outFile = &quot;dunnart_H3K27ac_annotation.txt&quot;, 
+  outFile1 = &quot;dunnart_H3K27ac_annotationConvertedIDs.txt&quot; , GOenrich = &quot;H3K27ac_mm10GOenrich.txt&quot;, 
+  kegg=&quot;H3K27ac_KEGG.txt&quot;, outFile2 = &quot;dunnart_H3K27ac_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-03 21:47:43 
+&gt;&gt; preparing features information...         2022-03-03 21:47:44 
+&gt;&gt; identifying nearest features...       2022-03-03 21:47:44 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-03 21:47:45 
+&gt;&gt; assigning genomic annotation...       2022-03-03 21:47:45 
+&gt;&gt; assigning chromosome lengths          2022-03-03 21:47:47 
+&gt;&gt; done...                   2022-03-03 21:47:47 </code></pre>
+</div>
+</div>
+<div id="distance-to-the-nearest-tss" class="section level1">
+<h1>Distance to the nearest TSS</h1>
+<p>Now see where the peaks are located in relation to the TSS. Promoters should be reasonably close to the TSS and enhancers more distal to the TSS. Plot distance to TSS for all unfiltered peaks</p>
+<pre class="r"><code>distanceToTSS &lt;- function(fileList, enhancerTSSplot, promoterTSSplot, TSSplot){
+    files =list.files(fileList, pattern= &quot;annotation.txt&quot;, full.names=T) # create list of files in directory
+    files = as.list(files)
+    data = lapply(files, function(x) fread(x, header=TRUE, sep=&quot;\t&quot;, quote = &quot;&quot;, na.strings=c(&quot;&quot;, &quot;NA&quot;))) # read in all files
+    names(data) = c(&quot;enhancers&quot;,&quot;H3K27ac&quot;,&quot;H3K4me3&quot;,&quot;promoter&quot;)
+    df1 = Map(mutate, data, mark = names(data))
+    enhProm = list(as.data.table(df1$promoter), as.data.table(df1$enhancers))
+    enhProm = suppressWarnings(lapply(enhProm, function(x) x[,log10_abs_dist:=log10(abs(distanceToTSS)+1)][,log10_abs_dist:=ifelse(distanceToTSS&lt;0,-log10_abs_dist,log10_abs_dist)]))
+    names(enhProm) = c(&quot;promoters&quot;,&quot;enhancers&quot;)
+
+    pdf(file = paste0(plot_dir, enhancerTSSplot), width=10, height = 7)
+    print(ggplot(enhProm$enhancers, aes(x=log10_abs_dist)) + 
+    geom_density(alpha=0.5, color=&quot;#2A9D8F&quot;, fill=&quot;#2A9D8F&quot;) + 
+    scale_y_continuous(limits=c(0,0.3), labels = scales::percent) + 
+    scale_x_continuous(limits=c(-7, 7)) + theme_bw())
+    dev.off()
+    print(ggplot(enhProm$enhancers, aes(x=log10_abs_dist)) + 
+    geom_density(alpha=0.5, color=&quot;#2A9D8F&quot;, fill=&quot;#2A9D8F&quot;) + 
+    scale_y_continuous(limits=c(0,0.3), labels = scales::percent) + 
+    scale_x_continuous(limits=c(-7, 7)) + theme_bw())
+
+    pdf(file = paste0(plot_dir, promoterTSSplot), width=10, height = 7)
+    print(ggplot(enhProm$promoters, aes(x=log10_abs_dist)) + 
+    geom_density(alpha=0.5, color=&quot;#2A9D8F&quot;, fill=&quot;#2A9D8F&quot;) + 
+    scale_y_continuous(limits=c(0,0.3), labels = scales::percent) + 
+    scale_x_continuous(limits=c(-7, 7)) + theme_bw())
+    dev.off()
+    print(ggplot(enhProm$promoters, aes(x=log10_abs_dist)) + 
+    geom_density(alpha=0.5, color=&quot;#2A9D8F&quot;, fill=&quot;#2A9D8F&quot;) + 
+    scale_y_continuous(limits=c(0,0.3), labels = scales::percent) + 
+    scale_x_continuous(limits=c(-7, 7)) + theme_bw())
+
+    enhProm = rbindlist(enhProm,)
+    pdf(file = paste0(plot_dir, TSSplot), width=10, height = 7)
+    print(ggplot(enhProm, aes(x=log10_abs_dist, fill=factor(mark), color=factor(mark))) + 
+    geom_density(alpha=0.5) +scale_color_manual(values=c(&quot;#E9C46A&quot;, &quot;#2A9D8F&quot;)) + scale_fill_manual(values=c(&quot;#E9C46A&quot;, &quot;#2A9D8F&quot;)) + 
+    scale_x_continuous(limits=c(-7, 7)) + theme_bw() + font)
+    dev.off()
+    print(ggplot(enhProm, aes(x=log10_abs_dist, fill=factor(mark), color=factor(mark))) + 
+    geom_density(alpha=0.5) +scale_color_manual(values=c(&quot;#E9C46A&quot;, &quot;#2A9D8F&quot;)) + scale_fill_manual(values=c(&quot;#E9C46A&quot;, &quot;#2A9D8F&quot;)) + 
+    scale_x_continuous(limits=c(-7, 7)) + theme_bw() + font)
+
+}
+distanceToTSS(fileList = annot_dir, enhancerTSSplot=&quot;dunnart_enhancerTSS.pdf&quot;, 
+promoterTSSplot=&quot;dunnart_promoterTSS.pdf&quot;, TSSplot = &quot;dunnart_TSS.pdf&quot;)</code></pre>
+<p><img src="figure/dunnart_peak_characterisation.Rmd/distance-to-tss-1.svg" width="672" style="display: block; margin: auto;" /><img src="figure/dunnart_peak_characterisation.Rmd/distance-to-tss-2.svg" width="672" style="display: block; margin: auto;" /><img src="figure/dunnart_peak_characterisation.Rmd/distance-to-tss-3.svg" width="672" style="display: block; margin: auto;" /></p>
+<p>From this we can see that the promoter peaks have a large amount of peaks a long way from the TSS - suggests that these are either actually enhancers or they represent unannotated transcripts. Probably a mixture of both based on comparison with mouse peaks (where the annotation is better) there are not as many peaks in this distal regions. Use k-means clustering to group the peaks to decide on a cut off for “promoter” peaks. This will be more conservative for what we identify as promoters.</p>
+<div id="k-means-clustering" class="section level2">
+<h2>k-means clustering</h2>
+<p>We can use k-means clustering with the MacQueen algorithm (morissette_k-means_2013) to perform unsupervised clustering on promoter-associated peaks into 3 clusters based on distance to the closest TSS.</p>
+<pre class="r"><code>set.seed(3)
+kmeansCluster &lt;- function(file, plot1, plot2, output){
+  data = fread(file, header=TRUE, sep=&quot;\t&quot;, quote = &quot;&quot;) # read in all files
+  data = data[,log10_dist:=log10(abs(distanceToTSS)+1.1)][,log10_dist:=ifelse(distanceToTSS&lt;0,-log10_dist,log10_dist)]
+  data = data[,abs_dist:=log10(abs(distanceToTSS)+1.1)]
+
+  data = data %&gt;% dplyr::select(&quot;V4&quot;, &quot;width&quot;, &quot;V7&quot;, &quot;distanceToTSS&quot;, &quot;log10_dist&quot;, &quot;abs_dist&quot;, &quot;annotation&quot;)
+  
+  ## plot the number of peaks in each cluster
+  ## Using the MacQueen algorithm instead of the default Lloyd 
+  ## The algorithm is more efficient as it updates centroids more often and usually needs to
+  ## perform one complete pass through the cases to converge on a solution.
+  df = data[,5]
+  cre.kmeans = kmeans(df, 3, iter.max=100, nstart=25, algorithm=&quot;MacQueen&quot;)  
+  cre.kmeans_table = data.frame(cre.kmeans$size, cre.kmeans$centers)
+  cre.kmeans_df = data.frame(Cluster = cre.kmeans$cluster, data)
+
+  pdf(plot1, width=10, height = 7)
+  p &lt;- ggplot(data = cre.kmeans_df, aes(y = Cluster, fill=as.factor(Cluster), color=as.factor(Cluster))) +
+  geom_bar()  +
+  theme(plot.title = element_text(hjust = 0.5)) + theme_bw() + font
+  pdf(plot1)
+  print(p + scale_color_manual(values = c(&#39;#9EBCDA&#39;,&#39;#8C6BB1&#39;, &quot;#4D004B&quot;)) + scale_fill_manual(values = c(&#39;#9EBCDA&#39;,&#39;#8C6BB1&#39;, &quot;#4D004B&quot;)))
+  dev.off()
+  print(p + scale_color_manual(values = c(&#39;#9EBCDA&#39;,&#39;#8C6BB1&#39;, &quot;#4D004B&quot;)) + scale_fill_manual(values = c(&#39;#9EBCDA&#39;,&#39;#8C6BB1&#39;, &quot;#4D004B&quot;)))
+
+
+  p &lt;- ggplot(cre.kmeans_df, aes(x=log10_dist, fill=as.factor(Cluster), color=as.factor(Cluster))) + 
+            geom_histogram(binwidth=0.1, position = &#39;identity&#39;)  +
+            theme_bw()+ font
+  pdf(plot2, width = 10, height = 7)
+  print(p + scale_color_manual(values = c(&#39;#9EBCDA&#39;,&#39;#8C6BB1&#39;, &quot;#4D004B&quot;)) + scale_fill_manual(values = c(&#39;#9EBCDA&#39;,&#39;#8C6BB1&#39;, &quot;#4D004B&quot;)))
+  dev.off()  
+  print(p + scale_color_manual(values = c(&#39;#9EBCDA&#39;,&#39;#8C6BB1&#39;, &quot;#4D004B&quot;)) + scale_fill_manual(values = c(&#39;#9EBCDA&#39;,&#39;#8C6BB1&#39;, &quot;#4D004B&quot;)))
+
+  write.table(cre.kmeans_df, paste0(filterPeaks_dir, output), sep=&quot;\t&quot;, quote=F, row.names=F)
+  return(cre.kmeans_df)
+}
+
+promoter_kmeans = kmeansCluster(file = paste0(annot_dir, &quot;dunnart_promoter_annotation.txt&quot;),  plot1 = paste0(plot_dir, &quot;promoter_kmeans_bar.pdf&quot;), plot2 = paste0(plot_dir, &quot;promoter_kmeans_histogram.pdf&quot;), output = &quot;promoter_kmeans_peaks.txt&quot;)</code></pre>
+<p><img src="figure/dunnart_peak_characterisation.Rmd/k-means-clustering-1.svg" width="672" style="display: block; margin: auto;" /><img src="figure/dunnart_peak_characterisation.Rmd/k-means-clustering-2.svg" width="672" style="display: block; margin: auto;" /></p>
+<p>Filter for cluster 1 and make final promoter/enhancer plots</p>
+<pre class="r"><code>plotPeakClusters &lt;- function(x, y, enhancer, promoter, plotTSS, peakIntensityPlot, peakWidthPlot, annotation){
+  enhancer.annot= fread(enhancer, header=TRUE, sep=&quot;\t&quot;, quote = &quot;&quot;) 
+  enhancer.annot = enhancer.annot[,log10_dist:=log10(abs(distanceToTSS)+1)][,log10_dist:=ifelse(distanceToTSS&lt;0,-log10_dist,log10_dist)]
+  enhancer.annot = enhancer.annot[,abs_dist:=abs(distanceToTSS)]
+  promoter.annot = fread(promoter, header=TRUE, sep=&quot;\t&quot;, quote = &quot;&quot;)
+  promoter.annot = promoter.annot[,log10_dist:=log10(abs(distanceToTSS)+1)][,log10_dist:=ifelse(distanceToTSS&lt;0,-log10_dist,log10_dist)]
+  promoter.annot = promoter.annot[,abs_dist:=abs(distanceToTSS)]
+
+  promoter.annot$label = &quot;promoter&quot;
+  enhancer.annot$label = &quot;enhancer&quot;
+  enhancer.annot = enhancer.annot %&gt;% dplyr::select(&quot;V4&quot;, &quot;width&quot;, &quot;V7&quot;, &quot;distanceToTSS&quot;, &quot;log10_dist&quot;, &quot;abs_dist&quot;, &quot;annotation&quot;, &quot;label&quot;)
+  promoter.annot = promoter.annot %&gt;% dplyr::select(&quot;V4&quot;, &quot;width&quot;, &quot;V7&quot;, &quot;distanceToTSS&quot;, &quot;log10_dist&quot;, &quot;abs_dist&quot;, &quot;annotation&quot;, &quot;label&quot;)
+
+  promoter.kmeans = fread(x, header=TRUE, sep=&quot;\t&quot;, quote = &quot;&quot;) 
+  promoter.kmeans$cre = &quot;promoter&quot;
+
+  for (i in 1:nrow(promoter.kmeans)) {
+    if(promoter.kmeans$Cluster[i]==&#39;1&#39; &amp; promoter.kmeans$cre[i]==&#39;promoter&#39;) {
+            promoter.kmeans[i, &#39;label&#39;] &lt;- &quot;promoter cluster 1&quot;
+            }
+            else if(promoter.kmeans$Cluster[i]==&#39;2&#39; &amp; promoter.kmeans$cre[i]==&#39;promoter&#39;) {
+              promoter.kmeans[i, &#39;label&#39;] &lt;- &quot;promoter cluster 2&quot;
+              }
+              else if(promoter.kmeans$Cluster[i]==&#39;3&#39; &amp; promoter.kmeans$cre[i]==&#39;promoter&#39;) {
+                promoter.kmeans[i, &#39;label&#39;] &lt;- &quot;promoter cluster 3&quot;
+                }
+  }
+
+  data2 = promoter.kmeans %&gt;% dplyr::select(&quot;V4&quot;, &quot;width&quot;, &quot;V7&quot;, &quot;distanceToTSS&quot;, &quot;log10_dist&quot;, &quot;abs_dist&quot;, &quot;annotation&quot;, &quot;label&quot;)
+  all_peaks = rbind(data2, enhancer.annot, promoter.annot)
+  all_peaks = as.data.table(all_peaks)
+  all_peaks = all_peaks[,log10_intensity:=log10(V7)]
+  all_peaks = all_peaks[,log10_width:=log10(width)]
+
+  colors = c(&quot;#E9C46A&quot;,&quot;#e34a33&quot;, &quot;#fdbb84&quot;,&quot;#fee8c8&quot;, &quot;#2A9D8F&quot;)
+ 
+  ## Plot distance to TSS
+  pdf(plotTSS, width=10, height = 7)
+  print(ggplot(all_peaks, aes(x=log10_dist, colour = factor(label), fill=factor(label))) + geom_density(aes(x = log10_dist, y = ..density..), position=&quot;stack&quot;, alpha=0.7) + 
+  theme_bw() + scale_fill_manual(values = colors)+ 
+  scale_color_manual(values = colors) + font)
+  dev.off()
+  print(ggplot(all_peaks, aes(x=log10_dist, colour = factor(label), fill=factor(label))) + geom_density(aes(x = log10_dist, y = ..density..), position=&quot;stack&quot;, alpha=0.7) + 
+  theme_bw() + scale_fill_manual(values = colors)+ 
+  scale_color_manual(values = colors) + font)
+
+  my_comparisons = list( c(&quot;promoter cluster 1&quot;, &quot;promoter cluster 2&quot;), c(&quot;promoter cluster 1&quot;, &quot;promoter cluster 3&quot;), c(&quot;promoter cluster 1&quot;, &quot;promoter&quot;), c(&quot;promoter cluster 1&quot;, &quot;enhancer&quot;) )
+  ## Plot peak intensity
+  p &lt;- ggplot(all_peaks, aes(factor(label), y = log10_intensity)) + 
+  geom_violin(aes(fill=factor(label), color=factor(label)),
+   position = &quot;dodge&quot;
+   )+
+  geom_boxplot(aes(color=factor(label)),
+    outlier.shape = NA,
+    width = .15, 
+    notch = TRUE,
+    position = position_dodge(width=.1)
+  ) + theme_bw() + xlab(&quot;&quot;) + ylab(&quot;Log 10 peak intensity&quot;) 
+  pdf(&quot;test.pdf&quot;, width=10, height = 8)
+  print(p + scale_color_manual(values = colors) +
+  scale_fill_manual(values = colors) + font + stat_compare_means(comparisons = my_comparisons)) 
+  dev.off()
+  print(p + scale_color_manual(values = colors) +
+  scale_fill_manual(values = colors) + font + stat_compare_means(comparisons = my_comparisons)) 
+
+  ## Plot peak width
+  p &lt;- ggplot(all_peaks, aes(factor(label), y = log10_width)) + 
+  geom_violin(aes(fill=factor(label), color=factor(label)),
+   position = &quot;dodge&quot;
+   )+
+  geom_boxplot(aes(color=factor(label)),
+    outlier.shape = NA,
+    width = .15, 
+    notch = TRUE,
+    position = position_dodge(width=.1)
+  ) + theme_bw() + xlab(&quot;&quot;) + ylab(&quot;Log 10 peak width&quot;) 
+  pdf(peakWidthPlot, width=9, height = 8)
+  print(p + scale_color_manual(values =colors) +
+  scale_fill_manual(values = colors) + font + stat_compare_means(comparisons = my_comparisons))
+  dev.off()
+  print(p + scale_color_manual(values =colors) +
+  scale_fill_manual(values = colors) + font + stat_compare_means(comparisons = my_comparisons))
+
+  ## Plot genomic regions
+  df2 = rbind(promoter_kmeans)
+    #df1 = rbindlist(df1,) ## bind rows back together
+  df2 = map_df(df2, ~ gsub(&quot; ().*&quot;, &quot;&quot;, .x))# remove everything after the first space
+  #promoters_only = df2[complete.cases(df2), ]
+  tbl = with(df2, table(annotation, Cluster)) %&gt;% as.data.frame()
+  pdf(annotation)
+    ggplot(tbl, aes(factor(annotation), Freq, fill=factor(Cluster))) + 
+    geom_bar(position=position_stack(reverse = TRUE), stat=&quot;identity&quot;) +
+    #geom_text(data=subset(data,Freq != 0),aes(label=Freq, y=pos), size=3)+
+    scale_fill_manual(values = c(&#39;#9EBCDA&#39;,&#39;#8C6BB1&#39;, &quot;#4D004B&quot;))  + 
+    theme_minimal() + ylab(&quot;Number of peaks&quot;) +
+    xlab(&quot;&quot;)
+    dev.off()
+    ggplot(tbl, aes(factor(annotation), Freq, fill=factor(Cluster))) + 
+    geom_bar(position=position_stack(reverse = TRUE), stat=&quot;identity&quot;) +
+    #geom_text(data=subset(data,Freq != 0),aes(label=Freq, y=pos), size=3)+
+    scale_fill_manual(values = c(&#39;#9EBCDA&#39;,&#39;#8C6BB1&#39;, &quot;#4D004B&quot;))  + 
+    theme_minimal() + ylab(&quot;Number of peaks&quot;) +
+    xlab(&quot;&quot;)
+}
+plotPeakClusters(peakWidthPlot = paste0(plot_dir, &quot;filteredPeaks_peakWidthPlot.pdf&quot;),plotTSS =paste0(plot_dir,  &quot;filteredPeaks_peakDistanceToTSS.pdf&quot;),
+peakIntensityPlot = paste0(plot_dir, &quot;filteredPeaks_peakIntensityPlot.pdf&quot;), annotation = paste0(plot_dir, &quot;filteredPeaks_peakAnnotation.pdf&quot;),
+x= paste0(filterPeaks_dir, &quot;promoter_kmeans_peaks.txt&quot;), enhancer = paste0(annot_dir, &quot;dunnart_enhancer_annotation.txt&quot;), 
+promoter = paste0(annot_dir, &quot;dunnart_promoter_annotation.txt&quot;))</code></pre>
+<p><img src="figure/dunnart_peak_characterisation.Rmd/plot-peak-clusters-1.svg" width="672" style="display: block; margin: auto;" /><img src="figure/dunnart_peak_characterisation.Rmd/plot-peak-clusters-2.svg" width="672" style="display: block; margin: auto;" /><img src="figure/dunnart_peak_characterisation.Rmd/plot-peak-clusters-3.svg" width="672" style="display: block; margin: auto;" /><img src="figure/dunnart_peak_characterisation.Rmd/plot-peak-clusters-4.svg" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="extract-cluster-groups-from-narrowpeak-files-and-save-separately" class="section level2">
+<h2>Extract cluster groups from narrowPeak files and save separately</h2>
+<pre class="r"><code>promoter.kmeans = fread(paste0(filterPeaks_dir, &quot;promoter_kmeans_peaks.txt&quot;))
+cluster1 &lt;- promoter.kmeans$V4[promoter.kmeans$Cluster==1]
+cluster2 &lt;- promoter.kmeans$V4[promoter.kmeans$Cluster==2]
+cluster3 &lt;- promoter.kmeans$V4[promoter.kmeans$Cluster==3]
+
+extractClusters = function(promoter, cluster1, cluster2, cluster3, out1, out2, out3){
+  file= fread(promoter, header=FALSE, sep=&quot;\t&quot;, quote = &quot;&quot;) 
+  write.table(subset(file, V4 %in% cluster1), out1, quote=FALSE, col.names=FALSE, row.names=FALSE, sep=&quot;\t&quot;)
+  write.table(subset(file, V4 %in% cluster2), out2, quote=FALSE, col.names=FALSE, row.names=FALSE, sep=&quot;\t&quot;)
+  write.table(subset(file, V4 %in% cluster3), out3, quote=FALSE, col.names=FALSE, row.names=FALSE, sep=&quot;\t&quot;)
+}
+
+extractClusters(promoter = paste0(fullPeak_dir, &quot;dunnart_promoter_peaks.narrowPeak&quot;), out1 = paste0(filterPeaks_dir, &quot;cluster1_promoters.narrowPeak&quot;), 
+out2 =paste0(filterPeaks_dir, &quot;cluster2_promoters.narrowPeak&quot;) , out3 = paste0(filterPeaks_dir, &quot;cluster3_promoters.narrowPeak&quot;), cluster1 = cluster1, 
+cluster2 = cluster2, cluster3 = cluster3)</code></pre>
+<div id="anotate-promoter-clusters" class="section level3">
+<h3>Anotate promoter clusters</h3>
+<pre class="r"><code>annotatePeaks(peak = paste0(filterPeaks_dir, &quot;cluster1_promoters.narrowPeak&quot;), 
+  outFile = &quot;cluster1_promoter_annotation.txt&quot;, outFile1 = &quot;cluster1_promoter_annotationConvertedIDs.txt&quot; , 
+  GOenrich = &quot;cluster1_mm10GOenrich.txt&quot;, 
+  kegg=&quot;cluster1_KEGG.txt&quot;, outFile2 = &quot;cluster1_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-03 21:51:28 
+&gt;&gt; preparing features information...         2022-03-03 21:51:29 
+&gt;&gt; identifying nearest features...       2022-03-03 21:51:29 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-03 21:51:29 
+&gt;&gt; assigning genomic annotation...       2022-03-03 21:51:29 
+&gt;&gt; assigning chromosome lengths          2022-03-03 21:51:30 
+&gt;&gt; done...                   2022-03-03 21:51:30 </code></pre>
+<pre class="r"><code>annotatePeaks(peak = paste0(filterPeaks_dir, &quot;cluster2_promoters.narrowPeak&quot;), 
+  outFile = &quot;cluster2_promoter_annotation.txt&quot;, outFile1 = &quot;cluster2_promoter_annotationConvertedIDs.txt&quot; , 
+  GOenrich = &quot;cluster2_mm10GOenrich.txt&quot;, 
+  kegg=&quot;cluster2_KEGG.txt&quot;, outFile2 = &quot;cluster2_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-03 21:52:03 
+&gt;&gt; preparing features information...         2022-03-03 21:52:03 
+&gt;&gt; identifying nearest features...       2022-03-03 21:52:03 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-03 21:52:03 
+&gt;&gt; assigning genomic annotation...       2022-03-03 21:52:03 
+&gt;&gt; assigning chromosome lengths          2022-03-03 21:52:05 
+&gt;&gt; done...                   2022-03-03 21:52:05 </code></pre>
+<pre class="r"><code>annotatePeaks(peak = paste0(filterPeaks_dir, &quot;cluster3_promoters.narrowPeak&quot;), 
+  outFile = &quot;cluster3_promoter_annotation.txt&quot;, outFile1 = &quot;cluster3_promoter_annotationConvertedIDs.txt&quot; , 
+  GOenrich = &quot;cluster3_mm10GOenrich.txt&quot;, 
+  kegg=&quot;cluster3_KEGG.txt&quot;, outFile2 = &quot;cluster3_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-03 21:52:37 
+&gt;&gt; preparing features information...         2022-03-03 21:52:37 
+&gt;&gt; identifying nearest features...       2022-03-03 21:52:37 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-03 21:52:37 
+&gt;&gt; assigning genomic annotation...       2022-03-03 21:52:37 
+&gt;&gt; assigning chromosome lengths          2022-03-03 21:52:38 
+&gt;&gt; done...                   2022-03-03 21:52:38 </code></pre>
+</div>
+<div id="assess-distance-to-tss-for-clusters" class="section level3">
+<h3>Assess distance to TSS for clusters</h3>
+<pre class="r"><code>distanceToTSS &lt;- function(fileList, enhancerTSSplot, promoterTSSplot, TSSplot){
+    files =list.files(fileList, pattern= &quot;_annotation.txt&quot;, full.names=T) # create list of files in directory
+    files = as.list(files)
+    data = lapply(files, function(x) fread(x, header=TRUE, sep=&quot;\t&quot;, quote = &quot;&quot;, na.strings=c(&quot;&quot;, &quot;NA&quot;))) # read in all files
+    names(data) = c(&quot;cluster1&quot;, &quot;cluster2&quot;, &quot;cluster3&quot;, &quot;enhancers&quot;,&quot;H3K27ac&quot;,&quot;H3K4me3&quot;,&quot;promoters&quot;)
+    enhProm = Map(mutate, data, mark = names(data))
+    #promoter_5kb = x
+    #promoter_5kb$mark = &quot;promoter_5kb&quot;
+    #enhProm = list(df1$enhancers, df1$promoters)
+    enhProm = suppressWarnings(lapply(enhProm, function(x) x[,log10_abs_dist:=log10(abs(distanceToTSS)+1)][,log10_abs_dist:=ifelse(distanceToTSS&lt;0,-log10_abs_dist,log10_abs_dist)]))
+    enhProm = suppressWarnings(lapply(enhProm, function(x) x[,abs_dist:=abs(distanceToTSS)]))
+    #names(enhProm) = c(&quot;enhancers&quot;,&quot;promoters&quot;, &quot;promoter_5kb&quot;)
+    level_order = c(&quot;cluster1&quot;, &quot;cluster2&quot;, &quot;cluster3&quot;, &quot;promoters&quot;, &quot;enhancers&quot;, &quot;H3K4me3&quot;, &quot;H3K27ac&quot;)
+
+    pdf(file = paste0(plot_dir, enhancerTSSplot), width=10, height = 7)
+    print(ggplot(enhProm$enhancers, aes(x=log10_abs_dist, color=factor(mark), fill=factor(mark))) + 
+    geom_density(alpha=0.5) + theme_bw() + scale_color_manual(values = c(&#39;#E9C46A&#39;)) 
+    + scale_fill_manual(values = c(&#39;#E9C46A&#39;)) + font) 
+    dev.off()
+    print(ggplot(enhProm$enhancers, aes(x=log10_abs_dist, color=factor(mark), fill=factor(mark))) + 
+    geom_density(alpha=0.5) + theme_bw() + scale_color_manual(values = c(&#39;#E9C46A&#39;)) 
+    + scale_fill_manual(values = c(&#39;#E9C46A&#39;)) + font) 
+
+    enhProm = rbind(enhProm$promoters, enhProm$cluster1, enhProm$cluster2, enhProm$cluster3 ,use.names=TRUE)
+    pdf(file = paste0(plot_dir, TSSplot), width=15, height = 7)
+    print(ggplot(enhProm, aes(x=log10_abs_dist, color = factor(mark, level=level_order), fill = factor(mark, level=level_order))) + 
+    geom_density(position = &quot;stack&quot;, alpha=0.8) + 
+    theme_bw() )
+    #+ scale_color_manual(values = c(&#39;#4D004B&#39;, &#39;#E9C46A&#39;,&#39;#2A9D8F&#39;)) 
+    #+ scale_fill_manual(values = c(&#39;#4D004B&#39;, &#39;#E9C46A&#39;,&#39;#2A9D8F&#39;)) + font) 
+    dev.off()
+    print(ggplot(enhProm, aes(x=log10_abs_dist, color = factor(mark, level=level_order), fill = factor(mark, level=level_order))) + 
+    geom_density(position = &quot;stack&quot;, alpha=0.8) + 
+    theme_bw() )
+    #+ scale_color_manual(values = c(&#39;#4D004B&#39;, &#39;#E9C46A&#39;,&#39;#2A9D8F&#39;)) 
+    #+ scale_fill_manual(values = c(&#39;#4D004B&#39;, &#39;#E9C46A&#39;,&#39;#2A9D8F&#39;)) + font) 
+}
+distanceToTSS(fileList = annot_dir, enhancerTSSplot=&quot;dunnart_enhancerTSS.pdf&quot;, promoterTSSplot=&quot;dunnart_filtered_promoterTSS.pdf&quot;,
+TSSplot = &quot;dunnart_all_TSS.pdf&quot;)</code></pre>
+<p><img src="figure/dunnart_peak_characterisation.Rmd/distance-to-tss-2-1.svg" width="672" style="display: block; margin: auto;" /><img src="figure/dunnart_peak_characterisation.Rmd/distance-to-tss-2-2.svg" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="now-look-at-cpg-and-gc-for-these-groups" class="section level3">
+<h3>Now look at CpG% and GC% for these groups</h3>
+<p>Run Homer on the clusters</p>
+<ol style="list-style-type: decimal">
+<li>Load modules and create genome db for use within homer</li>
+<li>Annotate peaks to extract GC and CpG content information using annotatePeaks.pl</li>
+</ol>
+<pre class="bash"><code>module load perl
+module load gcc
+module load web_proxy
+module load wget
+
+1. Load genome for use with HOMER tools
+## This will allow the genome to be called within the tools
+loadGenome.pl -name smiCra1 -org null -fasta data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr.fasta -gff data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr2.gff
+
+2. Annotate peaks to extract GC and CpG content information
+annotatePeaks.pl output/filtered_peaks/cluster1_promoters.narrowPeak smiCra1 -gff data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr2.gff -CpG -cons &gt; output/annotations/cluster1_promoters_homerAnnot.txt
+annotatePeaks.pl output/filtered_peaks/cluster2_promoters.narrowPeak smiCra1 -gff Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr2.gff -CpG -cons &gt; output/annotations/cluster2_promoters_homerAnnot.txt
+annotatePeaks.pl output/filtered_peaks/cluster3_promoters.narrowPeak smiCra1 -gff Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr2.gff -CpG -cons &gt; output/annotations/cluster3_promoters_homerAnnot.txt
+
+annotatePeaks.pl output/peaks/dunnart_promoter_peaks.narrowPeak smiCra1 -gff data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr2.gff -CpG -cons &gt; output/annotations/dunnart_promoters_homerAnnot.txt
+annotatePeaks.pl output/peaks/dunnart_enhancer_peaks.narrowPeak smiCra1 -gff data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr2.gff -CpG -cons &gt; output/annotations/dunnart_enhancers_homerAnnot.txt </code></pre>
+<pre class="r"><code>GCcontent = function(fileList, gcPlot, cpgPlot, dataframestobind){
+    files =list.files(fileList, pattern= &quot;homerAnnot.txt&quot;, full.names=T) # create list of files in directory
+    files = as.list(files)
+    data = lapply(files, function(x) fread(x, header=TRUE, sep=&quot;\t&quot;, quote = &quot;&quot;, na.strings=c(&quot;&quot;, &quot;NA&quot;))) # read in all files
+    names(data) = c(&quot;cluster1&quot;,&quot;cluster2&quot;,&quot;cluster3&quot;,&quot;enhancers&quot;, &quot;promoters&quot;)
+    df1 = Map(mutate, data, group = names(data))
+    df1 = lapply(df1, function(x) x %&gt;% dplyr::select(&quot;Chr&quot;, &quot;Start&quot;, &quot;End&quot;, &quot;Peak Score&quot;, &quot;Distance to TSS&quot;, &quot;CpG%&quot;, &quot;GC%&quot;, &quot;group&quot;) %&gt;% as.data.table())
+    df1 = rbind(df1$cluster1, df1$cluster2, df1$cluster3, df1$promoters, df1$enhancers)
+    colnames(df1)[5:7] &lt;- c(&quot;distanceToTSS&quot;,&quot;CpG&quot;, &quot;GC&quot;)
+    df1[is.na(df1)] &lt;- 0
+    df1 = df1[,log10_abs_dist:=log10(abs(distanceToTSS)+1)][,log10_abs_dist:=ifelse(distanceToTSS&lt;0,-log10_abs_dist,log10_abs_dist)]
+
+    my_comparisons = list( c(&quot;cluster1&quot;, &quot;cluster2&quot;), c(&quot;cluster1&quot;, &quot;cluster3&quot;), c(&quot;cluster1&quot;, &quot;promoters&quot;), 
+    c(&quot;cluster1&quot;, &quot;enhancers&quot;), c(&quot;promoters&quot;, &quot;enhancers&quot;), c(&quot;promoters&quot;, &quot;cluster2&quot;), 
+    c(&quot;promoters&quot;, &quot;cluster3&quot;), c(&quot;enhancers&quot;, &quot;cluster2&quot;), c(&quot;enhancers&quot;, &quot;cluster3&quot;), c(&quot;cluster2&quot;, &quot;cluster3&quot;) )
+
+    p &lt;- ggplot(df1, aes(factor(group), y = GC)) + 
+    geom_violin(aes(fill=factor(group), color=factor(group)),
+    position = &quot;dodge&quot;
+    )+
+    geom_boxplot(aes(color=factor(group)),
+    outlier.shape = NA,
+    width = .15, 
+    notch = TRUE,
+    fill=c(&quot;#E7EEF6&quot;,&quot;#D4C7E2&quot;,&quot;#D3BFD2&quot;, &quot;#FCF8EC&quot;,&quot;#E4F3F1&quot;),
+    position = position_dodge(width=.1)
+    ) + theme_bw() + xlab(&quot;&quot;) + ylab(&quot;GC content&quot;) 
+    pdf(gcPlot, width=9, height = 8)
+    print(p + font + scale_color_manual(values = c(&#39;#9EBCDA&#39;,&#39;#8C6BB1&#39;,&#39;#4D004B&#39;, &#39;#E9C46A&#39;,&#39;#2A9D8F&#39;)) +
+    scale_fill_manual(values = c(&quot;#B6CDE3&quot;,&quot;#A990C4&quot;,&quot;#7A4078&quot; ,&quot;#F1DAA2&quot;,&quot;#7AC2B9&quot;)) + stat_compare_means(p.adjust.method = &quot;fdr&quot;, comparisons = my_comparisons))
+    dev.off()
+    print(p + font + scale_color_manual(values = c(&#39;#9EBCDA&#39;,&#39;#8C6BB1&#39;,&#39;#4D004B&#39;, &#39;#E9C46A&#39;,&#39;#2A9D8F&#39;)) +
+    scale_fill_manual(values = c(&quot;#B6CDE3&quot;,&quot;#A990C4&quot;,&quot;#7A4078&quot; ,&quot;#F1DAA2&quot;,&quot;#7AC2B9&quot;)) + stat_compare_means(p.adjust.method = &quot;fdr&quot;, comparisons = my_comparisons))
+
+    p &lt;- ggplot(df1, aes(factor(group), y = CpG)) + 
+    geom_violin(aes(fill=factor(group), color=factor(group)),
+     position = &quot;dodge&quot;
+     )+
+    geom_boxplot(aes(color=factor(group)),
+    outlier.shape = NA,
+    width = .15, 
+    notch = TRUE,
+    fill=c(&quot;#E7EEF6&quot;,&quot;#D4C7E2&quot;,&quot;#D3BFD2&quot;, &quot;#FCF8EC&quot;,&quot;#E4F3F1&quot;),
+    position = position_dodge(width=.1)
+    ) + theme_bw() + xlab(&quot;&quot;) + ylab(&quot;CpG&quot;) 
+    pdf(cpgPlot, width=9, height = 8)
+    print(p + font + scale_color_manual(values = c(&#39;#9EBCDA&#39;,&#39;#8C6BB1&#39;,&#39;#4D004B&#39;, &#39;#E9C46A&#39;,&#39;#2A9D8F&#39;)) +
+    scale_fill_manual(values = c(&quot;#B6CDE3&quot;,&quot;#A990C4&quot;,&quot;#7A4078&quot; ,&quot;#F1DAA2&quot;,&quot;#7AC2B9&quot;)) + stat_compare_means(p.adjust.method = &quot;fdr&quot;, comparisons = my_comparisons))
+    dev.off()
+    print(p + font + scale_color_manual(values = c(&#39;#9EBCDA&#39;,&#39;#8C6BB1&#39;,&#39;#4D004B&#39;, &#39;#E9C46A&#39;,&#39;#2A9D8F&#39;)) +
+    scale_fill_manual(values = c(&quot;#B6CDE3&quot;,&quot;#A990C4&quot;,&quot;#7A4078&quot; ,&quot;#F1DAA2&quot;,&quot;#7AC2B9&quot;)) + stat_compare_means(p.adjust.method = &quot;fdr&quot;, comparisons = my_comparisons))
+
+}
+GCcontent(fileList = annot_dir, gcPlot = paste0(plot_dir, &quot;dunnart_GC.pdf&quot;), cpgPlot = paste0(plot_dir, &quot;dunnart_cpg.pdf&quot;))</code></pre>
+<p><img src="figure/dunnart_peak_characterisation.Rmd/gc-content-1.svg" width="672" style="display: block; margin: auto;" /><img src="figure/dunnart_peak_characterisation.Rmd/gc-content-2.svg" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="go-enrichment-for-high-confidence-promoter-associated-peaks-and-enhancer-associated-peaks" class="section level2">
+<h2>GO enrichment for high-confidence promoter-associated peaks and enhancer-associated peaks</h2>
+<pre class="r"><code>promoter = fread(paste0(annot_dir, &quot;cluster1_promoter_annotationConvertedIDs.txt&quot;))
+enhancer = fread(paste0(annot_dir, &quot;dunnart_enhancer_annotationConvertedIDs.txt&quot;))
+data = list(promoter, enhancer)
+genes = lapply(data, function(i) as.data.frame(i)$mouseensembl)
+genes = lapply(genes, function(i) unique(i))
+names(genes) = c(&quot;promoter-associated peaks&quot;, &quot;enhancer-associated peaks&quot;)
+go_cluster &lt;- setReadable(
+      compareCluster(
+        geneCluster = genes, 
+        fun = enrichGO, 
+        ont=&quot;BP&quot;,
+        #universe = bg, 
+        keyType=&quot;ENSEMBL&quot;, 
+        pvalueCutoff = 0.001, 
+        OrgDb = org.Mm.eg.db),
+      OrgDb = org.Mm.eg.db, 
+      keyType=&quot;ENSEMBL&quot;)</code></pre>
+<div id="plot-go-enrichment" class="section level3">
+<h3>Plot GO enrichment</h3>
+<!-- 
+
+pdf(paste0(plot_dir, "dunnart_go_cluster.pdf", width = 11, height = 9))
+print(dotplot(go_cluster, showCategory = 10) + 
+scale_color_viridis() +
+theme(axis.text.x = element_text(angle = 45, hjust=1)))
+dev.off()
+
+write.table(go_cluster@compareClusterResult, file = paste0(annot_dir, "dunnart_peak_mm10_enrichGO_compareCluster_results.txt"), sep="\t", quote=F, row.names=F)
+suppressWarnings(genes_ent <- lapply(genes, function(x) bitr(geneID=x, fromType="ENSEMBL", toType="ENTREZID", OrgDb="org.Mm.eg.db" )))
+genes_ent = lapply(genes_ent, function(x) x$ENTREZID)
+suppressWarnings(bg_ent <- bitr(geneID=bg, fromType="ENSEMBL", toType="ENTREZID", OrgDb="org.Mm.eg.db" ))
+bg_ent = bg_ent$ENTREZID
+
+kegg_cluster <- 
+  compareCluster(
+  geneCluster = genes_ent, 
+  fun = 'enrichKEGG', 
+  universe = bg_ent, 
+  pvalueCutoff = 0.001, 
+  organism = 'mmu')
+    
+pdf(paste0(plot_dir, "dunnart_kegg_cluster.pdf"), width = 8, height = 6)
+print(dotplot(kegg_cluster, showCategory = 10) + 
+scale_color_viridis() + 
+theme(axis.text.x = element_text(angle = 45, hjust=1)))
+dev.off()
+
+split =  split(as.data.frame(go_cluster@compareClusterResult), f = factor(go_cluster@compareClusterResult$Cluster))
+go_terms = lapply(split, function(x) x$ID)
+pdf(paste0(plot_dir, "dunnart_simplifyGO.pdf", width = 10, height = 14))
+    simplifyGOFromMultipleLists(go_terms, db = org.Mm.eg.db,  measure = "Wang", method = "binary_cut")
+    dev.off()  
+
+intersect = intersect(go_terms[[1]], go_terms[[2]])
+union = union(go_terms[[1]], go_terms[[2]])
+promoter_setdiff = setdiff(go_terms[[1]], go_terms[[2]])
+
+promoter_setdiff_terms = go_cluster@compareClusterResult[go_cluster@compareClusterResult[,"ID"] %in% promoter_setdiff,]
+enhancer_setdiff_terms = go_cluster@compareClusterResult[go_cluster@compareClusterResult[,"ID"] %in% enhancer_setdiff,]
+-->
+<blockquote>
+<p>Note: Look at using sourcing for calling R functions that I use across different analyses. Create a script of R functions called utils.R</p>
+</blockquote>
+<pre class="r"><code>if(exists(&quot;my_function&quot;, mode = &quot;function&quot;))
+    source(&quot;utils.R&quot;)</code></pre>
+<!-- # Peak length vs distance from TSS and peak intensity vs distance from TSS
+peak.counts <- df2 %>% as.data.frame() %>% group_by(geneId, group, geneLength) %>%
+    summarise(count = n(), .groups = 'drop') %>% as.data.table()
+
+pdf("geneLengthvsPeakCount.pdf", width=10, height = 15)
+p <- ggscatter(
+  peak.counts, x = "count", y = "geneLength",
+  color = "group", palette = "jco", add="reg.line",
+  conf.int = TRUE, # Add confidence interval
+  cor.coef = TRUE, # Add correlation coefficient. see ?stat_cor
+  cor.coeff.args = list(method = "pearson", label.x = 3, label.sep = "\n"), xlab = "Gene Length",
+  ylab = "Number of peaks per gene"
+  ) +
+  facet_wrap(~group)
+p + theme(panel.spacing = unit(3, "lines"), plot.margin = margin(2, 2, 2, 2, "cm"))
+dev.off()
+
+pdf("peakLengthVsDist.pdf", width=10, height = 7)
+ggplot(peak, aes(abs(distanceToTSS), y=log10_length, color=cre)) + geom_point(alpha=0.3) +  theme_bw() + scale_color_manual(values=c("#F1DAA2", "#7AC2B9"))
+dev.off()
+
+
+## Peak intensity for distal enhancers marked by H3K4me3
+# subset log10_abs_dist between 3.5 and 7 (3000bp and 10 million bps)
+H3K4me3 = fread("H3K4me3_annotation.txt", sep="\t", quote="", header=TRUE)
+H3K27ac = fread("H3K27ac_annotation.txt", sep="\t", quote="", header=TRUE)
+
+H3K4me3.subset.greater = subset(H3K4me3, abs(distanceToTSS) >=3000)
+H3K4me3.subset.greater$mark = "H3K4me3 > 3kb"
+H3K4me3.subset.less = subset(H3K4me3, abs(distanceToTSS) < 3000)
+H3K4me3.subset.less$mark = "H3K4me3 < 3kb"
+H3K27ac.subset = subset(H3K27ac, abs(distanceToTSS) >=3000)
+H3K27ac.subset$mark = "H3K27ac"
+data = rbind(H3K4me3.subset.less, H3K4me3.subset.greater, H3K27ac.subset)
+stat <- compare_means(V7 ~ mark, data = data)
+mean(H3K4me3.subset.greater$V7)
+mean(H3K4me3.subset.less$V7)
+
+
+enhancer <- fread("dunnart_enhancer_annotation.txt", sep="\t", quote="", header=TRUE)
+promoter <- fread("dunnart_promoter_annotation.txt", sep="\t", quote="", header=TRUE)
+enhancer$cre <- "enhancer"
+promoter$cre <- "promoter"
+enhancer = enhancer[,log10_abs_dist:=log10(abs(distanceToTSS)+1)]
+promoter = promoter[,log10_abs_dist:=log10(abs(distanceToTSS)+1)]
+
+promoter.subset=subset(promoter, log10_abs_dist >= 3.5)
+promoter = subset(promoter, log10_abs_dist <3.5)
+promoter.subset$cre = "subset"
+data = rbind(promoter, promoter.subset)
+data = data[,log10_intensity:=log10(V7)]
+
+p <- ggplot(data, aes(factor(cre), y = log10_intensity)) + 
+  #geom_violin(aes(fill=factor(cre), color=factor(cre)),
+   # position = "dodge"
+   # )+
+  geom_boxplot(aes(color=factor(cre)),
+    outlier.shape = NA,
+    width = .15, 
+    notch = TRUE,
+    fill=c("#FCF8EC","#E4F3F1"),
+    position = position_dodge(width=.1)
+  ) + theme_bw() + xlab("") + ylab("Peak intensity") 
+pdf("distalH3K4me3PeakIntensity.pdf", width=9, height = 8)
+p +  scale_color_manual(values = c("#E9C46A","#2A9D8F")) +
+scale_fill_manual(values = c("#F1DAA2","#7AC2B9")) + stat_compare_means(method = "wilcox.test" )
+dev.off()
+
+
+
+# Number of peaks per gene
+enhancer <- fread("annotations/dunnart_enhancer_annotation.txt", sep="\t", quote="", header=TRUE)
+promoter <- fread("annotations/dunnart_promoter_annotation.txt", sep="\t", quote="", header=TRUE)
+enhancer$cre <- "enhancer"
+promoter$cre <- "promoter"
+peak <- rbind(enhancer, promoter)
+peak.counts <- enhancer %>% as.data.frame() %>% group_by(geneId, cre) %>%
+    summarise(count = n(),.groups = 'drop') %>% as.data.table()
+peak.counts = peak.counts[,log10_abs_dist:=log10(count)][,log10_abs_dist:=ifelse(count<0,-log10_abs_dist,log10_abs_dist)]
+pick <- peak.counts %>% filter(count > 50)
+
+p <- ggplot(peak.counts, aes(factor(cre), y = log10_abs_dist)) + 
+  geom_violin(aes(fill=factor(cre), color=factor(cre))) +
+  geom_boxplot(aes(color=factor(cre)),
+    width = .15, 
+    outlier.shape = NA,
+    fill=c("#FCF8EC","#E4F3F1"),
+    position = position_dodge(width=.1)
+  )  +
+  geom_text(data = pick, aes(factor(cre), log10_abs_dist), label = pick$geneId, check_overlap = TRUE, size=3, position = position_jitter(w = 0.3)) +
+  theme_bw() + xlab("") + ylab("Log 10 number of peaks") 
+pdf("numberPeaksPerGene.pdf", width=9, height = 8)
+p +  scale_color_manual(values = c("#E9C46A","#2A9D8F")) +
+scale_fill_manual(values = c("#F1DAA2","#7AC2B9"))
+dev.off()
+
+## gene length and number of peaks per gene
+p <- ggplot(peak.counts, aes(x=log10_abs_length, y = log10(n))) + 
+  geom_point()+ theme_bw() + xlab("Gene Length") + ylab("Log 10 number of peaks") 
+pdf("numberPeaksvsGeneLength.pdf", width=9, height = 8)
+p
+dev.off() -->
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.1.0 (2021-05-18)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Red Hat Enterprise Linux
+
+Matrix products: default
+BLAS/LAPACK: /usr/local/easybuild-2019/easybuild/software/compiler/gcc/10.2.0/openblas/0.3.12/lib/libopenblas_haswellp-r0.3.12.so
+
+locale:
+ [1] LC_CTYPE=en_GB.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_GB.UTF-8        LC_COLLATE=en_GB.UTF-8    
+ [5] LC_MONETARY=en_GB.UTF-8    LC_MESSAGES=en_GB.UTF-8   
+ [7] LC_PAPER=en_GB.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_GB.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] grid      stats4    stats     graphics  grDevices utils     datasets 
+[8] methods   base     
+
+other attached packages:
+ [1] NbClust_3.0            factoextra_1.0.7       multcompView_0.1-8    
+ [4] gghalves_0.1.1         hrbrthemes_0.8.0       viridis_0.6.2         
+ [7] viridisLite_0.4.0      VennDiagram_1.7.1      futile.logger_1.4.3   
+[10] reshape2_1.4.4         ggridges_0.5.3         data.table_1.14.0     
+[13] RColorBrewer_1.1-2     forcats_0.5.1          stringr_1.4.0         
+[16] dplyr_1.0.8            purrr_0.3.4            readr_1.4.0           
+[19] tidyr_1.1.3            tibble_3.1.2           tidyverse_1.3.1       
+[22] plyr_1.8.6             org.Mm.eg.db_3.14.0    AnnotationHub_3.2.1   
+[25] BiocFileCache_2.2.1    dbplyr_2.1.1           ggpubr_0.4.0          
+[28] ggplot2_3.3.3          ChIPseeker_1.30.3      clusterProfiler_4.2.2 
+[31] AnnotationForge_1.36.0 rtracklayer_1.54.0     GenomicFeatures_1.46.4
+[34] AnnotationDbi_1.56.2   Biobase_2.54.0         GenomicRanges_1.46.1  
+[37] GenomeInfoDb_1.30.1    IRanges_2.28.0         S4Vectors_0.32.3      
+[40] BiocGenerics_0.40.0    workflowr_1.7.0       
+
+loaded via a namespace (and not attached):
+  [1] rappdirs_0.3.3                         
+  [2] bit64_4.0.5                            
+  [3] knitr_1.33                             
+  [4] DelayedArray_0.20.0                    
+  [5] KEGGREST_1.34.0                        
+  [6] RCurl_1.98-1.3                         
+  [7] generics_0.1.0                         
+  [8] callr_3.7.0                            
+  [9] lambda.r_1.2.4                         
+ [10] RSQLite_2.2.7                          
+ [11] shadowtext_0.1.1                       
+ [12] bit_4.0.4                              
+ [13] enrichplot_1.14.2                      
+ [14] xml2_1.3.2                             
+ [15] lubridate_1.7.10                       
+ [16] httpuv_1.6.1                           
+ [17] SummarizedExperiment_1.24.0            
+ [18] assertthat_0.2.1                       
+ [19] xfun_0.23                              
+ [20] hms_1.1.0                              
+ [21] jquerylib_0.1.4                        
+ [22] evaluate_0.14                          
+ [23] promises_1.2.0.1                       
+ [24] fansi_0.5.0                            
+ [25] restfulr_0.0.13                        
+ [26] progress_1.2.2                         
+ [27] caTools_1.18.2                         
+ [28] readxl_1.3.1                           
+ [29] igraph_1.2.6                           
+ [30] DBI_1.1.1                              
+ [31] ellipsis_0.3.2                         
+ [32] backports_1.2.1                        
+ [33] biomaRt_2.50.3                         
+ [34] MatrixGenerics_1.6.0                   
+ [35] vctrs_0.3.8                            
+ [36] abind_1.4-5                            
+ [37] cachem_1.0.5                           
+ [38] withr_2.4.2                            
+ [39] ggforce_0.3.3                          
+ [40] GenomicAlignments_1.30.0               
+ [41] treeio_1.18.1                          
+ [42] prettyunits_1.1.1                      
+ [43] DOSE_3.20.1                            
+ [44] ape_5.5                                
+ [45] lazyeval_0.2.2                         
+ [46] crayon_1.4.1                           
+ [47] labeling_0.4.2                         
+ [48] pkgconfig_2.0.3                        
+ [49] tweenr_1.0.2                           
+ [50] nlme_3.1-152                           
+ [51] rlang_1.0.1                            
+ [52] lifecycle_1.0.1                        
+ [53] downloader_0.4                         
+ [54] filelock_1.0.2                         
+ [55] extrafontdb_1.0                        
+ [56] modelr_0.1.8                           
+ [57] cellranger_1.1.0                       
+ [58] rprojroot_2.0.2                        
+ [59] polyclip_1.10-0                        
+ [60] matrixStats_0.61.0                     
+ [61] Matrix_1.3-4                           
+ [62] aplot_0.1.2                            
+ [63] carData_3.0-4                          
+ [64] boot_1.3-28                            
+ [65] reprex_2.0.0                           
+ [66] whisker_0.4                            
+ [67] processx_3.5.2                         
+ [68] png_0.1-7                              
+ [69] rjson_0.2.20                           
+ [70] bitops_1.0-7                           
+ [71] getPass_0.2-2                          
+ [72] KernSmooth_2.23-20                     
+ [73] Biostrings_2.62.0                      
+ [74] blob_1.2.1                             
+ [75] qvalue_2.26.0                          
+ [76] rstatix_0.7.0                          
+ [77] gridGraphics_0.5-1                     
+ [78] ggsignif_0.6.1                         
+ [79] scales_1.1.1                           
+ [80] memoise_2.0.0                          
+ [81] magrittr_2.0.1                         
+ [82] gplots_3.1.1                           
+ [83] zlibbioc_1.40.0                        
+ [84] compiler_4.1.0                         
+ [85] scatterpie_0.1.7                       
+ [86] BiocIO_1.4.0                           
+ [87] plotrix_3.8-1                          
+ [88] Rsamtools_2.10.0                       
+ [89] cli_2.5.0                              
+ [90] XVector_0.34.0                         
+ [91] patchwork_1.1.1                        
+ [92] ps_1.6.0                               
+ [93] formatR_1.11                           
+ [94] MASS_7.3-54                            
+ [95] tidyselect_1.1.1                       
+ [96] stringi_1.6.2                          
+ [97] highr_0.9                              
+ [98] yaml_2.2.1                             
+ [99] GOSemSim_2.20.0                        
+[100] ggrepel_0.9.1                          
+[101] sass_0.4.0                             
+[102] fastmatch_1.1-0                        
+[103] tools_4.1.0                            
+[104] parallel_4.1.0                         
+[105] rio_0.5.26                             
+[106] rstudioapi_0.13                        
+[107] foreign_0.8-81                         
+[108] TxDb.Hsapiens.UCSC.hg19.knownGene_3.2.2
+[109] git2r_0.28.0                           
+[110] gridExtra_2.3                          
+[111] farver_2.1.0                           
+[112] ggraph_2.0.5                           
+[113] digest_0.6.27                          
+[114] BiocManager_1.30.16                    
+[115] shiny_1.6.0                            
+[116] Rcpp_1.0.6                             
+[117] car_3.0-10                             
+[118] broom_0.7.6                            
+[119] BiocVersion_3.14.0                     
+[120] later_1.2.0                            
+[121] httr_1.4.2                             
+[122] gdtools_0.2.4                          
+[123] colorspace_2.0-1                       
+[124] rvest_1.0.0                            
+[125] XML_3.99-0.6                           
+[126] fs_1.5.0                               
+[127] splines_4.1.0                          
+[128] yulab.utils_0.0.4                      
+[129] tidytree_0.3.8                         
+[130] graphlayouts_0.7.1                     
+[131] ggplotify_0.1.0                        
+[132] systemfonts_1.0.4                      
+[133] xtable_1.8-4                           
+[134] jsonlite_1.7.2                         
+[135] ggtree_3.2.1                           
+[136] futile.options_1.0.1                   
+[137] tidygraph_1.2.0                        
+[138] ggfun_0.0.5                            
+[139] R6_2.5.0                               
+[140] pillar_1.6.1                           
+[141] htmltools_0.5.1.1                      
+[142] mime_0.10                              
+[143] glue_1.4.2                             
+[144] fastmap_1.1.0                          
+[145] BiocParallel_1.28.3                    
+[146] interactiveDisplayBase_1.32.0          
+[147] fgsea_1.20.0                           
+[148] utf8_1.2.1                             
+[149] lattice_0.20-44                        
+[150] bslib_0.2.5.1                          
+[151] curl_4.3.1                             
+[152] gtools_3.8.2                           
+[153] zip_2.2.0                              
+[154] GO.db_3.14.0                           
+[155] openxlsx_4.2.3                         
+[156] Rttf2pt1_1.3.8                         
+[157] rmarkdown_2.8                          
+[158] munsell_0.5.0                          
+[159] DO.db_2.9                              
+[160] GenomeInfoDbData_1.2.7                 
+[161] haven_2.4.1                            
+[162] gtable_0.3.0                           
+[163] extrafont_0.17                         </code></pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
