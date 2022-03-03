@@ -97,9 +97,9 @@ bash subsample.sh
 
 This helps to determine whether the different sample types can be separated, i.e., samples of different conditions are expected to be more dissimilar to each other than replicates within the same condition.
 
-![Pearson correlation dunnart downsampled BAM files](output/qc/pearsoncor_multibamsum_dunnart_downSampled.png)
-![Pearson correlation mouse downsampled BAM files for H3K4me3](output/qc/H3K4me3_pearsoncor_multibamsum_mouse.png")
-![Pearson correlation mouse downsampled BAM files for H3K27ac](output/qc/H3K27ac_pearsoncor_multibamsum_mouse.png")
+![Pearson correlation dunnart downsampled BAM files](pearsoncor_multibamsum_dunnart_downSampled.pdf)
+![Pearson correlation mouse downsampled BAM files for H3K4me3](H3K4me3_pearsoncor_multibamsum_mouse.pdf")
+![Pearson correlation mouse downsampled BAM files for H3K27ac](H3K27ac_pearsoncor_multibamsum_mouse.pdf")
 
 ### Fingerprint plots 
 This tool samples indexed BAM files and plots a profile of cumulative read coverages for each. All reads overlapping a window (bin) of the specified length are counted; these counts are sorted and the cumulative sum is finally plotted.
@@ -108,9 +108,9 @@ It determines how well the signal in the ChIP-seq sample can be differentiated f
 
 An ideal input with perfect uniform distribution of reads along the genome (i.e. without enrichments in open chromatin etc.) and infinite sequencing coverage should generate a straight diagonal line. A very specific and strong ChIP enrichment will be indicated by a prominent and steep rise of the cumulative sum towards the highest rank. This means that a big chunk of reads from the ChIP sample is located in few bins which corresponds to high, narrow enrichments typically seen for transcription factors.
 
-![Fingerprint plot for dunnart downsampled BAM files](output/qc/multiBAM_fingerprint_dunnart_downSampled.png)
-![Fingerprint plot for mouse downsampled BAM files for H3K4me3](output/qc/H3K4me3_multiBAM_fingerprint_mouse.png)
-![Fingerprint plot for mouse downsampled BAM files for H3K27ac](output/qc/H327ac_multiBAM_fingerprint_mouse.png)
+![Fingerprint plot for dunnart downsampled BAM files](multiBAM_fingerprint_dunnart_downSampled.pdf)
+![Fingerprint plot for mouse downsampled BAM files for H3K4me3](H3K4me3_multiBAM_fingerprint_mouse.pdf)
+![Fingerprint plot for mouse downsampled BAM files for H3K27ac](H327ac_multiBAM_fingerprint_mouse.pdf)
 
 ## Cross-correlation analysis
 Information from: https://docs.google.com/document/d/1lG_Rd7fnYgRpSIqrIfuVlAz2dW1VaSQThzk836Db99c/edit
@@ -175,4 +175,84 @@ Table. Peak calling quality metrics for mouse ChIP-seq peaks after peak calling 
 \* computed from 15M reads subsampled
  ̂ fraction of reads in peaks
 
+## Peak QC
+### Number of peaks 
+
+#### Dunnart
+```{bash}
+less output/peaks/A-3_H3K27ac_vs_A-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
+less output/peaks/A-2_H3K4me3_vs_A-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
+less output/peaks/B-3_H3K27ac_vs_B-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
+less output/peaks/B-2_H3K4me3_vs_B-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
+```
+
+#### Mouse
+```{bash}
+
+```
+
+### Consensus peaksets for biological replicates
+#### Number of consensus peaks 
+##### Dunnart
+```{bash}
+less output/peaks/H3K4me3_overlap_default_dunnart_downSampled.narrowPeak | wc -l
+less output/peaks/H3K27ac_overlap_default_dunnart_downSampled.narrowPeak | wc -l
+```
+
+##### Mouse
+
+# Consensus peaks and grouping into putative enhancers and promoters
+
+Find uniquely H3K4me3 sites (i.e. peaks that don't overlap with H3K27ac):
+
+```{bash}
+bedtools intersect -v -a H3K4me3_E10.5_overlap.narrowPeak -b H3K27ac_E10.5_overlap.narrowPeak > H3K4me3_E10.5_only.narrowPeak
+bedtools intersect -v -a H3K4me3_E11.5_overlap.narrowPeak -b H3K27ac_E11.5_overlap.narrowPeak > H3K4me3_E11.5_only.narrowPeak
+bedtools intersect -v -a H3K4me3_E12.5_overlap.narrowPeak -b H3K27ac_E12.5_overlap.narrowPeak > H3K4me3_E12.5_only.narrowPeak
+bedtools intersect -v -a H3K4me3_E13.5_overlap.narrowPeak -b H3K27ac_E13.5_overlap.narrowPeak > H3K4me3_E13.5_only.narrowPeak
+bedtools intersect -v -a H3K4me3_E14.5_overlap.narrowPeak -b H3K27ac_E14.5_overlap.narrowPeak > H3K4me3_E14.5_only.narrowPeak
+bedtools intersect -v -a H3K4me3_E15.5_overlap.narrowPeak -b H3K27ac_E15.5_overlap.narrowPeak > H3K4me3_E15.5_only.narrowPeak
+
+```
+
+Find unique H3K27ac sites (i.e. peaks that don't overlap with H3K4me3):
+
+```{bash}
+bedtools intersect -v -a H3K27ac_E10.5_overlap.narrowPeak -b H3K4me3_E10.5_overlap.narrowPeak > H3K27ac_E10.5_only.narrowPeak
+bedtools intersect -v -a H3K27ac_E11.5_overlap.narrowPeak -b H3K4me3_E11.5_overlap.narrowPeak > H3K27ac_E11.5_only.narrowPeak
+bedtools intersect -v -a H3K27ac_E12.5_overlap.narrowPeak -b H3K4me3_E12.5_overlap.narrowPeak > H3K27ac_E12.5_only.narrowPeak
+bedtools intersect -v -a H3K27ac_E13.5_overlap.narrowPeak -b H3K4me3_E13.5_overlap.narrowPeak > H3K27ac_E13.5_only.narrowPeak
+bedtools intersect -v -a H3K27ac_E14.5_overlap.narrowPeak -b H3K4me3_E14.5_overlap.narrowPeak > H3K27ac_E14.5_only.narrowPeak
+bedtools intersect -v -a H3K27ac_E15.5_overlap.narrowPeak -b H3K4me3_E15.5_overlap.narrowPeak > H3K27ac_E15.5_only.narrowPeak
+```
+
+Find peaks common between H3K27ac & H3K4me3 with a reciprocal overlap of at least 50%.
+```{bash}
+bedtools intersect -f 0.5 -r -a H3K4me3_E10.5_overlap.narrowPeak -b H3K27ac_E10.5_overlap.narrowPeak > H3K4me3_and_H3K27ac_E10.5.narrowPeak
+bedtools intersect -f 0.5 -r -a H3K4me3_E11.5_overlap.narrowPeak -b H3K27ac_E11.5_overlap.narrowPeak > H3K4me3_and_H3K27ac_E11.5.narrowPeak
+bedtools intersect -f 0.5 -r -a H3K4me3_E12.5_overlap.narrowPeak -b H3K27ac_E12.5_overlap.narrowPeak > H3K4me3_and_H3K27ac_E12.5.narrowPeak
+bedtools intersect -f 0.5 -r -a H3K4me3_E13.5_overlap.narrowPeak -b H3K27ac_E13.5_overlap.narrowPeak > H3K4me3_and_H3K27ac_E13.5.narrowPeak
+bedtools intersect -f 0.5 -r -a H3K4me3_E14.5_overlap.narrowPeak -b H3K27ac_E14.5_overlap.narrowPeak > H3K4me3_and_H3K27ac_E14.5.narrowPeak
+bedtools intersect -f 0.5 -r -a H3K4me3_E15.5_overlap.narrowPeak -b H3K27ac_E15.5_overlap.narrowPeak > H3K4me3_and_H3K27ac_E15.5.narrowPeak
+```
+
+Combine peak files
+
+```{bash}
+cat H3K4me3_E10.5_only.narrowPeak H3K4me3_and_H3K27ac_E10.5.narrowPeak | sort -k 4,4 > E10.5_promoter_peaks.narrowPeak
+cat H3K4me3_E11.5_only.narrowPeak H3K4me3_and_H3K27ac_E11.5.narrowPeak | sort -k 4,4 > E11.5_promoter_peaks.narrowPeak
+cat H3K4me3_E12.5_only.narrowPeak H3K4me3_and_H3K27ac_E12.5.narrowPeak | sort -k 4,4 > E12.5_promoter_peaks.narrowPeak
+cat H3K4me3_E13.5_only.narrowPeak H3K4me3_and_H3K27ac_E13.5.narrowPeak | sort -k 4,4 > E13.5_promoter_peaks.narrowPeak
+cat H3K4me3_E14.5_only.narrowPeak H3K4me3_and_H3K27ac_E14.5.narrowPeak | sort -k 4,4 > E14.5_promoter_peaks.narrowPeak
+cat H3K4me3_E15.5_only.narrowPeak H3K4me3_and_H3K27ac_E15.5.narrowPeak | sort -k 4,4 > E15.5_promoter_peaks.narrowPeak
+
+
+cat H3K27ac_E10.5_only.narrowPeak | sort -k 4,4 > E10.5_enhancer_peaks.narrowPeak
+cat H3K27ac_E11.5_only.narrowPeak | sort -k 4,4 > E11.5_enhancer_peaks.narrowPeak
+cat H3K27ac_E12.5_only.narrowPeak | sort -k 4,4 > E12.5_enhancer_peaks.narrowPeak
+cat H3K27ac_E13.5_only.narrowPeak | sort -k 4,4 > E13.5_enhancer_peaks.narrowPeak
+cat H3K27ac_E14.5_only.narrowPeak | sort -k 4,4 > E14.5_enhancer_peaks.narrowPeak
+cat H3K27ac_E15.5_only.narrowPeak | sort -k 4,4 > E15.5_enhancer_peaks.narrowPeak
+
+```
 

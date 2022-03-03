@@ -47,13 +47,13 @@ rule all:
         expand("output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bai", sample=all_samples),        
         "output/qc/multibamsum_dunnart_downSampled.npz",
         "output/qc/multibamsum_dunnart_downSampled.tab",
-        "output/qc/pearsoncor_multibamsum_dunnart_downSampled.png",
+        "docs/pearsoncor_multibamsum_dunnart_downSampled.pdf",
         "output/qc/pearsoncor_multibamsum_matrix_dunnart_downSampled.txt",
         expand("output/qc/{sample}.SeqDepthNorm_dunnart_downSampled.bw", sample=all_samples),
-        "output/qc/multiBAM_fingerprint_dunnart_downSampled.png",
+        "docs/multiBAM_fingerprint_dunnart_downSampled.pdf",
         "output/qc/multiBAM_fingerprint_metrics_dunnart_downSampled.txt",
         "output/qc/multiBAM_fingerprint_rawcounts_dunnart_downSampled.txt",
-        "output/qc/bamPEFragmentSize_hist_dunnart_downSampled.png",
+        "docs/bamPEFragmentSize_hist_dunnart_downSampled.pdf",
         "output/qc/bamPEFragmentSize_rawcounts_dunnart_downSampled.tab",
         expand("output/peaks/{case}_vs_{control}_macs2_default_peaks_dunnart_downSampled.narrowPeak", zip, case=IPS, control=INPUTS),
         expand("output/peaks/{case}_vs_{control}_macs2_default_peaks_dunnart_downSampled.xls", zip, case=IPS, control=INPUTS),
@@ -129,7 +129,7 @@ rule deeptools_summary:
 rule deeptools_correlation:
     input: "output/qc/multibamsum_dunnart_downSampled.npz"
     output:
-        fig="output/qc/pearsoncor_multibamsum_dunnart_downSampled.png",
+        fig="docs/pearsoncor_multibamsum_dunnart_downSampled.pdf",
         matrix="output/qc/pearsoncor_multibamsum_matrix_dunnart_downSampled.txt"
     log:
         "output/logs/correlation_dunnart_downSampled.deepTools"
@@ -165,7 +165,7 @@ rule deeptools_fingerprint:
         bam = expand(["output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bam"], sample=all_samples),
         bai = expand(["output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bai"], sample=all_samples)
     output:
-        fig="output/qc/multiBAM_fingerprint_dunnart_downSampled.png",
+        fig="docs/multiBAM_fingerprint_dunnart_downSampled.pdf",
         metrics="output/qc/multiBAM_fingerprint_metrics_dunnart_downSampled.txt",
         rawcounts="output/qc/multiBAM_fingerprint_rawcounts_dunnart_downSampled.txt"
     threads: 32
@@ -186,7 +186,7 @@ rule deeptools_bamPEFragmentSize:
         bam = expand(["output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bam"], sample=all_samples),
         bai = expand(["output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bai"], sample=all_samples)
     output:
-        fig="output/qc/bamPEFragmentSize_hist_dunnart_downSampled.png",
+        fig="docs/bamPEFragmentSize_hist_dunnart_downSampled.pdf",
         rawcounts="output/qc/bamPEFragmentSize_rawcounts_dunnart_downSampled.tab"
     log:
         "output/logs/bamPEFragmentSize_dunnart_downSampled.deepTools"

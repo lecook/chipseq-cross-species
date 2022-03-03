@@ -81,13 +81,13 @@ rule all:
         "output/logs/input_E15.5_H3K4me3.mergeBAM",
         "output/qc/H3K4me3_multibamsum_mouse.npz",
         "output/qc/H3K4me3_multibamsum_mouse.tab",
-        "output/qc/H3K4me3_pearsoncor_multibamsum_mouse.png",
+        "docs/H3K4me3_pearsoncor_multibamsum_mouse.pdf",
         "output/qc/H3K4me3_pearsoncor_multibamsum_matrix_mouse.txt",
         expand("output/qc/{sample}_{stage}_{mark}.SeqDepthNorm_mouse.bw", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        "output/qc/H3K4me3_multiBAM_fingerprint_mouse.png",
+        "docs/H3K4me3_multiBAM_fingerprint_mouse.pdf",
         "output/qc/H3K4me3_multiBAM_fingerprint_metrics_mouse.txt",
         "output/qc/H3K4me3_multiBAM_fingerprint_rawcounts_mouse.txt",
-        "output/qc/H3K4me3_plot_coverage_mouse.png",
+        "docs/H3K4me3_plot_coverage_mouse.pdf",
         "output/qc/H3K4me3_plot_coverage_rawcounts_mouse.tab",
         expand("output/bam_files/{sample}_{stage}_{mark}_q30.dupmark.tmp.bam", zip, sample=all_samples, stage=STAGE, mark=MARK),
         expand("output/logs/{sample}_{stage}_{mark}.pbc.sort", zip, sample=all_samples, stage=STAGE, mark=MARK),
@@ -335,7 +335,7 @@ rule deeptools_summary:
 rule deeptools_correlation:
     input: "output/qc/H3K4me3_multibamsum_mouse.npz"
     output:
-        fig="output/qc/H3K4me3_pearsoncor_multibamsum_mouse.png",
+        fig="docs/H3K4me3_pearsoncor_multibamsum_mouse.pdf",
         matrix="output/qc/H3K4me3_pearsoncor_multibamsum_matrix_mouse.txt"
     log:
         "output/logs/H3K4me3_correlation_mouse.deepTools"
@@ -366,7 +366,7 @@ rule deeptools_fingerprint:
         bam = expand(["output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bam"], zip, sample=all_samples, stage=STAGE, mark = MARK),
         bai = expand(["output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bai"], zip, sample=all_samples, stage=STAGE, mark = MARK)
     output:
-        fig="output/qc/H3K4me3_multiBAM_fingerprint_mouse.png",
+        fig="docs/H3K4me3_multiBAM_fingerprint_mouse.pdf",
         metrics="output/qc/H3K4me3_multiBAM_fingerprint_metrics_mouse.txt",
         rawcounts="output/qc/H3K4me3_multiBAM_fingerprint_rawcounts_mouse.txt"
     threads: 32
@@ -387,7 +387,7 @@ rule deeptools_plotCoverage:
         bam = expand(["output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bam"], zip, sample=all_samples, stage=STAGE, mark=MARK),
         bai = expand(["output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bai"], zip, sample=all_samples, stage=STAGE, mark=MARK)
     output:
-        fig="output/qc/H3K4me3_plot_coverage_mouse.png",
+        fig="docs/H3K4me3_plot_coverage_mouse.pdf",
         rawcounts="output/qc/H3K4me3_plot_coverage_rawcounts_mouse.tab"
     log:
         "output/logs/H3K4me3_plotCoverage_mouse.deepTools"
@@ -431,7 +431,7 @@ rule subsample_aligned_reads:
 
 # Determine exclusion range for fragment length estimation.
 ## From bamPEFragmentSize (deepTools) average fragment length is ~220bp
-## See bamPEFragmentSize.histogram.png
+## See bamPEFragmentSize.histogram.pdf
 # Use a fixed lowerbound at -500.
 # Upperbound E
 #EXCLUSION_RANGE_MAX is

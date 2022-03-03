@@ -542,7 +542,7 @@ Run Homer on the clusters
 1. Load modules and create genome db for use within homer
 2. Annotate peaks to extract GC and CpG content information using annotatePeaks.pl
 
-```{bash}
+```{bash eval=FALSE}
 module load perl
 module load gcc
 module load web_proxy
