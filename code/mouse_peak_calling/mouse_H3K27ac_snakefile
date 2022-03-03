@@ -464,7 +464,7 @@ rule cross_correlation_SSP:
         EXCLUSION_RANGE_MIN=-500,
         EXCLUSION_RANGE_MAX=85
     shell:
-        "Rscript scripts/run_spp.R -c={input} -savp={output.CC_PLOT_FILE} -out={output.CC_SCORES_FILE} -x={params.EXCLUSION_RANGE_MIN}:{params.EXCLUSION_RANGE_MAX} 2> {log}"
+        "Rscript code/run_spp.R -c={input} -savp={output.CC_PLOT_FILE} -out={output.CC_SCORES_FILE} -x={params.EXCLUSION_RANGE_MIN}:{params.EXCLUSION_RANGE_MAX} 2> {log}"
 
 
 # CC_SCORE FILE format
@@ -581,7 +581,7 @@ rule frip:
     output:
         "output/qc/{case}_vs_{control}_{stage}_{mark}.frip.txt"
     shell:
-        "python scripts/encode_frip.py {input.bed} {input.peak} > {output}"
+        "python code/encode_frip.py {input.bed} {input.peak} > {output}"
 
 # ===============================================================================================
 #  9. Create consensus peaksets for replicates
@@ -612,12 +612,12 @@ rule overlap_peaks:
         E14= "output/peaks/H3K27ac_E14.5_overlap.narrowPeak",
         E15= "output/peaks/H3K27ac_E15.5_overlap.narrowPeak"
     run:
-        shell("python scripts/overlap_peaks.py {input.E10} {input.E10_pooled} {output.E10}")
-        shell("python scripts/overlap_peaks.py {input.E11} {input.E11_pooled} {output.E11}")
-        shell("python scripts/overlap_peaks.py {input.E12} {input.E12_pooled} {output.E12}")
-        shell("python scripts/overlap_peaks.py {input.E13} {input.E13_pooled} {output.E13}")
-        shell("python scripts/overlap_peaks.py {input.E14} {input.E14_pooled} {output.E14}")
-        shell("python scripts/overlap_peaks.py {input.E15} {input.E15_pooled} {output.E15}")
+        shell("python code/overlap_peaks.py {input.E10} {input.E10_pooled} {output.E10}")
+        shell("python code/overlap_peaks.py {input.E11} {input.E11_pooled} {output.E11}")
+        shell("python code/overlap_peaks.py {input.E12} {input.E12_pooled} {output.E12}")
+        shell("python code/overlap_peaks.py {input.E13} {input.E13_pooled} {output.E13}")
+        shell("python code/overlap_peaks.py {input.E14} {input.E14_pooled} {output.E14}")
+        shell("python code/overlap_peaks.py {input.E15} {input.E15_pooled} {output.E15}")
 
 rule overlap_frip:
     input:
@@ -641,9 +641,9 @@ rule overlap_frip:
       E14bed = "output/qc/H3K27ac_E14.5_overlap.frip",
       E15bed = "output/qc/H3K27ac_E15.5_overlap.frip"
     run:
-      shell("python scripts/encode_frip.py {input.E10bam} {input.E10bed} > {output.E10bed}")
-      shell("python scripts/encode_frip.py {input.E11bam} {input.E11bed} > {output.E11bed}")
-      shell("python scripts/encode_frip.py {input.E12bam} {input.E12bed} > {output.E12bed}")
-      shell("python scripts/encode_frip.py {input.E13bam} {input.E13bed} > {output.E13bed}")
-      shell("python scripts/encode_frip.py {input.E14bam} {input.E14bed} > {output.E14bed}")
-      shell("python scripts/encode_frip.py {input.E15bam} {input.E15bed} > {output.E15bed}")
+      shell("python code/encode_frip.py {input.E10bam} {input.E10bed} > {output.E10bed}")
+      shell("python code/encode_frip.py {input.E11bam} {input.E11bed} > {output.E11bed}")
+      shell("python code/encode_frip.py {input.E12bam} {input.E12bed} > {output.E12bed}")
+      shell("python code/encode_frip.py {input.E13bam} {input.E13bed} > {output.E13bed}")
+      shell("python code/encode_frip.py {input.E14bam} {input.E14bed} > {output.E14bed}")
+      shell("python code/encode_frip.py {input.E15bam} {input.E15bed} > {output.E15bed}")
