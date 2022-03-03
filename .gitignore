@@ -19,3 +19,4 @@ output/filtered_peaks/*
 output/logs/*
 output/peaks/*
 output/annotations/*
+output/qc/*.bw
