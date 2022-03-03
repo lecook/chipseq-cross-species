@@ -3,6 +3,7 @@
 ## Author: Laura E Cook, University of Melbourne
 ## Purpose: ChIP-seq pipeline for histone marks
 ## This workflow only works for paired-end sequencing reads
+## Updated: 3 Mar 2022
 
     # 1. FastQC on raw reads
     # 2. Alignment
