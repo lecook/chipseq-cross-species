@@ -8,8 +8,6 @@ Link to project [website] - WORK IN PROGRESS
 ```
 chipseq-cross-species/
 ├── analysis
-│   ├── dunnart_peaks
-│   └── cross_species_peak_comparisons
 ├── data
 │   ├── genomes
 │   └── raw_reads

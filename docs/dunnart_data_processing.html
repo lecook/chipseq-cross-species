@@ -473,16 +473,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree8ea4f0fcc04ec6021cf0987aa581a457b6342df2targetblank8ea4f0fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/8ea4f0fcc04ec6021cf0987aa581a457b6342df2" target="_blank">8ea4f0f</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree6faef6a42ebd030523f1d7125b5a10aab86f0d48targetblank6faef6aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/6faef6a42ebd030523f1d7125b5a10aab86f0d48" target="_blank">6faef6a</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree8ea4f0fcc04ec6021cf0987aa581a457b6342df2targetblank8ea4f0fa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree6faef6a42ebd030523f1d7125b5a10aab86f0d48targetblank6faef6aa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/8ea4f0fcc04ec6021cf0987aa581a457b6342df2" target="_blank">8ea4f0f</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/6faef6a42ebd030523f1d7125b5a10aab86f0d48" target="_blank">6faef6a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -725,6 +725,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/4e6c7f00b5c7d5967bba0e6abdf549c3cc4f1643/analysis/dunnart_data_processing.Rmd" target="_blank">4e6c7f0</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-03
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/42e48bec4da69be2a8cb33e711fc29ef147f1a18/docs/dunnart_data_processing.html" target="_blank">42e48be</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-03
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1780,19 +1814,16 @@ less output/peaks/H3K27ac_only.narrowPeak | wc -l</code></pre>
 <pre><code>59272</code></pre>
 <p>Find peaks common between H3K27ac &amp; H3K4me3 with a reciprocal overlap of at least 50%.</p>
 <pre class="bash"><code>module load bedtools
-bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_overlap.narrowPeak -b output/peaks/H3K27ac_overlap.narrowPeak &gt; output/peaks/H3K4me3_and_H3K27ac.narrowPeak
+bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_overlap_default.narrowPeak -b output/peaks/H3K27ac_overlap_default.narrowPeak &gt; output/peaks/H3K4me3_and_H3K27ac.narrowPeak
 less output/peaks/H3K4me3_and_H3K27ac.narrowPeak | wc -l</code></pre>
-<pre><code>Error: Unable to open file output/peaks/H3K4me3_overlap.narrowPeak. Exiting.
-0</code></pre>
+<pre><code>48541</code></pre>
 <p>Combine files</p>
-<pre class="bash"><code>cat output/peaks/H3K4me3_only_default.narrowPeak output/peaks/H3K4me3_and_H3K27ac.narrowPeak | sort -k 4,4 &gt; output/peaks/dunnart_promoter_peaks.narrowPeak
-cat output/peaks/H3K27ac_only_default.narrowPeak | sort -k 4,4 &gt; output/peaks/dunnart_enhancer_peaks.narrowPeak
+<pre class="bash"><code>cat output/peaks/H3K4me3_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac.narrowPeak | sort -k 4,4 &gt; output/peaks/dunnart_promoter_peaks.narrowPeak
+cat output/peaks/H3K27ac_only.narrowPeak | sort -k 4,4 &gt; output/peaks/dunnart_enhancer_peaks.narrowPeak
 less output/peaks/dunnart_promoter_peaks.narrowPeak | wc -l
 less output/peaks/dunnart_enhancer_peaks.narrowPeak | wc -l</code></pre>
-<pre><code>cat: output/peaks/H3K4me3_only_default.narrowPeak: No such file or directory
-cat: output/peaks/H3K27ac_only_default.narrowPeak: No such file or directory
-0
-0</code></pre>
+<pre><code>64932
+59272</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
