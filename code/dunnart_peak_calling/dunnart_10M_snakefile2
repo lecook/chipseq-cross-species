@@ -1,0 +1,326 @@
+#! /usr/bin/env python
+
+## Author: Laura E Cook, University of Melbourne
+## Purpose: ChIP-seq pipeline for histone marks
+## This workflow only works for paired-end sequencing reads
+    # 1. index downsampled BAMs
+    # 2. deepTools
+    # 3. Call narrow peaks (MACS2)
+    # 4. Peak QC
+    # 5. Create consensus peaksets
+
+configfile: "code/configs/config.yaml"
+# Contains sample and genome information
+# calls the SRR.txt file that contains the samples as either IP or control
+
+import csv
+import os
+
+IPS = []
+INPUTS = []
+MARK = []
+
+with open(config['SAMPLES'], "r") as f:
+    reader = csv.reader(f, delimiter = ",")
+    header = next(reader)
+    for row in reader:
+        IPS.append(row[0])
+        INPUTS.append(row[1])
+        MARK.append(row[2])
+f.close()
+
+## multiple samples may use the same control input files
+unique_inputs = list(set(INPUTS))
+print(unique_inputs)
+#unique_marks = list(set(MARK))
+
+## combine all samples
+all_samples = IPS + unique_inputs
+print(all_samples)
+
+# ===============================================================================================
+#        Output targets
+# ===============================================================================================
+
+rule all:
+    input:
+        expand("output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bai", sample=all_samples),        
+        "output/qc/multibamsum_dunnart_downSampled.npz",
+        "output/qc/multibamsum_dunnart_downSampled.tab",
+        "output/qc/pearsoncor_multibamsum_dunnart_downSampled.png",
+        "output/qc/pearsoncor_multibamsum_matrix_dunnart_downSampled.txt",
+        expand("output/qc/{sample}.SeqDepthNorm_dunnart_downSampled.bw", sample=all_samples),
+        "output/qc/multiBAM_fingerprint_dunnart_downSampled.png",
+        "output/qc/multiBAM_fingerprint_metrics_dunnart_downSampled.txt",
+        "output/qc/multiBAM_fingerprint_rawcounts_dunnart_downSampled.txt",
+        "output/qc/bamPEFragmentSize_hist_dunnart_downSampled.png",
+        "output/qc/bamPEFragmentSize_rawcounts_dunnart_downSampled.tab",
+        expand("output/peaks/{case}_vs_{control}_macs2_default_peaks_dunnart_downSampled.narrowPeak", zip, case=IPS, control=INPUTS),
+        expand("output/peaks/{case}_vs_{control}_macs2_default_peaks_dunnart_downSampled.xls", zip, case=IPS, control=INPUTS),
+        expand("output/peaks/{case}_vs_{control}_macs2_default_summits_dunnart_downSampled.bed", zip, case=IPS, control=INPUTS),
+        #expand("output/qc/{case}-vs-{control}-narrowpeak-count_mqc.json", zip, case=IPS, control=INPUTS),
+        expand("output/bam_files/{case}_dunnart_downSampled.bedpe", case=IPS),
+        expand("output/logs/{case}_dunnart_downSampled.bamToBed", case=IPS),
+        expand("output/qc/{case}_vs_{control}.frip_default_dunnart_downSampled.txt", case=IPS, control=INPUTS),
+        "output/peaks/H3K4me3_pooled_macs2_default_peaks_dunnart_downSampled.narrowPeak",
+        "output/peaks/H3K27ac_pooled_macs2_default_peaks_dunnart_downSampled.narrowPeak",
+        "output/peaks/H3K4me3_overlap_default_dunnart_downSampled.narrowPeak",
+        "output/peaks/H3K27ac_overlap_default_dunnart_downSampled.narrowPeak",
+        "output/qc/H3K4me3_overlap_default_dunnart_downSampled.frip",
+        "output/qc/H3K27ac_overlap_default_dunnart_downSampled.frip"
+
+
+rule indexBam:
+    input:
+        "output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bam"
+    output:
+        "output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bai"
+    log:
+        "output/logs/{sample}downSampled.indexBam"
+    shell:
+        "samtools index -c {input} {output} 2> {log}"
+
+rule mergeBAMreplicates:
+    input:
+        H3K4me3 = ["output/bam_files/A-2_H3K4me3_downSampled.PPq30.sorted.dedup.bam",  "output/bam_files/B-2_H3K4me3_downSampled.PPq30.sorted.dedup.bam"],
+        H3K27ac = ["output/bam_files/A-3_H3K27ac_downSampled.PPq30.sorted.dedup.bam", "output/bam_files/B-3_H3K27ac_downSampled.PPq30.sorted.dedup.bam"],
+        control = ["output/bam_files/A-1_input_downSampled.PPq30.sorted.dedup.bam", "output/bam_files/B-1_input_downSampled.PPq30.sorted.dedup.bam"]
+    output:
+        H3K4me3 = "output/bam_files/H3K4me3_pooled_downSampled.PPq30.sorted.dedup.bam",
+        H3K27ac = "output/bam_files/H3K27ac_pooled_downSampled.PPq30.sorted.dedup.bam",
+        control = "output/bam_files/input_pooled_downSampled.PPq30.sorted.dedup.bam"
+    log:
+        H3K4me3 = "output/logs/H3K4me3_dunnart_downSampled.mergeBAM",
+        H3K27ac = "output/logs/H3K27ac_dunnart_downSampled.mergeBAM",
+        control = "output/logs/input_dunnart_downSampled.mergeBAM"
+    run:
+        shell("samtools merge {output.H3K4me3} {input.H3K4me3} 2> {log.H3K4me3}")
+        shell("samtools merge {output.H3K27ac} {input.H3K27ac} 2> {log.H3K27ac}")
+        shell("samtools merge {output.control} {input.control} 2> {log.control}")
+
+# ===============================================================================================
+#  2. deepTools
+#   > multiBAMsummary
+#   > plotCorrelation
+#   > plotFingerprint
+#   > bamCoverage (read depth normalised bigWig files)
+#   > plotCoverage
+#   > bamPEFragmentSize
+# ===============================================================================================
+
+rule deeptools_summary:
+    input:
+        bam = expand(["output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bam"], sample=all_samples),
+        bai = expand(["output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bai"], sample=all_samples)
+    output:
+        sum="output/qc/multibamsum_dunnart_downSampled.npz",
+        counts="output/qc/multibamsum_dunnart_downSampled.tab"
+    threads: 32
+    log:
+        "output/logs/multisummary_dunnart_downSampled.deepTools"
+    run:
+        shell("multiBamSummary bins \
+        -p {threads} \
+        -b {input.bam} \
+        --centerReads \
+        -out {output.sum} \
+        --outRawCounts {output.counts} 2> {log}")
+
+rule deeptools_correlation:
+    input: "output/qc/multibamsum_dunnart_downSampled.npz"
+    output:
+        fig="output/qc/pearsoncor_multibamsum_dunnart_downSampled.png",
+        matrix="output/qc/pearsoncor_multibamsum_matrix_dunnart_downSampled.txt"
+    log:
+        "output/logs/correlation_dunnart_downSampled.deepTools"
+    run:
+        shell("plotCorrelation \
+        --corData {input} \
+        --plotFile {output.fig} \
+        --outFileCorMatrix {output.matrix} \
+        --corMethod pearson \
+        --whatToPlot heatmap \
+        --skipZeros \
+        --plotNumbers \
+        --colorMap viridis 2> {log}")
+
+rule deeptools_coverage:
+    input:
+        bam ="output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bam",
+        bai ="output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bai"
+    output:
+        "output/qc/{sample}.SeqDepthNorm_dunnart_downSampled.bw"
+    log:
+        "output/logs/{sample}_coverage_dunnart_downSampled.deepTools"
+    run:
+        shell("bamCoverage --bam {input.bam} --binSize 10 \
+        --normalizeUsing RPGC \
+        --effectiveGenomeSize 2740338543 \
+        --extendReads \
+        -o {output} \
+         2> {log}")
+
+rule deeptools_fingerprint:
+    input:
+        bam = expand(["output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bam"], sample=all_samples),
+        bai = expand(["output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bai"], sample=all_samples)
+    output:
+        fig="output/qc/multiBAM_fingerprint_dunnart_downSampled.png",
+        metrics="output/qc/multiBAM_fingerprint_metrics_dunnart_downSampled.txt",
+        rawcounts="output/qc/multiBAM_fingerprint_rawcounts_dunnart_downSampled.txt"
+    threads: 32
+    log:
+        "output/logs/fingerprint_dunnart_downSampled.deepTools"
+    run:
+        shell("plotFingerprint -p {threads} \
+        -b {input.bam} \
+        --plotFile {output.fig} \
+        --outQualityMetrics {output.metrics} \
+        --outRawCounts {output.rawcounts} \
+        --minMappingQuality 30 \
+        --skipZeros \
+        --centerReads 2> {log}")
+
+rule deeptools_bamPEFragmentSize:
+    input:
+        bam = expand(["output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bam"], sample=all_samples),
+        bai = expand(["output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bai"], sample=all_samples)
+    output:
+        fig="output/qc/bamPEFragmentSize_hist_dunnart_downSampled.png",
+        rawcounts="output/qc/bamPEFragmentSize_rawcounts_dunnart_downSampled.tab"
+    log:
+        "output/logs/bamPEFragmentSize_dunnart_downSampled.deepTools"
+    run:
+        shell("bamPEFragmentSize \
+        -hist {output.fig} \
+        --outRawFragmentLengths {output.rawcounts} \
+        -b {input.bam} 2> {log}")
+
+# ===============================================================================================
+#  3. Call peaks (MACS2)
+# ===============================================================================================
+
+# peak calling for pair-end peaks
+# effective genome size for dunnart genome calculated with khmer program (see README.md)
+
+rule call_peaks_macs2:
+    input:
+        control = "output/bam_files/{control}_downSampled.PPq30.sorted.dedup.bam",
+        case = "output/bam_files/{case}_downSampled.PPq30.sorted.dedup.bam"
+    output:
+        "output/peaks/{case}_vs_{control}_macs2_default_peaks_dunnart_downSampled.xls",
+        "output/peaks/{case}_vs_{control}_macs2_default_summits_dunnart_downSampled.bed",
+        "output/peaks/{case}_vs_{control}_macs2_default_peaks_dunnart_downSampled.narrowPeak",
+    log:
+        "output/logs/{case}_vs_{control}_call_peaks_macs2_default_dunnart_downSampled.log"
+    params:
+        name = "{case}_vs_{control}_macs2_default_dunnart_downSampled",
+    run:
+        shell("macs2 callpeak -f BAMPE -t {input.case} \
+        -c {input.control} --keep-dup all \
+        --outdir output/peaks/  \
+        -n {params.name} \
+        -g 2740338543 2> {log}")
+
+rule call_peaks_macs2_pooled_replicates:
+    input:
+        H3K4me3 = "output/bam_files/H3K4me3_pooled_downSampled.PPq30.sorted.dedup.bam",
+        H3K27ac = "output/bam_files/H3K27ac_pooled_downSampled.PPq30.sorted.dedup.bam",
+        input = "output/bam_files/input_pooled_downSampled.PPq30.sorted.dedup.bam"
+    output:
+        "output/peaks/H3K4me3_pooled_macs2_default_peaks_dunnart_downSampled.xls",
+        "output/peaks/H3K4me3_pooled_macs2_default_summits_dunnart_downSampled.bed",
+        "output/peaks/H3K4me3_pooled_macs2_default_peaks_dunnart_downSampled.narrowPeak",
+        "output/peaks/H3K27ac_pooled_macs2_default_peaks_dunnart_downSampled.xls",
+        "output/peaks/H3K27ac_pooled_macs2_default_summits_dunnart_downSampled.bed",
+        "output/peaks/H3K27ac_pooled_macs2_default_peaks_dunnart_downSampled.narrowPeak"
+    log:
+        H3K4me3 ="output/logs/H3K4me3_pooled_call_peaks_macs2_default_dunnart_downSampled.log",
+        H3K27ac ="output/logs/H3K27ac_pooled_call_peaks_macs2_default_dunnart_downSampled.log"
+    params:
+        H3K4me3 = "H3K4me3_pooled_macs2_default_dunnart_downSampled",
+        H3K27ac = "H3K27ac_pooled_macs2_default_dunnart_downSampled"
+    run:
+        shell(" macs2 callpeak -f BAMPE -t {input.H3K4me3} \
+        -c {input.input} --keep-dup all \
+        --outdir output/peaks/ \
+        -n {params.H3K4me3} \
+        -g 2740338543 2> {log.H3K4me3} ")
+        shell("macs2 callpeak -f BAMPE -t {input.H3K27ac} \
+        -c {input.input} --keep-dup all \
+        --outdir output/peaks/ -p 0.01 \
+        -n {params.H3K27ac} \
+        -g 2740338543 2> {log.H3K27ac} ")
+
+# ===============================================================================================
+#  8. Peak QC
+#   > narrow peak counts
+#   > fraction of reads in peaks (convert BAM to bed first then do intersect with peaks)
+# ===============================================================================================
+
+## Convert BAM to tagAlign file for calculating FRiP QC metric (Fraction of reads in peaks)
+rule bamToBed:
+    input:
+        "output/bam_files/{case}_downSampled.PPq30.sorted.dedup.bam"
+    output:
+        "output/bam_files/{case}_dunnart_downSampled.bedpe"
+    log:
+        "output/logs/{case}_dunnart_downSampled.bamToBed"
+    shell:
+        "samtools sort -n {input} | bedtools bamtobed -bedpe -mate1 -i - > {output}"
+
+
+## Fraction of reads in peaks
+rule frip:
+    input:
+        bed = "output/bam_files/{case}_dunnart_downSampled.bedpe",
+        peak = "output/peaks/{case}_vs_{control}_macs2_default_peaks_dunnart_downSampled.narrowPeak"
+    output:
+        "output/qc/{case}_vs_{control}.frip_default_dunnart_downSampled.txt"
+    log:
+        "output/logs/{case}_vs_{control}_dunnart_downSampled.frip"
+    shell:
+        "python code/encode_frip.py {input.bed} {input.peak} > {output}"
+
+
+# ===============================================================================================
+#  9. Create consensus peaksets for replicates
+# ===============================================================================================
+
+# Based on ENCODE `overlap_peaks.py` - recommended for histone marks.
+# Need to pool peaks first for each replicate
+
+rule overlap_peaks_H3K4me3:
+    input:
+        peak1="output/peaks/A-2_H3K4me3_vs_A-1_input_macs2_default_peaks_dunnart_downSampled.narrowPeak",
+        peak2="output/peaks/B-2_H3K4me3_vs_B-1_input_macs2_default_peaks_dunnart_downSampled.narrowPeak",
+        pooled="output/peaks/H3K4me3_pooled_macs2_default_peaks_dunnart_downSampled.narrowPeak"
+    output:
+        "output/peaks/H3K4me3_overlap_default_dunnart_downSampled.narrowPeak"
+    shell:
+        "python code/overlap_peaks.py {input.peak1} {input.peak2} {input.pooled} {output}"
+
+
+rule overlap_peaks_H3K27ac:
+    input:
+        peak1="output/peaks/A-3_H3K27ac_vs_A-1_input_macs2_default_peaks_dunnart_downSampled.narrowPeak",
+        peak2="output/peaks/B-3_H3K27ac_vs_B-1_input_macs2_default_peaks_dunnart_downSampled.narrowPeak",
+        pooled="output/peaks/H3K27ac_pooled_macs2_default_peaks_dunnart_downSampled.narrowPeak"
+    output:
+        "output/peaks/H3K27ac_overlap_default_dunnart_downSampled.narrowPeak"
+    shell:
+        "python code/overlap_peaks.py {input.peak1} {input.peak2} {input.pooled} {output}"
+
+## Fraction of reads in peaks
+rule overlap_frip:
+    input:
+        H3K4me3bam = "output/bam_files/H3K4me3_pooled_downSampled.PPq30.sorted.dedup.bam",
+        H3K27acbam = "output/bam_files/H3K27ac_pooled_downSampled.PPq30.sorted.dedup.bam",
+        H3K4me3bed = "output/peaks/H3K4me3_overlap_default_dunnart_downSampled.narrowPeak",
+        H3K27acbed = "output/peaks/H3K27ac_overlap_default_dunnart_downSampled.narrowPeak"
+    output:
+        H3K4me3frip = "output/qc/H3K4me3_overlap_default_dunnart_downSampled.frip",
+        H3K27acfrip = "output/qc/H3K27ac_overlap_default_dunnart_downSampled.frip"
+    run:
+        shell("python code/encode_frip.py {input.H3K4me3bam} {input.H3K4me3bed} > {output.H3K4me3frip}")
+        shell("python code/encode_frip.py {input.H3K27acbam} {input.H3K27acbed} > {output.H3K27acfrip}")
