@@ -473,16 +473,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreef1e19c717048b1cfb18bed2a4baed654ee49af7btargetblankf1e19c7a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/f1e19c717048b1cfb18bed2a4baed654ee49af7b" target="_blank">f1e19c7</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree3570dfd0ad935f1a013c5e5874d4c2b331b1636etargetblank3570dfda"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/3570dfd0ad935f1a013c5e5874d4c2b331b1636e" target="_blank">3570dfd</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreef1e19c717048b1cfb18bed2a4baed654ee49af7btargetblankf1e19c7a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree3570dfd0ad935f1a013c5e5874d4c2b331b1636etargetblank3570dfda" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/f1e19c717048b1cfb18bed2a4baed654ee49af7b" target="_blank">f1e19c7</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/3570dfd0ad935f1a013c5e5874d4c2b331b1636e" target="_blank">3570dfd</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -725,6 +725,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/e3431cb0ea7062851539bff5a015c5f453199d7f/analysis/dunnart_data_processing.Rmd" target="_blank">e3431cb</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-03
+</td>
+<td>
+updated
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/5ebf4b5ab2dbc48eac218be1f666efce5c2205a3/docs/dunnart_data_processing.html" target="_blank">5ebf4b5</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-03
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1181,7 +1215,7 @@ module load bowtie2/2.3.5.1</code></pre>
 </tbody>
 </table>
 <p>See full snakemake script for details: code/dunnart_peak_calling/dunnart_snakefile.</p>
-<p>Table. Read alignment quality metrics before and aftering filtering steps | <br> | | <strong>read counts</strong> | | | | | | | :————–: | :———–: | :——————–: | :—————-: | :——————: | :——–: | :———: | :———-: | | <strong>Sample</strong> | <strong>Antibody</strong> | <em>bowtie2 alignment</em> | <em>filtered reads^</em> | <em>remove duplicates</em> | <strong>NRF*</strong> | <strong>PBC1*</strong> | <strong>PBC2*</strong> | | A-1 | input | 130587134 | 87165286 | 47645260 | 0.773602 | 0.774519 | 4.45728 | | A-2 | H3K4me3 | 103324742 | 62678360 | 35617708 | 0.789709 | 0.789661 | 4.754989 | | A-3 | H3K27ac | 131071676 | 86503078 | 45700530 | 0.761768 | 0.761687 | 4.196586 | | B-1 | input | 111574640 | 72303316 | 44433864 | 0.820313 | 0.819974 | 5.545324 | | B-2 | H3K4me3 | 114146802 | 67048994 | 42357180 | 0.831032 | 0.830749 | 5.898224 | | B-3 | H3K27ac | 104714846 | 66615704 | 43939460 | 0.847255 | 0.847022 | 6.529168 |</p>
+<p>Table. Read alignment quality metrics before and aftering filtering steps | ** ** <br> ** ** | ** ** | ** <strong>read counts</strong> ** | ** ** | ** ** | ** ** | ** ** | ** ** | | :————————–: | :—————–: | :————————–: | :———————-: | :————————: | :————–: | :—————: | :—————-: | | <strong>Sample</strong> | <strong>Antibody</strong> | <em>bowtie2 alignment</em> | <em>filtered reads*</em> | <em>remove duplicates</em> | <strong>NRF*</strong> | <strong>PBC1*</strong> | <strong>PBC2*</strong> | | A-1 | input | 130587134 | 87165286 | 47645260 | 07773602 | 07774519 | 4445728 | | A-2 | H3K4me3 | 103324742 | 62678360 | 35617708 | 07789709 | 07789661 | 47754989 | | A-3 | H3K27ac | 131071676 | 86503078 | 45700530 | 07761768 | 07761687 | 41196586 | | B-1 | input | 111574640 | 72303316 | 44433864 | 08820313 | 08819974 | 55545324 | | B-2 | H3K4me3 | 114146802 | 67048994 | 42357180 | 08831032 | 08830749 | 58898224 | | B-3 | H3K27ac | 104714846 | 66615704 | 43939460 | 08847255 | 08847022 | 65529168 |</p>
 <p>* calculated from a subsample of ~10-15M aligned reads prior to removing duplicates</p>
 <p>^ excluded low quality (MAPQ 30) and orphaned reads</p>
 </div>
@@ -1600,30 +1634,6 @@ colnames(B3) = c(&quot;Filename&quot;, &quot;numReads&quot;, &quot;estFragLen&qu
 <pre><code>130443</code></pre>
 <div id="fraction-of-reads-in-peaks" class="section level3">
 <h3>Fraction of reads in peaks</h3>
-<pre class="r"><code>A2 = fread(&quot;output/qc/A-2_H3K4me3_vs_A-1_input.frip_default.txt&quot;)</code></pre>
-<pre><code>Warning in fread(&quot;output/qc/A-2_H3K4me3_vs_A-1_input.frip_default.txt&quot;):
-Detected 6 column names but the data has 7 columns (i.e. invalid file). Added 1
-extra default column name for the first column which is guessed to be row names
-or an index. Use setnames() afterwards if this guess is not correct, or fix the
-file write command that created the file to create a valid file.</code></pre>
-<pre class="r"><code>A3 = fread(&quot;output/qc/A-3_H3K27ac_vs_A-1_input.frip_default.txt&quot;)</code></pre>
-<pre><code>Warning in fread(&quot;output/qc/A-3_H3K27ac_vs_A-1_input.frip_default.txt&quot;):
-Detected 6 column names but the data has 7 columns (i.e. invalid file). Added 1
-extra default column name for the first column which is guessed to be row names
-or an index. Use setnames() afterwards if this guess is not correct, or fix the
-file write command that created the file to create a valid file.</code></pre>
-<pre class="r"><code>B2 = fread(&quot;output/qc/B-2_H3K4me3_vs_B-1_input.frip_default.txt&quot;)</code></pre>
-<pre><code>Warning in fread(&quot;output/qc/B-2_H3K4me3_vs_B-1_input.frip_default.txt&quot;):
-Detected 6 column names but the data has 7 columns (i.e. invalid file). Added 1
-extra default column name for the first column which is guessed to be row names
-or an index. Use setnames() afterwards if this guess is not correct, or fix the
-file write command that created the file to create a valid file.</code></pre>
-<pre class="r"><code>B3 = fread(&quot;output/qc/B-3_H3K27ac_vs_B-1_input.frip_default.txt&quot;)</code></pre>
-<pre><code>Warning in fread(&quot;output/qc/B-3_H3K27ac_vs_B-1_input.frip_default.txt&quot;):
-Detected 6 column names but the data has 7 columns (i.e. invalid file). Added 1
-extra default column name for the first column which is guessed to be row names
-or an index. Use setnames() afterwards if this guess is not correct, or fix the
-file write command that created the file to create a valid file.</code></pre>
 <p>A-2_H3K4me3 fraction of reads in peaks</p>
 <pre class="bash"><code>less output/qc/A-2_H3K4me3_vs_A-1_input.frip_default.txt</code></pre>
 <pre><code>Number of reads that intersect with peaks =  10471951
@@ -1657,9 +1667,10 @@ Fraction of Reads in Peak =  0.6129931501206433</code></pre>
 <div id="group-peaks-into-promoter--and-enhancer--associated-peaks" class="section level2">
 <h2>Group peaks into promoter- and enhancer- associated peaks</h2>
 <p>Find uniquely H3K4me3 sites (i.e. peaks that don’t overlap with H3K27ac):</p>
-<pre class="bash"><code>bedtools intersect -v -a output/peaks/H3K4me3_overlap.narrowPeak -b output/peaks/H3K27ac_overlap.narrowPeak &gt; output/peaks/H3K4me3_only.narrowPeak
+<pre class="bash"><code>module load bedtools
+bedtools intersect -v -a output/peaks/H3K4me3_overlap.narrowPeak -b output/peaks/H3K27ac_overlap.narrowPeak &gt; output/peaks/H3K4me3_only.narrowPeak
 less output/peaks/H3K4me3_only.narrowPeak | wc -l</code></pre>
-<pre><code>bash: bedtools: command not found
+<pre><code>Error: Unable to open file output/peaks/H3K4me3_overlap.narrowPeak. Exiting.
 0</code></pre>
 <p>Find unique H3K27ac sites (i.e. peaks that don’t overlap with H3K4me3):</p>
 <pre class="bash"><code>bedtools intersect -v -a output/peaks/H3K27ac_overlap.narrowPeak -b output/peaks/H3K4me3_overlap.narrowPeak &gt; output/peaks/H3K27ac_only.narrowPeak
