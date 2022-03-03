@@ -6,6 +6,9 @@ output: workflowr::wflow_html
 editor_options:
   chunk_output_type: console
 ---
+```{r setup, include=FALSE} 
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+```
 
 # Introduction
 This analysis looks through various features of the dunnart peaks including peak intensity, lengths, distance to TSS and nearest gene calls.
@@ -82,10 +85,10 @@ unfilteredPeakFeatures <- function(fileList, combined.tbl.stack, peak.length.plo
       scale_fill_manual(values = c("#FF9D40",  "#37B6CE", "#04859D"))  + 
       theme_minimal() + ylab("Number of peaks") +
       xlab("")
-    p
     pdf(file=paste0(plot_dir, combined.tbl.stack), width = 10, height = 7)
     print(p)
     dev.off()
+    p
 
     # Peak lengths for H3K4me3 and H3K27ac
     fullPeaks$length <- (fullPeaks$V3 - fullPeaks$V2)
@@ -114,6 +117,9 @@ unfilteredPeakFeatures <- function(fileList, combined.tbl.stack, peak.length.plo
     scale_fill_manual(values = c("#F1DAA2","#F1DAA2","#AEBABF","#7AC2B9")) + coord_flip())
     dev.off()
 
+    print(p +  scale_color_manual(values = c("#E9C46A","#E9C46A","#264653","#2A9D8F")) +
+    scale_fill_manual(values = c("#F1DAA2","#F1DAA2","#AEBABF","#7AC2B9")) + coord_flip())
+
     ## Plot peak intensity
     p <- ggplot(fullPeaks, aes(factor(group, level = level_order), y = log10(V7))) + 
     geom_half_violin(aes(fill=factor(group), color=factor(group)),
@@ -131,6 +137,9 @@ unfilteredPeakFeatures <- function(fileList, combined.tbl.stack, peak.length.plo
     print(p +  scale_color_manual(values = c("#E9C46A","#E9C46A","#264653","#2A9D8F")) +
     scale_fill_manual(values = c("#F1DAA2","#F1DAA2","#AEBABF","#7AC2B9")) + coord_flip())
     dev.off()  
+
+    print(p +  scale_color_manual(values = c("#E9C46A","#E9C46A","#264653","#2A9D8F")) +
+    scale_fill_manual(values = c("#F1DAA2","#F1DAA2","#AEBABF","#7AC2B9")) + coord_flip())
 }
 
 unfilteredPeakFeatures(fileList = fullPeak_dir, combined.tbl.stack= "dunnart_combined_stacked.pdf",
@@ -252,6 +261,10 @@ distanceToTSS <- function(fileList, enhancerTSSplot, promoterTSSplot, TSSplot){
     scale_y_continuous(limits=c(0,0.3), labels = scales::percent) + 
     scale_x_continuous(limits=c(-7, 7)) + theme_bw())
     dev.off()
+    print(ggplot(enhProm$enhancers, aes(x=log10_abs_dist)) + 
+    geom_density(alpha=0.5, color="#2A9D8F", fill="#2A9D8F") + 
+    scale_y_continuous(limits=c(0,0.3), labels = scales::percent) + 
+    scale_x_continuous(limits=c(-7, 7)) + theme_bw())
 
     pdf(file = paste0(plot_dir, promoterTSSplot), width=10, height = 7)
     print(ggplot(enhProm$promoters, aes(x=log10_abs_dist)) + 
@@ -259,6 +272,10 @@ distanceToTSS <- function(fileList, enhancerTSSplot, promoterTSSplot, TSSplot){
     scale_y_continuous(limits=c(0,0.3), labels = scales::percent) + 
     scale_x_continuous(limits=c(-7, 7)) + theme_bw())
     dev.off()
+    print(ggplot(enhProm$promoters, aes(x=log10_abs_dist)) + 
+    geom_density(alpha=0.5, color="#2A9D8F", fill="#2A9D8F") + 
+    scale_y_continuous(limits=c(0,0.3), labels = scales::percent) + 
+    scale_x_continuous(limits=c(-7, 7)) + theme_bw())
 
     enhProm = rbindlist(enhProm,)
     pdf(file = paste0(plot_dir, TSSplot), width=10, height = 7)
@@ -266,6 +283,9 @@ distanceToTSS <- function(fileList, enhancerTSSplot, promoterTSSplot, TSSplot){
     geom_density(alpha=0.5) +scale_color_manual(values=c("#E9C46A", "#2A9D8F")) + scale_fill_manual(values=c("#E9C46A", "#2A9D8F")) + 
     scale_x_continuous(limits=c(-7, 7)) + theme_bw() + font)
     dev.off()
+    print(ggplot(enhProm, aes(x=log10_abs_dist, fill=factor(mark), color=factor(mark))) + 
+    geom_density(alpha=0.5) +scale_color_manual(values=c("#E9C46A", "#2A9D8F")) + scale_fill_manual(values=c("#E9C46A", "#2A9D8F")) + 
+    scale_x_continuous(limits=c(-7, 7)) + theme_bw() + font)
 
 }
 distanceToTSS(fileList = annot_dir, enhancerTSSplot="dunnart_enhancerTSS.pdf", 
@@ -301,6 +321,7 @@ kmeansCluster <- function(file, plot1, plot2, output){
   pdf(plot1)
   print(p + scale_color_manual(values = c('#9EBCDA','#8C6BB1', "#4D004B")) + scale_fill_manual(values = c('#9EBCDA','#8C6BB1', "#4D004B")))
   dev.off()
+  print(p + scale_color_manual(values = c('#9EBCDA','#8C6BB1', "#4D004B")) + scale_fill_manual(values = c('#9EBCDA','#8C6BB1', "#4D004B")))
 
 
   p <- ggplot(cre.kmeans_df, aes(x=log10_dist, fill=as.factor(Cluster), color=as.factor(Cluster))) + 
@@ -309,6 +330,7 @@ kmeansCluster <- function(file, plot1, plot2, output){
   pdf(plot2, width = 10, height = 7)
   print(p + scale_color_manual(values = c('#9EBCDA','#8C6BB1', "#4D004B")) + scale_fill_manual(values = c('#9EBCDA','#8C6BB1', "#4D004B")))
   dev.off()  
+  print(p + scale_color_manual(values = c('#9EBCDA','#8C6BB1', "#4D004B")) + scale_fill_manual(values = c('#9EBCDA','#8C6BB1', "#4D004B")))
 
   write.table(cre.kmeans_df, paste0(filterPeaks_dir, output), sep="\t", quote=F, row.names=F)
   return(cre.kmeans_df)
@@ -362,6 +384,9 @@ plotPeakClusters <- function(x, y, enhancer, promoter, plotTSS, peakIntensityPlo
   theme_bw() + scale_fill_manual(values = colors)+ 
   scale_color_manual(values = colors) + font)
   dev.off()
+  print(ggplot(all_peaks, aes(x=log10_dist, colour = factor(label), fill=factor(label))) + geom_density(aes(x = log10_dist, y = ..density..), position="stack", alpha=0.7) + 
+  theme_bw() + scale_fill_manual(values = colors)+ 
+  scale_color_manual(values = colors) + font)
 
   my_comparisons = list( c("promoter cluster 1", "promoter cluster 2"), c("promoter cluster 1", "promoter cluster 3"), c("promoter cluster 1", "promoter"), c("promoter cluster 1", "enhancer") )
   ## Plot peak intensity
@@ -379,6 +404,8 @@ plotPeakClusters <- function(x, y, enhancer, promoter, plotTSS, peakIntensityPlo
   print(p + scale_color_manual(values = colors) +
   scale_fill_manual(values = colors) + font + stat_compare_means(comparisons = my_comparisons)) 
   dev.off()
+  print(p + scale_color_manual(values = colors) +
+  scale_fill_manual(values = colors) + font + stat_compare_means(comparisons = my_comparisons)) 
 
   ## Plot peak width
   p <- ggplot(all_peaks, aes(factor(label), y = log10_width)) + 
@@ -395,6 +422,8 @@ plotPeakClusters <- function(x, y, enhancer, promoter, plotTSS, peakIntensityPlo
   print(p + scale_color_manual(values =colors) +
   scale_fill_manual(values = colors) + font + stat_compare_means(comparisons = my_comparisons))
   dev.off()
+  print(p + scale_color_manual(values =colors) +
+  scale_fill_manual(values = colors) + font + stat_compare_means(comparisons = my_comparisons))
 
   ## Plot genomic regions
   df2 = rbind(promoter_kmeans)
@@ -410,6 +439,12 @@ plotPeakClusters <- function(x, y, enhancer, promoter, plotTSS, peakIntensityPlo
     theme_minimal() + ylab("Number of peaks") +
     xlab("")
     dev.off()
+    ggplot(tbl, aes(factor(annotation), Freq, fill=factor(Cluster))) + 
+    geom_bar(position=position_stack(reverse = TRUE), stat="identity") +
+    #geom_text(data=subset(data,Freq != 0),aes(label=Freq, y=pos), size=3)+
+    scale_fill_manual(values = c('#9EBCDA','#8C6BB1', "#4D004B"))  + 
+    theme_minimal() + ylab("Number of peaks") +
+    xlab("")
 }
 plotPeakClusters(peakWidthPlot = paste0(plot_dir, "filteredPeaks_peakWidthPlot.pdf"),plotTSS =paste0(plot_dir,  "filteredPeaks_peakDistanceToTSS.pdf"),
 peakIntensityPlot = paste0(plot_dir, "filteredPeaks_peakIntensityPlot.pdf"), annotation = paste0(plot_dir, "filteredPeaks_peakAnnotation.pdf"),
@@ -421,6 +456,7 @@ promoter = paste0(annot_dir, "dunnart_promoter_annotation.txt"))
 ## Extract cluster groups from narrowPeak files and save separately
 
 ```{r}
+promoter.kmeans = fread(paste0(filterPeaks_dir, "promoter_kmeans_peaks.txt"))
 cluster1 <- promoter.kmeans$V4[promoter.kmeans$Cluster==1]
 cluster2 <- promoter.kmeans$V4[promoter.kmeans$Cluster==2]
 cluster3 <- promoter.kmeans$V4[promoter.kmeans$Cluster==3]
@@ -478,6 +514,9 @@ distanceToTSS <- function(fileList, enhancerTSSplot, promoterTSSplot, TSSplot){
     geom_density(alpha=0.5) + theme_bw() + scale_color_manual(values = c('#E9C46A')) 
     + scale_fill_manual(values = c('#E9C46A')) + font) 
     dev.off()
+    print(ggplot(enhProm$enhancers, aes(x=log10_abs_dist, color=factor(mark), fill=factor(mark))) + 
+    geom_density(alpha=0.5) + theme_bw() + scale_color_manual(values = c('#E9C46A')) 
+    + scale_fill_manual(values = c('#E9C46A')) + font) 
 
     enhProm = rbind(enhProm$promoters, enhProm$cluster1, enhProm$cluster2, enhProm$cluster3 ,use.names=TRUE)
     pdf(file = paste0(plot_dir, TSSplot), width=15, height = 7)
@@ -487,6 +526,11 @@ distanceToTSS <- function(fileList, enhancerTSSplot, promoterTSSplot, TSSplot){
     #+ scale_color_manual(values = c('#4D004B', '#E9C46A','#2A9D8F')) 
     #+ scale_fill_manual(values = c('#4D004B', '#E9C46A','#2A9D8F')) + font) 
     dev.off()
+    print(ggplot(enhProm, aes(x=log10_abs_dist, color = factor(mark, level=level_order), fill = factor(mark, level=level_order))) + 
+    geom_density(position = "stack", alpha=0.8) + 
+    theme_bw() )
+    #+ scale_color_manual(values = c('#4D004B', '#E9C46A','#2A9D8F')) 
+    #+ scale_fill_manual(values = c('#4D004B', '#E9C46A','#2A9D8F')) + font) 
 }
 distanceToTSS(fileList = annot_dir, enhancerTSSplot="dunnart_enhancerTSS.pdf", promoterTSSplot="dunnart_filtered_promoterTSS.pdf",
 TSSplot = "dunnart_all_TSS.pdf")
@@ -535,37 +579,42 @@ GCcontent = function(fileList, gcPlot, cpgPlot, dataframestobind){
     c("cluster1", "enhancers"), c("promoters", "enhancers"), c("promoters", "cluster2"), 
     c("promoters", "cluster3"), c("enhancers", "cluster2"), c("enhancers", "cluster3"), c("cluster2", "cluster3") )
 
-  p <- ggplot(df1, aes(factor(group), y = GC)) + 
+    p <- ggplot(df1, aes(factor(group), y = GC)) + 
     geom_violin(aes(fill=factor(group), color=factor(group)),
     position = "dodge"
     )+
-  geom_boxplot(aes(color=factor(group)),
+    geom_boxplot(aes(color=factor(group)),
     outlier.shape = NA,
     width = .15, 
     notch = TRUE,
     fill=c("#E7EEF6","#D4C7E2","#D3BFD2", "#FCF8EC","#E4F3F1"),
     position = position_dodge(width=.1)
-  ) + theme_bw() + xlab("") + ylab("GC content") 
-  pdf(gcPlot, width=9, height = 8)
-  print(p + font + scale_color_manual(values = c('#9EBCDA','#8C6BB1','#4D004B', '#E9C46A','#2A9D8F')) +
-  scale_fill_manual(values = c("#B6CDE3","#A990C4","#7A4078" ,"#F1DAA2","#7AC2B9")) + stat_compare_means(p.adjust.method = "fdr", comparisons = my_comparisons))
-  dev.off()
+    ) + theme_bw() + xlab("") + ylab("GC content") 
+    pdf(gcPlot, width=9, height = 8)
+    print(p + font + scale_color_manual(values = c('#9EBCDA','#8C6BB1','#4D004B', '#E9C46A','#2A9D8F')) +
+    scale_fill_manual(values = c("#B6CDE3","#A990C4","#7A4078" ,"#F1DAA2","#7AC2B9")) + stat_compare_means(p.adjust.method = "fdr", comparisons = my_comparisons))
+    dev.off()
+    print(p + font + scale_color_manual(values = c('#9EBCDA','#8C6BB1','#4D004B', '#E9C46A','#2A9D8F')) +
+    scale_fill_manual(values = c("#B6CDE3","#A990C4","#7A4078" ,"#F1DAA2","#7AC2B9")) + stat_compare_means(p.adjust.method = "fdr", comparisons = my_comparisons))
 
-  p <- ggplot(df1, aes(factor(group), y = CpG)) + 
-  geom_violin(aes(fill=factor(group), color=factor(group)),
-   position = "dodge"
-   )+
-  geom_boxplot(aes(color=factor(group)),
+    p <- ggplot(df1, aes(factor(group), y = CpG)) + 
+    geom_violin(aes(fill=factor(group), color=factor(group)),
+     position = "dodge"
+     )+
+    geom_boxplot(aes(color=factor(group)),
     outlier.shape = NA,
     width = .15, 
     notch = TRUE,
     fill=c("#E7EEF6","#D4C7E2","#D3BFD2", "#FCF8EC","#E4F3F1"),
     position = position_dodge(width=.1)
-  ) + theme_bw() + xlab("") + ylab("CpG") 
-  pdf(cpgPlot, width=9, height = 8)
-  print(p + font + scale_color_manual(values = c('#9EBCDA','#8C6BB1','#4D004B', '#E9C46A','#2A9D8F')) +
-  scale_fill_manual(values = c("#B6CDE3","#A990C4","#7A4078" ,"#F1DAA2","#7AC2B9")) + stat_compare_means(p.adjust.method = "fdr", comparisons = my_comparisons))
-  dev.off()
+    ) + theme_bw() + xlab("") + ylab("CpG") 
+    pdf(cpgPlot, width=9, height = 8)
+    print(p + font + scale_color_manual(values = c('#9EBCDA','#8C6BB1','#4D004B', '#E9C46A','#2A9D8F')) +
+    scale_fill_manual(values = c("#B6CDE3","#A990C4","#7A4078" ,"#F1DAA2","#7AC2B9")) + stat_compare_means(p.adjust.method = "fdr", comparisons = my_comparisons))
+    dev.off()
+    print(p + font + scale_color_manual(values = c('#9EBCDA','#8C6BB1','#4D004B', '#E9C46A','#2A9D8F')) +
+    scale_fill_manual(values = c("#B6CDE3","#A990C4","#7A4078" ,"#F1DAA2","#7AC2B9")) + stat_compare_means(p.adjust.method = "fdr", comparisons = my_comparisons))
+
 }
 GCcontent(fileList = annot_dir, gcPlot = paste0(plot_dir, "dunnart_GC.pdf"), cpgPlot = paste0(plot_dir, "dunnart_cpg.pdf"))
 
