@@ -163,11 +163,17 @@ Quality tag based on thresholded RSC (codes: -2:veryLow,-1:Low,0:Medium,1:High; 
 library(data.table)
 library(knitr)
 A1 = fread("output/qc/A-1_input_filt_15Mreads.SE.cc.qc")
+colnames(A1) = c("Filename", "numReads", "estFragLen", "corr_estFragLen", "PhantomPeak", "corr_phantomPeak", "argmin_corr", "min_corr", "phantomPeakCoef", "relPhantomPeakCoef", "QualityTag")
 A2 = fread("output/qc/A-2_H3K4me3_filt_15Mreads.SE.cc.qc")
+colnames(A2) = c("Filename", "numReads", "estFragLen", "corr_estFragLen", "PhantomPeak", "corr_phantomPeak", "argmin_corr", "min_corr", "phantomPeakCoef", "relPhantomPeakCoef", "QualityTag")
 A3 = fread("output/qc/A-3_H3K27ac_filt_15Mreads.SE.cc.qc")
+colnames(A3) = c("Filename", "numReads", "estFragLen", "corr_estFragLen", "PhantomPeak", "corr_phantomPeak", "argmin_corr", "min_corr", "phantomPeakCoef", "relPhantomPeakCoef", "QualityTag")
 B1 = fread("output/qc/B-1_input_filt_15Mreads.SE.cc.qc")
+colnames(B1) = c("Filename", "numReads", "estFragLen", "corr_estFragLen", "PhantomPeak", "corr_phantomPeak", "argmin_corr", "min_corr", "phantomPeakCoef", "relPhantomPeakCoef", "QualityTag")
 B2 = fread("output/qc/B-2_H3K4me3_filt_15Mreads.SE.cc.qc")
+colnames(B2) = c("Filename", "numReads", "estFragLen", "corr_estFragLen", "PhantomPeak", "corr_phantomPeak", "argmin_corr", "min_corr", "phantomPeakCoef", "relPhantomPeakCoef", "QualityTag")
 B3 = fread("output/qc/B-3_H3K27ac_filt_15Mreads.SE.cc.qc")
+colnames(B3) = c("Filename", "numReads", "estFragLen", "corr_estFragLen", "PhantomPeak", "corr_phantomPeak", "argmin_corr", "min_corr", "phantomPeakCoef", "relPhantomPeakCoef", "QualityTag")
 ```
 
 
@@ -184,15 +190,15 @@ kable(A2, caption="A2 H3K4me3 cross-correlation analysis")
 kable(A3, caption="A3 input control cross-correlation analysis")
 ```
 
-```{r}
+```{r echo=FALSE}
 kable(B1, caption="B1 H3K27ac control cross-correlation analysis")
 ```
 
-```{r}
+```{r echo=FALSE}
 kable(B2, caption="B2 H3K4me3 control cross-correlation analysis")
 ```
 
-```{r}
+```{r echo=FALSE}
 kable(B3, caption="B3 input control cross-correlation analysis")
 ```
 
@@ -201,19 +207,19 @@ kable(B3, caption="B3 input control cross-correlation analysis")
 Number of peaks 
 
 ```{bash}
-less A-3_H3K27ac_vs_A-1_input_macs2_default_peaks.narrowPeak | wc -l
+less output/peaks/A-3_H3K27ac_vs_A-1_input_macs2_default_peaks.narrowPeak | wc -l
 ```
 
 ```{bash}
-less A-2_H3K4me3_vs_A-1_input_macs2_default_peaks.narrowPeak | wc -l
+less output/peaks/A-2_H3K4me3_vs_A-1_input_macs2_default_peaks.narrowPeak | wc -l
 ```
 
 ```{bash}
-less B-3_H3K27ac_vs_B-1_input_macs2_default_peaks.narrowPeak | wc -l
+less output/peaks/B-3_H3K27ac_vs_B-1_input_macs2_default_peaks.narrowPeak | wc -l
 ```
 
 ```{bash}
-less B-2_H3K4me3_vs_B-1_input_macs2_default_peaks.narrowPeak | wc -l
+less output/peaks/B-2_H3K4me3_vs_B-1_input_macs2_default_peaks.narrowPeak | wc -l
 ```
 
 ### Fraction of reads in peaks
@@ -225,20 +231,24 @@ B2 = fread("output/qc/B-2_H3K4me3_vs_B-1_input.frip_default.txt")
 B3 = fread("output/qc/B-3_H3K27ac_vs_B-1_input.frip_default.txt")
 ```
 
-```{r echo=FALSE}
-kable(A2, caption="A2 H3K4me3 fraction of reads in peaks")
+A-2_H3K4me3 fraction of reads in peaks
+```{bash}
+less output/qc/A-2_H3K4me3_vs_A-1_input.frip_default.txt)
 ```
 
-```{r echo=FALSE}
-kable(A3, caption="A3 H3K27ac fraction of reads in peaks")
+A3 H3K27ac fraction of reads in peaks
+```{bash}
+less output/qc/A-3_H3K27ac_vs_A-1_input.frip_default.txt)
 ```
 
-```{r echo=FALSE}
-kable(B2, caption="B2 H3K4me3 fraction of reads in peaks")
+B2 H3K4me3 fraction of reads in peaks
+```{bash}
+less output/qc/B-2_H3K4me3_vs_B-1_input.frip_default.txt
 ```
 
-```{r echo=FALSE}
-kable(B3, caption="B3 H3K27ac fraction of reads in peaks")
+B3 H3K27ac fraction of reads in peaks
+```{bash}
+less output/qc/B-3_H3K27ac_vs_B-1_input.frip_default.txt
 ```
 
 ### Consensus peaksets for biological replicates
@@ -257,27 +267,27 @@ less output/peaks/H3K27ac_overlap_default.narrowPeak | wc -l
 Find uniquely H3K4me3 sites (i.e. peaks that don't overlap with H3K27ac):
 
 ```{bash}
-bedtools intersect -v -a H3K4me3_overlap.narrowPeak -b H3K27ac_overlap.narrowPeak > H3K4me3_only.narrowPeak
-less H3K4me3_only.narrowPeak | wc -l
+bedtools intersect -v -a output/peaks/H3K4me3_overlap.narrowPeak -b output/peaks/H3K27ac_overlap.narrowPeak > output/peaks/H3K4me3_only.narrowPeak
+less output/peaks/H3K4me3_only.narrowPeak | wc -l
 ```
 
 Find unique H3K27ac sites (i.e. peaks that don't overlap with H3K4me3):
 ```{bash}
-bedtools intersect -v -a H3K27ac_overlap.narrowPeak -b H3K4me3_overlap.narrowPeak > H3K27ac_only.narrowPeak
-less H3K27ac_only.narrowPeak | wc -l
+bedtools intersect -v -a output/peaks/H3K27ac_overlap.narrowPeak -b output/peaks/H3K4me3_overlap.narrowPeak > output/peaks/H3K27ac_only.narrowPeak
+less output/peaks/H3K27ac_only.narrowPeak | wc -l
 ```
 
 Find peaks common between H3K27ac & H3K4me3 with a reciprocal overlap of at least 50%.
 ```{bash}
-bedtools intersect -f 0.5 -r -a H3K4me3_overlap.narrowPeak -b H3K27ac_overlap.narrowPeak > H3K4me3_and_H3K27ac.narrowPeak
-less H3K4me3_and_H3K27ac.narrowPeak | wc -l
+bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_overlap.narrowPeak -b output/peaks/H3K27ac_overlap.narrowPeak > output/peaks/H3K4me3_and_H3K27ac.narrowPeak
+less output/peaks/H3K4me3_and_H3K27ac.narrowPeak | wc -l
 ```
 
 Combine files
 
 ```{bash}
-cat H3K4me3_only.narrowPeak H3K4me3_and_H3K27ac.narrowPeak | sort -k 4,4 > dunnart_promoter_peaks.narrowPeak
-cat H3K27ac_only.narrowPeak | sort -k 4,4 > dunnart_enhancer_peaks.narrowPeak
-less dunnart_promoter_peaks.narrowPeak | wc -l
-less dunnart_enhancer_peaks.narrowPeak | wc -l
+cat output/peaks/H3K4me3_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac.narrowPeak | sort -k 4,4 > output/peaks/dunnart_promoter_peaks.narrowPeak
+cat output/peaks/H3K27ac_only.narrowPeak | sort -k 4,4 > output/peaks/dunnart_enhancer_peaks.narrowPeak
+less output/peaks/dunnart_promoter_peaks.narrowPeak | wc -l
+less output/peaks/dunnart_enhancer_peaks.narrowPeak | wc -l
 ```
