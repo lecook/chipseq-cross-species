@@ -643,8 +643,8 @@ go_cluster <- setReadable(
 ```
 
 ### Plot GO enrichment 
+<!-- 
 
-```{r}
 pdf(paste0(plot_dir, "dunnart_go_cluster.pdf", width = 11, height = 9))
 print(dotplot(go_cluster, showCategory = 10) + 
 scale_color_viridis() +
@@ -683,7 +683,7 @@ promoter_setdiff = setdiff(go_terms[[1]], go_terms[[2]])
 
 promoter_setdiff_terms = go_cluster@compareClusterResult[go_cluster@compareClusterResult[,"ID"] %in% promoter_setdiff,]
 enhancer_setdiff_terms = go_cluster@compareClusterResult[go_cluster@compareClusterResult[,"ID"] %in% enhancer_setdiff,]
-```
+-->
 
 
 > Note: Look at using sourcing for calling R functions that I use across different analyses.
