@@ -352,8 +352,6 @@ rule deeptools_correlation:
         --plotNumbers \
         --colorMap viridis 2> {log}")
 
-error: argument --colorMap: expected one argumentq
-
 rule deeptools_coverage:
     input:
         bam ="output/bam_files/{sample}_PPq30.sorted.dedup.bam",
