@@ -20,3 +20,5 @@ output/logs/*
 output/peaks/*
 output/annotations/*
 output/qc/*.bw
+output/qc/*.gz
+output/qc/*.txt
