@@ -19,3 +19,8 @@ output/filtered_peaks/*
 output/logs/*
 output/peaks/*
 output/annotations/*
+output/qc/*.bw
+output/qc/*.gz
+output/qc/*.txt
+output/qc/*.npz
+output/qc/*.tab

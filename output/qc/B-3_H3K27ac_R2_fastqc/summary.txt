@@ -1,0 +1,11 @@
+PASS	Basic Statistics	B-3_H3K27ac_R2.fastq.gz
+PASS	Per base sequence quality	B-3_H3K27ac_R2.fastq.gz
+WARN	Per tile sequence quality	B-3_H3K27ac_R2.fastq.gz
+PASS	Per sequence quality scores	B-3_H3K27ac_R2.fastq.gz
+PASS	Per base sequence content	B-3_H3K27ac_R2.fastq.gz
+PASS	Per sequence GC content	B-3_H3K27ac_R2.fastq.gz
+PASS	Per base N content	B-3_H3K27ac_R2.fastq.gz
+PASS	Sequence Length Distribution	B-3_H3K27ac_R2.fastq.gz
+PASS	Sequence Duplication Levels	B-3_H3K27ac_R2.fastq.gz
+PASS	Overrepresented sequences	B-3_H3K27ac_R2.fastq.gz
+PASS	Adapter Content	B-3_H3K27ac_R2.fastq.gz
