@@ -255,7 +255,7 @@ less output/peaks/H3K4me3_overlap_default.narrowPeak | wc -l
 less output/peaks/H3K27ac_overlap_default.narrowPeak | wc -l
 ```
 
-## Group peaks into promoter- and enhancer- associated peaks
+# Group peaks into promoter- and enhancer- associated peaks
 
 Find uniquely H3K4me3 sites (i.e. peaks that don't overlap with H3K27ac):
 
