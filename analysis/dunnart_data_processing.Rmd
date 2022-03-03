@@ -280,8 +280,8 @@ less output/peaks/H3K4me3_and_H3K27ac.narrowPeak | wc -l
 Combine files
 
 ```{bash}
-cat output/peaks/H3K4me3_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac.narrowPeak | sort -k 4,4 > output/peaks/dunnart_promoter_peaks.narrowPeak
-cat output/peaks/H3K27ac_only.narrowPeak | sort -k 4,4 > output/peaks/dunnart_enhancer_peaks.narrowPeak
+cat output/peaks/H3K4me3_only_default.narrowPeak output/peaks/H3K4me3_and_H3K27ac.narrowPeak | sort -k 4,4 > output/peaks/dunnart_promoter_peaks.narrowPeak
+cat output/peaks/H3K27ac_only_default.narrowPeak | sort -k 4,4 > output/peaks/dunnart_enhancer_peaks.narrowPeak
 less output/peaks/dunnart_promoter_peaks.narrowPeak | wc -l
 less output/peaks/dunnart_enhancer_peaks.narrowPeak | wc -l
 ```
