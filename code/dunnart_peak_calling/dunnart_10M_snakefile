@@ -167,8 +167,8 @@ rule deeptools_fingerprint:
 
 rule deeptools_bamPEFragmentSize:
     input:
-        bam = expand(["output/bam_files/{sample}_dunnart_downSampled.PPq30.sorted.dedup.bam"], sample=all_samples),
-        bai = expand(["output/bam_files/{sample}_dunnart_downSampled.PPq30.sorted.dedup.bai"], sample=all_samples)
+        bam = expand(["output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bam"], sample=all_samples),
+        bai = expand(["output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bai"], sample=all_samples)
     output:
         fig="output/qc/bamPEFragmentSize_hist_dunnart_downSampled.png",
         rawcounts="output/qc/bamPEFragmentSize_rawcounts_dunnart_downSampled.tab"
@@ -189,8 +189,8 @@ rule deeptools_bamPEFragmentSize:
 
 rule call_peaks_macs2:
     input:
-        control = "output/bam_files/{control}_dunnart_downSampled.PPq30.sorted.dedup.bam",
-        case = "output/bam_files/{case}_dunnart_downSampled.PPq30.sorted.dedup.bam"
+        control = "output/bam_files/{control}_downSampled.PPq30.sorted.dedup.bam",
+        case = "output/bam_files/{case}_downSampled.PPq30.sorted.dedup.bam"
     output:
         "output/peaks/{case}_vs_{control}_macs2_default_peaks_dunnart_downSampled.xls",
         "output/peaks/{case}_vs_{control}_macs2_default_summits_dunnart_downSampled.bed",
@@ -208,9 +208,9 @@ rule call_peaks_macs2:
 
 rule call_peaks_macs2_pooled_replicates:
     input:
-        H3K4me3 = "output/bam_files/H3K4me3_pooled_dunnart_downSampled.PPq30.sorted.dedup.bam",
-        H3K27ac = "output/bam_files/H3K27ac_pooled_dunnart_downSampled.PPq30.sorted.dedup.bam",
-        input = "output/bam_files/input_pooled_dunnart_downSampled.PPq30.sorted.dedup.bam"
+        H3K4me3 = "output/bam_files/H3K4me3_pooled_downSampled.PPq30.sorted.dedup.bam",
+        H3K27ac = "output/bam_files/H3K27ac_pooled_downSampled.PPq30.sorted.dedup.bam",
+        input = "output/bam_files/input_pooled_downSampled.PPq30.sorted.dedup.bam"
     output:
         "output/peaks/H3K4me3_pooled_macs2_default_peaks_dunnart_downSampled.xls",
         "output/peaks/H3K4me3_pooled_macs2_default_summits_dunnart_downSampled.bed",
