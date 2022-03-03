@@ -302,7 +302,7 @@ $(document).ready(function () {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-03-01
+<strong>Last updated:</strong> 2022-03-03
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -333,16 +333,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree451d5a2860500555c9c5d1f38b759e2c0c2bd795targetblank451d5a2a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/451d5a2860500555c9c5d1f38b759e2c0c2bd795" target="_blank">451d5a2</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree91574f92ce5bfe0eee9a26f4f98ddb3fba8d643etargetblank91574f9a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/91574f92ce5bfe0eee9a26f4f98ddb3fba8d643e" target="_blank">91574f9</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree451d5a2860500555c9c5d1f38b759e2c0c2bd795targetblank451d5a2a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree91574f92ce5bfe0eee9a26f4f98ddb3fba8d643etargetblank91574f9a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/451d5a2860500555c9c5d1f38b759e2c0c2bd795" target="_blank">451d5a2</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/91574f92ce5bfe0eee9a26f4f98ddb3fba8d643e" target="_blank">91574f9</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -358,18 +358,120 @@ Ignored files:
     Ignored:    output/bam_files/
     Ignored:    output/filtered_peaks/
     Ignored:    output/logs/
+    Ignored:    output/peaks/
     Ignored:    output/plots/
     Ignored:    results/
 
 Untracked files:
     Untracked:  .snakemake/
+    Untracked:  H3K27ac_only.narrowPeak
+    Untracked:  H3K4me3_and_H3K27ac.narrowPeak
+    Untracked:  H3K4me3_only.narrowPeak
     Untracked:  code/basic_wrapper.slurm
     Untracked:  code/configs/metadata.tsv
     Untracked:  code/slurmjob.stderr
     Untracked:  code/slurmjob.stdout
     Untracked:  code/trimfastq.py
     Untracked:  data/raw_reads/
+    Untracked:  dunnart_enhancer_peaks.narrowPeak
+    Untracked:  dunnart_promoter_peaks.narrowPeak
     Untracked:  output/qc/
+    Untracked:  output/rnaseq/
+    Untracked:  slurm-33634648.out
+    Untracked:  slurm-33634649.out
+    Untracked:  slurm-33634650.out
+    Untracked:  slurm-33634651.out
+    Untracked:  slurm-33634652.out
+    Untracked:  slurm-33634653.out
+    Untracked:  slurm-33634669.out
+    Untracked:  slurm-33634682.out
+    Untracked:  slurm-33638735.out
+    Untracked:  slurm-33638749.out
+    Untracked:  slurm-33638750.out
+    Untracked:  slurm-33638751.out
+    Untracked:  slurm-33639342.out
+    Untracked:  slurm-33639343.out
+    Untracked:  slurm-33639344.out
+    Untracked:  slurm-33639345.out
+    Untracked:  slurm-33639346.out
+    Untracked:  slurm-33639347.out
+    Untracked:  slurm-33652974.out
+    Untracked:  slurm-33652975.out
+    Untracked:  slurm-33652976.out
+    Untracked:  slurm-33652977.out
+    Untracked:  slurm-33652978.out
+    Untracked:  slurm-33652979.out
+    Untracked:  slurm-33653279.out
+    Untracked:  slurm-33653280.out
+    Untracked:  slurm-33653281.out
+    Untracked:  slurm-33653282.out
+    Untracked:  slurm-33653283.out
+    Untracked:  slurm-33653284.out
+    Untracked:  slurm-33654225.out
+    Untracked:  slurm-33654226.out
+    Untracked:  slurm-33654227.out
+    Untracked:  slurm-33654228.out
+    Untracked:  slurm-33654229.out
+    Untracked:  slurm-33654230.out
+    Untracked:  slurm-33654264.out
+    Untracked:  slurm-33654265.out
+    Untracked:  slurm-33654266.out
+    Untracked:  slurm-33654267.out
+    Untracked:  slurm-33655778.out
+    Untracked:  slurm-33655779.out
+    Untracked:  slurm-33655780.out
+    Untracked:  slurm-33655781.out
+    Untracked:  slurm-33655782.out
+    Untracked:  slurm-33655783.out
+    Untracked:  slurm-33655867.out
+    Untracked:  slurm-33655869.out
+    Untracked:  slurm-33655871.out
+    Untracked:  slurm-33655873.out
+    Untracked:  slurm-33655936.out
+    Untracked:  slurm-33655937.out
+    Untracked:  slurm-33655964.out
+    Untracked:  slurm-33655966.out
+    Untracked:  slurm-33656003.out
+    Untracked:  slurm-33656023.out
+    Untracked:  slurm-33656024.out
+    Untracked:  slurm-33656025.out
+    Untracked:  slurm-33656027.out
+    Untracked:  slurm-33656056.out
+    Untracked:  slurm-33656089.out
+    Untracked:  slurm-33656090.out
+    Untracked:  slurm-33656102.out
+    Untracked:  slurm-33656104.out
+    Untracked:  slurm-33656170.out
+    Untracked:  slurm-33656224.out
+    Untracked:  slurm-33656227.out
+    Untracked:  slurm-33656228.out
+    Untracked:  slurm-33656312.out
+    Untracked:  slurm-33656357.out
+    Untracked:  slurm-33656358.out
+    Untracked:  slurm-33656364.out
+    Untracked:  slurm-33656365.out
+    Untracked:  slurm-33656409.out
+    Untracked:  slurm-33656545.out
+    Untracked:  slurm-33657362.out
+    Untracked:  slurm-33657363.out
+    Untracked:  slurm-33657364.out
+    Untracked:  slurm-33657365.out
+    Untracked:  slurm-33657366.out
+    Untracked:  slurm-33657367.out
+    Untracked:  slurm-33657375.out
+    Untracked:  slurm-33657376.out
+    Untracked:  slurm-33657625.out
+    Untracked:  slurm-33657626.out
+    Untracked:  slurm-33657627.out
+    Untracked:  slurm-33657628.out
+    Untracked:  slurm-33657629.out
+    Untracked:  slurm-33657630.out
+    Untracked:  slurm-33657636.out
+    Untracked:  slurm-33657638.out
+    Untracked:  slurm-33657645.out
+    Untracked:  slurm-33657646.out
+    Untracked:  slurm-33657677.out
+    Untracked:  slurm-33657688.out
 
 Unstaged changes:
     Deleted:    code/dunnart_peak_calling/trimfastq.py
@@ -411,6 +513,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/a97d3c57c638c074a308452653233ad3bfc59f48/analysis/index.Rmd" target="_blank">a97d3c5</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-01
+</td>
+<td>
+first commit
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/67e8b13e9bc9011aa8daf2e473ff5747a7cdfd62/docs/index.html" target="_blank">67e8b13</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -753,24 +889,26 @@ Start workflowr project.
 <div id="data-preparation-and-peak-calling" class="section level2">
 <h2>Data preparation and peak calling</h2>
 <ul>
-<li><a href="dunnart_data_processing.html">Dunnart data pre-processing</a></li>
-</ul>
-<p>Outlines read mapping, filtering, QC and peak calling.</p>
+<li><p><a href="dunnart_data_processing.html">Dunnart data pre-processing</a></p>
 <ul>
-<li><a href="mouse_dunnart_data_processing_for_comparison.html">Normalised mouse and dunnart read pre-processing</a></li>
+<li>Outlines read mapping, filtering, QC and peak calling.</li>
+</ul></li>
+<li><p><a href="mouse_dunnart_data_processing_for_comparison.html">Normalised mouse and dunnart read pre-processing</a></p>
+<ul>
+<li>Outlines filtering aligned reads from ENCODE, QC and peak calling.</li>
+</ul></li>
 </ul>
-<p>Outlines filtering aligned reads from ENCODE, QC and peak calling.</p>
 </div>
 <div id="data-analyses" class="section level2">
 <h2>Data analyses</h2>
 <ul>
-<li><p>Whole genome alignment between mouse and dunnart</p></li>
-<li><p>Dunnart peak characterisation</p></li>
+<li><p><a href="whole_genome_alignment.html">Whole genome alignment between mouse and dunnart</a></p></li>
+<li><p><a href="dunnart_peak_characterisation.html">Dunnart peak characterisation</a></p></li>
 <li><p><a href="cross-species-peak-comparison.html">Cross-species peak comparisons</a></p>
 <ul>
-<li><p>Peak level</p></li>
-<li><p>Gene level</p></li>
-<li><p>Incorporating temporal mouse gene expression data</p></li>
+<li><p><a href="peak_level_comparisons.html">Peak level</a></p></li>
+<li><p><a href="gene_level_comparisons.html">Gene level</a></p></li>
+<li><p><a href="tcseq_expression_analysis.html">Incorporating temporal mouse gene expression data</a></p></li>
 </ul></li>
 </ul>
 </div>
