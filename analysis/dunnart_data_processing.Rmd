@@ -267,12 +267,14 @@ less output/peaks/H3K4me3_only.narrowPeak | wc -l
 
 Find unique H3K27ac sites (i.e. peaks that don't overlap with H3K4me3):
 ```{bash}
+module load bedtools
 bedtools intersect -v -a output/peaks/H3K27ac_overlap.narrowPeak -b output/peaks/H3K4me3_overlap.narrowPeak > output/peaks/H3K27ac_only.narrowPeak
 less output/peaks/H3K27ac_only.narrowPeak | wc -l
 ```
 
 Find peaks common between H3K27ac & H3K4me3 with a reciprocal overlap of at least 50%.
 ```{bash}
+module load bedtools
 bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_overlap.narrowPeak -b output/peaks/H3K27ac_overlap.narrowPeak > output/peaks/H3K4me3_and_H3K27ac.narrowPeak
 less output/peaks/H3K4me3_and_H3K27ac.narrowPeak | wc -l
 ```
