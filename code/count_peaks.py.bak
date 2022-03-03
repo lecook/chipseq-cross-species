@@ -40,4 +40,4 @@ multiqc_output = {
     "data": sample_count
 }
 
-print((json.dumps(multiqc_output, indent = 4)))
+print(json.dumps(multiqc_output, indent = 4))
