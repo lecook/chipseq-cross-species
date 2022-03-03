@@ -623,8 +623,8 @@ GCcontent(fileList = annot_dir, gcPlot = paste0(plot_dir, "dunnart_GC.pdf"), cpg
 ## GO enrichment for high-confidence promoter-associated peaks and enhancer-associated peaks
 
 ```{r}
-promoter = fread("cluster1_promoter_annotationConvertedIDs.txt")
-enhancer = fread("dunnart_enhancer_annotationConvertedIDs.txt")
+promoter = fread(paste0(annot_dir, "cluster1_promoter_annotationConvertedIDs.txt"))
+enhancer = fread(paste0(annot_dir, "dunnart_enhancer_annotationConvertedIDs.txt"))
 data = list(promoter, enhancer)
 genes = lapply(data, function(i) as.data.frame(i)$mouseensembl)
 genes = lapply(genes, function(i) unique(i))
@@ -645,13 +645,13 @@ go_cluster <- setReadable(
 ### Plot GO enrichment 
 
 ```{r}
-pdf("dunnart_go_cluster.pdf", width = 11, height = 9)
+pdf(paste0(plot_dir, "dunnart_go_cluster.pdf", width = 11, height = 9))
 print(dotplot(go_cluster, showCategory = 10) + 
 scale_color_viridis() +
 theme(axis.text.x = element_text(angle = 45, hjust=1)))
 dev.off()
 
-write.table(go_cluster@compareClusterResult, file = "dunnart_peak_mm10_enrichGO_compareCluster_results.txt", sep="\t", quote=F, row.names=F)
+write.table(go_cluster@compareClusterResult, file = paste0(annot_dir, "dunnart_peak_mm10_enrichGO_compareCluster_results.txt"), sep="\t", quote=F, row.names=F)
 suppressWarnings(genes_ent <- lapply(genes, function(x) bitr(geneID=x, fromType="ENSEMBL", toType="ENTREZID", OrgDb="org.Mm.eg.db" )))
 genes_ent = lapply(genes_ent, function(x) x$ENTREZID)
 suppressWarnings(bg_ent <- bitr(geneID=bg, fromType="ENSEMBL", toType="ENTREZID", OrgDb="org.Mm.eg.db" ))
@@ -665,7 +665,7 @@ kegg_cluster <-
   pvalueCutoff = 0.001, 
   organism = 'mmu')
     
-pdf("dunnart_kegg_cluster.pdf", width = 8, height = 6)
+pdf(paste0(plot_dir, "dunnart_kegg_cluster.pdf"), width = 8, height = 6)
 print(dotplot(kegg_cluster, showCategory = 10) + 
 scale_color_viridis() + 
 theme(axis.text.x = element_text(angle = 45, hjust=1)))
@@ -673,7 +673,7 @@ dev.off()
 
 split =  split(as.data.frame(go_cluster@compareClusterResult), f = factor(go_cluster@compareClusterResult$Cluster))
 go_terms = lapply(split, function(x) x$ID)
-pdf("dunnart_simplifyGO.pdf", width = 10, height = 14)
+pdf(paste0(plot_dir, "dunnart_simplifyGO.pdf", width = 10, height = 14))
     simplifyGOFromMultipleLists(go_terms, db = org.Mm.eg.db,  measure = "Wang", method = "binary_cut")
     dev.off()  
 
