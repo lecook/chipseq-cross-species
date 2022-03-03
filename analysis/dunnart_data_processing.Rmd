@@ -109,7 +109,7 @@ Table. Read alignment quality metrics before and aftering filtering steps
 
 This helps to determine whether the different sample types can be separated, i.e., samples of different conditions are expected to be more dissimilar to each other than replicates within the same condition.
 
-![Pearson correlation dunnart BAM files](output/qc/pearsoncor_multibamsum.png)
+![Pearson correlation dunnart BAM files](pearsoncor_multibamsum.png)
 
 
 ### Fingerprint plots 
@@ -119,13 +119,13 @@ It determines how well the signal in the ChIP-seq sample can be differentiated f
 
 An ideal input with perfect uniform distribution of reads along the genome (i.e. without enrichments in open chromatin etc.) and infinite sequencing coverage should generate a straight diagonal line. A very specific and strong ChIP enrichment will be indicated by a prominent and steep rise of the cumulative sum towards the highest rank. This means that a big chunk of reads from the ChIP sample is located in few bins which corresponds to high, narrow enrichments typically seen for transcription factors.
 
-![Fingerprint plot for dunnart BAM files](output/qc/multiBAM_fingerprint.png)
+![Fingerprint plot for dunnart BAM files](multiBAM_fingerprint.png)
 
 ### BAM PE fragment size
 
 This tool calculates the fragment sizes for read pairs given a BAM file from paired-end sequencing. Several regions are sampled depending on the size of the genome and number of processors to estimate thesummary statistics on the fragment lengths.
 
-![Fragment size for read pairs in a BAM file](output/qc/bamPEFragmentSize_hist.png)
+![Fragment size for read pairs in a BAM file](bamPEFragmentSize_hist.png)
 
 ## Cross-correlation analysis
 Information from: https://docs.google.com/document/d/1lG_Rd7fnYgRpSIqrIfuVlAz2dW1VaSQThzk836Db99c/edit

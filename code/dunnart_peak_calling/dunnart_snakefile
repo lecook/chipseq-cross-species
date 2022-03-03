@@ -78,13 +78,13 @@ rule all:
         expand("output/qc/{sample}.pbc.qc", sample=all_samples),
         "output/qc/multibamsum.npz",
         "output/qc/multibamsum.tab",
-        "output/qc/pearsoncor_multibamsum.png",
+        "docs/pearsoncor_multibamsum.png",
         "output/qc/pearsoncor_multibamsum_matrix.txt",
         expand("output/qc/{sample}.SeqDepthNorm.bw", sample=all_samples),
-        "output/qc/multiBAM_fingerprint.png",
+        "docs/multiBAM_fingerprint.png",
         "output/qc/multiBAM_fingerprint_metrics.txt",
         "output/qc/multiBAM_fingerprint_rawcounts.txt",
-        "output/qc/bamPEFragmentSize_hist.png",
+        "docs/bamPEFragmentSize_hist.png",
         "output/qc/bamPEFragmentSize_rawcounts.tab",
         expand("output/bam_files/{sample}_R1_trimmed_q30.bam", sample=all_samples),
         expand("output/logs/{sample}_filt_15Mreads.SE.spp.log", sample=all_samples),
@@ -337,7 +337,7 @@ rule deeptools_summary:
 rule deeptools_correlation:
     input: "output/qc/multibamsum.npz"
     output:
-        fig="output/qc/pearsoncor_multibamsum.png",
+        fig="docs/pearsoncor_multibamsum.png",
         matrix="output/qc/pearsoncor_multibamsum_matrix.txt"
     log:
         "output/logs/correlation.deepTools"
@@ -373,7 +373,7 @@ rule deeptools_fingerprint:
         bam = expand(["output/bam_files/{sample}_PPq30.sorted.dedup.bam"], sample=all_samples),
         bai = expand(["output/bam_files/{sample}_PPq30.sorted.dedup.bai"], sample=all_samples)
     output:
-        fig="output/qc/multiBAM_fingerprint.png",
+        fig="docs/multiBAM_fingerprint.png",
         metrics="output/qc/multiBAM_fingerprint_metrics.txt",
         rawcounts="output/qc/multiBAM_fingerprint_rawcounts.txt"
     threads: 32
@@ -394,7 +394,7 @@ rule deeptools_bamPEFragmentSize:
         bam = expand(["output/bam_files/{sample}_PPq30.sorted.dedup.bam"], sample=all_samples),
         bai = expand(["output/bam_files/{sample}_PPq30.sorted.dedup.bai"], sample=all_samples)
     output:
-        fig="output/qc/bamPEFragmentSize_hist.png",
+        fig="docs/bamPEFragmentSize_hist.png",
         rawcounts="output/qc/bamPEFragmentSize_rawcounts.tab"
     log:
         "output/logs/bamPEFragmentSize.deepTools"
