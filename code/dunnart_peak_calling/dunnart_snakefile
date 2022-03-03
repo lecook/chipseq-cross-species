@@ -350,7 +350,9 @@ rule deeptools_correlation:
         --whatToPlot heatmap \
         --skipZeros \
         --plotNumbers \
-        --colorMap #264653 #2A9D8F #E9C46A #F4A261 #E76F51 2> {log}")
+        --colorMap viridis 2> {log}")
+
+error: argument --colorMap: expected one argumentq
 
 rule deeptools_coverage:
     input:
