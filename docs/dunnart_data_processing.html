@@ -382,7 +382,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-03-01
+<strong>Last updated:</strong> 2022-03-03
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -473,16 +473,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreee69f5512379cb1185f85dff6bded43ddca1237d7targetblanke69f551a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/e69f5512379cb1185f85dff6bded43ddca1237d7" target="_blank">e69f551</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree91574f92ce5bfe0eee9a26f4f98ddb3fba8d643etargetblank91574f9a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/91574f92ce5bfe0eee9a26f4f98ddb3fba8d643e" target="_blank">91574f9</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreee69f5512379cb1185f85dff6bded43ddca1237d7targetblanke69f551a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree91574f92ce5bfe0eee9a26f4f98ddb3fba8d643etargetblank91574f9a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/e69f5512379cb1185f85dff6bded43ddca1237d7" target="_blank">e69f551</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/91574f92ce5bfe0eee9a26f4f98ddb3fba8d643e" target="_blank">91574f9</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -495,24 +495,125 @@ Ignored files:
     Ignored:    analysis/.Rhistory
     Ignored:    data/genomic_data/
     Ignored:    output/annotations/
+    Ignored:    output/bam_files/
     Ignored:    output/filtered_peaks/
+    Ignored:    output/logs/
+    Ignored:    output/peaks/
     Ignored:    output/plots/
     Ignored:    results/
 
 Untracked files:
     Untracked:  .snakemake/
+    Untracked:  H3K27ac_only.narrowPeak
+    Untracked:  H3K4me3_and_H3K27ac.narrowPeak
+    Untracked:  H3K4me3_only.narrowPeak
     Untracked:  code/basic_wrapper.slurm
     Untracked:  code/configs/metadata.tsv
     Untracked:  code/slurmjob.stderr
     Untracked:  code/slurmjob.stdout
     Untracked:  code/trimfastq.py
     Untracked:  data/raw_reads/
-    Untracked:  output/bam_files/
-    Untracked:  output/logs/
+    Untracked:  dunnart_enhancer_peaks.narrowPeak
+    Untracked:  dunnart_promoter_peaks.narrowPeak
     Untracked:  output/qc/
+    Untracked:  output/rnaseq/
+    Untracked:  slurm-33634648.out
+    Untracked:  slurm-33634649.out
+    Untracked:  slurm-33634650.out
+    Untracked:  slurm-33634651.out
+    Untracked:  slurm-33634652.out
+    Untracked:  slurm-33634653.out
+    Untracked:  slurm-33634669.out
+    Untracked:  slurm-33634682.out
+    Untracked:  slurm-33638735.out
+    Untracked:  slurm-33638749.out
+    Untracked:  slurm-33638750.out
+    Untracked:  slurm-33638751.out
+    Untracked:  slurm-33639342.out
+    Untracked:  slurm-33639343.out
+    Untracked:  slurm-33639344.out
+    Untracked:  slurm-33639345.out
+    Untracked:  slurm-33639346.out
+    Untracked:  slurm-33639347.out
+    Untracked:  slurm-33652974.out
+    Untracked:  slurm-33652975.out
+    Untracked:  slurm-33652976.out
+    Untracked:  slurm-33652977.out
+    Untracked:  slurm-33652978.out
+    Untracked:  slurm-33652979.out
+    Untracked:  slurm-33653279.out
+    Untracked:  slurm-33653280.out
+    Untracked:  slurm-33653281.out
+    Untracked:  slurm-33653282.out
+    Untracked:  slurm-33653283.out
+    Untracked:  slurm-33653284.out
+    Untracked:  slurm-33654225.out
+    Untracked:  slurm-33654226.out
+    Untracked:  slurm-33654227.out
+    Untracked:  slurm-33654228.out
+    Untracked:  slurm-33654229.out
+    Untracked:  slurm-33654230.out
+    Untracked:  slurm-33654264.out
+    Untracked:  slurm-33654265.out
+    Untracked:  slurm-33654266.out
+    Untracked:  slurm-33654267.out
+    Untracked:  slurm-33655778.out
+    Untracked:  slurm-33655779.out
+    Untracked:  slurm-33655780.out
+    Untracked:  slurm-33655781.out
+    Untracked:  slurm-33655782.out
+    Untracked:  slurm-33655783.out
+    Untracked:  slurm-33655867.out
+    Untracked:  slurm-33655869.out
+    Untracked:  slurm-33655871.out
+    Untracked:  slurm-33655873.out
+    Untracked:  slurm-33655936.out
+    Untracked:  slurm-33655937.out
+    Untracked:  slurm-33655964.out
+    Untracked:  slurm-33655966.out
+    Untracked:  slurm-33656003.out
+    Untracked:  slurm-33656023.out
+    Untracked:  slurm-33656024.out
+    Untracked:  slurm-33656025.out
+    Untracked:  slurm-33656027.out
+    Untracked:  slurm-33656056.out
+    Untracked:  slurm-33656089.out
+    Untracked:  slurm-33656090.out
+    Untracked:  slurm-33656102.out
+    Untracked:  slurm-33656104.out
+    Untracked:  slurm-33656170.out
+    Untracked:  slurm-33656224.out
+    Untracked:  slurm-33656227.out
+    Untracked:  slurm-33656228.out
+    Untracked:  slurm-33656312.out
+    Untracked:  slurm-33656357.out
+    Untracked:  slurm-33656358.out
+    Untracked:  slurm-33656364.out
+    Untracked:  slurm-33656365.out
+    Untracked:  slurm-33656409.out
+    Untracked:  slurm-33656545.out
+    Untracked:  slurm-33657362.out
+    Untracked:  slurm-33657363.out
+    Untracked:  slurm-33657364.out
+    Untracked:  slurm-33657365.out
+    Untracked:  slurm-33657366.out
+    Untracked:  slurm-33657367.out
+    Untracked:  slurm-33657375.out
+    Untracked:  slurm-33657376.out
+    Untracked:  slurm-33657625.out
+    Untracked:  slurm-33657626.out
+    Untracked:  slurm-33657627.out
+    Untracked:  slurm-33657628.out
+    Untracked:  slurm-33657629.out
+    Untracked:  slurm-33657630.out
+    Untracked:  slurm-33657636.out
+    Untracked:  slurm-33657638.out
+    Untracked:  slurm-33657645.out
+    Untracked:  slurm-33657646.out
+    Untracked:  slurm-33657677.out
+    Untracked:  slurm-33657688.out
 
 Unstaged changes:
-    Modified:   .gitignore
     Deleted:    code/dunnart_peak_calling/trimfastq.py
 
 </code></pre>
@@ -552,6 +653,74 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/323d8b6a03950741027f0b6329a51b8f0c31d796/analysis/dunnart_data_processing.Rmd" target="_blank">323d8b6</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-03
+</td>
+<td>
+copied scripts over
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/ae523af3e11ade3cc2e0c7884c96bfdc5faa66b1/analysis/dunnart_data_processing.Rmd" target="_blank">ae523af</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-02
+</td>
+<td>
+fix code formatting for bam coverage rule
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/9d9a99533caf5d7803ed5576afd8786ef296a7ea/analysis/dunnart_data_processing.Rmd" target="_blank">9d9a995</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-01
+</td>
+<td>
+udpated
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/275d2299013a6db02d57b94c22d287788ec16d15/docs/dunnart_data_processing.html" target="_blank">275d229</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -769,7 +938,7 @@ add analysis files
 <div id="create-conda-environment" class="section level2">
 <h2>Create conda environment</h2>
 <pre class="bash"><code># create conda environment with all packages and dependencies
-conda create --name chip bowtie2 samtools picard deeptools multiqc phantompeakqualtools preseq macs2 bedtools fastqc pybedtools
+conda create --name chip bowtie2 samtools picard deeptools multiqc phantompeakqualtools preseq macs2 bedtools fastqc snakemake numpy pybedtools
 
 # save environment to a yaml file
 conda env export &gt; chip_environment.yml
@@ -855,10 +1024,8 @@ module load bowtie2/2.3.5.1</code></pre>
 </tbody>
 </table>
 <p>See full snakemake script for details: code/dunnart_peak_calling/dunnart_snakefile.</p>
-<p>Table. Read alignment quality metrics before and aftering filtering steps | <br> | | <strong>read counts</strong> | | | | | | | :———————————————————————————-: | :———–: | :———————————————————: | :—————-: | :——————: | :——–: | :———: | :———-: | | <strong>Sample</strong> | <strong>Antibody</strong> | <em>bowtie2 alignment</em> | <em>filtered reads^</em> | <em>remove duplicates</em> | <strong>NRF*</strong> | <strong>PBC1*</strong> | <strong>PBC2*</strong> | | A-1 | input | 130587134 | 87165286 | 47645260 | 0.773602 | 0.774519 | 4.45728 | | A-2 | H3K4me3 | 103324742 | 62678360 | 35617708 | 0.789709 | 0.789661 | 4.754989 | | A-3 | H3K27ac | 131071676 | 86503078 | 45700530 | 0.761768 | 0.761687 | 4.196586 | | B-1 | input | 111574640 | 72303316 | 44433864 | 0.820313 | 0.819974 | 5.545324 | | B-2 | H3K4me3 | 114146802 | 67048994 | 42357180 | 0.831032 | 0.830749 | 5.898224 | | B-3 | H3K27ac | 104714846 | 66615704 | 43939460 | 0.847255 | 0.847022 | 6.529168 |</p>
-<ul>
-<li>calculated from a subsample of ~10-15M aligned reads prior to removing duplicates</li>
-</ul>
+<p>Table. Read alignment quality metrics before and aftering filtering steps | <br> | | <strong>read counts</strong> | | | | | | | :————–: | :———–: | :——————–: | :—————-: | :——————: | :——–: | :———: | :———-: | | <strong>Sample</strong> | <strong>Antibody</strong> | <em>bowtie2 alignment</em> | <em>filtered reads^</em> | <em>remove duplicates</em> | <strong>NRF*</strong> | <strong>PBC1*</strong> | <strong>PBC2*</strong> | | A-1 | input | 130587134 | 87165286 | 47645260 | 0.773602 | 0.774519 | 4.45728 | | A-2 | H3K4me3 | 103324742 | 62678360 | 35617708 | 0.789709 | 0.789661 | 4.754989 | | A-3 | H3K27ac | 131071676 | 86503078 | 45700530 | 0.761768 | 0.761687 | 4.196586 | | B-1 | input | 111574640 | 72303316 | 44433864 | 0.820313 | 0.819974 | 5.545324 | | B-2 | H3K4me3 | 114146802 | 67048994 | 42357180 | 0.831032 | 0.830749 | 5.898224 | | B-3 | H3K27ac | 104714846 | 66615704 | 43939460 | 0.847255 | 0.847022 | 6.529168 |</p>
+<p>* calculated from a subsample of ~10-15M aligned reads prior to removing duplicates</p>
 <p>^ excluded low quality (MAPQ 30) and orphaned reads</p>
 </div>
 <div id="read-qc-with-deeptools" class="section level2">
@@ -867,19 +1034,28 @@ module load bowtie2/2.3.5.1</code></pre>
 <h3>Plot correlation between BAM files</h3>
 <p><code>plotCorrelation</code> computes the overall similarity between two or more files based on read coverage (or other scores) within genomic regions.</p>
 <p>This helps to determine whether the different sample types can be separated, i.e., samples of different conditions are expected to be more dissimilar to each other than replicates within the same condition.</p>
-<pre class="r"><code>include_graphics(&quot;output/qc/pearsoncor_multibamsum.png&quot;)</code></pre>
+<div class="figure">
+<img src="output/qc/pearsoncor_multibamsum.png" alt="Pearson correlation dunnart BAM files" />
+<p class="caption">Pearson correlation dunnart BAM files</p>
+</div>
 </div>
 <div id="fingerprint-plots" class="section level3">
 <h3>Fingerprint plots</h3>
 <p>This tool samples indexed BAM files and plots a profile of cumulative read coverages for each. All reads overlapping a window (bin) of the specified length are counted; these counts are sorted and the cumulative sum is finally plotted.</p>
 <p>It determines how well the signal in the ChIP-seq sample can be differentiated from the background distribution of reads in the control sample.</p>
 <p>An ideal input with perfect uniform distribution of reads along the genome (i.e. without enrichments in open chromatin etc.) and infinite sequencing coverage should generate a straight diagonal line. A very specific and strong ChIP enrichment will be indicated by a prominent and steep rise of the cumulative sum towards the highest rank. This means that a big chunk of reads from the ChIP sample is located in few bins which corresponds to high, narrow enrichments typically seen for transcription factors.</p>
-<pre class="r"><code>include_graphics(&quot;output/qc/multiBAM_fingerprint.png&quot;)</code></pre>
+<div class="figure">
+<img src="output/qc/multiBAM_fingerprint.png" alt="Fingerprint plot for dunnart BAM files" />
+<p class="caption">Fingerprint plot for dunnart BAM files</p>
+</div>
 </div>
 <div id="bam-pe-fragment-size" class="section level3">
 <h3>BAM PE fragment size</h3>
 <p>This tool calculates the fragment sizes for read pairs given a BAM file from paired-end sequencing. Several regions are sampled depending on the size of the genome and number of processors to estimate thesummary statistics on the fragment lengths.</p>
-<pre class="r"><code>include_graphics(&quot;output/qc/bamPEFragmentSize_hist.png&quot;)</code></pre>
+<div class="figure">
+<img src="output/qc/bamPEFragmentSize_hist.png" alt="Fragment size for read pairs in a BAM file" />
+<p class="caption">Fragment size for read pairs in a BAM file</p>
+</div>
 </div>
 </div>
 <div id="cross-correlation-analysis" class="section level2">
@@ -963,14 +1139,469 @@ module load bowtie2/2.3.5.1</code></pre>
 <p>NSC; NSC&gt;1.1 (higher values indicate more enrichment; 1 = no enrichment)</p>
 <p>RSC; RSC&gt;0.8 (0 = no signal; &lt;1 low quality ChIP; &gt;1 high enrichment</p>
 <p>Quality tag based on thresholded RSC (codes: -2:veryLow,-1:Low,0:Medium,1:High; 2:veryHigh)</p>
+<pre class="r"><code>library(data.table)
+library(knitr)
+A1 = fread(&quot;output/qc/A-1_input_filt_15Mreads.SE.cc.qc&quot;)
+A2 = fread(&quot;output/qc/A-2_H3K4me3_filt_15Mreads.SE.cc.qc&quot;)
+A3 = fread(&quot;output/qc/A-3_H3K27ac_filt_15Mreads.SE.cc.qc&quot;)
+B1 = fread(&quot;output/qc/B-1_input_filt_15Mreads.SE.cc.qc&quot;)
+B2 = fread(&quot;output/qc/B-2_H3K4me3_filt_15Mreads.SE.cc.qc&quot;)
+B3 = fread(&quot;output/qc/B-3_H3K27ac_filt_15Mreads.SE.cc.qc&quot;)</code></pre>
+<table>
+<caption>A1 H3K27ac cross-correlation analysis</caption>
+<colgroup>
+<col width="27%" />
+<col width="4%" />
+<col width="6%" />
+<col width="32%" />
+<col width="1%" />
+<col width="5%" />
+<col width="2%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="2%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">V1</th>
+<th align="right">V2</th>
+<th align="left">V3</th>
+<th align="left">V4</th>
+<th align="right">V5</th>
+<th align="right">V6</th>
+<th align="right">V7</th>
+<th align="right">V8</th>
+<th align="right">V9</th>
+<th align="right">V10</th>
+<th align="right">V11</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">A-1_input.filt.sample.15Mreads.SE.tagAlign.gz</td>
+<td align="right">1.5e+07</td>
+<td align="left">95,135,150</td>
+<td align="left">0.123657819405274,0.123466870849122,0.123426393106245</td>
+<td align="right">50</td>
+<td align="right">0.125339</td>
+<td align="right">1500</td>
+<td align="right">0.1220062</td>
+<td align="right">1.013537</td>
+<td align="right">0.495558</td>
+<td align="right">-1</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption>A2 H3K4me3 cross-correlation analysis</caption>
+<colgroup>
+<col width="27%" />
+<col width="4%" />
+<col width="6%" />
+<col width="31%" />
+<col width="1%" />
+<col width="5%" />
+<col width="2%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="2%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">V1</th>
+<th align="right">V2</th>
+<th align="left">V3</th>
+<th align="left">V4</th>
+<th align="right">V5</th>
+<th align="right">V6</th>
+<th align="right">V7</th>
+<th align="right">V8</th>
+<th align="right">V9</th>
+<th align="right">V10</th>
+<th align="right">V11</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">A-2_H3K4me3.filt.sample.15Mreads.SE.tagAlign.gz</td>
+<td align="right">1.5e+07</td>
+<td align="left">205,225,240</td>
+<td align="left">0.264180702500576,0.264046178090335,0.263856306475591</td>
+<td align="right">50</td>
+<td align="right">0.2533387</td>
+<td align="right">1500</td>
+<td align="right">0.1496324</td>
+<td align="right">1.765532</td>
+<td align="right">1.104545</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption>A3 input control cross-correlation analysis</caption>
+<colgroup>
+<col width="28%" />
+<col width="4%" />
+<col width="7%" />
+<col width="30%" />
+<col width="1%" />
+<col width="5%" />
+<col width="2%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="2%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">V1</th>
+<th align="right">V2</th>
+<th align="left">V3</th>
+<th align="left">V4</th>
+<th align="right">V5</th>
+<th align="right">V6</th>
+<th align="right">V7</th>
+<th align="right">V8</th>
+<th align="right">V9</th>
+<th align="right">V10</th>
+<th align="right">V11</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">A-3_H3K27ac.filt.sample.15Mreads.SE.tagAlign.gz</td>
+<td align="right">1.5e+07</td>
+<td align="left">210,220,235</td>
+<td align="left">0.22968659727008,0.229482796607544,0.229305284391192</td>
+<td align="right">55</td>
+<td align="right">0.2184643</td>
+<td align="right">1500</td>
+<td align="right">0.1570855</td>
+<td align="right">1.462175</td>
+<td align="right">1.182836</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>kable(B1, caption=&quot;B1 H3K27ac control cross-correlation analysis&quot;)</code></pre>
+<table>
+<caption>B1 H3K27ac control cross-correlation analysis</caption>
+<colgroup>
+<col width="27%" />
+<col width="4%" />
+<col width="7%" />
+<col width="31%" />
+<col width="1%" />
+<col width="5%" />
+<col width="2%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="2%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">V1</th>
+<th align="right">V2</th>
+<th align="left">V3</th>
+<th align="left">V4</th>
+<th align="right">V5</th>
+<th align="right">V6</th>
+<th align="right">V7</th>
+<th align="right">V8</th>
+<th align="right">V9</th>
+<th align="right">V10</th>
+<th align="right">V11</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">B-1_input.filt.sample.15Mreads.SE.tagAlign.gz</td>
+<td align="right">1.5e+07</td>
+<td align="left">115,130,150</td>
+<td align="left">0.128496809011662,0.128442767656697,0.12834049936991</td>
+<td align="right">50</td>
+<td align="right">0.1304347</td>
+<td align="right">1500</td>
+<td align="right">0.126898</td>
+<td align="right">1.012599</td>
+<td align="right">0.4520538</td>
+<td align="right">-1</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>kable(B2, caption=&quot;B2 H3K4me3 control cross-correlation analysis&quot;)</code></pre>
+<table>
+<caption>B2 H3K4me3 control cross-correlation analysis</caption>
+<colgroup>
+<col width="27%" />
+<col width="4%" />
+<col width="6%" />
+<col width="31%" />
+<col width="1%" />
+<col width="5%" />
+<col width="2%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="2%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">V1</th>
+<th align="right">V2</th>
+<th align="left">V3</th>
+<th align="left">V4</th>
+<th align="right">V5</th>
+<th align="right">V6</th>
+<th align="right">V7</th>
+<th align="right">V8</th>
+<th align="right">V9</th>
+<th align="right">V10</th>
+<th align="right">V11</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">B-2_H3K4me3.filt.sample.15Mreads.SE.tagAlign.gz</td>
+<td align="right">1.5e+07</td>
+<td align="left">210,225,245</td>
+<td align="left">0.316307968017767,0.316149524309277,0.315180730244617</td>
+<td align="right">50</td>
+<td align="right">0.3014805</td>
+<td align="right">1500</td>
+<td align="right">0.1675044</td>
+<td align="right">1.888356</td>
+<td align="right">1.110672</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>kable(B3, caption=&quot;B3 input control cross-correlation analysis&quot;)</code></pre>
+<table>
+<caption>B3 input control cross-correlation analysis</caption>
+<colgroup>
+<col width="27%" />
+<col width="4%" />
+<col width="6%" />
+<col width="31%" />
+<col width="1%" />
+<col width="5%" />
+<col width="2%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="2%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">V1</th>
+<th align="right">V2</th>
+<th align="left">V3</th>
+<th align="left">V4</th>
+<th align="right">V5</th>
+<th align="right">V6</th>
+<th align="right">V7</th>
+<th align="right">V8</th>
+<th align="right">V9</th>
+<th align="right">V10</th>
+<th align="right">V11</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">B-3_H3K27ac.filt.sample.15Mreads.SE.tagAlign.gz</td>
+<td align="right">1.5e+07</td>
+<td align="left">220,230,255</td>
+<td align="left">0.229222829886832,0.228995326028105,0.228262435658256</td>
+<td align="right">55</td>
+<td align="right">0.2203839</td>
+<td align="right">1500</td>
+<td align="right">0.1693505</td>
+<td align="right">1.353541</td>
+<td align="right">1.173198</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="peak-qc" class="section level2">
 <h2>Peak QC</h2>
+<p>Number of peaks</p>
+<pre class="bash"><code>less A-3_H3K27ac_vs_A-1_input_macs2_default_peaks.narrowPeak | wc -l</code></pre>
+<pre><code>A-3_H3K27ac_vs_A-1_input_macs2_default_peaks.narrowPeak: No such file or directory
+0</code></pre>
+<pre class="bash"><code>less A-2_H3K4me3_vs_A-1_input_macs2_default_peaks.narrowPeak | wc -l</code></pre>
+<pre><code>A-2_H3K4me3_vs_A-1_input_macs2_default_peaks.narrowPeak: No such file or directory
+0</code></pre>
+<pre class="bash"><code>less B-3_H3K27ac_vs_B-1_input_macs2_default_peaks.narrowPeak | wc -l</code></pre>
+<pre><code>B-3_H3K27ac_vs_B-1_input_macs2_default_peaks.narrowPeak: No such file or directory
+0</code></pre>
+<pre class="bash"><code>less B-2_H3K4me3_vs_B-1_input_macs2_default_peaks.narrowPeak | wc -l</code></pre>
+<pre><code>B-2_H3K4me3_vs_B-1_input_macs2_default_peaks.narrowPeak: No such file or directory
+0</code></pre>
 <div id="fraction-of-reads-in-peaks" class="section level3">
 <h3>Fraction of reads in peaks</h3>
+<pre class="r"><code>A2 = fread(&quot;output/qc/A-2_H3K4me3_vs_A-1_input.frip_default.txt&quot;)</code></pre>
+<pre><code>Warning in fread(&quot;output/qc/A-2_H3K4me3_vs_A-1_input.frip_default.txt&quot;):
+Detected 6 column names but the data has 7 columns (i.e. invalid file). Added 1
+extra default column name for the first column which is guessed to be row names
+or an index. Use setnames() afterwards if this guess is not correct, or fix the
+file write command that created the file to create a valid file.</code></pre>
+<pre class="r"><code>A3 = fread(&quot;output/qc/A-3_H3K27ac_vs_A-1_input.frip_default.txt&quot;)</code></pre>
+<pre><code>Warning in fread(&quot;output/qc/A-3_H3K27ac_vs_A-1_input.frip_default.txt&quot;):
+Detected 6 column names but the data has 7 columns (i.e. invalid file). Added 1
+extra default column name for the first column which is guessed to be row names
+or an index. Use setnames() afterwards if this guess is not correct, or fix the
+file write command that created the file to create a valid file.</code></pre>
+<pre class="r"><code>B2 = fread(&quot;output/qc/B-2_H3K4me3_vs_B-1_input.frip_default.txt&quot;)</code></pre>
+<pre><code>Warning in fread(&quot;output/qc/B-2_H3K4me3_vs_B-1_input.frip_default.txt&quot;):
+Detected 6 column names but the data has 7 columns (i.e. invalid file). Added 1
+extra default column name for the first column which is guessed to be row names
+or an index. Use setnames() afterwards if this guess is not correct, or fix the
+file write command that created the file to create a valid file.</code></pre>
+<pre class="r"><code>B3 = fread(&quot;output/qc/B-3_H3K27ac_vs_B-1_input.frip_default.txt&quot;)</code></pre>
+<pre><code>Warning in fread(&quot;output/qc/B-3_H3K27ac_vs_B-1_input.frip_default.txt&quot;):
+Detected 6 column names but the data has 7 columns (i.e. invalid file). Added 1
+extra default column name for the first column which is guessed to be row names
+or an index. Use setnames() afterwards if this guess is not correct, or fix the
+file write command that created the file to create a valid file.</code></pre>
+<table>
+<caption>A2 H3K4me3 fraction of reads in peaks</caption>
+<thead>
+<tr class="header">
+<th align="left">V1</th>
+<th align="left">Number</th>
+<th align="left">of</th>
+<th align="left">total</th>
+<th align="left">reads</th>
+<th align="left">=</th>
+<th align="right">17808854</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Fraction</td>
+<td align="left">of</td>
+<td align="left">Reads</td>
+<td align="left">in</td>
+<td align="left">Peak</td>
+<td align="left">=</td>
+<td align="right">0.5880194</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption>A3 H3K27ac fraction of reads in peaks</caption>
+<thead>
+<tr class="header">
+<th align="left">V1</th>
+<th align="left">Number</th>
+<th align="left">of</th>
+<th align="left">total</th>
+<th align="left">reads</th>
+<th align="left">=</th>
+<th align="right">22850265</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Fraction</td>
+<td align="left">of</td>
+<td align="left">Reads</td>
+<td align="left">in</td>
+<td align="left">Peak</td>
+<td align="left">=</td>
+<td align="right">0.6207235</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption>B2 H3K4me3 fraction of reads in peaks</caption>
+<thead>
+<tr class="header">
+<th align="left">V1</th>
+<th align="left">Number</th>
+<th align="left">of</th>
+<th align="left">total</th>
+<th align="left">reads</th>
+<th align="left">=</th>
+<th align="right">21178590</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Fraction</td>
+<td align="left">of</td>
+<td align="left">Reads</td>
+<td align="left">in</td>
+<td align="left">Peak</td>
+<td align="left">=</td>
+<td align="right">0.6570836</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption>B3 H3K27ac fraction of reads in peaks</caption>
+<thead>
+<tr class="header">
+<th align="left">V1</th>
+<th align="left">Number</th>
+<th align="left">of</th>
+<th align="left">total</th>
+<th align="left">reads</th>
+<th align="left">=</th>
+<th align="right">21969730</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Fraction</td>
+<td align="left">of</td>
+<td align="left">Reads</td>
+<td align="left">in</td>
+<td align="left">Peak</td>
+<td align="left">=</td>
+<td align="right">0.6129932</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="consensus-peaksets-for-biological" class="section level3">
-<h3>Consensus peaksets for biological</h3>
+<div id="consensus-peaksets-for-biological-replicates" class="section level3">
+<h3>Consensus peaksets for biological replicates</h3>
+<p>Number of consensus peaks</p>
+<pre class="bash"><code>less output/peaks/H3K4me3_overlap_default.narrowPeak | wc -l</code></pre>
+<pre><code>80989</code></pre>
+<pre class="bash"><code>less output/peaks/H3K27ac_overlap_default.narrowPeak | wc -l</code></pre>
+<pre><code>118528</code></pre>
+</div>
+</div>
+<div id="group-peaks-into-promoter--and-enhancer--associated-peaks" class="section level2">
+<h2>Group peaks into promoter- and enhancer- associated peaks</h2>
+<p>Find uniquely H3K4me3 sites (i.e. peaks that don’t overlap with H3K27ac):</p>
+<pre class="bash"><code>bedtools intersect -v -a H3K4me3_overlap.narrowPeak -b H3K27ac_overlap.narrowPeak &gt; H3K4me3_only.narrowPeak
+less H3K4me3_only.narrowPeak | wc -l</code></pre>
+<pre><code>Error: Unable to open file H3K4me3_overlap.narrowPeak. Exiting.
+0</code></pre>
+<p>Find unique H3K27ac sites (i.e. peaks that don’t overlap with H3K4me3):</p>
+<pre class="bash"><code>bedtools intersect -v -a H3K27ac_overlap.narrowPeak -b H3K4me3_overlap.narrowPeak &gt; H3K27ac_only.narrowPeak
+less H3K27ac_only.narrowPeak | wc -l</code></pre>
+<pre><code>Error: Unable to open file H3K27ac_overlap.narrowPeak. Exiting.
+0</code></pre>
+<p>Find peaks common between H3K27ac &amp; H3K4me3 with a reciprocal overlap of at least 50%.</p>
+<pre class="bash"><code>bedtools intersect -f 0.5 -r -a H3K4me3_overlap.narrowPeak -b H3K27ac_overlap.narrowPeak &gt; H3K4me3_and_H3K27ac.narrowPeak
+less H3K4me3_and_H3K27ac.narrowPeak | wc -l</code></pre>
+<pre><code>Error: Unable to open file H3K4me3_overlap.narrowPeak. Exiting.
+0</code></pre>
+<p>Combine files</p>
+<pre class="bash"><code>cat H3K4me3_only.narrowPeak H3K4me3_and_H3K27ac.narrowPeak | sort -k 4,4 &gt; dunnart_promoter_peaks.narrowPeak
+cat H3K27ac_only.narrowPeak | sort -k 4,4 &gt; dunnart_enhancer_peaks.narrowPeak
+less dunnart_promoter_peaks.narrowPeak | wc -l
+less dunnart_enhancer_peaks.narrowPeak | wc -l</code></pre>
+<pre><code>0
+0</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -998,21 +1629,20 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] workflowr_1.7.0
+[1] knitr_1.33        data.table_1.14.0 workflowr_1.7.0  
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.6        jquerylib_0.1.4   pillar_1.6.1      compiler_4.1.0   
- [5] bslib_0.2.5.1     later_1.2.0       git2r_0.28.0      tools_4.1.0      
- [9] getPass_0.2-2     digest_0.6.27     jsonlite_1.7.2    evaluate_0.14    
-[13] lifecycle_1.0.1   tibble_3.1.2      pkgconfig_2.0.3   rlang_1.0.1      
-[17] cli_2.5.0         rstudioapi_0.13   yaml_2.2.1        xfun_0.23        
-[21] httr_1.4.2        stringr_1.4.0     knitr_1.33        sass_0.4.0       
+ [1] Rcpp_1.0.6        highr_0.9         jquerylib_0.1.4   pillar_1.6.1     
+ [5] compiler_4.1.0    bslib_0.2.5.1     later_1.2.0       git2r_0.28.0     
+ [9] tools_4.1.0       getPass_0.2-2     digest_0.6.27     jsonlite_1.7.2   
+[13] evaluate_0.14     lifecycle_1.0.1   tibble_3.1.2      pkgconfig_2.0.3  
+[17] rlang_1.0.1       cli_2.5.0         rstudioapi_0.13   yaml_2.2.1       
+[21] xfun_0.23         httr_1.4.2        stringr_1.4.0     sass_0.4.0       
 [25] fs_1.5.0          vctrs_0.3.8       rprojroot_2.0.2   glue_1.4.2       
 [29] R6_2.5.0          processx_3.5.2    fansi_0.5.0       rmarkdown_2.8    
 [33] callr_3.7.0       magrittr_2.0.1    whisker_0.4       ps_1.6.0         
 [37] promises_1.2.0.1  ellipsis_0.3.2    htmltools_0.5.1.1 httpuv_1.6.1     
 [41] utf8_1.2.1        stringi_1.6.2     crayon_1.4.1     </code></pre>
-</div>
 </div>
 </div>
 </div>
