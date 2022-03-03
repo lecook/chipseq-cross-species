@@ -45,7 +45,7 @@ all_samples = IPS + unique_inputs
 
 rule all:
     input:
-        "output/qc/multibamsum_dunnart_downSampled.npz",
+        expand("output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bai", sample=all_samples),        "output/qc/multibamsum_dunnart_downSampled.npz",
         "output/qc/multibamsum_dunnart_downSampled.tab",
         "output/qc/pearsoncor_multibamsum_dunnart_downSampled.png",
         "output/qc/pearsoncor_multibamsum_matrix_dunnart_downSampled.txt",
@@ -71,6 +71,7 @@ rule all:
 
 # ===============================================================================================
 #  1. deepTools
+#   > index BAM files   
 #   > multiBAMsummary
 #   > plotCorrelation
 #   > plotFingerprint
@@ -78,6 +79,17 @@ rule all:
 #   > plotCoverage
 #   > bamPEFragmentSize
 # ===============================================================================================
+
+rule indexBam:
+    input:
+        "output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bam"
+    output:
+        "output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bai"
+    log:
+        "output/logs/{sample}_downSampled.indexBam"
+    shell:
+        "samtools index -c {input} {output} 2> {log}"
+
 
 rule deeptools_summary:
     input:
@@ -264,7 +276,7 @@ rule frip:
     output:
         "output/qc/{case}_vs_{control}.frip_default_dunnart_downSampled.txt"
     shell:
-        "python2.7 code/encode_frip.py {input.bed} {input.peak} > {output}"
+        "python code/encode_frip.py {input.bed} {input.peak} > {output}"
 
 
 # ===============================================================================================
@@ -282,7 +294,7 @@ rule overlap_peaks_H3K4me3:
     output:
         "output/peaks/H3K4me3_overlap_default_downSampled.narrowPeak"
     shell:
-        "python2.7 code/overlap_peaks.py {input.peak1} {input.peak2} {input.pooled} {output}"
+        "python code/overlap_peaks.py {input.peak1} {input.peak2} {input.pooled} {output}"
 
 
 rule overlap_peaks_H3K27ac:
@@ -293,7 +305,7 @@ rule overlap_peaks_H3K27ac:
     output:
         "output/peaks/H3K27ac_overlap_default_downSampled.narrowPeak"
     shell:
-        "python2.7 code/overlap_peaks.py {input.peak1} {input.peak2} {input.pooled} {output}"
+        "python code/overlap_peaks.py {input.peak1} {input.peak2} {input.pooled} {output}"
 
 ## Fraction of reads in peaks
 rule overlap_frip:
@@ -306,5 +318,5 @@ rule overlap_frip:
         H3K4me3frip = "output/qc/H3K4me3_overlap_default_dunnart_downSampled.frip",
         H3K27acfrip = "output/qc/H3K27ac_overlap_default_dunnart_downSampled.frip"
     run:
-        shell("python2.7 code/encode_frip.py {input.H3K4me3bam} {input.H3K4me3bed} > {output.H3K4me3frip}")
-        shell("python2.7 code/encode_frip.py {input.H3K27acbam} {input.H3K27acbed} > {output.H3K27acfrip}")
+        shell("python code/encode_frip.py {input.H3K4me3bam} {input.H3K4me3bed} > {output.H3K4me3frip}")
+        shell("python code/encode_frip.py {input.H3K27acbam} {input.H3K27acbed} > {output.H3K27acfrip}")
