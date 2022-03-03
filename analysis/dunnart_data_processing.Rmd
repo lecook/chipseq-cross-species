@@ -233,12 +233,12 @@ B3 = fread("output/qc/B-3_H3K27ac_vs_B-1_input.frip_default.txt")
 
 A-2_H3K4me3 fraction of reads in peaks
 ```{bash}
-less output/qc/A-2_H3K4me3_vs_A-1_input.frip_default.txt)
+less output/qc/A-2_H3K4me3_vs_A-1_input.frip_default.txt
 ```
 
 A3 H3K27ac fraction of reads in peaks
 ```{bash}
-less output/qc/A-3_H3K27ac_vs_A-1_input.frip_default.txt)
+less output/qc/A-3_H3K27ac_vs_A-1_input.frip_default.txt
 ```
 
 B2 H3K4me3 fraction of reads in peaks
