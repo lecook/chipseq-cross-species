@@ -42,12 +42,9 @@ library(gghalves)
 library(multcompView)
 library(factoextra)
 library(NbClust)
-<<<<<<< HEAD
 library(simplifyEnrichment)
 library(formatR)
-=======
 library(utils)
->>>>>>> aecaaab5d31a2d52a08f88c5fa32888c436b7db8
 ```
 
 # Set up 
@@ -68,7 +65,6 @@ font <- theme(axis.text.x = element_text(size = 25),
 ```
 
 # Peak features
-<<<<<<< HEAD
 ## Peak counts
 
 ```{r}
@@ -106,63 +102,6 @@ dev.off()
 p
 ```
 
-=======
-## Peak counts, intensity and length. 
-
-```{r}
-unfilteredPeakFeatures <- function(fileList, combined.tbl.stack, peak.length.plot, peak.intensity.plot){
-    files <- list.files(fileList, pattern = "*r_peaks.narrowPeak|*_only.narrowPeak|*overlap_default.narrowPeak|*and_H3K27ac.narrowPeak", full.names = T) # create list of files in directory
-    files <- as.list(files)
-    data <- lapply(files, function(x) data.table::fread(x, header = FALSE, sep = "\t", quote = "", na.strings = c("", "NA")))
-    names(data) <- c("enhancers","promoters","H3K27ac_only","H3K27ac","H3K4me3_H3K27ac", "H3K4me3_only","H3K4me3")
-    df1 <- Map(dplyr::mutate, data, group = names(data))
-    df1$H3K27ac_only$cre <- "enhancers"
-    df1$H3K4me3_only$cre <- "promoters"
-    df1$H3K4me3_H3K27ac$cre <- "promoters"
-
-    fullPeaks <- rbind(df1$enhancers, df1$promoters, df1$H3K27ac, df1$H3K4me3)
-    combinedPeaks <- rbind(df1$H3K27ac_only, df1$H3K4me3_H3K27ac, df1$H3K4me3_only)
-        
-    ## Plot stacked bar graph with number of peaks for each histone mark
-    combined.tbl <- with(combinedPeaks, table(group, cre)) # nolint # nolint
-    combined.tbl <- as.data.frame(combined.tbl)
-    p <- ggplot(combined.tbl, aes(factor(cre), Freq, fill = group)) + 
-      geom_bar(position = position_stack(reverse = TRUE), stat = "identity") +
-      scale_fill_manual(values = c("#FF9D40",  "#37B6CE", "#04859D"))  + 
-      theme_minimal() + ylab("Number of peaks") +
-      xlab("")
-    pdf(file = paste0(plot_dir, combined.tbl.stack), width = 10, height = 7)
-    print(p)
-    dev.off()
-    p
-
-    # Peak lengths for H3K4me3 and H3K27ac
-    fullPeaks$length <- (fullPeaks$V3 - fullPeaks$V2)
-    level_order <- c('promoter', 'enhancer', 'H3K4me3', 'H3K27ac')
-
-    ## Plot peak lengths
-    p <- ggplot(fullPeaks, aes(factor(group), y = log10(length)))+ geom_violin(aes(fill = factor(group), color = factor(group))) + geom_boxplot(aes(color = factor(group)), width = .15, 
-    outlier.shape = NA,
-    position = position_dodge(width = .1)
-    ) + theme_bw() + xlab("") + ylab("Log10 Peak Length") 
-
-    p <- ggplot(fullPeaks, aes(factor(group, level = level_order), y = log10(length))) + 
-    geom_half_violin(aes(fill = factor(group), color = factor(group)),
-    side = "r", 
-    position = "dodge"
-    )+
-    geom_boxplot(aes(color = factor(group)),
-    width = .15, 
-    outlier.shape = NA,
-    fill = c("#FCF8EC","#FCF8EC","#F5F6F7","#E4F3F1"),
-    position = position_dodge(width = .1)
-    ) +
-    coord_cartesian(xlim = c(1.2, NA), clip = "off") + theme_bw() + xlab("") + ylab("Log10 Peak Length") 
-    pdf(file = paste0(plot_dir, peak.length.plot), width = 10, height = 7)
-    print(p +  scale_color_manual(values = c("#E9C46A","#E9C46A","#264653","#2A9D8F")) +
-    scale_fill_manual(values = c("#F1DAA2","#F1DAA2","#AEBABF","#7AC2B9")) + coord_flip())
-    dev.off()
->>>>>>> aecaaab5d31a2d52a08f88c5fa32888c436b7db8
 
 ## Average peak lengths
 
@@ -196,7 +135,6 @@ dev.off()
 
 ## Average peak intensity
 
-<<<<<<< HEAD
 ```{r}
 ## Plot peak intensity
 p <- ggplot(fullPeaks, aes(factor(group), y = log10(V7))) + 
@@ -216,7 +154,6 @@ p <- ggplot(fullPeaks, aes(factor(group), y = log10(V7))) +
 p
 
 pdf(file = paste0(plot_dir, peak.intensity.plot), width = 10, height = 7)
-=======
     ## Plot peak intensity
     p <- ggplot(fullPeaks, aes(factor(group, level = level_order), y = log10(V7))) + 
     geom_half_violin(aes(fill = factor(group), color = factor(group)),
@@ -231,21 +168,9 @@ pdf(file = paste0(plot_dir, peak.intensity.plot), width = 10, height = 7)
     ) +
     coord_cartesian(xlim = c(1.2, NA), clip = "off") + theme_bw() + xlab("") + ylab("Log10 Peak Intensity") 
     pdf(file = paste0(plot_dir, peak.intensity.plot), width = 10, height = 7)
->>>>>>> aecaaab5d31a2d52a08f88c5fa32888c436b7db8
     print(p +  scale_color_manual(values = c("#E9C46A","#E9C46A","#264653","#2A9D8F")) +
     scale_fill_manual(values = c("#F1DAA2","#F1DAA2","#AEBABF","#7AC2B9")) + coord_flip())
 dev.off()  
-
-    print(p +  scale_color_manual(values = c("#E9C46A","#E9C46A","#264653","#2A9D8F")) +
-    scale_fill_manual(values = c("#F1DAA2","#F1DAA2","#AEBABF","#7AC2B9")) + coord_flip())
-<<<<<<< HEAD
-=======
-}
-
-unfilteredPeakFeatures(fileList = fullPeak_dir, combined.tbl.stack =  "dunnart_combined_stacked.pdf",
-peak.length.plot = "dunnart_fullPeaks_length.pdf", peak.intensity.plot = "dunnart_fullPeaks_intensity.pdf")
-
->>>>>>> aecaaab5d31a2d52a08f88c5fa32888c436b7db8
 ```
 
 # Annotate dunnart peaks
@@ -268,15 +193,10 @@ Additionally I have a list of background genes for calculating GO enrichment. Th
  
 ```{r}
 ## geneID conversion tables
-<<<<<<< HEAD
 df2 <- read.table("output/annotations/devil_to_mouse_ensembl.txt", header=TRUE, sep="\t") ## conversion table for devil ENSEMBL to mouse ENSEMBL
 df3 <- read.table("output/annotations/refseq_to_ensembl.txt", header=TRUE, sep="\t") ## convertsion table for devil refseq to devil ENSEMBL
 bg = fread("output/annotations/go_background_orthologousENSEMBL_biomart.txt", header = FALSE)
 bg = unlist(bg, use.names = FALSE)
-=======
-df2 <- read.table("output/annotations/devil_to_mouse_ensembl.txt", header = TRUE, sep = "\t") ## conversion table for devil ENSEMBL to mouse ENSEMBL
-df3 <- read.table("output/annotations/refseq_to_ensembl.txt", header = TRUE, sep = "\t") ## convertsion table for devil refseq to devil ENSEMBL
->>>>>>> aecaaab5d31a2d52a08f88c5fa32888c436b7db8
 ```
 
 ## Annotate peak files with ChIPseeker
@@ -320,22 +240,18 @@ annotatePeaks <- function(peak, outFile, outFile1, outFile2, GOenrich, kegg, bac
                   pAdjustMethod = "fdr",
                   qvalueCutoff = 0.01,
                   readable = TRUE)
-<<<<<<< HEAD
   write.table(GO, paste0(annot_dir, GOenrich), 
               sep="\t", quote=F, row.names=F)
-=======
   write.table(GO, paste0(annot_dir, GOenrich), sep = "\t", quote = F, row.names = F)
->>>>>>> aecaaab5d31a2d52a08f88c5fa32888c436b7db8
-  
+
   # convert mouse ensembl to entrezID
-  suppressWarnings(gene.df <- clusterProfiler::bitr(geneId = peakAnnoDF$mouseensembl, fromType = "ENSEMBL", toType = "ENTREZID", OrgDb = "org.Mm.eg.db" ))
+  suppressWarnings(gene.df <- bitr(geneID = peakAnnoDF$mouseensembl, fromType = "ENSEMBL", toType = "ENTREZID", OrgDb = "org.Mm.eg.db" ))
   
   bg.entrez <- bitr(geneID=backg, fromType="ENSEMBL", toType="ENTREZID", OrgDb="org.Mm.eg.db" )
   
   bg.entrez = bg.entrez$ENTREZID
   
   # ## kegg analysis
-<<<<<<< HEAD
   kk <- enrichKEGG(gene = gene.df$ENTREZID, 
                    organism = "mmu", pAdjustMethod = "fdr",
                    qvalueCutoff = 0.01, universe = bg.entrez)
@@ -343,11 +259,9 @@ annotatePeaks <- function(peak, outFile, outFile1, outFile2, GOenrich, kegg, bac
               sep="\t", 
               quote=F,
               row.names=F)
-=======
   kk <- enrichKEGG(gene = gene.df$ENTREZID, organism = "mmu", pAdjustMethod = "fdr",
                   qvalueCutoff = 0.01, universe = )
   write.table(kk, paste0(annot_dir, kegg), sep = "\t", quote = F, row.names = F)
->>>>>>> aecaaab5d31a2d52a08f88c5fa32888c436b7db8
 }
 
 
@@ -377,16 +291,15 @@ Now see where the peaks are located in relation to the TSS. Promoters should be 
 Plot distance to TSS for all unfiltered peaks 
 
 ```{r distance-to-tss}
-<<<<<<< HEAD
 fileList = annot_dir
 enhancerTSSplot="dunnart_enhancerTSS.pdf"
 promoterTSSplot="dunnart_promoterTSS.pdf"
 TSSplot = "dunnart_TSS.pdf"
 
-files =list.files(fileList, pattern= "annotation.txt", full.names=T) # create list of files in directory
+files = c(paste0(fileList, "dunnart_enhancer_annotation.txt"), paste0(fileList, "dunnart_promoter_annotation.txt"), paste0(fileList, "dunnart_H3K4me3_annotation.txt"), paste0(fileList, "dunnart_H3K27ac_annotation.txt"))
 files = as.list(files)
 data = lapply(files, function(x) fread(x, header=TRUE, sep="\t", quote = "", na.strings=c("", "NA"))) # read in all files
-names(data) = c("enhancers","H3K27ac","H3K4me3","promoter")
+names(data) = c("enhancers","promoter","H3K4me3","H3K27ac")
 df1 = Map(mutate, data, mark = names(data))
 enhProm = list(as.data.table(df1$promoter), as.data.table(df1$enhancers))
 enhProm = suppressWarnings(lapply(enhProm, 
@@ -410,8 +323,6 @@ p <- ggplot(enhProm$promoters, aes(x=log10_abs_dist)) +
     geom_density(alpha=0.5, color="#2A9D8F", fill="#2A9D8F") + theme_bw() + 
   ggtitle("Promoter-associated peaks")
 
-p
-
 ## Save as PDF
 pdf(file = paste0(plot_dir, promoterTSSplot), width=10, height = 7)
     print(p)
@@ -429,54 +340,6 @@ p
 pdf(file = paste0(plot_dir, TSSplot), width=10, height = 7)
     print(p + font)
 dev.off()
-
-=======
-distanceToTSS <- function(fileList, enhancerTSSplot, promoterTSSplot, TSSplot){
-    files <- list.files(fileList, pattern =  "annotation.txt", full.names = T) # create list of files in directory
-    files <- as.list(files)
-    data <- lapply(files, function(x) data.table::fread(x, header = TRUE, sep = "\t", quote = "", na.strings = c("", "NA"))) # read in all files
-    names(data) <- c("enhancers","H3K27ac","H3K4me3","promoter")
-    df1 <- Map(dplyr::mutate, data, mark = names(data))
-    enhProm <- list(data.table::as.data.table(df1$promoter), data.table::as.data.table(df1$enhancers))
-    enhProm <- suppressWarnings(lapply(enhProm, function(x) x[,log10_abs_dist:=log10(abs(distanceToTSS)+1)][,log10_abs_dist:=ifelse(distanceToTSS<0,-log10_abs_dist,log10_abs_dist)])) # nolint # nolint # nolint
-    names(enhProm) <- c("promoters","enhancers")
-
-    pdf(file = paste0(plot_dir, enhancerTSSplot), width = 10, height = 7)
-    print(ggplot(enhProm$enhancers, aes(x = log10_abs_dist)) + 
-    geom_density(alpha = 0.5, color = "#2A9D8F", fill = "#2A9D8F") + 
-    scale_y_continuous(limits = c(0,0.3), labels = scales::percent) + 
-    scale_x_continuous(limits = c(-7, 7)) + theme_bw())
-    dev.off()
-    print(ggplot(enhProm$enhancers, aes(x = log10_abs_dist)) + 
-    geom_density(alpha = 0.5, color = "#2A9D8F", fill = "#2A9D8F") + 
-    scale_y_continuous(limits = c(0,0.3), labels = scales::percent) + 
-    scale_x_continuous(limits = c(-7, 7)) + theme_bw())
-
-    pdf(file = paste0(plot_dir, promoterTSSplot), width = 10, height = 7)
-    print(ggplot(enhProm$promoters, aes(x = log10_abs_dist)) + 
-    geom_density(alpha = 0.5, color = "#2A9D8F", fill = "#2A9D8F") + 
-    scale_y_continuous(limits = c(0,0.3), labels = scales::percent) + 
-    scale_x_continuous(limits = c(-7, 7)) + theme_bw())
-    dev.off()
-    print(ggplot(enhProm$promoters, aes(x = log10_abs_dist)) + 
-    geom_density(alpha = 0.5, color = "#2A9D8F", fill = "#2A9D8F") +
-    scale_y_continuous(limits = c(0,0.3), labels = scales::percent) +
-    scale_x_continuous(limits = c(-7, 7)) +theme_bw())
-
-    enhProm <- data.table::rbindlist(enhProm,)
-    pdf(file = paste0(plot_dir, TSSplot), width = 10, height = 7)
-    print(ggplot(enhProm, aes(x = log10_abs_dist, fill = factor(mark), color = factor(mark))) +
-    geom_density(alpha = 0.5) +scale_color_manual(values = c("#E9C46A", "#2A9D8F")) + scale_fill_manual(values = c("#E9C46A", "#2A9D8F")) +
-    scale_x_continuous(limits = c(-7, 7)) + theme_bw() + font)
-    dev.off()
-    print(ggplot(enhProm, aes(x = log10_abs_dist, fill = factor(mark), color = factor(mark))) +
-    geom_density(alpha = 0.5) +scale_color_manual(values = c("#E9C46A", "#2A9D8F")) + scale_fill_manual(values = c("#E9C46A", "#2A9D8F")) +
-    scale_x_continuous(limits = c(-7, 7)) + theme_bw() + font)
-
-}
-distanceToTSS(fileList = annot_dir, enhancerTSSplot = "dunnart_enhancerTSS.pdf", 
-promoterTSSplot = "dunnart_promoterTSS.pdf", TSSplot = "dunnart_TSS.pdf")
->>>>>>> aecaaab5d31a2d52a08f88c5fa32888c436b7db8
 ```
 
 From this we can see that the promoter peaks have a large amount of peaks a long way from the TSS - suggests that these are either actually enhancers or they represent unannotated transcripts. Probably a mixture of both based on comparison with mouse peaks (where the annotation is better) there are not as many peaks in this distal regions. To look further into this I assessed the relationship between various peak features and the distances to the nearest genes as potential explanation for the distally-located promoter-associated peaks.
@@ -603,7 +466,6 @@ Use k-means clustering to group the peaks to decide on a cut off for "promoter" 
 We can use k-means clustering with the MacQueen algorithm (morissette_k-means_2013) to perform unsupervised clustering on promoter-associated peaks into 3 clusters based on distance to the closest TSS.
 ```{r k-means-clustering}
 set.seed(3)
-<<<<<<< HEAD
 
 file = paste0(annot_dir, "dunnart_promoter_annotation.txt")
 plot1 = paste0(plot_dir, "promoter_kmeans_bar.pdf")
@@ -648,41 +510,9 @@ p + ggtitle("Histogram of clustered peaks")
 pdf(plot2, width = 10, height = 7)
   print(p + font)
 dev.off() 
-=======
-kmeansCluster <- function(file, plot1, plot2, output){
-  data <- data.table::fread(file, header = TRUE, sep = "\t", quote = "") # read in all files
-  data <- data[,log10_dist:=log10(abs(distanceToTSS)+1.1)][,log10_dist:=ifelse(distanceToTSS<0,-log10_dist,log10_dist)] # nolint # nolint
-  data <- data[,abs_dist:=log10(abs(distanceToTSS)+1.1)] # nolint
-
-  data <- data %>% dplyr::select("V4", "width", "V7", "distanceToTSS", "log10_dist", "abs_dist", "annotation")
-  
-  ## plot the number of peaks in each cluster
-  ## Using the MacQueen algorithm instead of the default Lloyd 
-  ## The algorithm is more efficient as it updates centroids more often and usually needs to
-  ## perform one complete pass through the cases to converge on a solution.
-  df <- data[,5]
-  cre.kmeans <- kmeans(df, 3, iter.max = 100, nstart = 25, algorithm = "MacQueen")  
-  cre.kmeans_table <- data.frame(cre.kmeans$size, cre.kmeans$centers) # nolint
-  cre.kmeans_df <- data.frame(Cluster = cre.kmeans$cluster, data)
-
-  pdf(plot1, width = 10, height = 7)
-  p <- ggplot2::ggplot(data = cre.kmeans_df, aes(y = Cluster, fill = as.factor(Cluster), color = as.factor(Cluster))) +
-  geom_bar()  +
-  theme(plot.title = element_text(hjust = 0.5)) + theme_bw() + font
-  pdf(plot1)
-  print(p + ggplot2::scale_color_manual(values = c('#9EBCDA','#8C6BB1', "#4D004B")) +
-  scale_fill_manual(values = c('#9EBCDA','#8C6BB1', "#4D004B"))) # nolint
-  dev.off()
-  print(p + 
-  ggplot2::scale_color_manual(
-    values = c('#9EBCDA','#8C6BB1', "#4D004B")) +
-  scale_fill_manual(values = c('#9EBCDA','#8C6BB1', "#4D004B")))
->>>>>>> aecaaab5d31a2d52a08f88c5fa32888c436b7db8
 
 write.table(cre.kmeans_df, paste0(filterPeaks_dir, output), sep="\t", quote=F, row.names=F)
 ```
-
-<<<<<<< HEAD
 
 ## Filter for cluster 1 and make final promoter/enhancer plots
 
@@ -730,7 +560,6 @@ all_peaks = as.data.table(all_peaks)
 all_peaks = all_peaks[,log10_intensity:=log10(V7)]
 all_peaks = all_peaks[,log10_width:=log10(width)]
 
-=======
   p <- ggplot2::ggplot(cre.kmeans_df, aes(x = log10_dist, fill = as.factor(Cluster), color = as.factor(Cluster))) +
             geom_histogram(binwidth = 0.1, position = 'identity')  +
             theme_bw()+ font
@@ -740,21 +569,13 @@ all_peaks = all_peaks[,log10_width:=log10(width)]
   print(p + scale_color_manual(values = c('#9EBCDA','#8C6BB1', "#4D004B")) + scale_fill_manual(values = c('#9EBCDA','#8C6BB1', "#4D004B")))
 
   write.table(cre.kmeans_df, paste0(filterPeaks_dir, output), sep = "\t", quote = F, row.names = F)
-  return(cre.kmeans_df)
-}
 
-promoter_kmeans <- kmeansCluster(file = paste0(annot_dir, "dunnart_promoter_annotation.txt"),
-plot1 = paste0(plot_dir, "promoter_kmeans_bar.pdf"),
-plot2 = paste0(plot_dir, "promoter_kmeans_histogram.pdf"),
-output = "promoter_kmeans_peaks.txt")
->>>>>>> aecaaab5d31a2d52a08f88c5fa32888c436b7db8
 ```
 
 ## Plot distance to TSS
 ```{r}
 colors = c("#E9C46A","#e34a33", "#fdbb84","#fee8c8", "#2A9D8F")
 
-<<<<<<< HEAD
 p <- ggplot(all_peaks, aes(x=log10_dist, colour = factor(label), fill=factor(label))) + 
   geom_density(aes(x = log10_dist, y = ..density..), position="stack", alpha=0.7) + 
   theme_bw() + scale_fill_manual(values = colors) + scale_color_manual(values = colors)
@@ -764,8 +585,12 @@ pdf(plotTSS, width=10, height = 7)
 dev.off()
 
 my_comparisons = list( c("promoter cluster 1", "promoter cluster 2"), c("promoter cluster 1", "promoter cluster 3"), c("promoter cluster 1", "promoter"), c("promoter cluster 1", "enhancer") )
-  
+```
+
+
 ## Plot peak intensity
+
+```{r}
 p <- ggplot(all_peaks, aes(factor(label), y = log10_intensity)) + 
   geom_violin(aes(fill = factor(label), 
                   color = factor(label)), 
@@ -784,8 +609,12 @@ p +  ggtitle("Peak intensity for clustered promoter-associated peaks compared to
 pdf(paste0(plot_dir, "test.pdf"),width=10, height = 8)
   print(p + font)
 dev.off()
+```
+
+
 
 ## Plot peak width
+```{r}
 p <- ggplot(all_peaks, aes(factor(label), y = log10_width)) + 
   geom_violin(aes(fill = factor(label), 
                   color = factor(label)), 
@@ -803,8 +632,10 @@ p + ggtitle("Peak widths for clustered promoter-associated peaks compared to unf
 pdf(peakWidthPlot, width=9, height = 8)
   print(p + font)
 dev.off()
+```
 
 ## Plot genomic regions
+```{r}
 df2 = rbind(promoter.kmeans)
 df2 = map_df(df2, ~ gsub(" ().*", "", .x))# remove everything after the first space
 tbl = with(df2, table(annotation, Cluster)) %>% as.data.frame()
@@ -820,125 +651,13 @@ p + ggtitle("Genomic features of clusters")
 pdf(annotation)
 print(p + font)
 dev.off()
-=======
-Filter for cluster 1 and make final promoter/enhancer plots
-```{r plot-peak-clusters}
-plotPeakClusters <- function(x, y, enhancer, promoter, plotTSS, peakIntensityPlot, peakWidthPlot, annotation){
-  enhancer.annot <- data.table::fread(enhancer, header = TRUE, sep = "\t", quote = "") 
-  enhancer.annot <- enhancer.annot[,log10_dist:=log10(abs(distanceToTSS)+1)][,log10_dist:=ifelse(distanceToTSS<0,-log10_dist,log10_dist)]
-  enhancer.annot <- enhancer.annot[,abs_dist:=abs(distanceToTSS)]
-  promoter.annot <- data.table::fread(promoter, header = TRUE, sep = "\t", quote = "")
-  promoter.annot <- promoter.annot[,log10_dist:=log10(abs(distanceToTSS)+1)][,log10_dist:=ifelse(distanceToTSS<0,-log10_dist,log10_dist)]
-  promoter.annot <- promoter.annot[,abs_dist:=abs(distanceToTSS)]
 
-  promoter.annot$label <- "promoter"
-  enhancer.annot$label <- "enhancer"
-  enhancer.annot <- enhancer.annot %>% dplyr::select("V4", "width", "V7", "distanceToTSS", "log10_dist", "abs_dist", "annotation", "label")
-  promoter.annot <- promoter.annot %>% dplyr::select("V4", "width", "V7", "distanceToTSS", "log10_dist", "abs_dist", "annotation", "label")
-
-  promoter.kmeans <- data.table::fread(x, header = TRUE, sep = "\t", quote = "") 
-  promoter.kmeans$cre <- "promoter"
-
-  for (i in 1:nrow(promoter.kmeans)) {
-    if(promoter.kmeans$Cluster[i]=='1' & promoter.kmeans$cre[i]=='promoter') {
-            promoter.kmeans[i, 'label'] <- "promoter cluster 1"
-            }
-            else if(promoter.kmeans$Cluster[i]=='2' & promoter.kmeans$cre[i]=='promoter') {
-              promoter.kmeans[i, 'label'] <- "promoter cluster 2"
-              }
-              else if(promoter.kmeans$Cluster[i]=='3' & promoter.kmeans$cre[i]=='promoter') {
-                promoter.kmeans[i, 'label'] <- "promoter cluster 3"
-                }
-  }
-
-  data2 <- promoter.kmeans %>% dplyr::select("V4", "width", "V7", "distanceToTSS", "log10_dist", "abs_dist", "annotation", "label")
-  all_peaks <- rbind(data2, enhancer.annot, promoter.annot)
-  all_peaks <- data.table::as.data.table(all_peaks)
-  all_peaks <- all_peaks[,log10_intensity:=log10(V7)]
-  all_peaks <- all_peaks[,log10_width:=log10(width)]
-
-  colors <- c("#E9C46A","#e34a33", "#fdbb84","#fee8c8", "#2A9D8F")
- 
-  ## Plot distance to TSS
-  pdf(plotTSS, width = 10, height = 7)
-  print(ggplot(all_peaks, aes(x = log10_dist, colour = factor(label), fill = factor(label))) + geom_density(aes(x = log10_dist, y = ..density..), position = "stack", alpha = 0.7) + 
-  theme_bw() + scale_fill_manual(values = colors)+
-  scale_color_manual(values = colors) + font)
-  dev.off()
-  print(ggplot(all_peaks, aes(x = log10_dist, colour = factor(label), fill = factor(label))) + geom_density(aes(x = log10_dist, y = ..density..), position = "stack", alpha = 0.7) + 
-  theme_bw() + scale_fill_manual(values = colors)+ 
-  scale_color_manual(values = colors) + font)
-
-  my_comparisons <- list( c("promoter cluster 1", "promoter cluster 2"), c("promoter cluster 1", "promoter cluster 3"), c("promoter cluster 1", "promoter"), c("promoter cluster 1", "enhancer") )
-  ## Plot peak intensity
-  p <- ggplot(all_peaks, aes(factor(label), y = log10_intensity)) + 
-  geom_violin(aes(fill = factor(label), color = factor(label)),
-   position = "dodge"
-   )+
-  geom_boxplot(aes(color = factor(label)),
-    outlier.shape = NA,
-    width = .15, 
-    notch = TRUE,
-    position = position_dodge(width = .1)
-  ) + theme_bw() + xlab("") + ylab("Log 10 peak intensity") 
-  pdf("test.pdf", width = 10, height = 8)
-  print(p + ggplot2::scale_color_manual(values = colors) +
-  ggplot2::scale_fill_manual(values = colors) +
-  font +
-  ggpubr::stat_compare_means(comparisons = my_comparisons))
-  dev.off()
-  print(p + scale_color_manual(values = colors) +
-  scale_fill_manual(values = colors) + font + stat_compare_means(comparisons = my_comparisons))
-
-  ## Plot peak width
-  p <- ggplot(all_peaks, aes(factor(label), y = log10_width)) +
-  geom_violin(aes(fill = factor(label), color = factor(label)),
-   position = "dodge"
-   )+
-  geom_boxplot(aes(color = factor(label)),
-    outlier.shape = NA,
-    width = .15, 
-    notch = TRUE,
-    position = position_dodge(width = .1)
-  ) + theme_bw() + xlab("") + ylab("Log 10 peak width")
-  pdf(peakWidthPlot, width = 9, height = 8)
-  print(p + scale_color_manual(values =colors) +
-  scale_fill_manual(values = colors) + font + stat_compare_means(comparisons = my_comparisons))
-  dev.off()
-  print(p + scale_color_manual(values =colors) +
-  scale_fill_manual(values = colors) + font + stat_compare_means(comparisons = my_comparisons))
-
-  ## Plot genomic regions
-  df2 <- rbind(promoter_kmeans)
-  df2 <- map_df(df2, ~ gsub(" ().*", "", .x))# remove everything after the first space
-  tbl <- with(df2, table(annotation, Cluster)) %>% as.data.frame()
-  pdf(annotation)
-    ggplot(tbl, aes(factor(annotation), Freq, fill = factor(Cluster))) +
-    geom_bar(position = position_stack(reverse = TRUE), stat = "identity") +
-    #geom_text(data = subset(data,Freq != 0),aes(label = Freq, y = pos), size = 3)+
-    scale_fill_manual(values = c('#9EBCDA','#8C6BB1', "#4D004B"))  +
-    theme_minimal() + ylab("Number of peaks") +
-    xlab("")
-    dev.off()
-    ggplot(tbl, aes(factor(annotation), Freq, fill = factor(Cluster))) +
-    geom_bar(position = position_stack(reverse = TRUE), stat = "identity") +
-    #geom_text(data = subset(data,Freq != 0),aes(label = Freq, y = pos), size = 3)+
-    scale_fill_manual(values = c('#9EBCDA','#8C6BB1', "#4D004B"))  +
-    theme_minimal() + ylab("Number of peaks") +
-    xlab("")
-}
-plotPeakClusters(peakWidthPlot = paste0(plot_dir, "filteredPeaks_peakWidthPlot.pdf"),plotTSS =paste0(plot_dir,  "filteredPeaks_peakDistanceToTSS.pdf"),
-peakIntensityPlot = paste0(plot_dir, "filteredPeaks_peakIntensityPlot.pdf"), annotation = paste0(plot_dir, "filteredPeaks_peakAnnotation.pdf"),
-x =  paste0(filterPeaks_dir, "promoter_kmeans_peaks.txt"), enhancer = paste0(annot_dir, "dunnart_enhancer_annotation.txt"), 
-promoter = paste0(annot_dir, "dunnart_promoter_annotation.txt"))
->>>>>>> aecaaab5d31a2d52a08f88c5fa32888c436b7db8
 ```
 
 
 ## Extract cluster groups from narrowPeak files and save separately
 
 ```{r}
-<<<<<<< HEAD
 promoter.kmeans = fread(paste0(filterPeaks_dir, "promoter_kmeans_peaks.txt"))
 cluster1 <- promoter.kmeans$V4[promoter.kmeans$Cluster==1]
 cluster2 <- promoter.kmeans$V4[promoter.kmeans$Cluster==2]
@@ -956,24 +675,6 @@ file= fread(promoter, header=FALSE, sep="\t", quote = "")
 write.table(subset(file, V4 %in% cluster1), out1, quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
 write.table(subset(file, V4 %in% cluster2), out2, quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
 write.table(subset(file, V4 %in% cluster3), out3, quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
-=======
-promoter.kmeans <- data.table::fread(paste0(filterPeaks_dir, "promoter_kmeans_peaks.txt"))
-cluster1 <- promoter.kmeans$V4[promoter.kmeans$Cluster == 1]
-cluster2 <- promoter.kmeans$V4[promoter.kmeans$Cluster == 2]
-cluster3 <- promoter.kmeans$V4[promoter.kmeans$Cluster == 3]
-
-extractClusters <- function(promoter, cluster1, cluster2, cluster3, out1, out2, out3){
-  file =  data.table::fread(promoter, header = FALSE, sep = "\t", quote = "") 
-  write.table(subset(file, V4 %in% cluster1), out1, quote = FALSE, col.names = FALSE, row.names = FALSE, sep = "\t")
-  write.table(subset(file, V4 %in% cluster2), out2, quote = FALSE, col.names = FALSE, row.names = FALSE, sep = "\t")
-  write.table(subset(file, V4 %in% cluster3), out3, quote = FALSE, col.names = FALSE, row.names = FALSE, sep = "\t")
-}
-
-extractClusters(promoter = paste0(fullPeak_dir, "dunnart_promoter_peaks.narrowPeak"), out1 = paste0(filterPeaks_dir, "cluster1_promoters.narrowPeak"), 
-out2 =paste0(filterPeaks_dir, "cluster2_promoters.narrowPeak") , out3 = paste0(filterPeaks_dir, "cluster3_promoters.narrowPeak"), cluster1 = cluster1, 
-cluster2 = cluster2, cluster3 = cluster3)
-
->>>>>>> aecaaab5d31a2d52a08f88c5fa32888c436b7db8
 ```
 
 ## Anotate promoter clusters
@@ -994,15 +695,12 @@ annotatePeaks(peak = paste0(filterPeaks_dir, "cluster3_promoters.narrowPeak"),
   kegg = "cluster3_KEGG.txt", outFile2 = "cluster3_annotationConvertedIDs_t.devil.txt")
 ```
 
-
-<<<<<<< HEAD
 ## Assess distance to TSS for clusters
 ```{r}
 fileList = annot_dir
 enhancerTSSplot="dunnart_enhancerTSS.pdf"
 promoterTSSplot="dunnart_filtered_promoterTSS.pdf"
 TSSplot = "dunnart_all_TSS.pdf"
-
 
 files =list.files(fileList, pattern= "_annotation.txt", full.names=T) # create list of files in directory
 files = as.list(files)
@@ -1024,7 +722,7 @@ p <- ggplot(enhProm$enhancers, aes(x=log10_abs_dist,
         geom_density(alpha=0.5) + theme_bw() + scale_color_manual(values = c('#E9C46A')) + 
         scale_fill_manual(values = c('#E9C46A'))
 
-p + ggtitle("Distance to the nearest TSS for enhancer-associated peaks")
+#p + ggtitle("Distance to the nearest TSS for enhancer-associated peaks")
 
 pdf(file = paste0(plot_dir, enhancerTSSplot), width=10, height = 7)
 print(p + font)
@@ -1042,43 +740,6 @@ p + ggtitle("Distance to the nearest TSS for promoter-associated peaks")
 pdf(file = paste0(plot_dir, TSSplot), width=15, height = 7)
 print(p + font)
 dev.off()
-=======
-### Assess distance to TSS for clusters
-```{r distance-to-tss-2}
-distanceToTSS <- function(fileList, enhancerTSSplot, promoterTSSplot, TSSplot){
-    files <- list.files(fileList, pattern =  "_annotation.txt", full.names = T) # create list of files in directory
-    files <- as.list(files)
-    data <- lapply(files, function(x) data.table::fread(x, header = TRUE, sep = "\t", quote = "", na.strings = c("", "NA"))) # read in all files
-    names(data) <- c("cluster1", "cluster2", "cluster3", "enhancers","H3K27ac","H3K4me3","promoters")
-    enhProm <- Map(dplyr::mutate, data, mark = names(data))
-    enhProm <- suppressWarnings(lapply(enhProm, function(x) x[,log10_abs_dist:=log10(abs(distanceToTSS)+1)][,log10_abs_dist:=ifelse(distanceToTSS<0,-log10_abs_dist,log10_abs_dist)]))
-    enhProm <- suppressWarnings(lapply(enhProm, function(x) x[,abs_dist:=abs(distanceToTSS)]))
-    level_order <- c("cluster1", "cluster2", "cluster3", "promoters", "enhancers", "H3K4me3", "H3K27ac")
-
-  pdf(file = paste0(plot_dir, enhancerTSSplot), width = 10, height = 7)
-  print(ggplot(enhProm$enhancers, aes(x = log10_abs_dist, color = factor(mark), fill = factor(mark))) + 
-  geom_density(alpha = 0.5) + theme_bw() + scale_color_manual(values = c('#E9C46A')) 
-  + scale_fill_manual(values = c('#E9C46A')) + font) 
-  dev.off()
-  print(ggplot(enhProm$enhancers, aes(x = log10_abs_dist, color = factor(mark), fill = factor(mark))) + 
-  geom_density(alpha = 0.5) + theme_bw() + scale_color_manual(values = c('#E9C46A')) 
-  + scale_fill_manual(values = c('#E9C46A')) + font) 
-
-  enhProm <- rbind(enhProm$promoters, enhProm$cluster1, enhProm$cluster2, enhProm$cluster3 ,use.names = TRUE)
-  pdf(file = paste0(plot_dir, TSSplot), width = 15, height = 7)
-  print(ggplot(enhProm, aes(x = log10_abs_dist, color = factor(mark, level = level_order), fill = factor(mark, level = level_order))) + 
-  geom_density(position = "stack", alpha = 0.8) + 
-  theme_bw() + scale_color_manual(values = c("#4D004B", "#E9C46A","#2A9D8F")) + 
-  scale_fill_manual(values = c("#4D004B", "#E9C46A","#2A9D8F")) + font) 
-  dev.off()
-  print(ggplot(enhProm, aes(x = log10_abs_dist, color = factor(mark, level = level_order), fill = factor(mark, level = level_order))) + 
-  geom_density(position = "stack", alpha = 0.8) + 
-  theme_bw() + scale_color_manual(values = c("#4D004B", "#E9C46A","#2A9D8F")) + 
-  scale_fill_manual(values = c("#4D004B", "#E9C46A","#2A9D8F")) + font) 
-}
-distanceToTSS(fileList = annot_dir, enhancerTSSplot = "dunnart_enhancerTSS.pdf", promoterTSSplot = "dunnart_filtered_promoterTSS.pdf",
-TSSplot = "dunnart_all_TSS.pdf")
->>>>>>> aecaaab5d31a2d52a08f88c5fa32888c436b7db8
 ```
 
 ## Now look at CpG% and GC% for these groups
@@ -1112,7 +773,6 @@ annotatePeaks.pl output/peaks/dunnart_enhancer_peaks.narrowPeak smiCra1 -gff dat
 
 
 ```{r}
-<<<<<<< HEAD
 fileList = annot_dir
 gcPlot = paste0(plot_dir, "dunnart_GC.pdf")
 cpgPlot = paste0(plot_dir, "dunnart_cpg.pdf")
@@ -1155,62 +815,6 @@ p + ggtitle("GC content")
 pdf(gcPlot, width=9, height = 8)
     print(p + font + stat_compare_means(p.adjust.method = "fdr", comparisons = my_comparisons))
 dev.off()
-=======
-GC_content <- function(fileList, gcPlot, cpgPlot, dataframestobind){
-    files <- list.files(fileList, pattern =  "homerAnnot.txt", full.names = T) # create list of files in directory
-    files <- as.list(files)
-    data <- lapply(files, function(x) data.table::fread(x, header = TRUE, sep = "\t", quote = "", na.strings = c("", "NA"))) # read in all files
-    names(data) <- c("cluster1","cluster2","cluster3","enhancers", "promoters")
-    df1 <- Map(dplyr::mutate, data, group = names(data))
-    df1 <- lapply(df1, function(x) x %>% dplyr::select("Chr", "Start", "End", "Peak Score", "Distance to TSS", "CpG%", "GC%", "group") %>% data.table::as.data.table()) # nolint
-    df1 <- rbind(df1$cluster1, df1$cluster2, df1$cluster3, df1$promoters, df1$enhancers)
-    colnames(df1)[5:7] <- c("distanceToTSS","CpG", "GC")
-    df1[is.na(df1)] <- 0
-    df1 <- df1[,log10_abs_dist:=log10(abs(distanceToTSS)+1)][,log10_abs_dist:=ifelse(distanceToTSS<0,-log10_abs_dist,log10_abs_dist)]
-
-    my_comparisons <- list( c("cluster1", "cluster2"), c("cluster1", "cluster3"), c("cluster1", "promoters"), 
-    c("cluster1", "enhancers"), c("promoters", "enhancers"), c("promoters", "cluster2"), 
-    c("promoters", "cluster3"), c("enhancers", "cluster2"), c("enhancers", "cluster3"), c("cluster2", "cluster3") )
-
-    p <- ggplot(df1, aes(factor(group), y = GC)) + 
-    geom_violin(aes(fill = factor(group), color = factor(group)),
-    position = "dodge"
-    )+
-    geom_boxplot(aes(color = factor(group)),
-    outlier.shape = NA,
-    width = .15, 
-    notch = TRUE,
-    fill = c("#E7EEF6","#D4C7E2","#D3BFD2", "#FCF8EC","#E4F3F1"),
-    position = position_dodge(width = .1)
-    ) + theme_bw() + xlab("") + ylab("GC content") 
-    pdf(gcPlot, width = 9, height = 8)
-    print(p + font + scale_color_manual(values = c('#9EBCDA','#8C6BB1',"#4D004B", "#E9C46A","#2A9D8F")) +
-    scale_fill_manual(values = c("#B6CDE3","#A990C4","#7A4078" ,"#F1DAA2","#7AC2B9")) + stat_compare_means(p.adjust.method = "fdr", comparisons = my_comparisons))
-    dev.off()
-    print(p + font + scale_color_manual(values = c('#9EBCDA','#8C6BB1',"#4D004B", "#E9C46A","#2A9D8F")) +
-    scale_fill_manual(values = c("#B6CDE3","#A990C4","#7A4078" ,"#F1DAA2","#7AC2B9")) + stat_compare_means(p.adjust.method = "fdr", comparisons = my_comparisons))
-
-    p <- ggplot(df1, aes(factor(group), y = CpG)) + 
-    geom_violin(aes(fill = factor(group), color = factor(group)),
-     position = "dodge"
-     )+
-    geom_boxplot(aes(color = factor(group)),
-    outlier.shape = NA,
-    width = .15, 
-    notch = TRUE,
-    fill = c("#E7EEF6","#D4C7E2","#D3BFD2", "#FCF8EC","#E4F3F1"),
-    position = position_dodge(width = .1)
-    ) + theme_bw() + xlab("") + ylab("CpG") 
-    pdf(cpgPlot, width = 9, height = 8)
-    print(p + font + scale_color_manual(values = c('#9EBCDA','#8C6BB1',"#4D004B", "#E9C46A","#2A9D8F")) +
-    scale_fill_manual(values = c("#B6CDE3","#A990C4","#7A4078" ,"#F1DAA2","#7AC2B9")) + stat_compare_means(p.adjust.method = "fdr", comparisons = my_comparisons))
-    dev.off()
-    print(p + font + scale_color_manual(values = c('#9EBCDA','#8C6BB1',"#4D004B", "#E9C46A","#2A9D8F")) +
-    scale_fill_manual(values = c("#B6CDE3","#A990C4","#7A4078" ,"#F1DAA2","#7AC2B9")) + stat_compare_means(p.adjust.method = "fdr", comparisons = my_comparisons))
-
-}
-GC_content(fileList = annot_dir, gcPlot = paste0(plot_dir, "dunnart_GC.pdf"), cpgPlot = paste0(plot_dir, "dunnart_cpg.pdf"))
->>>>>>> aecaaab5d31a2d52a08f88c5fa32888c436b7db8
 
 ## Plot CpG
 p <- ggplot(df1, aes(factor(group), y = CpG)) + 
@@ -1237,42 +841,26 @@ pdf(cpgPlot, width = 9, height = 8)
 ## GO enrichment for high-confidence promoter-associated peaks and enhancer-associated peaks
 
 ```{r}
-<<<<<<< HEAD
-
 promoter = fread(paste0(annot_dir, "cluster1_promoter_annotationConvertedIDs.txt"))
 enhancer = fread(paste0(annot_dir, "dunnart_enhancer_annotationConvertedIDs.txt"))
 data = list(promoter, enhancer)
 genes = lapply(data, function(i) as.data.frame(i)$mouseensembl)
 genes = lapply(genes, function(i) unique(i))
 names(genes) = c("promoter-associated peaks", "enhancer-associated peaks")
-=======
-promoter <- data.table::fread(paste0(annot_dir, "cluster1_promoter_annotationConvertedIDs.txt"))
-enhancer <- data.table::fread(paste0(annot_dir, "dunnart_enhancer_annotationConvertedIDs.txt"))
-data <- list(promoter, enhancer)
-genes <- lapply(data, function(i) as.data.frame(i)$mouseensembl)
-genes <- lapply(genes, function(i) unique(i))
-names(genes) <- c("promoter-associated peaks", "enhancer-associated peaks")
->>>>>>> aecaaab5d31a2d52a08f88c5fa32888c436b7db8
+
 go_cluster <- setReadable(
       compareCluster(
         geneCluster = genes, 
         fun = enrichGO, 
-<<<<<<< HEAD
-        ont="BP",
         universe = bg, 
-        keyType="ENSEMBL", 
-=======
-        ont = "BP", # nolint
-        universe = bg, 
+        ont = "BP",
         keyType = "ENSEMBL", 
->>>>>>> aecaaab5d31a2d52a08f88c5fa32888c436b7db8
         pvalueCutoff = 0.001, 
         OrgDb = org.Mm.eg.db),
       OrgDb = org.Mm.eg.db, 
       keyType = "ENSEMBL")
 ```
 
-<<<<<<< HEAD
 ## Plot GO enrichment 
 
 ```{r}
@@ -1293,22 +881,6 @@ genes_ent = lapply(genes_ent, function(x) x$ENTREZID)
 
 suppressWarnings(bg_ent <- bitr(geneID=bg, fromType="ENSEMBL", toType="ENTREZID", OrgDb="org.Mm.eg.db" ))
 bg_entrez = bg_ent$ENTREZID
-=======
-### Plot GO enrichment 
-
-```{r}
-pdf(paste0(plot_dir, "dunnart_go_cluster.pdf", width = 11, height = 9))
-print(dotplot(go_cluster, showCategory = 10) + 
-scale_color_viridis() +
-theme(axis.text.x = element_text(angle = 45, hjust = 1)))
-dev.off()
-
-write.table(go_cluster@compareClusterResult, file = paste0(annot_dir, "dunnart_peak_mm10_enrichGO_compareCluster_results.txt"), sep = "\t", quote = F, row.names = F)
-suppressWarnings(genes_ent <- lapply(genes, function(x) bitr(geneId = x, fromType = "ENSEMBL", toType = "ENTREZID", OrgDb = "org.Mm.eg.db" )))
-genes_ent <- lapply(genes_ent, function(x) x$ENTREZID)
-suppressWarnings(bg_ent <- bitr(geneId = bg, fromType = "ENSEMBL", toType = "ENTREZID", OrgDb = "org.Mm.eg.db" ))
-bg_ent <- bg_ent$ENTREZID
->>>>>>> aecaaab5d31a2d52a08f88c5fa32888c436b7db8
 
 kegg_cluster <- 
   compareCluster(
@@ -1323,7 +895,6 @@ p <- dotplot(kegg_cluster, showCategory = 10) + scale_color_viridis() +
 p
 
 pdf(paste0(plot_dir, "dunnart_kegg_cluster.pdf"), width = 8, height = 6)
-<<<<<<< HEAD
 print(p)
 dev.off()
 
@@ -1337,25 +908,6 @@ simplifyGOFromMultipleLists(go_terms,
                                  measure = "Wang", 
                                  method = "binary_cut")
 dev.off()  
-```
-=======
-print(dotplot(kegg_cluster, showCategory = 10) + 
-scale_color_viridis() + 
-theme(axis.text.x = element_text(angle = 45, hjust = 1)))
-dev.off()
-
-split <-  split(as.data.frame(go_cluster@compareClusterResult), f = factor(go_cluster@compareClusterResult$Cluster))
-go_terms <- lapply(split, function(x) x$ID)
-pdf(paste0(plot_dir, "dunnart_simplifyGO.pdf", width = 10, height = 14))
-    simplifyGOFromMultipleLists(go_terms, db = org.Mm.eg.db,  measure = "Wang", method = "binary_cut")
-    dev.off()  
-
-intersect <- intersect(go_terms[[1]], go_terms[[2]])
-union <- union(go_terms[[1]], go_terms[[2]])
-promoter_setdiff <- setdiff(go_terms[[1]], go_terms[[2]])
-
-promoter_setdiff_terms <- go_cluster@compareClusterResult[go_cluster@compareClusterResult[,"ID"] %in% promoter_setdiff,]
-enhancer_setdiff_terms <- go_cluster@compareClusterResult[go_cluster@compareClusterResult[,"ID"] %in% enhancer_setdiff,]
 ```
 
 
