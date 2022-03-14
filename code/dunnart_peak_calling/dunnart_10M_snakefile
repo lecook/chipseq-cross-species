@@ -228,12 +228,12 @@ rule call_peaks_macs2_pooled_replicates:
         H3K27ac = "output/bam_files/H3K27ac_pooled_downSampled.PPq30.sorted.dedup.bam",
         input = "output/bam_files/input_pooled_downSampled.PPq30.sorted.dedup.bam"
     output:
-        "output/peaks/H3K4me3_pooled_macs2_default_peaks_dunnart_downSampled_peaks.xls",
+        "output/peaks/H3K4me3_pooled_macs2_default_dunnart_downSampled_peaks.xls",
         "output/peaks/H3K4me3_pooled_macs2_default_summits_dunnart_downSampled_peaks.bed",
-        "output/peaks/H3K4me3_pooled_macs2_default_peaks_dunnart_downSampled_peaks.narrowPeak",
-        "output/peaks/H3K27ac_pooled_macs2_default_peaks_dunnart_downSampled_peaks.xls",
+        "output/peaks/H3K4me3_pooled_macs2_default_dunnart_downSampled_peaks.narrowPeak",
+        "output/peaks/H3K27ac_pooled_macs2_default_dunnart_downSampled_peaks.xls",
         "output/peaks/H3K27ac_pooled_macs2_default_summits_dunnart_downSampled_peaks.bed",
-        "output/peaks/H3K27ac_pooled_macs2_default_peaks_dunnart_downSampled_peaks.narrowPeak"
+        "output/peaks/H3K27ac_pooled_macs2_default_dunnart_downSampled_peaks.narrowPeak"
     log:
         H3K4me3 ="output/logs/H3K4me3_pooled_call_peaks_macs2_default_dunnart_downSampled.log",
         H3K27ac ="output/logs/H3K27ac_pooled_call_peaks_macs2_default_dunnart_downSampled.log"
@@ -305,7 +305,7 @@ rule overlap_peaks_H3K27ac:
     input:
         peak1="output/peaks/A-3_H3K27ac_vs_A-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak",
         peak2="output/peaks/B-3_H3K27ac_vs_B-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak",
-        pooled="output/peaks/H3K27ac_pooled_macs2_default_peaks_dunnart_downSampled_peaks.narrowPeak"
+        pooled="output/peaks/H3K27ac_pooled_macs2_default_dunnart_downSampled_peaks.narrowPeak"
     output:
         "output/peaks/H3K27ac_overlap_default_dunnart_downSampled_peaks.narrowPeak"
     shell:
