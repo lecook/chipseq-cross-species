@@ -24,3 +24,4 @@ output/qc/*.gz
 output/qc/*.txt
 output/qc/*.npz
 output/qc/*.tab
+output/wga/*
