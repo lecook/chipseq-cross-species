@@ -214,7 +214,7 @@ rule call_peaks_macs2:
     log:
         "output/logs/{case}_vs_{control}_call_peaks_macs2_default_dunnart_downSampled.log"
     params:
-        name = "{case}_vs_{control}_macs2_default_dunnart_downSampled",
+        name = "{case}_vs_{control}_macs2_default_dunnart_downSampled_peaks",
     run:
         shell("macs2 callpeak -f BAMPE -t {input.case} \
         -c {input.control} --keep-dup all \
