@@ -78,8 +78,8 @@ Run RepeatModeler to de novo find repeat regions in the dunnart genome:
 ```{bash eval=FALSE}
 BuildDatabase -name dunnart -engine ncbi data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr.fasta
 
-nohup RepeatModeler -database dunnart -pa 20 >& output/repeat_modeler/repeat_modeler/repeatmodeler.out
-
+nohup RepeatModeler -database dunnart -pa 20 >& output/wga/repeat_modeler
+repeat_modeler/repeatmodeler.out
 ```
 
 Run RepeatMasker to mask repeats in dunnart genome (makes repeats lowercase). Run as an array for scaffolds to make it quicker.
@@ -94,7 +94,7 @@ RepeatMasker -q -xsmall data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_fl
 Using faSplit from the UCSC Kent Tools
 
 ```{bash eval=FALSE}
-faSplit byName data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr.fasta data/genomic_data/smiCra1_split/
+faSplit byName data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr.fasta data/genomic_data/smiCra1_scaffolds/
 ```
 
 ## Create .2bit and .sizes files
@@ -131,22 +131,28 @@ http://last.cbrc.jp/doc/maf-convert.html
 
 ```{bash eval=FALSE}
 module load last/last/1066
-maf-convert axt ${tr}.maf > ${tr}.axt
+maf-convert axt output/wga/maf/${tr}.maf > output/wga/axt/${tr}.axt
 ```
+
+script: code/maf-convert_commands.sh
+run with: code/array_wrapper.slurm
 
 ## axtChain
 
 We use axtChain (http://www.soe.ucsc.edu/~kent; default parameters) to build co-linear alignment chains.
 
 ```{bash eval=FALSE}
-axtChain -linearGap=loose -scoreScheme=../../bin/GenomeAlignmentTools/HoxD55.q data/genomic_data/mm10_smiCra1.axt data/genomic_data/mm10.2bit data/genomic_data/smiCra1.2bit output/wga/axt_chain/mm10_smiCra1.chain
+axtChain -linearGap=loose -scoreScheme=bin/GenomeAlignmentTools/HoxD55.q output/axt/[axt_files] data/genomic_data/mm10.2bit data/genomic_data/smiCra1.2bit output/wga/axt_chain/mm10_smiCra1.chain
 ```
+
+script: code/axt_commands.sh
+run with: code/array_wrapper.slurm
 
 ## chainMergeSort
 Merge short chains into longer ones, concatenate chains and sort
 
 ```{bash eval=FALSE}
-chainMergeSort data/genomic_data/*.chain > output/wga/chain_merge/smiCra1_mm10.chain
+chainMergeSort output/wga/axt_chain/*.chain > output/wga/chain_merge/smiCra1_mm10.chain
 ```
 
 
@@ -169,7 +175,6 @@ export MACHTYPE=x86_64
 make 
 
 PATH=$PATH:/Users/lauracook/bin/GenomeAlignmentTools/src
-
 ```
 
 ## RepeatFiller
@@ -179,9 +184,9 @@ https://github.com/hillerlab/GenomeAlignmentTools
 RepeatFiller [5] is a tool to incorporate newly-detected repeat-overlapping alignments into pairwise alignment chains [4]. Its runtime adds little to the computationally more expensive step of generating chains in pairwise whole-genome alignments. RepeatFiller circumvents the problem that considering all repeat-overlapping alignment seeds during whole genome alignment is computationally not feasible. Therefore, RepeatFiller only aligns local genomic regions that are bounded by colinear aligning blocks, as provided in the chains, which makes it feasible to consider all seeds including those that overlap repetitive regions. RepeatFiller application to mammalian genome alignment chains can add between 22 and 84 Mb of previously-undetected alignments that mostly originate from transposable elements [5]. This helps to comprehensively align repetitive regions and improves the annotation of conserved non-coding elements.
 
 ```{bash eval=FALSE}
-python3 RepeatFiller.py -c output/wga/axt_chain/smiCra1_mm10.chain -T2 mm10.2bit -Q2 smiCra1.2bit
+python3 RepeatFiller.py -c output/wga/chain_merge/smiCra1_mm10.chain -T2 data/genomic_data/mm10.2bit -Q2 data/genomic_data/smiCra1.2bit
 
-python3 RepeatFiller.py -c smiCra1_mm10_patched_sorted.chain -T2 ../../data/genomes/mm10.2bit -Q2 ../../data/genomes/smiCra1.2bit
+python3 RepeatFiller.py -c smiCra1_mm10_patched_sorted.chain -T2 data/genomic_data/mm10.2bit -Q2 data/genomic_data/smiCra1.2bit
 
 ```
 
@@ -194,7 +199,7 @@ patchChain.perl performs a highly sensitive local pairwise alignment for loci fl
 This procedure is recommended for comparisons between species that are separated by >0.75 substitutions per neutral site [1].
 
 ```{bash eval=FALSE}
-patchChain.perl smiCra1_mm10.chain /data/projects/punim0586/lecook/chipseq-cross-species/data/genomic_data/mm10.2bit /data/projects/punim0586/lecook/chipseq-cross-species/data/genomic_data/smiCra1.2bit /data/projects/punim0586/lecook/chipseq-cross-species/data/genomic_data/mm10.chrom.sizes /data/projects/punim0586/lecook/chipseq-cross-species/data/genomic_data/smiCra1.chrom.sizes -chainMinScore 5000 -gapMaxSizeT 500000 -gapMaxSizeQ 500000 -gapMinSizeT 30 -gapMinSizeQ 30 -numJobs 10 -jobDir jobs -jobList jobList -outputDir output/wga/pslOutput -minEntropy 1.8 -windowSize 30 -minIdentity 60 -lastzParameters "--format=axt K=1500 L=2500 M=0 T=0 W=5 Q=/data/projects/punim0586/lecook/chipseq-pipeline/cross_species/bin/GenomeAlignmentTools/example/HoxD55.q"
+patchChain.perl output/wga/chain_merge/smiCra1_mm10.chain data/genomic_data/mm10.2bit data/genomic_data/smiCra1.2bit data/genomic_data/mm10.chrom.sizes data/genomic_data/smiCra1.chrom.sizes -chainMinScore 5000 -gapMaxSizeT 500000 -gapMaxSizeQ 500000 -gapMinSizeT 30 -gapMinSizeQ 30 -numJobs 10 -jobDir jobs -jobList jobList -outputDir output/wga/patch_chain/pslOutput -minEntropy 1.8 -windowSize 30 -minIdentity 60 -lastzParameters "--format=axt K=1500 L=2500 M=0 T=0 W=5 Q=/data/projects/punim0586/lecook/chipseq-pipeline/cross_species/bin/GenomeAlignmentTools/example/HoxD55.q"
 ```
 
 This results in 10 alignment jobs that are located in jobs/ and listed in 'jobList'
@@ -222,7 +227,7 @@ This create a folder with the jobs and a jobList which can be called in an array
 axtChain on psl alignments (patchChain new alignments plus genomeWide lastz alignments)
 
 ```{bash eval=FALSE}
-axtChain -psl -linearGap=loose -scoreScheme=bin/GenomeAlignmentTools/HoxD55.q all.psl data/genomic_data/mm10.2bit data/genomic_data/smiCra1.2bit output/wga/patch_chain/smiCra1_mm10_patched.chain
+axtChain -psl -linearGap=loose -scoreScheme=bin/GenomeAlignmentTools/HoxD55.q output/wga/patch_chain/all.psl data/genomic_data/mm10.2bit data/genomic_data/smiCra1.2bit output/wga/patch_chain/smiCra1_mm10_patched.chain
 ```
 
 4.7G Jan 31 18:42 smiCra1_mm10.chain
@@ -242,7 +247,7 @@ chainCleaner output/wga/repeat_filler/smiCra1_mm10_repFil.chain data/genomic_dat
 
 Run chain cleaner on patched chain file
 ```{bash eval=FALSE}
-chainCleaner smiCra1_mm10_patched_sorted_repFil.chain ../../data/genomes/mm10.2bit ../../data/genomes/smiCra1.2bit smiCra1_mm10_patched_sorted_repFil_chainCl.chain smiCra1_mm10_patched_sorted_repFil_chainCl.bed -tSizes=../../data/genomes/mm10.sizes -qSizes=../../data/genomes/smiCra1.sizes -LRfoldThreshold=2.5 -doPairs -LRfoldThresholdPairs=10 -maxPairDistance=10000 -maxSuspectScore=100000 -minBrokenChainScore=75000 -linearGap=loose
+chainCleaner smiCra1_mm10_patched_sorted_repFil.chain data/genomic_data/mm10.2bit data/genomic_data/smiCra1.2bit output/wga/chain_cleaner/smiCra1_mm10_patched_sorted_repFil_chainCl.chain output/wga/chain_cleaner/smiCra1_mm10_patched_sorted_repFil_chainCl.bed -tSizes=data/genomic_data/mm10.sizes -qSizes=data/genomic_data/smiCra1.sizes -LRfoldThreshold=2.5 -doPairs -LRfoldThresholdPairs=10 -maxPairDistance=10000 -maxSuspectScore=100000 -minBrokenChainScore=75000 -linearGap=loose
 ```
 
 
@@ -254,48 +259,48 @@ chainCleaner smiCra1_mm10_patched_sorted_repFil.chain ../../data/genomes/mm10.2b
 
 `-linearGap`=loose
 
-__directory:__ /data/projects/punim0586/lecook/chipseq-pipeline/cross_species/wholeGenomeAlignment/chainCleaner/
+__directory:__ output/wga/chain_cleaner/
 
 
 For filtering the chains, we need the size of each chromosome
-```
-faSize /data/projects/punim0586/lecook/chipseq-pipeline/cross_species/data/genomes/smiCra1.fa -detailed > smiCra1.sizes
-faSize /data/projects/punim0586/lecook/chipseq-pipeline/cross_species/data/genomes/mm10.fa -detailed > mm10.sizes
+```{bash eval=FALSE}
+faSize data/genomic_data/smiCra1.fa -detailed > data/genomic_data/smiCra1.sizes
+faSize data/genomic_data/mm10.fa -detailed > data/genomic_data/mm10.sizes
 ```
 
-### chainPreNet
+## chainPreNet
 
-```
-chainPreNet smiCra1_mm10_patched_sorted_chainCl.chain /data/projects/punim0586/lecook/chipseq-pipeline/cross_species/data/genomes/mm10.sizes /data/projects/punim0586/lecook/chipseq-pipeline/cross_species/data/genomes/smiCra1.sizes smiCra1_mm10_patched_sorted_chainCl.chain
+```{bash eval=FALSE}
+chainPreNet output/wga/chain_cleaner/smiCra1_mm10_patched_sorted_chainCl.chain data/genomic_data/mm10.sizes data/genomic_data/smiCra1.sizes smiCra1_mm10_patched_sorted_chainCl_preNet.chain
 ```
 
 chainPreNet without chainCleaner
 
-```
-chainPreNet smiCra1_mm10_patched_sorted_repFil_chainCl.chain /data/projects/punim0586/lecook/chipseq-pipeline/cross_species/data/genomes/mm10.sizes /data/projects/punim0586/lecook/chipseq-pipeline/cross_species/data/genomes/smiCra1.sizes smiCra1_mm10_patched_sorted_repFil_chainCl_preNet.chain
+```{bash eval=FALSE}
+chainPreNet smiCra1_mm10_patched_sorted_repFil_chainCl.chain data/genomic_data/mm10.sizes data/genomic_data/smiCra1.sizes output/wga/chain_prenet/smiCra1_mm10_patched_sorted_repFil_chainCl_preNet.chain
 ```
 
-### chainNet
+## chainNet
 Given a set of alignment chains, chainNet produces alignment nets, which is a hierarchical collection of chains or parts of chains that attempt to capture only orthologous alignments [4]. The original chainNet implementation approximates the score of "sub-nets" (nets that come from a part of a chain and fill a gap in a higher-level net) by the fraction of aligning bases. This can lead to a bias in case the aligning blocks of a chain are not equally distributed. We implemented a new parameter "-rescore" in chainNet that computes the real score of each subnet [2].
 
 Make the alignment nets:
 
-```
-chainNet smiCra1_mm10_patched_sorted_repFil_chainCl_preNet.chain -minSpace=1 /data/projects/punim0586/lecook/chipseq-pipeline/cross_species/data/genomes/mm10.sizes /data/projects/punim0586/lecook/chipseq-pipeline/cross_species/data/genomes/smiCra1.sizes stdout /dev/null | netSyntenic stdin smiCra1_mm10_patched_sorted_repFil_chainCl_preNet.net
+```{bash eval=FALSE}
+chainNet output/wga/chain_prenet/smiCra1_mm10_patched_sorted_repFil_chainCl_preNet.chain -minSpace=1 data/genomic_data/mm10.sizes data/genomic_data/smiCra1.sizes stdout /dev/null | netSyntenic stdin output/wga/chain_net/smiCra1_mm10_patched_sorted_repFil_chainCl_preNet.net
 ```
 
-### netChainSubset
+## netChainSubset
 Creates a single chain file using only the chains that also appear in the net.
 
+```{bash eval=FALSE}
+netChainSubset output/wga/chain_prenet/smiCra1_mm10_patched_sorted_repFil_chainCl_preNet.net output/wga/chain_cleaner/smiCra1_mm10_patched_sorted_repFil_chainCl.chain output/wga/chain_net/smiCra1_mm10_patched_sorted_repFil_chainCl_preNet_chainNet.chain
 ```
-netChainSubset smiCra1_mm10_patched_sorted_repFil_chainCl_preNet.net ../chainCleaner/smiCra1_mm10_patched_sorted_repFil_chainCl.chain smiCra1_mm10_patched_sorted_repFil_chainCl_preNet_chainNet.chain
 
-```
 ## Join chain fragments
-```
-chainStitchId smiCra1_mm10_patched_sorted_chainCl_netted.chain smiCra1_mm10_patched_sorted_chainCl_netted_stitched.chain
+```{bash eval=FALSE}
+chainStitchId output/wga/chain_net/smiCra1_mm10_patched_sorted_chainCl_netted.chain chainStitchId output/wga/chain_stitch/smiCra1_mm10_patched_sorted_chainCl_netted_stitched.chain
 
-chainStitchId smiCra1_mm10_patched_sorted_repFil_chainCl_preNet_chainNet.chain smiCra1_mm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain
+chainStitchId chainStitchId output/wga/chain_net/smiCra1_mm10_patched_sorted_repFil_chainCl_preNet_chainNet.chain chainStitchId output/wga/chain_stitch/smiCra1_mm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain
 
 ```
 
@@ -306,31 +311,31 @@ From the synteny files (positions), get the sequences and re-create alignments.
 
 smiCra1_mm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain
 
-```
-netToAxt chainNet/smiCra1_mm10_patched_sorted_repFil_chainCl_preNet.net liftOver_chains/smiCra1_mm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain /data/projects/punim0586/lecook/chipseq-pipeline/cross_species/data/genomes/mm10.2bit /data/projects/punim0586/lecook/chipseq-pipeline/cross_species/data/genomes/smiCra1.2bit stdout | axtSort stdin mm10-smiCra1.axt
+```{bash eval=FALSE}
+netToAxt output/wga/chain_net/smiCra1_mm10_patched_sorted_repFil_chainCl_preNet.net chain_stitch/smiCra1_mm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain data/genomic_data/mm10.2bit data/genomic_data/smiCra1.2bit stdout | axtSort stdin output/wga/net_to_axt/mm10-smiCra1.axt
 
-axtToMaf netToAxt/mm10-smiCra1.axt /data/projects/punim0586/lecook/chipseq-pipeline/cross_species/data/genomes/mm10.sizes /data/projects/punim0586/lecook/chipseq-pipeline/cross_species/data/genomes/smiCra1.sizes mm10-smiCra1.maf -tPrefix=mm10. -qPrefix=smiCra1.
+axtToMaf output/wga/net_to_axt/mm10-smiCra1.axt data/genomic_data/mm10.sizes data/genomic_data/smiCra1.sizes output/wga/maf/mm10-smiCra1.maf -tPrefix=mm10. -qPrefix=smiCra1.
 ```
 
-### chainSwap
+## chainSwap
 
-```
+```{bash eval=FALSE}
 chainSwap mm10_to_smiCra1_patched_sorted_chainCl_netted_stitched.chain stdout | nice chainSort stdin stdout | nice gzip -c > smiCra1_to_mm10_patched_sorted_chainCl_netted_stitched.chain
 
 chainSwap smiCra1_mm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain stdout | nice chainSort stdin stdout > mm10_smiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain
 ```
 
-### Quality control 
+## Quality control of alignment blocks
 
 MafFilter.
 Using mm10-smiCra1 maf file generated using axtToMaf look at the block lengths and genomic coverage.
 
-```
+```{bash eval=FALSE}
 maffilter param=options-file
 ```
 
 Parameter options file
-```
+```{bash eval=FALSE}
 DATA=mm10-smiCra1 //A user-defined variable, representing the input maf file, without extension
 input.file=$(DATA).maf.gz  //Input maf file, gzipped
 input.file.compression=gzip
@@ -356,7 +361,8 @@ Summarise block lengths, block counts, pairwise divergence and calculate exon co
 mm10 exons from refseq (downloaded from UCSC)
 
 dunnart exons from lifted devil annotation gtf file converted to a bed file using BEDOPS `gtf2bed` function
-```
+
+```{bash eval=FALSE}
 gff2bed < Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr2.gff > dunnart_gff.bed
 less dunnart_gff.bed | grep "exon" > dunnart_exons.bed
 ```
@@ -366,13 +372,14 @@ In R: `alignment_QC.R'
 ## LiftOver
 
 smiCra1exonsMerged.bed
-```
+```{bash eval=FALSE}
 liftOver smiCra1exonsMerged.bed mm10_smiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain smiCra1exonsMapped.txt smiCra1exonsUnmapped.txt
 ```
+
 number of dunnart exons = 193182
 number of dunnart exons that can be mapped to mouse = 111693
 
-```
+```{bash eval=FALSE}
 liftOver mm10exonsMerged.bed smiCra1_mm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain mm10exonsMapped.txt mm10exonsUnmapped.txt
 ```
 number of mouse exons = 193776
