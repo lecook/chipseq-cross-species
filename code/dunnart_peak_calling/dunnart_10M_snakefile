@@ -55,9 +55,9 @@ rule all:
         "output/qc/multiBAM_fingerprint_rawcounts_dunnart_downSampled.txt",
         "docs/bamPEFragmentSize_hist_dunnart_downSampled.pdf",
         "output/qc/bamPEFragmentSize_rawcounts_dunnart_downSampled.tab",
-        expand("output/peaks/{case}_vs_{control}_macs2_default_peaks_dunnart_downSampled.narrowPeak", zip, case=IPS, control=INPUTS),
-        expand("output/peaks/{case}_vs_{control}_macs2_default_peaks_dunnart_downSampled.xls", zip, case=IPS, control=INPUTS),
-        expand("output/peaks/{case}_vs_{control}_macs2_default_summits_dunnart_downSampled.bed", zip, case=IPS, control=INPUTS),
+        expand("output/peaks/{case}_vs_{control}_macs2_default_peaks_dunnart_downSampled_peaks.narrowPeak", zip, case=IPS, control=INPUTS),
+        expand("output/peaks/{case}_vs_{control}_macs2_default_peaks_dunnart_downSampled_peaks.xls", zip, case=IPS, control=INPUTS),
+        expand("output/peaks/{case}_vs_{control}_macs2_default_summits_dunnart_downSampled_peaks.bed", zip, case=IPS, control=INPUTS),
         #expand("output/qc/{case}-vs-{control}-narrowpeak-count_mqc.json", zip, case=IPS, control=INPUTS),
         expand("output/bam_files/{case}_dunnart_downSampled.bedpe", case=IPS),
         expand("output/logs/{case}_dunnart_downSampled.bamToBed", case=IPS),
@@ -208,9 +208,9 @@ rule call_peaks_macs2:
         control = "output/bam_files/{control}_downSampled.PPq30.sorted.dedup.bam",
         case = "output/bam_files/{case}_downSampled.PPq30.sorted.dedup.bam"
     output:
-        "output/peaks/{case}_vs_{control}_macs2_default_peaks_dunnart_downSampled.xls",
-        "output/peaks/{case}_vs_{control}_macs2_default_summits_dunnart_downSampled.bed",
-        "output/peaks/{case}_vs_{control}_macs2_default_peaks_dunnart_downSampled.narrowPeak",
+        "output/peaks/{case}_vs_{control}_macs2_default_dunnart_downSampled_peaks.xls",
+        "output/peaks/{case}_vs_{control}_macs2_default_summits_dunnart_downSampled_peaks.bed",
+        "output/peaks/{case}_vs_{control}_macs2_default_dunnart_downSampled_peaks.narrowPeak",
     log:
         "output/logs/{case}_vs_{control}_call_peaks_macs2_default_dunnart_downSampled.log"
     params:
