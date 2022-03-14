@@ -359,31 +359,39 @@ Summarise block lengths, block counts, pairwise divergence and calculate exon co
 # Load libraries
 
 library(plyr)
-library(dplyr)
 library(data.table)
 library(seqinr)
 library(Biostrings)
 
 # set working directory
-setwd("output/qc/ucsc_alignment_qc/maf_filter/")
+setwd("output/qc/ucsc_alignment/")
 ```
 
 ### Summarise statistics from MafFilter
 
 ```{r}
-mm10 <- read.table("mm10.statistics.csv", header=TRUE, sep="\t") # read in table
+mm10 <- fread("mm10.statistics.csv") # read in table
 
-smiCra1 <- read.table("smiCra1.statistics.csv", header=TRUE, sep="\t") # read in table
+smiCra1 <- fread("smiCra1.statistics.csv") # read in table
 head(mm10) #check file has been imported correctly
 
-mm10ChrCount <- mm10 %>% count(Chr, sort=TRUE) # how many blocks per chromosome
-smiCra1ChrCount <- smiCra1 %>% count(Chr, sort=TRUE) # how many blocks per chromosome
-
-print("mm10 blocks per chromosome",mm10ChrCount)
-print("dunnart blocks per scaffold", smiCra1ChrCount)
+mm10ChrCount <- mm10 %>% dplyr::count(Chr, sort=TRUE) # how many blocks per chromosome
+smiCra1ChrCount <- smiCra1 %>% dplyr::count(Chr, sort=TRUE) # how many blocks per chromosome
 ```
 
-total size (incl gaps) just use mouse as the statistics are the same
+#### mm10 number of blocks per chromosome
+```{r}
+mm10ChrCount
+```
+
+
+#### dunnart number of blocks per chromosome
+```{r}
+smiCra1ChrCount
+```
+
+#### total size (incl gaps) 
+just use mouse as the statistics are the same
 ```{r}
 size1to10bp <- mm10[which(mm10$BlockLength>=1 & mm10$BlockLength<=10),]
 size10to100bp <- mm10[which(mm10$BlockLength>=10 & mm10$BlockLength<=100),]
@@ -392,7 +400,7 @@ size1kbto10kb <- mm10[which(mm10$BlockLength>=1000 & mm10$BlockLength<=10000),]
 size10kbto100kb <- mm10[which(mm10$BlockLength>=10000 & mm10$BlockLength<=100000),]
 size100kbto1Mb <- mm10[which(mm10$BlockLength>=100000 & mm10$BlockLength<=1000000),]
 
-count(size1to10bp)
+dplyr::count(size1to10bp)
 count(size10to100bp)
 count(size100to1kb)
 count(size1kbto10kb)
@@ -406,23 +414,16 @@ sum(size1kbto10kb$BlockLength)
 sum(size10kbto100kb$BlockLength)
 sum(size100kbto1Mb$BlockLength)
 
-
-DT = data.table(
-  ID = c("b","b","b","a","a","c"),
-  a = 1:6,
-  b = 7:12,
-  c = 13:18
-)
 df <- data.table(
   size = c("size1to10bp", "size10to100bp", "size100to1kb", "size1kbto10kb", "size10kbto100kb", "size100kbto1Mb"),
-  sum = c(sum(size1to10bp$BlockLength),
+  sum_block_length = c(sum(size1to10bp$BlockLength),
   sum(size10to100bp$BlockLength),
   sum(size100to1kb$BlockLength),
   sum(size1kbto10kb$BlockLength),
   sum(size10kbto100kb$BlockLength),
   sum(size100kbto1Mb$BlockLength)),
-  count = c(count(size1to10bp), count(size10to100bp), count(size100to1kb), 
-  count(size1kbto10kb), count(size10kbto100kb), count(size100kbto1Mb))
+  number_blocks = c(dplyr::count(size1to10bp), dplyr::count(size10to100bp), dplyr::count(size100to1kb), 
+  dplyr::count(size1kbto10kb), dplyr::count(size10kbto100kb), dplyr::count(size100kbto1Mb))
 )
 
 df
@@ -435,50 +436,51 @@ mm10 exons from refseq (downloaded from UCSC)
 dunnart exons from lifted devil annotation gtf file converted to a bed file using BEDOPS `gtf2bed` function
 
 ```{bash eval=FALSE}
-gff2bed < Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr2.gff > dunnart_gff.bed
-less dunnart_gff.bed | grep "exon" > dunnart_exons.bed
+gff2bed < data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr2.gff > data/genomic_data/dunnart_gff.bed
+less data/genomic_data/dunnart_gff.bed | grep "exon" > data/genomic_data/dunnart_exons.bed
 ```
 
 ### Mouse exon coverage
 mm10 refseq ncbi curated exons downloaded from ucsc
 
 ```{r}
-system("bedtools sort -i output/qc/ucsc_alignment_qc/mm10exons.bed > output/qc/ucsc_alignment_qc/mm10exonsSorted.bed", intern=TRUE) ## sort by coordinates
+system("bedtools sort -i data/genomic_data/mm10exons.bed > output/qc/ucsc_alignment/mm10exonsSorted.bed", intern=TRUE) ## sort by coordinates
 
-system("bedtools merge -i output/qc/ucsc_alignment_qc/mm10exonsSorted.bed > output/qc/ucsc_alignment_qc/mm10exonsMerged.bed", intern=TRUE) ## bedtools merge where transcripts are the same coordinates or within each other
+system("bedtools merge -i output/qc/ucsc_alignment/mm10exonsSorted.bed > output/qc/ucsc_alignment/mm10exonsMerged.bed", intern=TRUE) ## bedtools merge where transcripts are the same coordinates or within each other
 
-system("bedtools merge -i output/qc/ucsc_alignment_qc/mm10_mafAlignment.bed > output/qc/ucsc_alignment_qc/mm10_mafAlignmentMerged.bed", intern=TRUE) ## also merge the maf alignments from the liftOver
+system("bedtools merge -i output/qc/ucsc_alignment/mm10_mafAlignment.bed > output/qc/ucsc_alignment/mm10_mafAlignmentMerged.bed", intern=TRUE) ## also merge the maf alignments from the liftOver
 
-system("bedtools intersect -a output/qc/ucsc_alignment_qc/mm10exonsMerged.bed -b output/qc/ucsc_alignment_qc/mm10_mafAlignmentBlocks.bed -wo > output/qc/ucsc_alignment_qc/mm10exonOverlaps.bed", intern=TRUE) ## intersect exon coordinates with maf alignment file
+system("bedtools intersect -a output/qc/ucsc_alignment/mm10exonsMerged.bed -b output/qc/ucsc_alignment/mm10_mafAlignmentBlocks.bed -wo > output/qc/ucsc_alignment/mm10exonOverlaps.bed", intern=TRUE) ## intersect exon coordinates with maf alignment file
 ```
-### Calculate exon coverage 
 
 ```{r}
-mm10exon <- read.table("mm10exonsMerged.bed") ## exon file
+mm10exon <- fread("mm10exonsMerged.bed") ## exon file
 mm10exon$length <- (mm10exon$V3 - mm10exon$V2) ## exon length in ncbi refseq 
-mm10overlaps <- read.table("mm10exonOverlaps.bed") ## overlap file
+mm10overlaps <- fread("mm10exonOverlaps.bed") ## overlap file
 dim(mm10overlaps) ## check file imported correctly
 sum(mm10overlaps$V10) ## 31776094bps of exons found in maf alignment
 sum(mm10exon$length) ## 34221920bps of exons in refseq mm10
 mm10exonCoverage <- sum(mm10overlaps$V10)/sum(mm10exon$length) ## converge alignment exon bps/total exon bps
-mm10exonCoverage
+
+print(paste0("mm10 exon coverage = ", mm10exonCoverage))
 ```
 
 ### Dunnart exon coverage 
 
 ```{r}
-system("bedtools sort -i output/qc/ucsc_alignment_qc/dunnart_exons.bed > output/qc/ucsc_alignment_qc/dunnart_exonsSorted.bed", intern = TRUE) ## sort by coordinates
+system("bedtools sort -i data/genomic_data/dunnart_exons.bed > output/qc/ucsc_alignment/dunnart_exonsSorted.bed", intern = TRUE) ## sort by coordinates
 
-system("bedtools merge -i output/qc/ucsc_alignment_qc/dunnart_exonsSorted.bed > output/qc/ucsc_alignment_qc/smiCra1exonsMerged.bed", intern = TRUE) ## bedtools merge where transcripts are the same coordinates or within each other
+system("bedtools merge -i output/qc/ucsc_alignment/dunnart_exonsSorted.bed > output/qc/ucsc_alignment/smiCra1exonsMerged.bed", intern = TRUE) ## bedtools merge where transcripts are the same coordinates or within each other
 
-system("bedtools merge -i output/qc/ucsc_alignment_qc/smiCra1_mafAlignmentBlocksSorted.bed > output/qc/ucsc_alignment_qc/smiCra1_mafAlignmentMerged.bed", intern = TRUE) ## also merge the maf alignments from the liftOver
-system("bedtools intersect -a output/qc/ucsc_alignment_qc/smiCra1exonsMerged.bed -b output/qc/ucsc_alignment_qc/smiCra1_mafAlignmentMerged.bed -wo > output/qc/ucsc_alignment_qc/smiCra1_exonOverlaps.bed", intern=TRUE) ## intersect exon coordinates with maf alignment file
+system("bedtools merge -i output/qc/ucsc_alignment/smiCra1_mafAlignmentBlocksSorted.bed > output/qc/ucsc_alignment/smiCra1_mafAlignmentMerged.bed", intern = TRUE) ## also merge the maf alignments from the liftOver
+system("bedtools intersect -a output/qc/ucsc_alignment/smiCra1exonsMerged.bed -b output/qc/ucsc_alignment/smiCra1_mafAlignmentMerged.bed -wo > output/qc/ucsc_alignment/smiCra1_exonOverlaps.bed", intern=TRUE) ## intersect exon coordinates with maf alignment file
+```
 
-
-smiCra1exon <- read.table("smiCra1exonsMerged.bed", sep="\t", header=FALSE) ## exon file
+```{r}
+smiCra1exon <- fread("output/qc/ucsc_alignment/smiCra1exonsMerged.bed", sep="\t", header=FALSE) ## exon file
 dim(smiCra1exon) ## check file imported correctly
 smiCra1exon$length <- (smiCra1exon$V3 - smiCra1exon$V2)  ## exon length
-smiCra1overlaps <- read.table("smiCra1_exonOverlaps.bed", sep="\t", header=FALSE) ## exon overlaps with maf alignment file
+smiCra1overlaps <- fread("output/qc/ucsc_alignment/smiCra1_exonOverlaps.bed", sep="\t", header=FALSE) ## exon overlaps with maf alignment file
 dim(smiCra1overlaps) ## check imported correctly
 sum(smiCra1exon$length) # 63502228
 sum(smiCra1overlaps$V7) # 43939135
@@ -491,15 +493,15 @@ smiCra1exonCoverage
 ### Average sequence percentage mismatches for dunnart and mouse
 
 ```{r}
-mm10 <- read.table("mm10.divergence.statistics.csv", header=TRUE, sep="\t")
-smiCra1 <- read.table("smiCra1.divergence.statistics.csv", header=TRUE, sep="\t")
+mm10 <- fread("output/qc/ucsc_alignment/mm10.divergence.statistics.csv", header=TRUE, sep="\t")
+smiCra1 <- fread("output/qc/ucsc_alignment/smiCra1.divergence.statistics.csv", header=TRUE, sep="\t")
 
 mean(mm10$Div.mm10.smiCra1)
 mean(smiCra1$Div.smiCra1.mm10)
 
 ## Genome coverage
-readDNAStringSet("mm10_mafAlignment_nogaps.fasta") #number bp in alignment 743350114
-readDNAStringSet("smiCra1_mafAlignment_nogaps.fasta") #number bp in alignment 747935780
+readDNAStringSet("data/genomic_data/mm10_mafAlignment_nogaps.fasta") #number bp in alignment 743350114
+readDNAStringSet("data/genomic_data/smiCra1_mafAlignment_nogaps.fasta") #number bp in alignment 747935780
 
 mm10genomeSize <- 2652783500
 smiCra1genomeSize <-2838290115
@@ -507,15 +509,14 @@ smiCra1genomeSize <-2838290115
 mm10coverage <- 743350114/mm10genomeSize
 smiCra1coverage <- 747935780/smiCra1genomeSize
 
-print("mm10 genome coverage = ", mm10coverage)
-print("dunnart genome coverage =", smiCra1coverage)
+print(paste0("mm10 genome coverage = ", mm10coverage))
+print(pasteo("dunnart genome coverage =", smiCra1coverage))
 ```
 
 ## LiftOver
 
-smiCra1exonsMerged.bed
 ```{bash eval=FALSE}
-liftOver smiCra1exonsMerged.bed mm10_smiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain smiCra1exonsMapped.txt smiCra1exonsUnmapped.txt
+liftOver data/genomic_data/smiCra1exonsMerged.bed output/wga/liftover_chains/mm10_smiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain smiCra1exonsMapped.txt output/qc/ucsc_alignment/smiCra1exonsUnmapped.txt
 ```
 
 number of dunnart exons = 193182
