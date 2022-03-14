@@ -274,7 +274,7 @@ rule bamToBed:
 rule frip:
     input:
         bed = "output/bam_files/{case}_dunnart_downSampled.bedpe",
-        peak = "output/peaks/{case}_vs_{control}_macs2_default_peaks_dunnart_downSampled.narrowPeak"
+        peak = "output/peaks/{case}_vs_{control}_macs2_default_dunnart_downSampled_peaks.narrowPeak"
     output:
         "output/qc/{case}_vs_{control}.frip_default_dunnart_downSampled.txt"
     log:
@@ -289,11 +289,12 @@ rule frip:
 
 # Based on ENCODE `overlap_peaks.py` - recommended for histone marks.
 # Need to pool peaks first for each replicate
+output/peaks/{case}_vs_{control}_macs2_default_dunnart_downSampled_peaks.narrowPeak
 
 rule overlap_peaks_H3K4me3:
     input:
-        peak1="output/peaks/A-2_H3K4me3_vs_A-1_input_macs2_default_peaks_dunnart_downSampled.narrowPeak",
-        peak2="output/peaks/B-2_H3K4me3_vs_B-1_input_macs2_default_peaks_dunnart_downSampled.narrowPeak",
+        peak1="output/peaks/A-2_H3K4me3_vs_A-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak",
+        peak2="output/peaks/B-2_H3K4me3_vs_B-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak",
         pooled="output/peaks/H3K4me3_pooled_macs2_default_peaks_dunnart_downSampled.narrowPeak"
     output:
         "output/peaks/H3K4me3_overlap_default_dunnart_downSampled.narrowPeak"
@@ -303,8 +304,8 @@ rule overlap_peaks_H3K4me3:
 
 rule overlap_peaks_H3K27ac:
     input:
-        peak1="output/peaks/A-3_H3K27ac_vs_A-1_input_macs2_default_peaks_dunnart_downSampled.narrowPeak",
-        peak2="output/peaks/B-3_H3K27ac_vs_B-1_input_macs2_default_peaks_dunnart_downSampled.narrowPeak",
+        peak1="output/peaks/A-3_H3K27ac_vs_A-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak",
+        peak2="output/peaks/B-3_H3K27ac_vs_B-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak",
         pooled="output/peaks/H3K27ac_pooled_macs2_default_peaks_dunnart_downSampled.narrowPeak"
     output:
         "output/peaks/H3K27ac_overlap_default_dunnart_downSampled.narrowPeak"
