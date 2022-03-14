@@ -414,13 +414,13 @@ DT = data.table(
   c = 13:18
 )
 df <- data.table(
-  size = c("size1to10bp", "size10to100bp", "size100to1kb", "size1kbto10kb", "size10kbto100kb", "size100kbto1Mb")
+  size = c("size1to10bp", "size10to100bp", "size100to1kb", "size1kbto10kb", "size10kbto100kb", "size100kbto1Mb"),
   sum = c(sum(size1to10bp$BlockLength),
   sum(size10to100bp$BlockLength),
   sum(size100to1kb$BlockLength),
   sum(size1kbto10kb$BlockLength),
   sum(size10kbto100kb$BlockLength),
-  sum(size100kbto1Mb$BlockLength))
+  sum(size100kbto1Mb$BlockLength)),
   count = c(count(size1to10bp), count(size10to100bp), count(size100to1kb), 
   count(size1kbto10kb), count(size10kbto100kb), count(size100kbto1Mb))
 )
