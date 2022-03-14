@@ -289,7 +289,6 @@ rule frip:
 
 # Based on ENCODE `overlap_peaks.py` - recommended for histone marks.
 # Need to pool peaks first for each replicate
-output/peaks/{case}_vs_{control}_macs2_default_dunnart_downSampled_peaks.narrowPeak
 
 rule overlap_peaks_H3K4me3:
     input:
