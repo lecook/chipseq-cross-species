@@ -377,9 +377,9 @@ rule deeptools_fingerprint:
         bam = expand(["output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bam"], zip, sample=all_samples, stage=STAGE, mark = MARK),
         bai = expand(["output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bai"], zip, sample=all_samples, stage=STAGE, mark = MARK)
     output:
-        fig="output/qc/H3K27ac_multiBAM_fingerprint.pdf",
-        metrics="output/qc/H3K27ac_multiBAM_fingerprint_metrics.txt",
-        rawcounts="output/qc/H3K27ac_multiBAM_fingerprint_rawcounts.txt"
+        fig="output/qc/H3K27ac_multiBAM_fingerprint_mouse.pdf",
+        metrics="output/qc/H3K27ac_multiBAM_fingerprint_metrics_mouse.txt",
+        rawcounts="output/qc/H3K27ac_multiBAM_fingerprint_rawcounts_mouse.txt"
     threads: 32
     log:
         "output/logs/fingerprint.deepTools"
