@@ -473,16 +473,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree4b30eeea7fc240ac09dd05efe1d966f63df74a0ctargetblank4b30eeea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/4b30eeea7fc240ac09dd05efe1d966f63df74a0c" target="_blank">4b30eee</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree09ea90ec7856af7ce90b9c9ca20cfcf10fcc3295targetblank09ea90ea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/09ea90ec7856af7ce90b9c9ca20cfcf10fcc3295" target="_blank">09ea90e</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree4b30eeea7fc240ac09dd05efe1d966f63df74a0ctargetblank4b30eeea" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree09ea90ec7856af7ce90b9c9ca20cfcf10fcc3295targetblank09ea90ea" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/4b30eeea7fc240ac09dd05efe1d966f63df74a0c" target="_blank">4b30eee</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/09ea90ec7856af7ce90b9c9ca20cfcf10fcc3295" target="_blank">09ea90e</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -635,6 +635,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/09ea90ec7856af7ce90b9c9ca20cfcf10fcc3295/analysis/whole_genome_alignment.Rmd" target="_blank">09ea90e</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-15
+</td>
+<td>
+wflow_publish(“analysis/whole_genome_alignment.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/a557720070c98783a5dd4b289df0189115bb29c1/docs/whole_genome_alignment.html" target="_blank">a557720</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-15
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1007,93 +1041,9 @@ maf.filter=                                 \
 
 library(plyr)
 library(data.table)
-library(seqinr)</code></pre>
-<pre><code>
-Attaching package: &#39;seqinr&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:plyr&#39;:
-
-    count</code></pre>
-<pre class="r"><code>library(Biostrings)</code></pre>
-<pre><code>Loading required package: BiocGenerics</code></pre>
-<pre><code>
-Attaching package: &#39;BiocGenerics&#39;</code></pre>
-<pre><code>The following objects are masked from &#39;package:stats&#39;:
-
-    IQR, mad, sd, var, xtabs</code></pre>
-<pre><code>The following objects are masked from &#39;package:base&#39;:
-
-    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
-    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
-    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
-    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
-    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
-    union, unique, unsplit, which.max, which.min</code></pre>
-<pre><code>Loading required package: S4Vectors</code></pre>
-<pre><code>Loading required package: stats4</code></pre>
-<pre><code>
-Attaching package: &#39;S4Vectors&#39;</code></pre>
-<pre><code>The following objects are masked from &#39;package:data.table&#39;:
-
-    first, second</code></pre>
-<pre><code>The following object is masked from &#39;package:plyr&#39;:
-
-    rename</code></pre>
-<pre><code>The following objects are masked from &#39;package:base&#39;:
-
-    expand.grid, I, unname</code></pre>
-<pre><code>Loading required package: IRanges</code></pre>
-<pre><code>
-Attaching package: &#39;IRanges&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:data.table&#39;:
-
-    shift</code></pre>
-<pre><code>The following object is masked from &#39;package:plyr&#39;:
-
-    desc</code></pre>
-<pre><code>Loading required package: XVector</code></pre>
-<pre><code>
-Attaching package: &#39;XVector&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:plyr&#39;:
-
-    compact</code></pre>
-<pre><code>Loading required package: GenomeInfoDb</code></pre>
-<pre><code>
-Attaching package: &#39;Biostrings&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:seqinr&#39;:
-
-    translate</code></pre>
-<pre><code>The following object is masked from &#39;package:base&#39;:
-
-    strsplit</code></pre>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>✓ ggplot2 3.3.3     ✓ purrr   0.3.4
-✓ tibble  3.1.2     ✓ dplyr   1.0.8
-✓ tidyr   1.1.3     ✓ stringr 1.4.0
-✓ readr   1.4.0     ✓ forcats 0.5.1</code></pre>
-<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-x dplyr::arrange()    masks plyr::arrange()
-x dplyr::between()    masks data.table::between()
-x dplyr::collapse()   masks Biostrings::collapse(), IRanges::collapse()
-x dplyr::combine()    masks BiocGenerics::combine()
-x purrr::compact()    masks XVector::compact(), plyr::compact()
-x dplyr::count()      masks seqinr::count(), plyr::count()
-x dplyr::desc()       masks IRanges::desc(), plyr::desc()
-x tidyr::expand()     masks S4Vectors::expand()
-x dplyr::failwith()   masks plyr::failwith()
-x dplyr::filter()     masks stats::filter()
-x dplyr::first()      masks S4Vectors::first(), data.table::first()
-x dplyr::id()         masks plyr::id()
-x dplyr::lag()        masks stats::lag()
-x dplyr::last()       masks data.table::last()
-x dplyr::mutate()     masks plyr::mutate()
-x ggplot2::Position() masks BiocGenerics::Position(), base::Position()
-x purrr::reduce()     masks IRanges::reduce()
-x dplyr::rename()     masks S4Vectors::rename(), plyr::rename()
-x dplyr::slice()      masks XVector::slice(), IRanges::slice()
-x dplyr::summarise()  masks plyr::summarise()
-x dplyr::summarize()  masks plyr::summarize()
-x purrr::transpose()  masks data.table::transpose()</code></pre>
+library(seqinr)
+library(Biostrings)
+library(tidyverse)</code></pre>
 <div id="summarise-statistics-from-maffilter" class="section level3">
 <h3>Summarise statistics from MafFilter</h3>
 <pre class="r"><code>mm10 &lt;- fread(&quot;output/qc/ucsc_alignment/mm10.statistics.csv&quot;) # read in table
