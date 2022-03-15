@@ -7,6 +7,13 @@ editor_options:
   chunk_output_type: console
 ---
 
+
+```{r setup, include = FALSE} 
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
 # Notes on Whole Genome Alignment
 
 There are a number of online tutorials to build the alignment and nets using Lastz:
@@ -325,7 +332,7 @@ chainSwap mm10_to_smiCra1_patched_sorted_chainCl_netted_stitched.chain stdout | 
 chainSwap smiCra1_mm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain stdout | nice chainSort stdin stdout > mm10_smiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain
 ```
 
-## Quality control of alignment blocks
+# Quality control of alignment blocks
 
 MafFilter.
 Using mm10-smiCra1 maf file generated using axtToMaf look at the block lengths and genomic coverage.
@@ -362,17 +369,16 @@ library(plyr)
 library(data.table)
 library(seqinr)
 library(Biostrings)
+library(tidyverse)
 
-# set working directory
-setwd("output/qc/ucsc_alignment/")
 ```
 
 ### Summarise statistics from MafFilter
 
 ```{r}
-mm10 <- fread("mm10.statistics.csv") # read in table
+mm10 <- fread("output/qc/ucsc_alignment/mm10.statistics.csv") # read in table
 
-smiCra1 <- fread("smiCra1.statistics.csv") # read in table
+smiCra1 <- fread("output/qc/ucsc_alignment/smiCra1.statistics.csv") # read in table
 head(mm10) #check file has been imported correctly
 
 mm10ChrCount <- mm10 %>% dplyr::count(Chr, sort=TRUE) # how many blocks per chromosome
@@ -443,7 +449,7 @@ less data/genomic_data/dunnart_gff.bed | grep "exon" > data/genomic_data/dunnart
 ### Mouse exon coverage
 mm10 refseq ncbi curated exons downloaded from ucsc
 
-```{r}
+```{r eval=FALSE}
 system("bedtools sort -i data/genomic_data/mm10exons.bed > output/qc/ucsc_alignment/mm10exonsSorted.bed", intern=TRUE) ## sort by coordinates
 
 system("bedtools merge -i output/qc/ucsc_alignment/mm10exonsSorted.bed > output/qc/ucsc_alignment/mm10exonsMerged.bed", intern=TRUE) ## bedtools merge where transcripts are the same coordinates or within each other
@@ -454,9 +460,9 @@ system("bedtools intersect -a output/qc/ucsc_alignment/mm10exonsMerged.bed -b ou
 ```
 
 ```{r}
-mm10exon <- fread("mm10exonsMerged.bed") ## exon file
+mm10exon <- fread("output/qc/ucsc_alignment/mm10exonsMerged.bed") ## exon file
 mm10exon$length <- (mm10exon$V3 - mm10exon$V2) ## exon length in ncbi refseq 
-mm10overlaps <- fread("mm10exonOverlaps.bed") ## overlap file
+mm10overlaps <- fread("output/qc/ucsc_alignment/mm10exonOverlaps.bed") ## overlap file
 dim(mm10overlaps) ## check file imported correctly
 sum(mm10overlaps$V10) ## 31776094bps of exons found in maf alignment
 sum(mm10exon$length) ## 34221920bps of exons in refseq mm10
@@ -467,7 +473,7 @@ print(paste0("mm10 exon coverage = ", mm10exonCoverage))
 
 ### Dunnart exon coverage 
 
-```{r}
+```{r eval=FALSE}
 system("bedtools sort -i data/genomic_data/dunnart_exons.bed > output/qc/ucsc_alignment/dunnart_exonsSorted.bed", intern = TRUE) ## sort by coordinates
 
 system("bedtools merge -i output/qc/ucsc_alignment/dunnart_exonsSorted.bed > output/qc/ucsc_alignment/smiCra1exonsMerged.bed", intern = TRUE) ## bedtools merge where transcripts are the same coordinates or within each other
@@ -477,58 +483,62 @@ system("bedtools intersect -a output/qc/ucsc_alignment/smiCra1exonsMerged.bed -b
 ```
 
 ```{r}
-smiCra1exon <- fread("output/qc/ucsc_alignment/smiCra1exonsMerged.bed", sep="\t", header=FALSE) ## exon file
+smiCra1exon <- fread("output/qc/ucsc_alignment/smiCra1exonsMerged.bed") ## exon file
 dim(smiCra1exon) ## check file imported correctly
 smiCra1exon$length <- (smiCra1exon$V3 - smiCra1exon$V2)  ## exon length
-smiCra1overlaps <- fread("output/qc/ucsc_alignment/smiCra1_exonOverlaps.bed", sep="\t", header=FALSE) ## exon overlaps with maf alignment file
+smiCra1overlaps <- fread("output/qc/ucsc_alignment/smiCra1_exonOverlaps.bed") ## exon overlaps with maf alignment file
 dim(smiCra1overlaps) ## check imported correctly
 sum(smiCra1exon$length) # 63502228
 sum(smiCra1overlaps$V7) # 43939135
 smiCra1exonCoverage <- sum(smiCra1overlaps$V7)/sum(smiCra1exon$length)
 
-smiCra1exonCoverage
+print(paste0("dunnart exon coverage = ", smiCra1exonCoverage))
+
 ```
 
 
 ### Average sequence percentage mismatches for dunnart and mouse
 
 ```{r}
-mm10 <- fread("output/qc/ucsc_alignment/mm10.divergence.statistics.csv", header=TRUE, sep="\t")
-smiCra1 <- fread("output/qc/ucsc_alignment/smiCra1.divergence.statistics.csv", header=TRUE, sep="\t")
+mm10 <- fread("output/qc/ucsc_alignment/mm10.divergence.statistics.csv")
+smiCra1 <- fread("output/qc/ucsc_alignment/smiCra1.divergence.statistics.csv")
 
-mean(mm10$Div.mm10.smiCra1)
-mean(smiCra1$Div.smiCra1.mm10)
+mean(mm10$`Div.mm10-smiCra1`)
+mean(smiCra1$`Div.smiCra1-mm10`)
 
 ## Genome coverage
-readDNAStringSet("data/genomic_data/mm10_mafAlignment_nogaps.fasta") #number bp in alignment 743350114
-readDNAStringSet("data/genomic_data/smiCra1_mafAlignment_nogaps.fasta") #number bp in alignment 747935780
+readDNAmm10 <- readDNAStringSet("output/qc/ucsc_alignment/mm10_mafAlignment_nogaps.fasta") #number bp in alignment 743350114
+readDNAsmiCra1 <- readDNAStringSet("output/qc/ucsc_alignment/smiCra1_mafAlignment_nogaps.fasta") #number bp in alignment 747935780
 
 mm10genomeSize <- 2652783500
 smiCra1genomeSize <-2838290115
 
-mm10coverage <- 743350114/mm10genomeSize
-smiCra1coverage <- 747935780/smiCra1genomeSize
+mm10coverage <- readDNAmm10@ranges@width/mm10genomeSize
+smiCra1coverage <- readDNAsmiCra1@ranges@width/smiCra1genomeSize
 
 print(paste0("mm10 genome coverage = ", mm10coverage))
-print(pasteo("dunnart genome coverage =", smiCra1coverage))
+print(paste0("dunnart genome coverage =", smiCra1coverage))
 ```
 
 ## LiftOver
 
 ```{bash eval=FALSE}
-liftOver data/genomic_data/smiCra1exonsMerged.bed output/wga/liftover_chains/mm10_smiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain smiCra1exonsMapped.txt output/qc/ucsc_alignment/smiCra1exonsUnmapped.txt
+liftOver data/genomic_data/smiCra1exonsMerged.bed output/wga/liftOver_chains/mm10_smiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/qc/ucsc_alignment/smiCra1exonsMapped.txt output/qc/ucsc_alignment/smiCra1exonsUnmapped.txt
 ```
 
 number of dunnart exons = 193182
+
 number of dunnart exons that can be mapped to mouse = 111693
 
 ```{bash eval=FALSE}
-liftOver mm10exonsMerged.bed smiCra1_mm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain mm10exonsMapped.txt mm10exonsUnmapped.txt
+liftOver output/qc/ucsc_alignment/mm10exonsMerged.bed output/wga/liftOver_chains/smiCra1_mm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/qc/ucsc_alignment/mm10exonsMapped.txt output/qc/ucsc_alignment/mm10exonsUnmapped.txt
 ```
+
 number of mouse exons = 193776
+
 number of mouse exons that can be lifted over to dunnart = 160213
 
-## References
+### References
 
 [1] Sharma V, Hiller M. Increased alignment sensitivity improves the usage of genome alignments for comparative gene annotation. Nucleic Acids Res., 45(14), 8369–8377, 2017
 

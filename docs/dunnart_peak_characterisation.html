@@ -382,7 +382,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-03-07
+<strong>Last updated:</strong> 2022-03-15
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -473,16 +473,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree3031d6cd21ebbf2815733501e745005d8ef47ceatargetblank3031d6ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/3031d6cd21ebbf2815733501e745005d8ef47cea" target="_blank">3031d6c</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreeee712bfea5670371f1c936c1cbbcd31d02f68017targetblankee712bfa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/ee712bfea5670371f1c936c1cbbcd31d02f68017" target="_blank">ee712bf</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree3031d6cd21ebbf2815733501e745005d8ef47ceatargetblank3031d6ca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreeee712bfea5670371f1c936c1cbbcd31d02f68017targetblankee712bfa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/3031d6cd21ebbf2815733501e745005d8ef47cea" target="_blank">3031d6c</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/ee712bfea5670371f1c936c1cbbcd31d02f68017" target="_blank">ee712bf</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -493,7 +493,6 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    analysis/.RData
     Ignored:    analysis/.Rhistory
-    Ignored:    analysis/figure/
     Ignored:    data/genomic_data/
     Ignored:    output/annotations/
     Ignored:    output/bam_files/
@@ -536,6 +535,7 @@ Ignored files:
     Ignored:    output/qc/B-2_H3K4me3_R1_trimmed.fastq.gz
     Ignored:    output/qc/B-2_H3K4me3_est_lib_complex_metrics.txt
     Ignored:    output/qc/B-2_H3K4me3_vs_A-1_input.frip_default.txt
+    Ignored:    output/qc/B-2_H3K4me3_vs_A-1_input.frip_default_dunnart_downSampled.txt
     Ignored:    output/qc/B-2_H3K4me3_vs_B-1_input.frip_default.txt
     Ignored:    output/qc/B-3_H3K27ac.SeqDepthNorm.bw
     Ignored:    output/qc/B-3_H3K27ac.SeqDepthNorm_dunnart_downSampled.bw
@@ -546,67 +546,74 @@ Ignored files:
     Ignored:    output/qc/B-3_H3K27ac_vs_A-1_input.frip_default.txt
     Ignored:    output/qc/B-3_H3K27ac_vs_B-1_input.frip_default.txt
     Ignored:    output/qc/bamPEFragmentSize_rawcounts.tab
+    Ignored:    output/qc/bamPEFragmentSize_rawcounts_dunnart_downSampled.tab
     Ignored:    output/qc/multiBAM_fingerprint_metrics.txt
+    Ignored:    output/qc/multiBAM_fingerprint_metrics_dunnart_downSampled.txt
     Ignored:    output/qc/multiBAM_fingerprint_rawcounts.txt
+    Ignored:    output/qc/multiBAM_fingerprint_rawcounts_dunnart_downSampled.txt
     Ignored:    output/qc/multibamsum.npz
     Ignored:    output/qc/multibamsum.tab
     Ignored:    output/qc/multibamsum_dunnart_downSampled.npz
     Ignored:    output/qc/multibamsum_dunnart_downSampled.tab
     Ignored:    output/qc/pearsoncor_multibamsum_matrix.txt
+    Ignored:    output/qc/pearsoncor_multibamsum_matrix_dunnart_downSampled.txt
+    Ignored:    output/wga/
     Ignored:    results/
 
 Untracked files:
     Untracked:  .snakemake/
     Untracked:  Rplots.pdf
-    Untracked:  code/basic_wrapper.slurm
-    Untracked:  code/configs/metadata.tsv
-    Untracked:  code/slurmjob.stderr
-    Untracked:  code/slurmjob.stdout
-    Untracked:  code/trimfastq.py
     Untracked:  data/raw_reads/
-    Untracked:  geneLengthvsPeakCount.pdf
-    Untracked:  output/qc/H3K27ac_overlap_default.frip
+    Untracked:  output/qc/ucsc_alignment/
     Untracked:  output/rnaseq/
-    Untracked:  slurm-33664196.out
-    Untracked:  slurm-33664197.out
-    Untracked:  slurm-33664198.out
-    Untracked:  slurm-33664199.out
-    Untracked:  slurm-33664200.out
-    Untracked:  slurm-33664201.out
-    Untracked:  slurm-33664202.out
-    Untracked:  slurm-33664203.out
-    Untracked:  slurm-33664204.out
-    Untracked:  slurm-33664205.out
-    Untracked:  slurm-33664206.out
-    Untracked:  slurm-33664207.out
-    Untracked:  slurm-33665413.out
-    Untracked:  slurm-33665414.out
-    Untracked:  slurm-33665415.out
-    Untracked:  slurm-33665416.out
-    Untracked:  slurm-33665417.out
-    Untracked:  slurm-33665418.out
-    Untracked:  slurm-33665419.out
-    Untracked:  slurm-33665420.out
-    Untracked:  slurm-33665421.out
-    Untracked:  slurm-33665422.out
-    Untracked:  slurm-33665527.out
-    Untracked:  slurm-33665528.out
-    Untracked:  slurm-33665529.out
-    Untracked:  slurm-33665530.out
-    Untracked:  slurm-33665531.out
-    Untracked:  slurm-33665532.out
-    Untracked:  slurm-33665533.out
-    Untracked:  slurm-33665534.out
-    Untracked:  slurm-33665535.out
-    Untracked:  slurm-33665536.out
-    Untracked:  test.pdf
+    Untracked:  slurm-33931929.out
+    Untracked:  slurm-33931930.out
+    Untracked:  slurm-33931931.out
+    Untracked:  slurm-33931932.out
+    Untracked:  slurm-33931933.out
+    Untracked:  slurm-33931934.out
+    Untracked:  slurm-33934389.out
+    Untracked:  slurm-33934390.out
+    Untracked:  slurm-33934391.out
+    Untracked:  slurm-33934392.out
+    Untracked:  slurm-33934393.out
+    Untracked:  slurm-33934394.out
+    Untracked:  slurm-33935177.out
+    Untracked:  slurm-33935178.out
+    Untracked:  slurm-33935179.out
+    Untracked:  slurm-33935180.out
+    Untracked:  slurm-33935181.out
+    Untracked:  slurm-33935182.out
+    Untracked:  slurm-33938210.out
+    Untracked:  slurm-33938211.out
+    Untracked:  slurm-33938212.out
+    Untracked:  slurm-33938213.out
+    Untracked:  slurm-33938214.out
+    Untracked:  slurm-33938215.out
+    Untracked:  slurm-33948861.out
+    Untracked:  slurm-33948862.out
+    Untracked:  slurm-33948863.out
+    Untracked:  slurm-33948864.out
+    Untracked:  slurm-33948865.out
+    Untracked:  slurm-33948866.out
+    Untracked:  slurm-33950657.out
+    Untracked:  slurm-33950658.out
+    Untracked:  slurm-33950659.out
+    Untracked:  slurm-33950660.out
+    Untracked:  slurm-33950661.out
+    Untracked:  slurm-33950662.out
+    Untracked:  slurm-33950663.out
+    Untracked:  slurm-33950664.out
+    Untracked:  slurm-33950810.out
+    Untracked:  slurm-33950814.out
+    Untracked:  slurm-33950815.out
+    Untracked:  slurm-33950822.out
+    Untracked:  slurm-33952537.out
+    Untracked:  slurm-33952538.out
+    Untracked:  slurm-33952553.out
 
 Unstaged changes:
-    Deleted:    code/dunnart_peak_calling/trimfastq.py
-    Modified:   output/qc/H3K4me3_overlap_default.frip
-    Deleted:    output/qc/bamPEFragmentSize_hist.png
-    Deleted:    output/qc/multiBAM_fingerprint.png
-    Deleted:    output/qc/pearsoncor_multibamsum.png
+    Modified:   analysis/peak_level_comparisons.Rmd
 
 </code></pre>
 <p>
@@ -650,6 +657,57 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/a5a7b812f96ecf2eafce27131fefded0936477c2/analysis/dunnart_peak_characterisation.Rmd" target="_blank">a5a7b81</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-14
+</td>
+<td>
+corrected version
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/520b7034056c7e64db84ab065f2505d902fe0559/analysis/dunnart_peak_characterisation.Rmd" target="_blank">520b703</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-07
+</td>
+<td>
+fixed
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/5066ccddcd6b47d561a18620cb04ea1ee9845449/docs/dunnart_peak_characterisation.html" target="_blank">5066ccd</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-07
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/lecook/chipseq-cross-species/blob/3031d6cd21ebbf2815733501e745005d8ef47cea/analysis/dunnart_peak_characterisation.Rmd" target="_blank">3031d6c</a>
 </td>
 <td>
@@ -660,6 +718,23 @@ lecook
 </td>
 <td>
 wflow_publish(“analysis/dunnart_peak_characterisation.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/aaf30ae15db5b0e87e05ee682ec2e0b186ab0008/analysis/dunnart_peak_characterisation.Rmd" target="_blank">aaf30ae</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-03
+</td>
+<td>
+updated
 </td>
 </tr>
 <tr>
@@ -956,22 +1031,23 @@ library(multcompView)
 library(factoextra)
 library(NbClust)
 library(simplifyEnrichment)
-library(formatR)</code></pre>
+library(formatR)
+library(utils)</code></pre>
 </div>
 <div id="set-up" class="section level1">
 <h1>Set up</h1>
 <p>Set fonts, plot and output directories etc.</p>
-<pre class="r"><code>plot_dir = &quot;output/plots/&quot;
-fullPeak_dir = &quot;output/peaks/&quot;
-annot_dir = &quot;output/annotations/&quot;
-filterPeaks_dir = &quot;output/filtered_peaks/&quot;
+<pre class="r"><code>plot_dir &lt;- &quot;output/plots/&quot;
+fullPeak_dir &lt;- &quot;output/peaks/&quot;
+annot_dir &lt;- &quot;output/annotations/&quot;
+filterPeaks_dir &lt;- &quot;output/filtered_peaks/&quot;
 
 ## Set the fonts up so that each plot is the saved the same way.
-font = theme(axis.text.x = element_text(size = 25),
-        axis.text.y = element_text(size = 25),  
+font &lt;- theme(axis.text.x = element_text(size = 25),
+        axis.text.y = element_text(size = 25),
         axis.title.x = element_text(size = 25),
         axis.title.y = element_text(size = 25), 
-        legend.title=element_text(size=25), legend.text=element_text(size=25))</code></pre>
+        legend.title = element_text(size = 25), legend.text = element_text(size = 25))</code></pre>
 </div>
 <div id="peak-features" class="section level1">
 <h1>Peak features</h1>
@@ -1011,6 +1087,43 @@ dev.off()</code></pre>
   2 </code></pre>
 <pre class="r"><code>p</code></pre>
 <p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-3-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.svg
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/5066ccddcd6b47d561a18620cb04ea1ee9845449/docs/figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-3-1.svg" target="_blank">5066ccd</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="average-peak-lengths" class="section level2">
 <h2>Average peak lengths</h2>
@@ -1031,6 +1144,43 @@ p &lt;- ggplot(fullPeaks, aes(factor(group), y = log10(length))) +
   
 p</code></pre>
 <p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-4-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.svg
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/5066ccddcd6b47d561a18620cb04ea1ee9845449/docs/figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-4-1.svg" target="_blank">5066ccd</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>## Save as a pdf
 pdf(file = paste0(plot_dir, peak.length.plot), width = 10, height = 7)
     print(p +  scale_color_manual(values = c(&quot;#E9C46A&quot;,&quot;#E9C46A&quot;,&quot;#264653&quot;,&quot;#2A9D8F&quot;)) +
@@ -1058,15 +1208,63 @@ p &lt;- ggplot(fullPeaks, aes(factor(group), y = log10(V7))) +
 
 p</code></pre>
 <p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-5-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.svg
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/5066ccddcd6b47d561a18620cb04ea1ee9845449/docs/figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-5-1.svg" target="_blank">5066ccd</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>pdf(file = paste0(plot_dir, peak.intensity.plot), width = 10, height = 7)
+    ## Plot peak intensity
+    p &lt;- ggplot(fullPeaks, aes(factor(group, level = level_order), y = log10(V7))) + 
+    geom_half_violin(aes(fill = factor(group), color = factor(group)),
+    side = &quot;r&quot;, 
+    position = &quot;dodge&quot;
+    )+
+    geom_boxplot(aes(color = factor(group)),
+    width = .15, 
+    outlier.shape = NA,
+    fill = c(&quot;#FCF8EC&quot;,&quot;#FCF8EC&quot;,&quot;#F5F6F7&quot;,&quot;#E4F3F1&quot;),
+    position = position_dodge(width = .1)
+    ) +
+    coord_cartesian(xlim = c(1.2, NA), clip = &quot;off&quot;) + theme_bw() + xlab(&quot;&quot;) + ylab(&quot;Log10 Peak Intensity&quot;) 
+    pdf(file = paste0(plot_dir, peak.intensity.plot), width = 10, height = 7)
     print(p +  scale_color_manual(values = c(&quot;#E9C46A&quot;,&quot;#E9C46A&quot;,&quot;#264653&quot;,&quot;#2A9D8F&quot;)) +
     scale_fill_manual(values = c(&quot;#F1DAA2&quot;,&quot;#F1DAA2&quot;,&quot;#AEBABF&quot;,&quot;#7AC2B9&quot;)) + coord_flip())
 dev.off()  </code></pre>
 <pre><code>svg 
   2 </code></pre>
-<pre class="r"><code>    print(p +  scale_color_manual(values = c(&quot;#E9C46A&quot;,&quot;#E9C46A&quot;,&quot;#264653&quot;,&quot;#2A9D8F&quot;)) +
-    scale_fill_manual(values = c(&quot;#F1DAA2&quot;,&quot;#F1DAA2&quot;,&quot;#AEBABF&quot;,&quot;#7AC2B9&quot;)) + coord_flip())</code></pre>
-<p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-5-2.svg" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="annotate-dunnart-peaks" class="section level1">
@@ -1091,10 +1289,10 @@ bg = unlist(bg, use.names = FALSE)</code></pre>
 <pre class="r"><code>annotatePeaks &lt;- function(peak, outFile, outFile1, outFile2, GOenrich, kegg, backg){
   
   # Annotate peak file based on dunnart GFF
-  peakAnno &lt;- annotatePeak(peak = peak, tssRegion = c(-3000, 3000), TxDb = smiCra_txdb)
+  peakAnno &lt;- ChIPseeker::annotatePeak(peak = peak, tssRegion = c(-3000, 3000), TxDb = smiCra_txdb)
 
   # Write annotation to file
-  write.table(peakAnno, file=paste0(annot_dir, outFile), sep=&quot;\t&quot;, quote=F, row.names=F)
+  write.table(peakAnno, file = paste0(annot_dir, outFile), sep = &quot;\t&quot;, quote = F, row.names = F)
   
   peakAnnoDF &lt;- as.data.frame(peakAnno, row.names = NULL)
   # # Convert refseq IDs and geneIDs to devil ensembl IDs
@@ -1102,21 +1300,21 @@ bg = unlist(bg, use.names = FALSE)</code></pre>
   df3 &lt;- read.table(&quot;output/annotations/refseq_to_ensembl.txt&quot;, header=TRUE, sep=&quot;\t&quot;) ## convertsion table for devil refseq to devil ENSEMBL
 
   peakAnnoDF$ensemblgeneID &lt;- df2$Gene.stable.ID[match(unlist(peakAnnoDF$geneId), df2$Gene.name)]
-  peakAnnoDF$ensemblgeneID = replace(peakAnnoDF$ensemblgeneID,is.na(peakAnnoDF$ensemblgeneID),&quot;-&quot;)
+  peakAnnoDF$ensemblgeneID &lt;- replace(peakAnnoDF$ensemblgeneID,is.na(peakAnnoDF$ensemblgeneID),&quot;-&quot;)
   peakAnnoDF$transcriptIdAltered &lt;- gsub(&quot;\\..*&quot;,&quot;&quot;, peakAnnoDF$transcriptId)
   peakAnnoDF$refseqID &lt;- df3$Ensembl.Gene.ID[match(unlist(peakAnnoDF$transcriptIdAltered), df3$RefSeq.mRNA.Accession)]
-  peakAnnoDF$refseqID = replace(peakAnnoDF$refseqID,is.na(peakAnnoDF$refseqID),&quot;-&quot;)
+  peakAnnoDF$refseqID &lt;- replace(peakAnnoDF$refseqID,is.na(peakAnnoDF$refseqID),&quot;-&quot;)
   peakAnnoDF$combined &lt;- ifelse(peakAnnoDF$refseqID == &quot;-&quot;, peakAnnoDF$ensemblgeneID, peakAnnoDF$refseqID)
   peakAnnoDF$combined[peakAnnoDF$combined == as.character(&quot;-&quot;)] &lt;- NA
 
   peakAnnoDF &lt;- peakAnnoDF[!is.na(peakAnnoDF$combined),]
-  write.table(peakAnnoDF, paste0(annot_dir, outFile2), sep=&quot;\t&quot;, quote=F, row.names=F)
+  write.table(peakAnnoDF, paste0(annot_dir, outFile2), sep = &quot;\t&quot;, quote = F, row.names = F)
   # # Convert devil ensembl to mouse ensembl
   peakAnnoDF$mouseensembl &lt;- df2$Mouse.gene.stable.ID[match(unlist(peakAnnoDF$combined), df2$Gene.stable.ID)]
   # # Write annotation with converted IDs 
   peakAnnoDF$mouseensembl[peakAnnoDF$mouseensembl == as.character(&quot;&quot;)] &lt;- NA
   peakAnnoDF &lt;- peakAnnoDF[!is.na(peakAnnoDF$mouseensembl),]
-  write.table(peakAnnoDF, paste0(annot_dir, outFile1), sep=&quot;\t&quot;, quote=F, row.names=F)
+  write.table(peakAnnoDF, paste0(annot_dir, outFile1), sep = &quot;\t&quot;, quote = F, row.names = F)
 
   # # GO enrichment analysis
   GO &lt;- enrichGO(gene = peakAnnoDF$mouseensembl,
@@ -1129,9 +1327,10 @@ bg = unlist(bg, use.names = FALSE)</code></pre>
                   readable = TRUE)
   write.table(GO, paste0(annot_dir, GOenrich), 
               sep=&quot;\t&quot;, quote=F, row.names=F)
-  
+  write.table(GO, paste0(annot_dir, GOenrich), sep = &quot;\t&quot;, quote = F, row.names = F)
+
   # convert mouse ensembl to entrezID
-  suppressWarnings(gene.df &lt;- bitr(geneID=peakAnnoDF$mouseensembl, fromType=&quot;ENSEMBL&quot;, toType=&quot;ENTREZID&quot;, OrgDb=&quot;org.Mm.eg.db&quot; ))
+  suppressWarnings(gene.df &lt;- bitr(geneID = peakAnnoDF$mouseensembl, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb = &quot;org.Mm.eg.db&quot; ))
   
   bg.entrez &lt;- bitr(geneID=backg, fromType=&quot;ENSEMBL&quot;, toType=&quot;ENTREZID&quot;, OrgDb=&quot;org.Mm.eg.db&quot; )
   
@@ -1145,53 +1344,56 @@ bg = unlist(bg, use.names = FALSE)</code></pre>
               sep=&quot;\t&quot;, 
               quote=F,
               row.names=F)
+  kk &lt;- enrichKEGG(gene = gene.df$ENTREZID, organism = &quot;mmu&quot;, pAdjustMethod = &quot;fdr&quot;,
+                  qvalueCutoff = 0.01, universe = )
+  write.table(kk, paste0(annot_dir, kegg), sep = &quot;\t&quot;, quote = F, row.names = F)
 }
 
 
 ### Enhancer-associated peaks annotation
 annotatePeaks(peak = paste0(fullPeak_dir, &quot;dunnart_enhancer_peaks.narrowPeak&quot;), outFile = &quot;dunnart_enhancer_annotation.txt&quot;, backg = unlist(fread(&quot;output/annotations/go_background_orthologousENSEMBL_biomart.txt&quot;, header = FALSE), use.names = FALSE),
   outFile1 = &quot;dunnart_enhancer_annotationConvertedIDs.txt&quot;, GOenrich = &quot;enhancer_mm10GOenrich.txt&quot;, 
-  kegg=&quot;enhancer_KEGG.txt&quot;, outFile2 = &quot;dunnart_enhancer_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-07 15:52:54 
-&gt;&gt; preparing features information...         2022-03-07 15:52:55 
-&gt;&gt; identifying nearest features...       2022-03-07 15:52:55 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-07 15:52:56 
-&gt;&gt; assigning genomic annotation...       2022-03-07 15:52:56 
-&gt;&gt; assigning chromosome lengths          2022-03-07 15:53:05 
-&gt;&gt; done...                   2022-03-07 15:53:05 </code></pre>
+  kegg = &quot;enhancer_KEGG.txt&quot;, outFile2 = &quot;dunnart_enhancer_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-15 12:13:23 
+&gt;&gt; preparing features information...         2022-03-15 12:13:24 
+&gt;&gt; identifying nearest features...       2022-03-15 12:13:24 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-15 12:13:25 
+&gt;&gt; assigning genomic annotation...       2022-03-15 12:13:25 
+&gt;&gt; assigning chromosome lengths          2022-03-15 12:13:34 
+&gt;&gt; done...                   2022-03-15 12:13:34 </code></pre>
 <pre class="r"><code>### Promoter-associated peaks annotation
 annotatePeaks(peak = paste0(fullPeak_dir, &quot;dunnart_promoter_peaks.narrowPeak&quot;), outFile = &quot;dunnart_promoter_annotation.txt&quot;, backg = unlist(fread(&quot;output/annotations/go_background_orthologousENSEMBL_biomart.txt&quot;, header = FALSE), use.names = FALSE),
   outFile1 = &quot;dunnart_promoter_annotationConvertedIDs.txt&quot; , GOenrich = &quot;promoter_mm10GOenrich.txt&quot;, 
-  kegg=&quot;promoter_KEGG.txt&quot;, outFile2 = &quot;dunnart_promoter_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-07 15:53:55 
-&gt;&gt; preparing features information...         2022-03-07 15:53:55 
-&gt;&gt; identifying nearest features...       2022-03-07 15:53:55 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-07 15:53:56 
-&gt;&gt; assigning genomic annotation...       2022-03-07 15:53:56 
-&gt;&gt; assigning chromosome lengths          2022-03-07 15:53:58 
-&gt;&gt; done...                   2022-03-07 15:53:58 </code></pre>
+  kegg = &quot;promoter_KEGG.txt&quot;, outFile2 = &quot;dunnart_promoter_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-15 12:14:30 
+&gt;&gt; preparing features information...         2022-03-15 12:14:30 
+&gt;&gt; identifying nearest features...       2022-03-15 12:14:30 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-15 12:14:31 
+&gt;&gt; assigning genomic annotation...       2022-03-15 12:14:31 
+&gt;&gt; assigning chromosome lengths          2022-03-15 12:14:32 
+&gt;&gt; done...                   2022-03-15 12:14:32 </code></pre>
 <pre class="r"><code>### H3K4me3-associated peaks annotation
 annotatePeaks(peak = paste0(fullPeak_dir, &quot;H3K4me3_overlap_default.narrowPeak&quot;), outFile = &quot;dunnart_H3K4me3_annotation.txt&quot;, backg = unlist(fread(&quot;output/annotations/go_background_orthologousENSEMBL_biomart.txt&quot;, header = FALSE), use.names = FALSE),
   outFile1 = &quot;dunnart_H3K4me3_annotationConvertedIDs.txt&quot; , GOenrich = &quot;H3K4me3_mm10GOenrich.txt&quot;, 
-  kegg=&quot;H3K4me3_KEGG.txt&quot;, outFile2 = &quot;dunnart_H3K4me3_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-07 15:54:22 
-&gt;&gt; preparing features information...         2022-03-07 15:54:23 
-&gt;&gt; identifying nearest features...       2022-03-07 15:54:23 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-07 15:54:23 
-&gt;&gt; assigning genomic annotation...       2022-03-07 15:54:23 
-&gt;&gt; assigning chromosome lengths          2022-03-07 15:54:25 
-&gt;&gt; done...                   2022-03-07 15:54:25 </code></pre>
+  kegg = &quot;H3K4me3_KEGG.txt&quot;, outFile2 = &quot;dunnart_H3K4me3_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-15 12:14:56 
+&gt;&gt; preparing features information...         2022-03-15 12:14:57 
+&gt;&gt; identifying nearest features...       2022-03-15 12:14:57 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-15 12:14:57 
+&gt;&gt; assigning genomic annotation...       2022-03-15 12:14:57 
+&gt;&gt; assigning chromosome lengths          2022-03-15 12:14:59 
+&gt;&gt; done...                   2022-03-15 12:14:59 </code></pre>
 <pre class="r"><code>### H3K27ac-associated peaks annotation
 annotatePeaks(peak = paste0(fullPeak_dir, &quot;H3K27ac_overlap_default.narrowPeak&quot;), outFile = &quot;dunnart_H3K27ac_annotation.txt&quot;, backg = unlist(fread(&quot;output/annotations/go_background_orthologousENSEMBL_biomart.txt&quot;, header = FALSE), use.names = FALSE),
   outFile1 = &quot;dunnart_H3K27ac_annotationConvertedIDs.txt&quot; , GOenrich = &quot;H3K27ac_mm10GOenrich.txt&quot;, 
-  kegg=&quot;H3K27ac_KEGG.txt&quot;, outFile2 = &quot;dunnart_H3K27ac_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-07 15:54:49 
-&gt;&gt; preparing features information...         2022-03-07 15:54:50 
-&gt;&gt; identifying nearest features...       2022-03-07 15:54:50 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-07 15:54:51 
-&gt;&gt; assigning genomic annotation...       2022-03-07 15:54:51 
-&gt;&gt; assigning chromosome lengths          2022-03-07 15:54:53 
-&gt;&gt; done...                   2022-03-07 15:54:53 </code></pre>
+  kegg = &quot;H3K27ac_KEGG.txt&quot;, outFile2 = &quot;dunnart_H3K27ac_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-15 12:15:24 
+&gt;&gt; preparing features information...         2022-03-15 12:15:24 
+&gt;&gt; identifying nearest features...       2022-03-15 12:15:24 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-15 12:15:25 
+&gt;&gt; assigning genomic annotation...       2022-03-15 12:15:25 
+&gt;&gt; assigning chromosome lengths          2022-03-15 12:15:27 
+&gt;&gt; done...                   2022-03-15 12:15:27 </code></pre>
 </div>
 </div>
 <div id="distance-to-the-nearest-tss" class="section level1">
@@ -1202,10 +1404,10 @@ enhancerTSSplot=&quot;dunnart_enhancerTSS.pdf&quot;
 promoterTSSplot=&quot;dunnart_promoterTSS.pdf&quot;
 TSSplot = &quot;dunnart_TSS.pdf&quot;
 
-files =list.files(fileList, pattern= &quot;annotation.txt&quot;, full.names=T) # create list of files in directory
+files = c(paste0(fileList, &quot;dunnart_enhancer_annotation.txt&quot;), paste0(fileList, &quot;dunnart_promoter_annotation.txt&quot;), paste0(fileList, &quot;dunnart_H3K4me3_annotation.txt&quot;), paste0(fileList, &quot;dunnart_H3K27ac_annotation.txt&quot;))
 files = as.list(files)
 data = lapply(files, function(x) fread(x, header=TRUE, sep=&quot;\t&quot;, quote = &quot;&quot;, na.strings=c(&quot;&quot;, &quot;NA&quot;))) # read in all files
-names(data) = c(&quot;enhancers&quot;,&quot;H3K27ac&quot;,&quot;H3K4me3&quot;,&quot;promoter&quot;)
+names(data) = c(&quot;enhancers&quot;,&quot;promoter&quot;,&quot;H3K4me3&quot;,&quot;H3K27ac&quot;)
 df1 = Map(mutate, data, mark = names(data))
 enhProm = list(as.data.table(df1$promoter), as.data.table(df1$enhancers))
 enhProm = suppressWarnings(lapply(enhProm, 
@@ -1230,6 +1432,18 @@ p &lt;- ggplot(enhProm$promoters, aes(x=log10_abs_dist)) +
     geom_density(alpha=0.5, color=&quot;#2A9D8F&quot;, fill=&quot;#2A9D8F&quot;) + theme_bw() + 
   ggtitle(&quot;Promoter-associated peaks&quot;)
 
+## Save as PDF
+pdf(file = paste0(plot_dir, promoterTSSplot), width=10, height = 7)
+    print(p)
+dev.off()</code></pre>
+<pre><code>svg 
+  2 </code></pre>
+<pre class="r"><code>## Overlay both on the same plots
+enhProm = rbindlist(enhProm,)
+p &lt;- ggplot(enhProm, aes(x=log10_abs_dist, fill=factor(mark), color=factor(mark))) + 
+  geom_density(alpha=0.5) +scale_color_manual(values=c(&quot;#E9C46A&quot;, &quot;#2A9D8F&quot;)) +
+  scale_fill_manual(values=c(&quot;#E9C46A&quot;, &quot;#2A9D8F&quot;)) + 
+  scale_x_continuous(limits=c(-7, 7)) + theme_bw()
 p</code></pre>
 <p><img src="figure/dunnart_peak_characterisation.Rmd/distance-to-tss-1.svg" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -1256,58 +1470,29 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/lecook/chipseq-cross-species/blob/95a6294cdf4c4fc9fa7feca440c9d1488f089a8d/docs/figure/dunnart_peak_characterisation.Rmd/distance-to-tss-1.svg" target="_blank">95a6294</a>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/7c024677371842395a498c674d44f898bf1a93ee/docs/figure/dunnart_peak_characterisation.Rmd/distance-to-tss-1.svg" target="_blank">7c02467</a>
 </td>
 <td>
 lecook
 </td>
 <td>
-2022-03-03
+2022-03-15
 </td>
 </tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>## Save as PDF
-pdf(file = paste0(plot_dir, promoterTSSplot), width=10, height = 7)
-    print(p)
-dev.off()</code></pre>
-<pre><code>svg 
-  2 </code></pre>
-<pre class="r"><code>## Overlay both on the same plots
-enhProm = rbindlist(enhProm,)
-p &lt;- ggplot(enhProm, aes(x=log10_abs_dist, fill=factor(mark), color=factor(mark))) + 
-  geom_density(alpha=0.5) +scale_color_manual(values=c(&quot;#E9C46A&quot;, &quot;#2A9D8F&quot;)) +
-  scale_fill_manual(values=c(&quot;#E9C46A&quot;, &quot;#2A9D8F&quot;)) + 
-  scale_x_continuous(limits=c(-7, 7)) + theme_bw()
-p</code></pre>
-<p><img src="figure/dunnart_peak_characterisation.Rmd/distance-to-tss-2.svg" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-distance-to-tss-2">
-Past versions of distance-to-tss-2.svg
-</button>
-</p>
-<div id="fig-distance-to-tss-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
 <tr>
 <td>
-<a href="https://github.com/lecook/chipseq-cross-species/blob/95a6294cdf4c4fc9fa7feca440c9d1488f089a8d/docs/figure/dunnart_peak_characterisation.Rmd/distance-to-tss-2.svg" target="_blank">95a6294</a>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/5066ccddcd6b47d561a18620cb04ea1ee9845449/docs/figure/dunnart_peak_characterisation.Rmd/distance-to-tss-1.svg" target="_blank">5066ccd</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-07
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/95a6294cdf4c4fc9fa7feca440c9d1488f089a8d/docs/figure/dunnart_peak_characterisation.Rmd/distance-to-tss-1.svg" target="_blank">95a6294</a>
 </td>
 <td>
 lecook
@@ -1346,6 +1531,54 @@ p &lt;- ggscatter(
   facet_wrap(~mark) + theme(panel.spacing = unit(3, &quot;lines&quot;), plot.margin = margin(2, 2, 2, 2, &quot;cm&quot;))
 p</code></pre>
 <p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-9-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
+Past versions of unnamed-chunk-9-1.svg
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/7c024677371842395a498c674d44f898bf1a93ee/docs/figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-9-1.svg" target="_blank">7c02467</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/5066ccddcd6b47d561a18620cb04ea1ee9845449/docs/figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-9-1.svg" target="_blank">5066ccd</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>pdf(paste0(plot_dir, &quot;geneLengthvsPeakCount.pdf&quot;), width=10, height = 15)
 print(p)
 dev.off()</code></pre>
@@ -1498,6 +1731,28 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/7c024677371842395a498c674d44f898bf1a93ee/docs/figure/dunnart_peak_characterisation.Rmd/k-means-clustering-1.svg" target="_blank">7c02467</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/5066ccddcd6b47d561a18620cb04ea1ee9845449/docs/figure/dunnart_peak_characterisation.Rmd/k-means-clustering-1.svg" target="_blank">5066ccd</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/lecook/chipseq-cross-species/blob/95a6294cdf4c4fc9fa7feca440c9d1488f089a8d/docs/figure/dunnart_peak_characterisation.Rmd/k-means-clustering-1.svg" target="_blank">95a6294</a>
 </td>
 <td>
@@ -1546,6 +1801,28 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/7c024677371842395a498c674d44f898bf1a93ee/docs/figure/dunnart_peak_characterisation.Rmd/k-means-clustering-2.svg" target="_blank">7c02467</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/5066ccddcd6b47d561a18620cb04ea1ee9845449/docs/figure/dunnart_peak_characterisation.Rmd/k-means-clustering-2.svg" target="_blank">5066ccd</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-07
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/lecook/chipseq-cross-species/blob/95a6294cdf4c4fc9fa7feca440c9d1488f089a8d/docs/figure/dunnart_peak_characterisation.Rmd/k-means-clustering-2.svg" target="_blank">95a6294</a>
@@ -1610,7 +1887,19 @@ data2 = promoter.kmeans %&gt;% dplyr::select(&quot;V4&quot;, &quot;width&quot;, 
 all_peaks = rbind(data2, enhancer.annot, promoter.annot)
 all_peaks = as.data.table(all_peaks)
 all_peaks = all_peaks[,log10_intensity:=log10(V7)]
-all_peaks = all_peaks[,log10_width:=log10(width)]</code></pre>
+all_peaks = all_peaks[,log10_width:=log10(width)]
+
+  p &lt;- ggplot2::ggplot(cre.kmeans_df, aes(x = log10_dist, fill = as.factor(Cluster), color = as.factor(Cluster))) +
+            geom_histogram(binwidth = 0.1, position = &#39;identity&#39;)  +
+            theme_bw()+ font
+  pdf(plot2, width = 10, height = 7)
+  print(p + scale_color_manual(values = c(&#39;#9EBCDA&#39;,&#39;#8C6BB1&#39;, &quot;#4D004B&quot;)) + scale_fill_manual(values = c(&#39;#9EBCDA&#39;,&#39;#8C6BB1&#39;, &quot;#4D004B&quot;)))
+  dev.off()  </code></pre>
+<pre><code>svg 
+  2 </code></pre>
+<pre class="r"><code>  print(p + scale_color_manual(values = c(&#39;#9EBCDA&#39;,&#39;#8C6BB1&#39;, &quot;#4D004B&quot;)) + scale_fill_manual(values = c(&#39;#9EBCDA&#39;,&#39;#8C6BB1&#39;, &quot;#4D004B&quot;)))</code></pre>
+<p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-13-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>  write.table(cre.kmeans_df, paste0(filterPeaks_dir, output), sep = &quot;\t&quot;, quote = F, row.names = F)</code></pre>
 </div>
 <div id="plot-distance-to-tss" class="section level2">
 <h2>Plot distance to TSS</h2>
@@ -1625,10 +1914,11 @@ pdf(plotTSS, width=10, height = 7)
 dev.off()</code></pre>
 <pre><code>svg 
   2 </code></pre>
-<pre class="r"><code>my_comparisons = list( c(&quot;promoter cluster 1&quot;, &quot;promoter cluster 2&quot;), c(&quot;promoter cluster 1&quot;, &quot;promoter cluster 3&quot;), c(&quot;promoter cluster 1&quot;, &quot;promoter&quot;), c(&quot;promoter cluster 1&quot;, &quot;enhancer&quot;) )
-  
-## Plot peak intensity
-p &lt;- ggplot(all_peaks, aes(factor(label), y = log10_intensity)) + 
+<pre class="r"><code>my_comparisons = list( c(&quot;promoter cluster 1&quot;, &quot;promoter cluster 2&quot;), c(&quot;promoter cluster 1&quot;, &quot;promoter cluster 3&quot;), c(&quot;promoter cluster 1&quot;, &quot;promoter&quot;), c(&quot;promoter cluster 1&quot;, &quot;enhancer&quot;) )</code></pre>
+</div>
+<div id="plot-peak-intensity" class="section level2">
+<h2>Plot peak intensity</h2>
+<pre class="r"><code>p &lt;- ggplot(all_peaks, aes(factor(label), y = log10_intensity)) + 
   geom_violin(aes(fill = factor(label), 
                   color = factor(label)), 
               position = &quot;dodge&quot;) +
@@ -1642,14 +1932,16 @@ p &lt;- ggplot(all_peaks, aes(factor(label), y = log10_intensity)) +
 
 
 p +  ggtitle(&quot;Peak intensity for clustered promoter-associated peaks compared to unfiltered peaks&quot;)</code></pre>
-<p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-14-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-15-1.svg" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>pdf(paste0(plot_dir, &quot;test.pdf&quot;),width=10, height = 8)
   print(p + font)
 dev.off()</code></pre>
 <pre><code>svg 
   2 </code></pre>
-<pre class="r"><code>## Plot peak width
-p &lt;- ggplot(all_peaks, aes(factor(label), y = log10_width)) + 
+</div>
+<div id="plot-peak-width" class="section level2">
+<h2>Plot peak width</h2>
+<pre class="r"><code>p &lt;- ggplot(all_peaks, aes(factor(label), y = log10_width)) + 
   geom_violin(aes(fill = factor(label), 
                   color = factor(label)), 
               position = &quot;dodge&quot;) +
@@ -1662,14 +1954,16 @@ p &lt;- ggplot(all_peaks, aes(factor(label), y = log10_width)) +
   scale_fill_manual(values = colors) + stat_compare_means(comparisons = my_comparisons) 
 
 p + ggtitle(&quot;Peak widths for clustered promoter-associated peaks compared to unfiltered peaks&quot;)</code></pre>
-<p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-14-2.svg" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-16-1.svg" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>pdf(peakWidthPlot, width=9, height = 8)
   print(p + font)
 dev.off()</code></pre>
 <pre><code>svg 
   2 </code></pre>
-<pre class="r"><code>## Plot genomic regions
-df2 = rbind(promoter.kmeans)
+</div>
+<div id="plot-genomic-regions" class="section level2">
+<h2>Plot genomic regions</h2>
+<pre class="r"><code>df2 = rbind(promoter.kmeans)
 df2 = map_df(df2, ~ gsub(&quot; ().*&quot;, &quot;&quot;, .x))# remove everything after the first space
 tbl = with(df2, table(annotation, Cluster)) %&gt;% as.data.frame()
 
@@ -1680,7 +1974,55 @@ p &lt;- ggplot(tbl, aes(factor(annotation), Freq, fill=factor(Cluster))) +
   theme_minimal() + ylab(&quot;Number of peaks&quot;) + xlab(&quot;&quot;) 
 
 p + ggtitle(&quot;Genomic features of clusters&quot;)</code></pre>
-<p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-14-3.svg" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-17-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-17-1">
+Past versions of unnamed-chunk-17-1.svg
+</button>
+</p>
+<div id="fig-unnamed-chunk-17-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/7c024677371842395a498c674d44f898bf1a93ee/docs/figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-17-1.svg" target="_blank">7c02467</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/5066ccddcd6b47d561a18620cb04ea1ee9845449/docs/figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-17-1.svg" target="_blank">5066ccd</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>pdf(annotation)
 print(p + font)
 dev.off()</code></pre>
@@ -1712,36 +2054,36 @@ write.table(subset(file, V4 %in% cluster3), out3, quote=FALSE, col.names=FALSE, 
 <pre class="r"><code>annotatePeaks(peak = paste0(filterPeaks_dir, &quot;cluster1_promoters.narrowPeak&quot;), 
   outFile = &quot;cluster1_promoter_annotation.txt&quot;, outFile1 = &quot;cluster1_promoter_annotationConvertedIDs.txt&quot; , backg = unlist(fread(&quot;output/annotations/go_background_orthologousENSEMBL_biomart.txt&quot;, header = FALSE), use.names = FALSE), 
   GOenrich = &quot;cluster1_mm10GOenrich.txt&quot;, 
-  kegg=&quot;cluster1_KEGG.txt&quot;, outFile2 = &quot;cluster1_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-07 15:57:55 
-&gt;&gt; preparing features information...         2022-03-07 15:57:55 
-&gt;&gt; identifying nearest features...       2022-03-07 15:57:55 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-07 15:57:55 
-&gt;&gt; assigning genomic annotation...       2022-03-07 15:57:55 
-&gt;&gt; assigning chromosome lengths          2022-03-07 15:57:56 
-&gt;&gt; done...                   2022-03-07 15:57:56 </code></pre>
+  kegg = &quot;cluster1_KEGG.txt&quot;, outFile2 = &quot;cluster1_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-15 12:18:25 
+&gt;&gt; preparing features information...         2022-03-15 12:18:25 
+&gt;&gt; identifying nearest features...       2022-03-15 12:18:25 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-15 12:18:25 
+&gt;&gt; assigning genomic annotation...       2022-03-15 12:18:25 
+&gt;&gt; assigning chromosome lengths          2022-03-15 12:18:27 
+&gt;&gt; done...                   2022-03-15 12:18:27 </code></pre>
 <pre class="r"><code>annotatePeaks(peak = paste0(filterPeaks_dir, &quot;cluster2_promoters.narrowPeak&quot;), 
   outFile = &quot;cluster2_promoter_annotation.txt&quot;, outFile1 = &quot;cluster2_promoter_annotationConvertedIDs.txt&quot; , backg = unlist(fread(&quot;output/annotations/go_background_orthologousENSEMBL_biomart.txt&quot;, header = FALSE), use.names = FALSE), 
   GOenrich = &quot;cluster2_mm10GOenrich.txt&quot;, 
-  kegg=&quot;cluster2_KEGG.txt&quot;, outFile2 = &quot;cluster2_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-07 15:58:17 
-&gt;&gt; preparing features information...         2022-03-07 15:58:17 
-&gt;&gt; identifying nearest features...       2022-03-07 15:58:17 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-07 15:58:18 
-&gt;&gt; assigning genomic annotation...       2022-03-07 15:58:18 
-&gt;&gt; assigning chromosome lengths          2022-03-07 15:58:19 
-&gt;&gt; done...                   2022-03-07 15:58:19 </code></pre>
+  kegg = &quot;cluster2_KEGG.txt&quot;, outFile2 = &quot;cluster2_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-15 12:18:49 
+&gt;&gt; preparing features information...         2022-03-15 12:18:49 
+&gt;&gt; identifying nearest features...       2022-03-15 12:18:49 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-15 12:18:50 
+&gt;&gt; assigning genomic annotation...       2022-03-15 12:18:50 
+&gt;&gt; assigning chromosome lengths          2022-03-15 12:18:51 
+&gt;&gt; done...                   2022-03-15 12:18:51 </code></pre>
 <pre class="r"><code>annotatePeaks(peak = paste0(filterPeaks_dir, &quot;cluster3_promoters.narrowPeak&quot;), 
   outFile = &quot;cluster3_promoter_annotation.txt&quot;, outFile1 = &quot;cluster3_promoter_annotationConvertedIDs.txt&quot; , backg = unlist(fread(&quot;output/annotations/go_background_orthologousENSEMBL_biomart.txt&quot;, header = FALSE), use.names = FALSE), 
   GOenrich = &quot;cluster3_mm10GOenrich.txt&quot;, 
-  kegg=&quot;cluster3_KEGG.txt&quot;, outFile2 = &quot;cluster3_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-07 15:58:40 
-&gt;&gt; preparing features information...         2022-03-07 15:58:40 
-&gt;&gt; identifying nearest features...       2022-03-07 15:58:40 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-07 15:58:40 
-&gt;&gt; assigning genomic annotation...       2022-03-07 15:58:40 
-&gt;&gt; assigning chromosome lengths          2022-03-07 15:58:41 
-&gt;&gt; done...                   2022-03-07 15:58:41 </code></pre>
+  kegg = &quot;cluster3_KEGG.txt&quot;, outFile2 = &quot;cluster3_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-15 12:19:12 
+&gt;&gt; preparing features information...         2022-03-15 12:19:13 
+&gt;&gt; identifying nearest features...       2022-03-15 12:19:13 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-15 12:19:13 
+&gt;&gt; assigning genomic annotation...       2022-03-15 12:19:13 
+&gt;&gt; assigning chromosome lengths          2022-03-15 12:19:14 
+&gt;&gt; done...                   2022-03-15 12:19:14 </code></pre>
 </div>
 <div id="assess-distance-to-tss-for-clusters" class="section level2">
 <h2>Assess distance to TSS for clusters</h2>
@@ -1749,7 +2091,6 @@ write.table(subset(file, V4 %in% cluster3), out3, quote=FALSE, col.names=FALSE, 
 enhancerTSSplot=&quot;dunnart_enhancerTSS.pdf&quot;
 promoterTSSplot=&quot;dunnart_filtered_promoterTSS.pdf&quot;
 TSSplot = &quot;dunnart_all_TSS.pdf&quot;
-
 
 files =list.files(fileList, pattern= &quot;_annotation.txt&quot;, full.names=T) # create list of files in directory
 files = as.list(files)
@@ -1771,9 +2112,9 @@ p &lt;- ggplot(enhProm$enhancers, aes(x=log10_abs_dist,
         geom_density(alpha=0.5) + theme_bw() + scale_color_manual(values = c(&#39;#E9C46A&#39;)) + 
         scale_fill_manual(values = c(&#39;#E9C46A&#39;))
 
-p + ggtitle(&quot;Distance to the nearest TSS for enhancer-associated peaks&quot;)</code></pre>
-<p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-17-1.svg" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>pdf(file = paste0(plot_dir, enhancerTSSplot), width=10, height = 7)
+#p + ggtitle(&quot;Distance to the nearest TSS for enhancer-associated peaks&quot;)
+
+pdf(file = paste0(plot_dir, enhancerTSSplot), width=10, height = 7)
 print(p + font)
 dev.off()</code></pre>
 <pre><code>svg 
@@ -1786,7 +2127,7 @@ p &lt;- ggplot(enhProm, aes(x=log10_abs_dist,
   geom_density(position = &quot;stack&quot;, alpha=0.8) + theme_bw() 
 
 p + ggtitle(&quot;Distance to the nearest TSS for promoter-associated peaks&quot;)</code></pre>
-<p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-17-2.svg" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-20-1.svg" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>pdf(file = paste0(plot_dir, TSSplot), width=15, height = 7)
 print(p + font)
 dev.off()</code></pre>
@@ -1855,7 +2196,7 @@ p &lt;- ggplot(df1, aes(factor(group), y = GC)) +
   scale_fill_manual(values = c(&quot;#B6CDE3&quot;,&quot;#A990C4&quot;,&quot;#7A4078&quot; ,&quot;#F1DAA2&quot;,&quot;#7AC2B9&quot;))
 
 p + ggtitle(&quot;GC content&quot;)</code></pre>
-<p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-21-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-24-1.svg" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>pdf(gcPlot, width=9, height = 8)
     print(p + font + stat_compare_means(p.adjust.method = &quot;fdr&quot;, comparisons = my_comparisons))
 dev.off()</code></pre>
@@ -1877,7 +2218,7 @@ p &lt;- ggplot(df1, aes(factor(group), y = CpG)) +
   scale_fill_manual(values = c(&quot;#B6CDE3&quot;,&quot;#A990C4&quot;,&quot;#7A4078&quot; ,&quot;#F1DAA2&quot;,&quot;#7AC2B9&quot;))
 
 p + ggtitle(&quot;CpG content&quot;)</code></pre>
-<p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-21-2.svg" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-24-2.svg" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>pdf(cpgPlot, width = 9, height = 8)
   print(p + font + stat_compare_means(p.adjust.method = &quot;fdr&quot;, comparisons = my_comparisons))
   dev.off()</code></pre>
@@ -1892,25 +2233,26 @@ data = list(promoter, enhancer)
 genes = lapply(data, function(i) as.data.frame(i)$mouseensembl)
 genes = lapply(genes, function(i) unique(i))
 names(genes) = c(&quot;promoter-associated peaks&quot;, &quot;enhancer-associated peaks&quot;)
+
 go_cluster &lt;- setReadable(
       compareCluster(
         geneCluster = genes, 
         fun = enrichGO, 
-        ont=&quot;BP&quot;,
         universe = bg, 
-        keyType=&quot;ENSEMBL&quot;, 
+        ont = &quot;BP&quot;,
+        keyType = &quot;ENSEMBL&quot;, 
         pvalueCutoff = 0.001, 
         OrgDb = org.Mm.eg.db),
       OrgDb = org.Mm.eg.db, 
-      keyType=&quot;ENSEMBL&quot;)</code></pre>
+      keyType = &quot;ENSEMBL&quot;)</code></pre>
 </div>
 <div id="plot-go-enrichment" class="section level2">
 <h2>Plot GO enrichment</h2>
 <pre class="r"><code>p &lt;- dotplot(go_cluster, showCategory = 10) + scale_color_viridis() +
   theme(axis.text.x = element_text(angle = 45, hjust=1))</code></pre>
-<p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-23-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-26-1.svg" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>p</code></pre>
-<p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-23-2.svg" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-26-2.svg" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>pdf(paste0(plot_dir, &quot;dunnart_go_cluster.pdf&quot;), width = 11, height = 9)
 print(p)
 dev.off()</code></pre>
@@ -1935,9 +2277,9 @@ kegg_cluster &lt;-
 
 p &lt;- dotplot(kegg_cluster, showCategory = 10) + scale_color_viridis() + 
   theme(axis.text.x = element_text(angle = 45, hjust=1))</code></pre>
-<p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-23-3.svg" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-26-3.svg" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>p</code></pre>
-<p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-23-4.svg" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/dunnart_peak_characterisation.Rmd/unnamed-chunk-26-4.svg" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>pdf(paste0(plot_dir, &quot;dunnart_kegg_cluster.pdf&quot;), width = 8, height = 6)
 print(p)
 dev.off()</code></pre>
@@ -1953,10 +2295,132 @@ simplifyGOFromMultipleLists(go_terms,
                                  measure = &quot;Wang&quot;, 
                                  method = &quot;binary_cut&quot;)</code></pre>
 <pre><code>334/334 GO IDs left for clustering.
-Cluster 334 terms by &#39;binary_cut&#39;... 27 clusters, used 0.1066508 secs.</code></pre>
+Cluster 334 terms by &#39;binary_cut&#39;... 27 clusters, used 0.1040213 secs.</code></pre>
 <pre class="r"><code>dev.off()  </code></pre>
 <pre><code>svg 
   2 </code></pre>
+<blockquote>
+<p>Note: Look at using sourcing for calling R functions that I use across different analyses. Create a script of R</p>
+</blockquote>
+<pre class="r"><code>if(exists(&quot;my_function&quot;, mode = &quot;function&quot;))
+    source(&quot;LauraUtils.R&quot;)</code></pre>
+<!-- # Peak length vs distance from TSS and peak intensity vs distance from TSS
+peak.counts <- df2 %>% as.data.frame() %>% group_by(geneId, group, geneLength) %>%
+    summarise(count = n(), .groups = 'drop') %>% as.data.table()
+
+pdf("geneLengthvsPeakCount.pdf", width = 10, height = 15)
+p <- ggscatter(
+  peak.counts, x = "count", y = "geneLength",
+  color = "group", palette = "jco", add = "reg.line",
+  conf.int = TRUE, # Add confidence interval
+  cor.coef = TRUE, # Add correlation coefficient. see ?stat_cor
+  cor.coeff.args = list(method = "pearson", label.x = 3, label.sep = "\n"), xlab = "Gene Length",
+  ylab = "Number of peaks per gene"
+  ) +
+  facet_wrap(~group)
+p + theme(panel.spacing = unit(3, "lines"), plot.margin = margin(2, 2, 2, 2, "cm"))
+dev.off()
+
+pdf("peakLengthVsDist.pdf", width = 10, height = 7)
+ggplot(peak, aes(abs(distanceToTSS), y = log10_length, color = cre)) + geom_point(alpha = 0.3) +  theme_bw() + scale_color_manual(values = c("#F1DAA2", "#7AC2B9"))
+dev.off()
+
+
+## Peak intensity for distal enhancers marked by H3K4me3
+# subset log10_abs_dist between 3.5 and 7 (3000bp and 10 million bps)
+H3K4me3 = data.table::fread("H3K4me3_annotation.txt", sep = "\t", quote = "", header = TRUE)
+H3K27ac = data.table::fread("H3K27ac_annotation.txt", sep = "\t", quote = "", header = TRUE)
+
+H3K4me3.subset.greater = subset(H3K4me3, abs(distanceToTSS) >=3000)
+H3K4me3.subset.greater$mark = "H3K4me3 > 3kb"
+H3K4me3.subset.less = subset(H3K4me3, abs(distanceToTSS) < 3000)
+H3K4me3.subset.less$mark = "H3K4me3 < 3kb"
+H3K27ac.subset = subset(H3K27ac, abs(distanceToTSS) >=3000)
+H3K27ac.subset$mark = "H3K27ac"
+data = rbind(H3K4me3.subset.less, H3K4me3.subset.greater, H3K27ac.subset)
+stat <- compare_means(V7 ~ mark, data = data)
+mean(H3K4me3.subset.greater$V7)
+mean(H3K4me3.subset.less$V7)
+
+
+enhancer <- data.table::fread("dunnart_enhancer_annotation.txt", sep = "\t", quote = "", header = TRUE)
+promoter <- data.table::fread("dunnart_promoter_annotation.txt", sep = "\t", quote = "", header = TRUE)
+enhancer$cre <- "enhancer"
+promoter$cre <- "promoter"
+enhancer = enhancer[,log10_abs_dist:=log10(abs(distanceToTSS)+1)]
+promoter = promoter[,log10_abs_dist:=log10(abs(distanceToTSS)+1)]
+
+promoter.subset = subset(promoter, log10_abs_dist >= 3.5)
+promoter = subset(promoter, log10_abs_dist <3.5)
+promoter.subset$cre = "subset"
+data = rbind(promoter, promoter.subset)
+data = data[,log10_intensity:=log10(V7)]
+
+p <- ggplot(data, aes(factor(cre), y = log10_intensity)) + 
+  #geom_violin(aes(fill = factor(cre), color = factor(cre)),
+   # position = "dodge"
+   # )+
+  geom_boxplot(aes(color = factor(cre)),
+    outlier.shape = NA,
+    width = .15, 
+    notch = TRUE,
+    fill = c("#FCF8EC","#E4F3F1"),
+    position = position_dodge(width = .1)
+  ) + theme_bw() + xlab("") + ylab("Peak intensity") 
+pdf("distalH3K4me3PeakIntensity.pdf", width = 9, height = 8)
+p +  scale_color_manual(values = c("#E9C46A","#2A9D8F")) +
+scale_fill_manual(values = c("#F1DAA2","#7AC2B9")) + stat_compare_means(method = "wilcox.test" )
+dev.off()
+
+
+
+# Number of peaks per gene
+enhancer <- data.table::fread("annotations/dunnart_enhancer_annotation.txt", sep = "\t", quote = "", header = TRUE)
+promoter <- data.table::fread("annotations/dunnart_promoter_annotation.txt", sep = "\t", quote = "", header = TRUE)
+enhancer$cre <- "enhancer"
+promoter$cre <- "promoter"
+peak <- rbind(enhancer, promoter)
+peak.counts <- enhancer %>% as.data.frame() %>% group_by(geneId, cre) %>%
+    summarise(count = n(),.groups = 'drop') %>% as.data.table()
+peak.counts = peak.counts[,log10_abs_dist:=log10(count)][,log10_abs_dist:=ifelse(count<0,-log10_abs_dist,log10_abs_dist)]
+pick <- peak.counts %>% filter(count > 50)
+
+p <- ggplot(peak.counts, aes(factor(cre), y = log10_abs_dist)) + 
+  geom_violin(aes(fill = factor(cre), color = factor(cre))) +
+  geom_boxplot(aes(color = factor(cre)),
+    width = .15, 
+    outlier.shape = NA,
+    fill = c("#FCF8EC","#E4F3F1"),
+    position = position_dodge(width = .1)
+  )  +
+  geom_text(data = pick, aes(factor(cre), log10_abs_dist), label = pick$geneId, check_overlap = TRUE, size = 3, position = position_jitter(w = 0.3)) +
+  theme_bw() + xlab("") + ylab("Log 10 number of peaks") 
+pdf("numberPeaksPerGene.pdf", width = 9, height = 8)
+p +  scale_color_manual(values = c("#E9C46A","#2A9D8F")) +
+scale_fill_manual(values = c("#F1DAA2","#7AC2B9"))
+dev.off()
+
+## gene length and number of peaks per gene
+p <- ggplot(peak.counts, aes(x = log10_abs_length, y = log10(n))) + 
+  geom_point()+ theme_bw() + xlab("Gene Length") + ylab("Log 10 number of peaks") 
+pdf("numberPeaksvsGeneLength.pdf", width = 9, height = 8)
+p
+dev.off() -->
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>aecaaab5d31a2d52a08f88c5fa32888c436b7db8</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -2128,7 +2592,7 @@ loaded via a namespace (and not attached):
 [124] digest_0.6.27                          
 [125] BiocManager_1.30.16                    
 [126] shiny_1.6.0                            
-[127] Rcpp_1.0.6                             
+[127] Rcpp_1.0.8                             
 [128] car_3.0-10                             
 [129] broom_0.7.6                            
 [130] BiocVersion_3.14.0                     

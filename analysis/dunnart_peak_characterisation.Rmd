@@ -1019,5 +1019,4 @@ p <- ggplot(peak.counts, aes(x = log10_abs_length, y = log10(n))) +
   geom_point()+ theme_bw() + xlab("Gene Length") + ylab("Log 10 number of peaks") 
 pdf("numberPeaksvsGeneLength.pdf", width = 9, height = 8)
 p
-dev.off() -->
->>>>>>> aecaaab5d31a2d52a08f88c5fa32888c436b7db8
+dev.off()

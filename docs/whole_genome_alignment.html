@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="lecook" />
+
+<meta name="date" content="2022-02-23" />
+
+<title>Whole genome alignment between the mouse and dunnart</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">chipseq_cross_species</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/lecook/chipseq-cross-species">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Whole genome alignment between the mouse and dunnart</h1>
+<h4 class="author">lecook</h4>
+<h4 class="date">2022-02-23</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2022-03-15
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>chipseq-cross-species/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220209code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20220209)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20220209code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20220209)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree61f21eb31bc4314244a32f5a9a16037a077b7b3etargetblank61f21eba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/61f21eb31bc4314244a32f5a9a16037a077b7b3e" target="_blank">61f21eb</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree61f21eb31bc4314244a32f5a9a16037a077b7b3etargetblank61f21eba" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/61f21eb31bc4314244a32f5a9a16037a077b7b3e" target="_blank">61f21eb</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .RData
+    Ignored:    .Rhistory
+    Ignored:    analysis/.RData
+    Ignored:    analysis/.Rhistory
+    Ignored:    data/genomic_data/
+    Ignored:    output/annotations/
+    Ignored:    output/bam_files/
+    Ignored:    output/filtered_peaks/
+    Ignored:    output/logs/
+    Ignored:    output/peaks/
+    Ignored:    output/plots/
+    Ignored:    output/qc/A-1_input.SeqDepthNorm.bw
+    Ignored:    output/qc/A-1_input.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/A-1_input.ccurve.txt
+    Ignored:    output/qc/A-1_input.extrap.txt
+    Ignored:    output/qc/A-1_input_R1_trimmed.fastq.gz
+    Ignored:    output/qc/A-1_input_est_lib_complex_metrics.txt
+    Ignored:    output/qc/A-2_H3K4me3.SeqDepthNorm.bw
+    Ignored:    output/qc/A-2_H3K4me3.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/A-2_H3K4me3.ccurve.txt
+    Ignored:    output/qc/A-2_H3K4me3.extrap.txt
+    Ignored:    output/qc/A-2_H3K4me3_R1_trimmed.fastq.gz
+    Ignored:    output/qc/A-2_H3K4me3_est_lib_complex_metrics.txt
+    Ignored:    output/qc/A-2_H3K4me3_vs_A-1_input.frip_default.txt
+    Ignored:    output/qc/A-2_H3K4me3_vs_B-1_input.frip_default.txt
+    Ignored:    output/qc/A-3_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/A-3_H3K27ac.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/A-3_H3K27ac.ccurve.txt
+    Ignored:    output/qc/A-3_H3K27ac.extrap.txt
+    Ignored:    output/qc/A-3_H3K27ac_R1_trimmed.fastq.gz
+    Ignored:    output/qc/A-3_H3K27ac_est_lib_complex_metrics.txt
+    Ignored:    output/qc/A-3_H3K27ac_vs_A-1_input.frip_default.txt
+    Ignored:    output/qc/A-3_H3K27ac_vs_B-1_input.frip_default.txt
+    Ignored:    output/qc/B-1_input.SeqDepthNorm.bw
+    Ignored:    output/qc/B-1_input.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/B-1_input.ccurve.txt
+    Ignored:    output/qc/B-1_input.extrap.txt
+    Ignored:    output/qc/B-1_input_R1_trimmed.fastq.gz
+    Ignored:    output/qc/B-1_input_est_lib_complex_metrics.txt
+    Ignored:    output/qc/B-2_H3K4me3.SeqDepthNorm.bw
+    Ignored:    output/qc/B-2_H3K4me3.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/B-2_H3K4me3.ccurve.txt
+    Ignored:    output/qc/B-2_H3K4me3.extrap.txt
+    Ignored:    output/qc/B-2_H3K4me3_R1_trimmed.fastq.gz
+    Ignored:    output/qc/B-2_H3K4me3_est_lib_complex_metrics.txt
+    Ignored:    output/qc/B-2_H3K4me3_vs_A-1_input.frip_default.txt
+    Ignored:    output/qc/B-2_H3K4me3_vs_A-1_input.frip_default_dunnart_downSampled.txt
+    Ignored:    output/qc/B-2_H3K4me3_vs_B-1_input.frip_default.txt
+    Ignored:    output/qc/B-3_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/B-3_H3K27ac.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/B-3_H3K27ac.ccurve.txt
+    Ignored:    output/qc/B-3_H3K27ac.extrap.txt
+    Ignored:    output/qc/B-3_H3K27ac_R1_trimmed.fastq.gz
+    Ignored:    output/qc/B-3_H3K27ac_est_lib_complex_metrics.txt
+    Ignored:    output/qc/B-3_H3K27ac_vs_A-1_input.frip_default.txt
+    Ignored:    output/qc/B-3_H3K27ac_vs_B-1_input.frip_default.txt
+    Ignored:    output/qc/bamPEFragmentSize_rawcounts.tab
+    Ignored:    output/qc/bamPEFragmentSize_rawcounts_dunnart_downSampled.tab
+    Ignored:    output/qc/multiBAM_fingerprint_metrics.txt
+    Ignored:    output/qc/multiBAM_fingerprint_metrics_dunnart_downSampled.txt
+    Ignored:    output/qc/multiBAM_fingerprint_rawcounts.txt
+    Ignored:    output/qc/multiBAM_fingerprint_rawcounts_dunnart_downSampled.txt
+    Ignored:    output/qc/multibamsum.npz
+    Ignored:    output/qc/multibamsum.tab
+    Ignored:    output/qc/multibamsum_dunnart_downSampled.npz
+    Ignored:    output/qc/multibamsum_dunnart_downSampled.tab
+    Ignored:    output/qc/pearsoncor_multibamsum_matrix.txt
+    Ignored:    output/qc/pearsoncor_multibamsum_matrix_dunnart_downSampled.txt
+    Ignored:    output/wga/
+    Ignored:    results/
+
+Untracked files:
+    Untracked:  .snakemake/
+    Untracked:  Rplots.pdf
+    Untracked:  data/raw_reads/
+    Untracked:  output/qc/H3K27ac_overlap_default.frip
+    Untracked:  output/qc/ucsc_alignment/
+    Untracked:  output/rnaseq/
+    Untracked:  slurm-33931929.out
+    Untracked:  slurm-33931930.out
+    Untracked:  slurm-33931931.out
+    Untracked:  slurm-33931932.out
+    Untracked:  slurm-33931933.out
+    Untracked:  slurm-33931934.out
+    Untracked:  slurm-33934389.out
+    Untracked:  slurm-33934390.out
+    Untracked:  slurm-33934391.out
+    Untracked:  slurm-33934392.out
+    Untracked:  slurm-33934393.out
+    Untracked:  slurm-33934394.out
+    Untracked:  slurm-33935177.out
+    Untracked:  slurm-33935178.out
+    Untracked:  slurm-33935179.out
+    Untracked:  slurm-33935180.out
+    Untracked:  slurm-33935181.out
+    Untracked:  slurm-33935182.out
+    Untracked:  slurm-33938210.out
+    Untracked:  slurm-33938211.out
+    Untracked:  slurm-33938212.out
+    Untracked:  slurm-33938213.out
+    Untracked:  slurm-33938214.out
+    Untracked:  slurm-33938215.out
+    Untracked:  slurm-33948861.out
+    Untracked:  slurm-33948862.out
+    Untracked:  slurm-33948863.out
+    Untracked:  slurm-33948864.out
+    Untracked:  slurm-33948865.out
+    Untracked:  slurm-33948866.out
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/whole_genome_alignment.Rmd</code>) and HTML (<code>docs/whole_genome_alignment.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/61f21eb31bc4314244a32f5a9a16037a077b7b3e/analysis/whole_genome_alignment.Rmd" target="_blank">61f21eb</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-15
+</td>
+<td>
+wflow_publish(“analysis/whole_genome_alignment.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/c3418c78501e93712397627e05a7dc01de15375e/docs/whole_genome_alignment.html" target="_blank">c3418c7</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-15
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/09ea90ec7856af7ce90b9c9ca20cfcf10fcc3295/analysis/whole_genome_alignment.Rmd" target="_blank">09ea90e</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-15
+</td>
+<td>
+wflow_publish(“analysis/whole_genome_alignment.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/a557720070c98783a5dd4b289df0189115bb29c1/docs/whole_genome_alignment.html" target="_blank">a557720</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-15
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/4b30eeea7fc240ac09dd05efe1d966f63df74a0c/analysis/whole_genome_alignment.Rmd" target="_blank">4b30eee</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-15
+</td>
+<td>
+wflow_publish(“analysis/whole_genome_alignment.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/6ebc287b38e3c5f8cbbd52664184283e592d80d5/analysis/whole_genome_alignment.Rmd" target="_blank">6ebc287</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-14
+</td>
+<td>
+fix
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/bd46533b066900d84175fac5d91bf8fb8ed539a1/analysis/whole_genome_alignment.Rmd" target="_blank">bd46533</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-14
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/d8b90f64c2f7277982f4a586015c0bdb8bc93d95/analysis/whole_genome_alignment.Rmd" target="_blank">d8b90f6</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-14
+</td>
+<td>
+updated
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/290c569d8af7c54941682973317d6c65a4778b0b/analysis/whole_genome_alignment.Rmd" target="_blank">290c569</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-14
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/7e64d0f8a9f621a209c310a0d7d83a640e462807/analysis/whole_genome_alignment.Rmd" target="_blank">7e64d0f</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-14
+</td>
+<td>
+add wga notes
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/a97d3c57c638c074a308452653233ad3bfc59f48/analysis/whole_genome_alignment.Rmd" target="_blank">a97d3c5</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-01
+</td>
+<td>
+first commit
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/1fa92d9e841739434d4e6cffcca1d57dfebcf651/analysis/whole_genome_alignment.Rmd" target="_blank">1fa92d9</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-02-23
+</td>
+<td>
+add analysis files
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="notes-on-whole-genome-alignment" class="section level1">
+<h1>Notes on Whole Genome Alignment</h1>
+<p>There are a number of online tutorials to build the alignment and nets using Lastz: <a href="http://genomewiki.ucsc.edu/index.php/Whole_genome_alignment_howto" class="uri">http://genomewiki.ucsc.edu/index.php/Whole_genome_alignment_howto</a> <a href="https://www.bioconductor.org/packages/release/bioc/vignettes/CNEr/inst/doc/PairwiseWholeGenomeAlignment.html" class="uri">https://www.bioconductor.org/packages/release/bioc/vignettes/CNEr/inst/doc/PairwiseWholeGenomeAlignment.html</a> <a href="https://github.com/hillerlab/GenomeAlignmentTools" class="uri">https://github.com/hillerlab/GenomeAlignmentTools</a> (more fine-tuned and advanced)</p>
+<p><strong>Methods from Hecker &amp; Hiller 2020 Whole Genome Alignment:</strong></p>
+<p>To compute pairwise and multiple genome alignments, we used the human hg38 assembly as the reference (Supplementary Fig. 1 shows the entire workflow). We first built pairwise alignments between human and a query species using lastz and axtChain to compute co-linear alignment chains [82]. To align placental mammals, we used previously determined lastz parameters (K = 2400, L = 3000, Y = 9400, H = 2000, and the lastz default scoring matrix) that have a sufficient sensitivity to capture orthologous exons [16]. To align chimpanzee, bonobo, and gorilla, we changed the lastz parameters (K = 4500 and L = 4500).</p>
+<p>After building chains, we applied RepeatFiller (RRID:SCR_017414), a method that performs another round of local alignment, considering unaligning regions ≤20 kb in size that are bounded by co-linear alignment blocks up- and downstream. RepeatFiller removes any repeat masking from the unaligned region and is therefore able to detect novel alignments between repetitive regions. We have previously shown that RepeatFiller detects several megabases of aligning repetitive sequences that would be missed otherwise. After RepeatFiller, we applied chainCleaner with parameters -LRfoldThreshold = 2.5 -doPairs -LRfoldThresholdPairs = 10 -maxPairDistance = 10000 -maxSuspectScore = 100000 -minBrokenChainScore = 75000 to improve alignment specificity. Pairwise alignment chains were converted into alignment nets using a modified version of chainNet that computes real scores of partial nets. Nets were filtered using NetFilterNonNested.perl with parameters -doUCSCSynFilter -keepSynNetsWithScore 5000 -keepInvNetsWithScore 5000, which applies the UCSC “syntenic net” score thresholds (minTopScore of 300000 and minSynScore of 200000) and keeps nested nets that align to the same locus (inversions or local translocations; net type “inv” or “syn” according to netClass) if they score ≥5,000. For the Mongolian gerbil, tarsier, Malayan flying lemur, sperm whale, Przewalski’s horse, Weddell seal, Malayan pangolin, Chinese pangolin, Hoffmann’s two-fingered sloth, and Cape rock hyrax that have genome assemblies with a scaffold N50 ≤1,000,000 and a contig N50 ≤100,000, we just required that nets have a score ≥100,000. For marsupials and platypus, we lowered the score threshold for nets to 10,000 and kept inv or syn nets with scores ≥3,000.</p>
+<div id="some-definitions" class="section level2">
+<h2>Some definitions</h2>
+<p>In chain and net lingo, the <strong>target</strong> is the reference genome sequence and the <strong>query</strong> is some other genome sequence. For example, if you are viewing Human-Mouse alignments in the Human genome browser, human is the target and mouse is the query.</p>
+<p>A <strong>gapless block</strong> is a base-for-base alignment between part of the target and part of the query, possibly including mismatching bases. It has the same length in bases on the target and the query. This is the output of the most primitive alignment algorithms.</p>
+<p>A <strong>gap</strong> is a link between two gapless blocks, indicating that the target or the query has sequence that should be skipped over in order to make the best-scoring alignment. In other words, the scoring penalty for skipping over one or more bases is less than the penalty for continuing to align the sequences without skipping.</p>
+<p>A <strong>single-sided gap</strong> is a gap in which sequence in either target or query must be skipped over. A plausible explanation for needing to skip over a base in the target while not skipping a base in the query is that either the target has an inserted base or the query has a deleted base. Many alignment tools produce alignments with single-sided gaps between gapless blocks.</p>
+<p>A <strong>double-sided gap</strong> skips over sequence in both target and query because the sum of penalties for mismatching bases exceeds the penalty for extending a gap across them. This is possible only when the penalty for extending a gap is less than the penalty for creating a new gap and less than the penalty for a mismatch, and when the alignment algorithm is capable of considering double-sided gaps.</p>
+<p>A <strong>chain</strong> is a sequence of non-overlapping gapless blocks, with single- or double-sided gaps between blocks. Within a chain, target and query coords are monotonically non-decreasing (i.e. always increasing or flat). Chains are constructed by the axtChain program which finds pairwise alignments with the same target and query sequence, on the same strand, that can be merged if overlapping and joined into one longer alignment with a higher score under an affine gap-scoring system (progressively decreasing penalties for longer gaps).</p>
+<ul>
+<li>double-sided gaps are a new capability (blastz can’t do that) that allow extremely long chains to be constructed.</li>
+<li>not just orthologs, but paralogs too, can result in good chains. but that’s useful!</li>
+<li>chains should be symmetrical – e.g. swap human-mouse -&gt; mouse-human chains, and you should get approx. the same chains as if you chain swapped mouse-human blastz alignments. However, Blastz’s dynamic masking is asymmetrical, so in practice those results are not exactly symmetrical. Also, dynamic masking in conjunction with changed chunk sizes can cause differences in results from one run to the next.</li>
+<li>chained blastz alignments are not single-coverage in either target or query unless some subsequent filtering (like netting) is done.</li>
+<li>chain tracks can contain massive pileups when a piece of the target aligns well to many places in the query. Common causes of this include insufficient masking of repeats and high-copy-number genes (or paralogs).</li>
+</ul>
+<p>A <strong>net</strong> is a hierarchical collection of chains, with the highest-scoring non-overlapping chains on top, and their gaps filled in where possible by lower-scoring chains, which in turn may have gaps filled in by lower-level chains and so on.</p>
+<ul>
+<li>I think a chain’s qName also helps to determine which level it lands in, i.e. it makes a difference whether a chain’s qName is the same as the top-level chain’s qName or not, because the levels have meanings associated with them – see details page.</li>
+<li>a net is single-coverage for target but not for query, unless it has been filtered to be single-coverage on both target and query. By convention we add “rbest” to the net filename in that case.</li>
+<li>because it’s single-coverage in the target, it’s no longer symmetrical.</li>
+<li>the netter has two outputs, one of which we usually ignore: the target-centric net in query coordinates. The reciprocal best process uses that output: the query-referenced (but target-centric / target single-cov) net is turned back into component chains, and then those are netted to get single coverage in the query too; the two outputs of that netting are reciprocal-best in query and target coords. Reciprocal-best nets are symmetrical again.</li>
+<li>nets do a good job of filtering out massive pileups by collapsing them down to (usually) a single level.</li>
+<li>“LiftOver chains” are actually chains extracted from nets, or chains filtered by the netting process.</li>
+</ul>
+</div>
+</div>
+<div id="preparation" class="section level1">
+<h1>Preparation</h1>
+<p>Spartan modules</p>
+<pre class="bash"><code>module load foss
+module load lastz
+module load ucsc/21072020
+module load perl</code></pre>
+<div id="repeat-mask-dunnart-genome" class="section level2">
+<h2>Repeat mask dunnart genome</h2>
+<p>Create conda environment will all the dependencies:</p>
+<pre class="bash"><code>conda create -n wga
+conda activate wga
+conda config --add channels conda-forge
+conda config --add channels biocore
+conda config --add channels bioconda
+conda install repeatmasker</code></pre>
+<p>Run RepeatModeler to de novo find repeat regions in the dunnart genome:</p>
+<pre class="bash"><code>BuildDatabase -name dunnart -engine ncbi data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr.fasta
+
+nohup RepeatModeler -database dunnart -pa 20 &gt;&amp; output/wga/repeat_modeler
+repeat_modeler/repeatmodeler.out</code></pre>
+<p>Run RepeatMasker to mask repeats in dunnart genome (makes repeats lowercase). Run as an array for scaffolds to make it quicker. Create commands for array slurm script: <code>repeatMasker.sh</code></p>
+<pre class="bash"><code>RepeatMasker -q -xsmall data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr.fasta -default_search_engine hmmer -trf_prgm /home/lecook/.conda/envs/wga/bin/trf -hmmer_dir /home/lecook/.conda/envs/wga/bin/</code></pre>
+</div>
+<div id="split-into-scaffolds" class="section level2">
+<h2>Split into scaffolds</h2>
+<p>Using faSplit from the UCSC Kent Tools</p>
+<pre class="bash"><code>faSplit byName data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr.fasta data/genomic_data/smiCra1_scaffolds/</code></pre>
+</div>
+<div id="create-.2bit-and-.sizes-files" class="section level2">
+<h2>Create .2bit and .sizes files</h2>
+<pre class="bash"><code>faToTwoBit data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr_RM.fasta data/genomic_data/smiCra1.2bit</code></pre>
+<pre class="bash"><code>twoBitInfo data/genomic_data/smiCra1.2bit stdout | sort -k2rn &gt; data/genomic_data/smiCra1.chrom.sizes</code></pre>
+</div>
+<div id="mm10-target-genome" class="section level2">
+<h2>mm10 target genome</h2>
+<p><a href="http://hgdownload.cse.ucsc.edu/goldenpath/mm10/bigZips/mm10.2bit" class="uri">http://hgdownload.cse.ucsc.edu/goldenpath/mm10/bigZips/mm10.2bit</a></p>
+<p><strong>mm10.2bit</strong> - contains the complete mouse/mm10 genome sequence in the 2bit file format. Repeats from <strong>RepeatMasker</strong> and <strong>Tandem Repeats Finder</strong> (with period of 12 or less) are shown in lower case; non-repeating sequence is shown in upper case.</p>
+</div>
+</div>
+<div id="lastz" class="section level1">
+<h1>lastZ</h1>
+<p>To align placental mammals, we used previously determined lastz parameters (K = 2400, L = 3000, Y = 9400, H = 2000, and the lastz default scoring matrix) that have a sufficient sensitivity to capture orthologous exons</p>
+<p>To align placental mammals, we used the lastz alignment parameters K = 2400, L = 3000, Y = 9400, H = 2000 and the lastz default scoring matrix, correspond- ing to parameter set 2 in Table 1. To align vertebrates, we used K = 2400, L = 3000, Y = 3400, H = 2000 and the HoxD55 scoring matrix. Citation: Increased alignment sensitivity improves the usage of genome alignments for comparative gene annotation. Nucleic Acids Res. 2017;45(14):8369–77.</p>
+<p>Create commands for running lastZ for all scaffolds: <code>code/whole_genome_alignment/lastz.sh</code></p>
+<p>Repeated with vertebrate alignment parameters and HoxD55 scoring matrix. Retrieve A LOT more aligned sequences. For example scaffold00002 with mammal parameters retrieved 863M of data, while with the new parameters it’s 2.5GB.</p>
+<p>Run as an array on slurm: <code>code/whole_genome_alignment//array_wrapper.slurm</code></p>
+<div id="convert-maf-to-axt-format" class="section level2">
+<h2>Convert maf to axt-format</h2>
+<p><a href="http://last.cbrc.jp/doc/maf-convert.html" class="uri">http://last.cbrc.jp/doc/maf-convert.html</a></p>
+<pre class="bash"><code>module load last/last/1066
+maf-convert axt output/wga/maf/${tr}.maf &gt; output/wga/axt/${tr}.axt</code></pre>
+<p>script: code/whole_genome_alignment//maf-convert_commands.sh run with: code/whole_genome_alignment//array_wrapper.slurm</p>
+</div>
+<div id="axtchain" class="section level2">
+<h2>axtChain</h2>
+<p>We use axtChain (<a href="http://www.soe.ucsc.edu/~kent" class="uri">http://www.soe.ucsc.edu/~kent</a>; default parameters) to build co-linear alignment chains.</p>
+<pre class="bash"><code>axtChain -linearGap=loose -scoreScheme=lecook/bin/GenomeAlignmentTools/HoxD55.q output/axt/[axt_files] data/genomic_data/mm10.2bit data/genomic_data/smiCra1.2bit output/wga/axt_chain/mm10_smiCra1.chain</code></pre>
+<p>script: code/whole_genome_alignment//axt_commands.sh run with: code/whole_genome_alignment//array_wrapper.slurm</p>
+</div>
+<div id="chainmergesort" class="section level2">
+<h2>chainMergeSort</h2>
+<p>Merge short chains into longer ones, concatenate chains and sort</p>
+<pre class="bash"><code>chainMergeSort output/wga/axt_chain/*.chain &gt; output/wga/chain_merge/smiCra1_mm10.chain</code></pre>
+</div>
+<div id="installing-genomic-alignment-tools-hiller-group" class="section level2">
+<h2>Installing Genomic Alignment Tools (Hiller group)</h2>
+<pre class="bash"><code>git clone https://github.com/hillerlab/GenomeAlignmentTools.git
+
+cd GenomeAlignmentTools/kent/src
+
+make
+
+# Kent binaries
+PATH=$PATH:/Users/lauracook/bin/GenomeAlignmentTools/kent/bin;export PATH
+
+export KENTSRC_DIR=/Users/lauracook/bin/GenomeAlignmentTools/kent/src/
+
+cd /Users/lauracook/bin/GenomeAlignmentTools/src
+export MACHTYPE=x86_64
+make 
+
+PATH=$PATH:/Users/lauracook/bin/GenomeAlignmentTools/src</code></pre>
+</div>
+<div id="repeatfiller" class="section level2">
+<h2>RepeatFiller</h2>
+<p><a href="https://github.com/hillerlab/GenomeAlignmentTools" class="uri">https://github.com/hillerlab/GenomeAlignmentTools</a></p>
+<p>RepeatFiller [5] is a tool to incorporate newly-detected repeat-overlapping alignments into pairwise alignment chains [4]. Its runtime adds little to the computationally more expensive step of generating chains in pairwise whole-genome alignments. RepeatFiller circumvents the problem that considering all repeat-overlapping alignment seeds during whole genome alignment is computationally not feasible. Therefore, RepeatFiller only aligns local genomic regions that are bounded by colinear aligning blocks, as provided in the chains, which makes it feasible to consider all seeds including those that overlap repetitive regions. RepeatFiller application to mammalian genome alignment chains can add between 22 and 84 Mb of previously-undetected alignments that mostly originate from transposable elements [5]. This helps to comprehensively align repetitive regions and improves the annotation of conserved non-coding elements.</p>
+<pre class="bash"><code>python3 RepeatFiller.py -c output/wga/chain_merge/smiCra1_mm10.chain -T2 data/genomic_data/mm10.2bit -Q2 data/genomic_data/smiCra1.2bit
+
+python3 RepeatFiller.py -c smiCra1_mm10_patched_sorted.chain -T2 data/genomic_data/mm10.2bit -Q2 data/genomic_data/smiCra1.2bit
+</code></pre>
+<p>RepeatFiller adds 0.3G data to the alignment - 2 Feb 2021</p>
+</div>
+<div id="patchchain" class="section level2">
+<h2>patchChain</h2>
+<p>patchChain.perl performs a highly sensitive local pairwise alignment for loci flanked by aligning blocks [1,3]. Given an alignment chain [4], it considers all chains that pass the score and span filters (optional parameters), extracts all the unaligning loci and creates local alignment jobs. After executing these alignment jobs, the newly found and the original local alignments are combined and used to produce a new set of improved chains.</p>
+<p>This procedure is recommended for comparisons between species that are separated by &gt;0.75 substitutions per neutral site [1].</p>
+<pre class="bash"><code>patchChain.perl output/wga/chain_merge/smiCra1_mm10.chain data/genomic_data/mm10.2bit data/genomic_data/smiCra1.2bit data/genomic_data/mm10.chrom.sizes data/genomic_data/smiCra1.chrom.sizes -chainMinScore 5000 -gapMaxSizeT 500000 -gapMaxSizeQ 500000 -gapMinSizeT 30 -gapMinSizeQ 30 -numJobs 10 -jobDir jobs -jobList jobList -outputDir output/wga/patch_chain/pslOutput -minEntropy 1.8 -windowSize 30 -minIdentity 60 -lastzParameters &quot;--format=axt K=1500 L=2500 M=0 T=0 W=5 Q=lecook/bin/GenomeAlignmentTools/example/HoxD55.q&quot;</code></pre>
+<p>This results in 10 alignment jobs that are located in jobs/ and listed in ‘jobList’ now execute these jobs on a compute cluster or run them sequentially by doing ‘chmod +x jobList; ./jobList’</p>
+<pre class="bash"><code># concatenate all new results
+find output/wga/psl -name &quot;*.psl&quot; | xargs -i cat {} &gt; output/wga/patch_chain/newAlignments.psl
+
+# concatenate all genomewide psl lastz alignments
+find psl -name &quot;*.psl&quot; | xargs -i cat {} &gt; otuput/wga/psl/genomeWide.lastz.psl
+
+# combine the genome-wide lastz results (the combined psl file that was used to create the input chains) and the newly found psl alignments
+cat psl/genomeWide.lastz.psl patchChain/newAlignments.psl &gt; patch_chain/all.psl 
+</code></pre>
+<p>patchChain adds 1.1G to the genome wide alignment file</p>
+<p>use axtChain from the Kent source to compute alignment chains that include the new alignments</p>
+<p>This create a folder with the jobs and a jobList which can be called in an array slurm script. Then you can run the jobs in parallel.</p>
+</div>
+<div id="axtchain-again" class="section level2">
+<h2>axtChain again…</h2>
+<p>axtChain on psl alignments (patchChain new alignments plus genomeWide lastz alignments)</p>
+<pre class="bash"><code>axtChain -psl -linearGap=loose -scoreScheme=/lecook/bin/GenomeAlignmentTools/HoxD55.q output/wga/patch_chain/all.psl data/genomic_data/mm10.2bit data/genomic_data/smiCra1.2bit output/wga/patch_chain/smiCra1_mm10_patched.chain</code></pre>
+<p>4.7G Jan 31 18:42 smiCra1_mm10.chain 5.3G Feb 1 17:52 smiCra1_mm10_patched.chain</p>
+</div>
+<div id="chaincleaner" class="section level2">
+<h2>chainCleaner</h2>
+<p><a href="https://github.com/hillerlab/GenomeAlignmentTools" class="uri">https://github.com/hillerlab/GenomeAlignmentTools</a></p>
+<p>After RepeatFiller, we applied chainCleaner with parameters -LRfoldThreshold = 2.5 -doPairs -LRfoldThresholdPairs = 10 -maxPairDistance = 10000 -maxSuspectScore = 100000 -minBrokenChainScore = 75000 to improve alignment specificity.</p>
+<p>chainCleaner improves the specificity in genome alignment chains by detecting and removing local alignments that obscure the evolutionary history of genomic rearrangements [2]. The input is a chain file, ideally after adding alignments found with highly sensitive parameters if distal species are compared. The output is a chain file that contains re-scored and score-sorted chains after removing the local alignments from the parent chains and adding them as individual chains. The resulting output file can be used to get alignment nets by running chainNet [4].</p>
+<pre class="bash"><code>chainCleaner output/wga/repeat_filler/smiCra1_mm10_repFil.chain data/genomic_data/mm10.2bit data/genomic_data/smiCra1.2bit output/wga/chain_cleaner/smiCra1_mm10_repFill_chainCl.chain output/wga/chain_cleaner/smiCra1_mm10_repFill_chainCl.bed -tSizes=mm10.chrom.sizes -qSizes=smiCra1.chrom.sizes -LRfoldThreshold=2.5 -doPairs -LRfoldThresholdPairs=10 -maxPairDistance=10000 -maxSuspectScore=100000 -minBrokenChainScore=75000 -linearGap=loose</code></pre>
+<p>Run chain cleaner on patched chain file</p>
+<pre class="bash"><code>chainCleaner smiCra1_mm10_patched_sorted_repFil.chain data/genomic_data/mm10.2bit data/genomic_data/smiCra1.2bit output/wga/chain_cleaner/smiCra1_mm10_patched_sorted_repFil_chainCl.chain output/wga/chain_cleaner/smiCra1_mm10_patched_sorted_repFil_chainCl.bed -tSizes=data/genomic_data/mm10.sizes -qSizes=data/genomic_data/smiCra1.sizes -LRfoldThreshold=2.5 -doPairs -LRfoldThresholdPairs=10 -maxPairDistance=10000 -maxSuspectScore=100000 -minBrokenChainScore=75000 -linearGap=loose</code></pre>
+<p><code>-LRfoldThreshold</code> = threshold for removing local alignment blocks if the score of the left and right fill of brokenChain. Default is 2.5 <code>-doPairs</code> = flag: if set, do test if pairs of chain breaking alignments can be removed <code>-LRfoldThresholdPairs</code> = threshold for removing local alignment blocks if the score of the left and right fill of broken chains (for pairs). Default = 10 <code>-maxPairDistance</code> = only consider pairs of chain breaking alignments where the distance between the end of the upstream CBA and the start of the downstream CBA is at most that many bp (default 10000) <code>-maxSuspectScore</code> = threshold for score of suspect subChain. If higher, do not remove suspect.</p>
+<p><code>-linearGap</code>=loose</p>
+<p><strong>directory:</strong> output/wga/chain_cleaner/</p>
+<p>For filtering the chains, we need the size of each chromosome</p>
+<pre class="bash"><code>faSize data/genomic_data/smiCra1.fa -detailed &gt; data/genomic_data/smiCra1.sizes
+faSize data/genomic_data/mm10.fa -detailed &gt; data/genomic_data/mm10.sizes</code></pre>
+</div>
+<div id="chainprenet" class="section level2">
+<h2>chainPreNet</h2>
+<pre class="bash"><code>chainPreNet output/wga/chain_cleaner/smiCra1_mm10_patched_sorted_chainCl.chain data/genomic_data/mm10.sizes data/genomic_data/smiCra1.sizes smiCra1_mm10_patched_sorted_chainCl_preNet.chain</code></pre>
+<p>chainPreNet without chainCleaner</p>
+<pre class="bash"><code>chainPreNet smiCra1_mm10_patched_sorted_repFil_chainCl.chain data/genomic_data/mm10.sizes data/genomic_data/smiCra1.sizes output/wga/chain_prenet/smiCra1_mm10_patched_sorted_repFil_chainCl_preNet.chain</code></pre>
+</div>
+<div id="chainnet" class="section level2">
+<h2>chainNet</h2>
+<p>Given a set of alignment chains, chainNet produces alignment nets, which is a hierarchical collection of chains or parts of chains that attempt to capture only orthologous alignments [4]. The original chainNet implementation approximates the score of “sub-nets” (nets that come from a part of a chain and fill a gap in a higher-level net) by the fraction of aligning bases. This can lead to a bias in case the aligning blocks of a chain are not equally distributed. We implemented a new parameter “-rescore” in chainNet that computes the real score of each subnet [2].</p>
+<p>Make the alignment nets:</p>
+<pre class="bash"><code>chainNet output/wga/chain_prenet/smiCra1_mm10_patched_sorted_repFil_chainCl_preNet.chain -minSpace=1 data/genomic_data/mm10.sizes data/genomic_data/smiCra1.sizes stdout /dev/null | netSyntenic stdin output/wga/chain_net/smiCra1_mm10_patched_sorted_repFil_chainCl_preNet.net</code></pre>
+</div>
+<div id="netchainsubset" class="section level2">
+<h2>netChainSubset</h2>
+<p>Creates a single chain file using only the chains that also appear in the net.</p>
+<pre class="bash"><code>netChainSubset output/wga/chain_prenet/smiCra1_mm10_patched_sorted_repFil_chainCl_preNet.net output/wga/chain_cleaner/smiCra1_mm10_patched_sorted_repFil_chainCl.chain output/wga/chain_net/smiCra1_mm10_patched_sorted_repFil_chainCl_preNet_chainNet.chain</code></pre>
+</div>
+<div id="join-chain-fragments" class="section level2">
+<h2>Join chain fragments</h2>
+<pre class="bash"><code>chainStitchId output/wga/chain_net/smiCra1_mm10_patched_sorted_chainCl_netted.chain chainStitchId output/wga/chain_stitch/smiCra1_mm10_patched_sorted_chainCl_netted_stitched.chain
+
+chainStitchId chainStitchId output/wga/chain_net/smiCra1_mm10_patched_sorted_repFil_chainCl_preNet_chainNet.chain chainStitchId output/wga/chain_stitch/smiCra1_mm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain
+</code></pre>
+<p>From the synteny files (positions), get the sequences and re-create alignments.</p>
+<div id="create-maf-files" class="section level3">
+<h3>Create MAF files</h3>
+<p>smiCra1_mm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain</p>
+<pre class="bash"><code>netToAxt output/wga/chain_net/smiCra1_mm10_patched_sorted_repFil_chainCl_preNet.net chain_stitch/smiCra1_mm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain data/genomic_data/mm10.2bit data/genomic_data/smiCra1.2bit stdout | axtSort stdin output/wga/net_to_axt/mm10-smiCra1.axt
+
+axtToMaf output/wga/net_to_axt/mm10-smiCra1.axt data/genomic_data/mm10.sizes data/genomic_data/smiCra1.sizes output/wga/maf/mm10-smiCra1.maf -tPrefix=mm10. -qPrefix=smiCra1.</code></pre>
+</div>
+</div>
+<div id="chainswap" class="section level2">
+<h2>chainSwap</h2>
+<pre class="bash"><code>chainSwap mm10_to_smiCra1_patched_sorted_chainCl_netted_stitched.chain stdout | nice chainSort stdin stdout | nice gzip -c &gt; smiCra1_to_mm10_patched_sorted_chainCl_netted_stitched.chain
+
+chainSwap smiCra1_mm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain stdout | nice chainSort stdin stdout &gt; mm10_smiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain</code></pre>
+</div>
+</div>
+<div id="quality-control-of-alignment-blocks" class="section level1">
+<h1>Quality control of alignment blocks</h1>
+<p>MafFilter. Using mm10-smiCra1 maf file generated using axtToMaf look at the block lengths and genomic coverage.</p>
+<pre class="bash"><code>maffilter param=options-file</code></pre>
+<p>Parameter options file</p>
+<pre class="bash"><code>DATA=mm10-smiCra1 //A user-defined variable, representing the input maf file, without extension
+input.file=$(DATA).maf.gz  //Input maf file, gzipped
+input.file.compression=gzip
+output.log=$(DATA).maffilter.log //Output log file
+maf.filter=                                 \
+    SequenceStatistics(                     \
+        statistics=(                        \
+                BlockLength,                \
+            AlnScore,                       \
+            BlockCounts,                    \
+            PairwiseDivergence(             \
+                species1=mm10,              \
+                species2=smiCra1)),         \
+        ref_species=mm10,                   \
+        file=divergence.statistics.csv) </code></pre>
+<p>Summarise block lengths, block counts, pairwise divergence and calculate exon coverage in the maf file between species in R.</p>
+<pre class="r"><code># Load libraries
+
+library(plyr)
+library(data.table)
+library(seqinr)
+library(Biostrings)
+library(tidyverse)</code></pre>
+<div id="summarise-statistics-from-maffilter" class="section level3">
+<h3>Summarise statistics from MafFilter</h3>
+<pre class="r"><code>mm10 &lt;- fread(&quot;output/qc/ucsc_alignment/mm10.statistics.csv&quot;) # read in table
+
+smiCra1 &lt;- fread(&quot;output/qc/ucsc_alignment/smiCra1.statistics.csv&quot;) # read in table
+head(mm10) #check file has been imported correctly</code></pre>
+<pre><code>    Chr   Start    Stop BlockLength AlnScore Counts.A Counts.C Counts.G
+1: chr1 3012982 3013097         118     2740       23       16       12
+2: chr1 3027832 3027936         104     2614       31       23       11
+3: chr1 3028771 3028920         149     2821       51       18       36
+4: chr1 3029833 3029947         122     2687       38       19       21
+5: chr1 3044214 3044384         170      787       49       21       38
+6: chr1 3044384 3044519         142     2483       30       35       29
+   Counts.T Counts.Gap Counts.Unresolved
+1:       64          3                 0
+2:       39          0                 0
+3:       44          0                 0
+4:       36          8                 0
+5:       62          0                 0
+6:       41          7                 0</code></pre>
+<pre class="r"><code>mm10ChrCount &lt;- mm10 %&gt;% dplyr::count(Chr, sort=TRUE) # how many blocks per chromosome
+smiCra1ChrCount &lt;- smiCra1 %&gt;% dplyr::count(Chr, sort=TRUE) # how many blocks per chromosome</code></pre>
+<div id="mm10-number-of-blocks-per-chromosome" class="section level4">
+<h4>mm10 number of blocks per chromosome</h4>
+<pre class="r"><code>mm10ChrCount</code></pre>
+<pre><code>                     Chr      n
+ 1:                 chr1 207321
+ 2:                 chr2 206723
+ 3:                 chr3 167622
+ 4:                 chr6 163865
+ 5:                 chr4 163152
+ 6:                 chr5 163055
+ 7:                 chr7 152609
+ 8:                 chr8 142300
+ 9:                chr10 141726
+10:                 chrX 138973
+11:                chr11 138669
+12:                 chr9 137467
+13:                chr12 134230
+14:                chr14 132548
+15:                chr13 130426
+16:                chr15 114484
+17:                chr16 106874
+18:                chr17 103335
+19:                chr18  97483
+20:                 chrY  73394
+21:                chr19  67800
+22: chr5_JH584299_random    417
+23: chrY_JH584301_random    233
+24: chr1_GL456211_random    224
+25: chr4_JH584293_random    218
+26: chr4_GL456350_random    209
+27: chr1_GL456210_random    199
+28: chr4_JH584294_random    182
+29: chr1_GL456221_random    181
+30: chrY_JH584300_random    179
+31: chrX_GL456233_random    170
+32: chr1_GL456212_random    141
+33: chrY_JH584303_random    132
+34: chrY_JH584302_random    101
+35:       chrUn_GL456379     88
+36: chr4_GL456216_random     87
+37: chr5_GL456354_random     87
+38: chr7_GL456219_random     87
+39: chr5_JH584298_random     84
+40: chr5_JH584297_random     83
+41: chr5_JH584296_random     78
+42:       chrUn_JH584304     77
+43: chr1_GL456213_random     53
+44:       chrUn_GL456359     38
+45:       chrUn_GL456378     35
+46:       chrUn_GL456393     35
+47:       chrUn_GL456367     32
+48:       chrUn_GL456382     30
+49:       chrUn_GL456370     27
+50:       chrUn_GL456372     27
+51:       chrUn_GL456387     27
+52:       chrUn_GL456239     25
+53:       chrUn_GL456366     23
+54: chr4_JH584292_random     22
+55:       chrUn_GL456385     19
+56:       chrUn_GL456394     18
+57:       chrUn_GL456381     17
+58:       chrUn_GL456360     12
+59:       chrUn_GL456368     10
+60:                 chrM      7
+61: chr4_JH584295_random      3
+                     Chr      n</code></pre>
+</div>
+<div id="dunnart-number-of-blocks-per-chromosome" class="section level4">
+<h4>dunnart number of blocks per chromosome</h4>
+<pre class="r"><code>smiCra1ChrCount</code></pre>
+<pre><code>                           Chr      n
+  1: scaffold00002_pilon_pilon 456793
+  2: scaffold00001_pilon_pilon 105481
+  3: scaffold00004_pilon_pilon  73635
+  4: scaffold00020_pilon_pilon  73492
+  5: scaffold00009_pilon_pilon  69917
+ ---                                 
+609: scaffold00699_pilon_pilon      1
+610: scaffold00704_pilon_pilon      1
+611: scaffold00708_pilon_pilon      1
+612: scaffold00714_pilon_pilon      1
+613: scaffold00715_pilon_pilon      1</code></pre>
+</div>
+<div id="total-size-incl-gaps" class="section level4">
+<h4>total size (incl gaps)</h4>
+<p>just use mouse as the statistics are the same</p>
+<pre class="r"><code>size1to10bp &lt;- mm10[which(mm10$BlockLength&gt;=1 &amp; mm10$BlockLength&lt;=10),]
+size10to100bp &lt;- mm10[which(mm10$BlockLength&gt;=10 &amp; mm10$BlockLength&lt;=100),]
+size100to1kb &lt;- mm10[which(mm10$BlockLength&gt;=100 &amp; mm10$BlockLength&lt;=1000),]
+size1kbto10kb &lt;- mm10[which(mm10$BlockLength&gt;=1000 &amp; mm10$BlockLength&lt;=10000),]
+size10kbto100kb &lt;- mm10[which(mm10$BlockLength&gt;=10000 &amp; mm10$BlockLength&lt;=100000),]
+size100kbto1Mb &lt;- mm10[which(mm10$BlockLength&gt;=100000 &amp; mm10$BlockLength&lt;=1000000),]
+
+dplyr::count(size1to10bp)</code></pre>
+<pre><code>      n
+1: 5523</code></pre>
+<pre class="r"><code>count(size10to100bp)</code></pre>
+<pre><code>        n
+1: 816883</code></pre>
+<pre class="r"><code>count(size100to1kb)</code></pre>
+<pre><code>         n
+1: 1975414</code></pre>
+<pre class="r"><code>count(size1kbto10kb)</code></pre>
+<pre><code>        n
+1: 103456</code></pre>
+<pre class="r"><code>count(size10kbto100kb)</code></pre>
+<pre><code>    n
+1: 17</code></pre>
+<pre class="r"><code>count(size100kbto1Mb)</code></pre>
+<pre><code>   n
+1: 0</code></pre>
+<pre class="r"><code>sum(size1to10bp$BlockLength)</code></pre>
+<pre><code>[1] 28265</code></pre>
+<pre class="r"><code>sum(size10to100bp$BlockLength)</code></pre>
+<pre><code>[1] 57934059</code></pre>
+<pre class="r"><code>sum(size100to1kb$BlockLength)</code></pre>
+<pre><code>[1] 578314504</code></pre>
+<pre class="r"><code>sum(size1kbto10kb$BlockLength)</code></pre>
+<pre><code>[1] 165302684</code></pre>
+<pre class="r"><code>sum(size10kbto100kb$BlockLength)</code></pre>
+<pre><code>[1] 212515</code></pre>
+<pre class="r"><code>sum(size100kbto1Mb$BlockLength)</code></pre>
+<pre><code>[1] 0</code></pre>
+<pre class="r"><code>df &lt;- data.table(
+  size = c(&quot;size1to10bp&quot;, &quot;size10to100bp&quot;, &quot;size100to1kb&quot;, &quot;size1kbto10kb&quot;, &quot;size10kbto100kb&quot;, &quot;size100kbto1Mb&quot;),
+  sum_block_length = c(sum(size1to10bp$BlockLength),
+  sum(size10to100bp$BlockLength),
+  sum(size100to1kb$BlockLength),
+  sum(size1kbto10kb$BlockLength),
+  sum(size10kbto100kb$BlockLength),
+  sum(size100kbto1Mb$BlockLength)),
+  number_blocks = c(dplyr::count(size1to10bp), dplyr::count(size10to100bp), dplyr::count(size100to1kb), 
+  dplyr::count(size1kbto10kb), dplyr::count(size10kbto100kb), dplyr::count(size100kbto1Mb))
+)
+
+df</code></pre>
+<pre><code>              size sum_block_length number_blocks
+1:     size1to10bp            28265          5523
+2:   size10to100bp         57934059        816883
+3:    size100to1kb        578314504       1975414
+4:   size1kbto10kb        165302684        103456
+5: size10kbto100kb           212515            17
+6:  size100kbto1Mb                0             0</code></pre>
+<ul>
+<li>Fraction of mouse exons are in the alignment, and what fraction you actually recover by using liftover.</li>
+</ul>
+<p>mm10 exons from refseq (downloaded from UCSC)</p>
+<p>dunnart exons from lifted devil annotation gtf file converted to a bed file using BEDOPS <code>gtf2bed</code> function</p>
+<pre class="bash"><code>gff2bed &lt; data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr2.gff &gt; data/genomic_data/dunnart_gff.bed
+less data/genomic_data/dunnart_gff.bed | grep &quot;exon&quot; &gt; data/genomic_data/dunnart_exons.bed</code></pre>
+</div>
+</div>
+<div id="mouse-exon-coverage" class="section level3">
+<h3>Mouse exon coverage</h3>
+<p>mm10 refseq ncbi curated exons downloaded from ucsc</p>
+<pre class="r"><code>system(&quot;bedtools sort -i data/genomic_data/mm10exons.bed &gt; output/qc/ucsc_alignment/mm10exonsSorted.bed&quot;, intern=TRUE) ## sort by coordinates
+
+system(&quot;bedtools merge -i output/qc/ucsc_alignment/mm10exonsSorted.bed &gt; output/qc/ucsc_alignment/mm10exonsMerged.bed&quot;, intern=TRUE) ## bedtools merge where transcripts are the same coordinates or within each other
+
+system(&quot;bedtools merge -i output/qc/ucsc_alignment/mm10_mafAlignment.bed &gt; output/qc/ucsc_alignment/mm10_mafAlignmentMerged.bed&quot;, intern=TRUE) ## also merge the maf alignments from the liftOver
+
+system(&quot;bedtools intersect -a output/qc/ucsc_alignment/mm10exonsMerged.bed -b output/qc/ucsc_alignment/mm10_mafAlignmentBlocks.bed -wo &gt; output/qc/ucsc_alignment/mm10exonOverlaps.bed&quot;, intern=TRUE) ## intersect exon coordinates with maf alignment file</code></pre>
+<pre class="r"><code>mm10exon &lt;- fread(&quot;output/qc/ucsc_alignment/mm10exonsMerged.bed&quot;) ## exon file
+mm10exon$length &lt;- (mm10exon$V3 - mm10exon$V2) ## exon length in ncbi refseq 
+mm10overlaps &lt;- fread(&quot;output/qc/ucsc_alignment/mm10exonOverlaps.bed&quot;) ## overlap file
+dim(mm10overlaps) ## check file imported correctly</code></pre>
+<pre><code>[1] 190176     10</code></pre>
+<pre class="r"><code>sum(mm10overlaps$V10) ## 31776094bps of exons found in maf alignment</code></pre>
+<pre><code>[1] 31776094</code></pre>
+<pre class="r"><code>sum(mm10exon$length) ## 34221920bps of exons in refseq mm10</code></pre>
+<pre><code>[1] 34221920</code></pre>
+<pre class="r"><code>mm10exonCoverage &lt;- sum(mm10overlaps$V10)/sum(mm10exon$length) ## converge alignment exon bps/total exon bps
+
+print(paste0(&quot;mm10 exon coverage = &quot;, mm10exonCoverage))</code></pre>
+<pre><code>[1] &quot;mm10 exon coverage = 0.928530427281695&quot;</code></pre>
+</div>
+<div id="dunnart-exon-coverage" class="section level3">
+<h3>Dunnart exon coverage</h3>
+<pre class="r"><code>system(&quot;bedtools sort -i data/genomic_data/dunnart_exons.bed &gt; output/qc/ucsc_alignment/dunnart_exonsSorted.bed&quot;, intern = TRUE) ## sort by coordinates
+
+system(&quot;bedtools merge -i output/qc/ucsc_alignment/dunnart_exonsSorted.bed &gt; output/qc/ucsc_alignment/smiCra1exonsMerged.bed&quot;, intern = TRUE) ## bedtools merge where transcripts are the same coordinates or within each other
+
+system(&quot;bedtools merge -i output/qc/ucsc_alignment/smiCra1_mafAlignmentBlocksSorted.bed &gt; output/qc/ucsc_alignment/smiCra1_mafAlignmentMerged.bed&quot;, intern = TRUE) ## also merge the maf alignments from the liftOver
+system(&quot;bedtools intersect -a output/qc/ucsc_alignment/smiCra1exonsMerged.bed -b output/qc/ucsc_alignment/smiCra1_mafAlignmentMerged.bed -wo &gt; output/qc/ucsc_alignment/smiCra1_exonOverlaps.bed&quot;, intern=TRUE) ## intersect exon coordinates with maf alignment file</code></pre>
+<pre class="r"><code>smiCra1exon &lt;- fread(&quot;output/qc/ucsc_alignment/smiCra1exonsMerged.bed&quot;) ## exon file
+dim(smiCra1exon) ## check file imported correctly</code></pre>
+<pre><code>[1] 193182      3</code></pre>
+<pre class="r"><code>smiCra1exon$length &lt;- (smiCra1exon$V3 - smiCra1exon$V2)  ## exon length
+smiCra1overlaps &lt;- fread(&quot;output/qc/ucsc_alignment/smiCra1_exonOverlaps.bed&quot;) ## exon overlaps with maf alignment file
+dim(smiCra1overlaps) ## check imported correctly</code></pre>
+<pre><code>[1] 193996      7</code></pre>
+<pre class="r"><code>sum(smiCra1exon$length) # 63502228</code></pre>
+<pre><code>[1] 63502228</code></pre>
+<pre class="r"><code>sum(smiCra1overlaps$V7) # 43939135</code></pre>
+<pre><code>[1] 43939135</code></pre>
+<pre class="r"><code>smiCra1exonCoverage &lt;- sum(smiCra1overlaps$V7)/sum(smiCra1exon$length)
+
+print(paste0(&quot;dunnart exon coverage = &quot;, smiCra1exonCoverage))</code></pre>
+<pre><code>[1] &quot;dunnart exon coverage = 0.691930604387613&quot;</code></pre>
+</div>
+<div id="average-sequence-percentage-mismatches-for-dunnart-and-mouse" class="section level3">
+<h3>Average sequence percentage mismatches for dunnart and mouse</h3>
+<pre class="r"><code>mm10 &lt;- fread(&quot;output/qc/ucsc_alignment/mm10.divergence.statistics.csv&quot;)
+smiCra1 &lt;- fread(&quot;output/qc/ucsc_alignment/smiCra1.divergence.statistics.csv&quot;)
+
+mean(mm10$`Div.mm10-smiCra1`)</code></pre>
+<pre><code>[1] 37.1781</code></pre>
+<pre class="r"><code>mean(smiCra1$`Div.smiCra1-mm10`)</code></pre>
+<pre><code>[1] 37.1781</code></pre>
+<pre class="r"><code>## Genome coverage
+readDNAmm10 &lt;- readDNAStringSet(&quot;output/qc/ucsc_alignment/mm10_mafAlignment_nogaps.fasta&quot;) #number bp in alignment 743350114
+readDNAsmiCra1 &lt;- readDNAStringSet(&quot;output/qc/ucsc_alignment/smiCra1_mafAlignment_nogaps.fasta&quot;) #number bp in alignment 747935780
+
+mm10genomeSize &lt;- 2652783500
+smiCra1genomeSize &lt;-2838290115
+
+mm10coverage &lt;- readDNAmm10@ranges@width/mm10genomeSize
+smiCra1coverage &lt;- readDNAsmiCra1@ranges@width/smiCra1genomeSize
+
+print(paste0(&quot;mm10 genome coverage = &quot;, mm10coverage))</code></pre>
+<pre><code>[1] &quot;mm10 genome coverage = 0.280215145336964&quot;</code></pre>
+<pre class="r"><code>print(paste0(&quot;dunnart genome coverage =&quot;, smiCra1coverage))</code></pre>
+<pre><code>[1] &quot;dunnart genome coverage =0.263516324863077&quot;</code></pre>
+</div>
+<div id="liftover" class="section level2">
+<h2>LiftOver</h2>
+<pre class="bash"><code>liftOver data/genomic_data/smiCra1exonsMerged.bed output/wga/liftOver_chains/mm10_smiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/qc/ucsc_alignment/smiCra1exonsMapped.txt output/qc/ucsc_alignment/smiCra1exonsUnmapped.txt</code></pre>
+<p>number of dunnart exons = 193182</p>
+<p>number of dunnart exons that can be mapped to mouse = 111693</p>
+<pre class="bash"><code>liftOver output/qc/ucsc_alignment/mm10exonsMerged.bed output/wga/liftOver_chains/smiCra1_mm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/qc/ucsc_alignment/mm10exonsMapped.txt output/qc/ucsc_alignment/mm10exonsUnmapped.txt</code></pre>
+<p>number of mouse exons = 193776</p>
+<p>number of mouse exons that can be lifted over to dunnart = 160213</p>
+<div id="references" class="section level3">
+<h3>References</h3>
+<p>[1] Sharma V, Hiller M. Increased alignment sensitivity improves the usage of genome alignments for comparative gene annotation. Nucleic Acids Res., 45(14), 8369–8377, 2017</p>
+<p>[2] Suarez H, Langer BE, Ladde P, Hiller M. chainCleaner improves genome alignment specificity and sensitivity. Bioinformatics, 33(11):1596-1603, 2017</p>
+<p>[3] Hiller M, Agarwal S, Notwell JH, Parikh R, Guturu H, Wenger AM, Bejerano G. Computational methods to detect conserved non-genic elements in phylogenetically isolated genomes: application to zebrafish. Nucleic Acids Res, 41(15):e151.</p>
+<p>[4] Kent WJ, Baertsch R, Hinrichs A, Miller W, Haussler D. Evolution’s cauldron: duplication, deletion, and rearrangement in the mouse and human genomes. PNAS, 100(20):11484-9, 2003</p>
+<p>[5] Osipova E, Hecker N, Hiller M. RepeatFiller newly identifies megabases of aligning repetitive sequences and improves annotations of conserved non-exonic elements, submitted</p>
+<p>[6] MafFilter</p>
+<p>[7] Kent tools UCSC</p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.1.0 (2021-05-18)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Red Hat Enterprise Linux
+
+Matrix products: default
+BLAS/LAPACK: /usr/local/easybuild-2019/easybuild/software/compiler/gcc/10.2.0/openblas/0.3.12/lib/libopenblas_haswellp-r0.3.12.so
+
+locale:
+ [1] LC_CTYPE=en_AU.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_AU.UTF-8        LC_COLLATE=en_AU.UTF-8    
+ [5] LC_MONETARY=en_AU.UTF-8    LC_MESSAGES=en_AU.UTF-8   
+ [7] LC_PAPER=en_AU.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_AU.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats4    stats     graphics  grDevices utils     datasets  methods  
+[8] base     
+
+other attached packages:
+ [1] forcats_0.5.1       stringr_1.4.0       dplyr_1.0.8        
+ [4] purrr_0.3.4         readr_1.4.0         tidyr_1.1.3        
+ [7] tibble_3.1.2        ggplot2_3.3.3       tidyverse_1.3.1    
+[10] Biostrings_2.62.0   GenomeInfoDb_1.30.1 XVector_0.34.0     
+[13] IRanges_2.28.0      S4Vectors_0.32.3    BiocGenerics_0.40.0
+[16] seqinr_4.2-5        data.table_1.14.0   plyr_1.8.6         
+[19] workflowr_1.7.0    
+
+loaded via a namespace (and not attached):
+ [1] httr_1.4.2             sass_0.4.0             jsonlite_1.7.2        
+ [4] modelr_0.1.8           bslib_0.2.5.1          assertthat_0.2.1      
+ [7] getPass_0.2-2          cellranger_1.1.0       GenomeInfoDbData_1.2.7
+[10] yaml_2.2.1             progress_1.2.2         pillar_1.6.1          
+[13] backports_1.2.1        glue_1.4.2             digest_0.6.27         
+[16] promises_1.2.0.1       rvest_1.0.0            colorspace_2.0-1      
+[19] htmltools_0.5.1.1      httpuv_1.6.1           pkgconfig_2.0.3       
+[22] broom_0.7.6            haven_2.4.1            zlibbioc_1.40.0       
+[25] scales_1.1.1           processx_3.5.2         whisker_0.4           
+[28] later_1.2.0            git2r_0.28.0           generics_0.1.0        
+[31] ellipsis_0.3.2         withr_2.4.2            cli_2.5.0             
+[34] magrittr_2.0.1         crayon_1.4.1           readxl_1.3.1          
+[37] evaluate_0.14          ps_1.6.0               fs_1.5.0              
+[40] fansi_0.5.0            MASS_7.3-54            xml2_1.3.2            
+[43] tools_4.1.0            prettyunits_1.1.1      hms_1.1.0             
+[46] lifecycle_1.0.1        reprex_2.0.0           munsell_0.5.0         
+[49] callr_3.7.0            ade4_1.7-16            compiler_4.1.0        
+[52] jquerylib_0.1.4        rlang_1.0.2            grid_4.1.0            
+[55] RCurl_1.98-1.3         rstudioapi_0.13        bitops_1.0-7          
+[58] rmarkdown_2.8          gtable_0.3.0           DBI_1.1.1             
+[61] R6_2.5.0               lubridate_1.7.10       knitr_1.33            
+[64] utf8_1.2.1             rprojroot_2.0.2        stringi_1.6.2         
+[67] Rcpp_1.0.8             vctrs_0.3.8            dbplyr_2.1.1          
+[70] tidyselect_1.1.1       xfun_0.23             </code></pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

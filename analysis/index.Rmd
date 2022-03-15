@@ -36,7 +36,7 @@ This project involves a number of analysis for the generation of ChIP-seq data f
 
 * [Dunnart peak characterisation](dunnart_peak_characterisation.html)
 
-* [Cross-species peak comparisons](cross-species-peak-comparison.html)
+* Cross-species peak comparisons
 
 	+ [Peak level](peak_level_comparisons.html)
 	
