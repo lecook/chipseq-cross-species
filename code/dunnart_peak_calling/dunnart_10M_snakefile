@@ -55,9 +55,9 @@ rule all:
         "output/qc/multiBAM_fingerprint_rawcounts_dunnart_downSampled.txt",
         "docs/bamPEFragmentSize_hist_dunnart_downSampled.pdf",
         "output/qc/bamPEFragmentSize_rawcounts_dunnart_downSampled.tab",
-        #expand("output/peaks/{case}_vs_{control}_macs2_default_dunnart_downSampled_peaks.narrowPeak", zip, case=IPS, control=INPUTS),
-        #expand("output/peaks/{case}_vs_{control}_macs2_default_summits_dunnart_downSampled_peaks.bed", zip, case=IPS, control=INPUTS),
-        #expand("output/qc/{case}-vs-{control}-narrowpeak-count_mqc.json", zip, case=IPS, control=INPUTS),
+        expand("output/peaks/{case}_vs_{control}_macs2_default_dunnart_downSampled_peaks.narrowPeak", zip, case=IPS, control=INPUTS),
+        expand("output/peaks/{case}_vs_{control}_macs2_default_summits_dunnart_downSampled_peaks.bed", zip, case=IPS, control=INPUTS),
+        expand("output/qc/{case}-vs-{control}-narrowpeak-count_mqc.json", zip, case=IPS, control=INPUTS),
         expand("output/bam_files/{case}_dunnart_downSampled.bedpe", case=IPS),
         expand("output/logs/{case}_dunnart_downSampled.bamToBed", case=IPS),
         expand("output/qc/{case}_vs_{control}.frip_default_dunnart_downSampled.txt", case=IPS, control=INPUTS),
@@ -213,7 +213,7 @@ rule call_peaks_macs2:
     log:
         "output/logs/{case}_vs_{control}_call_peaks_macs2_default_dunnart_downSampled.log"
     params:
-        name = "{case}_vs_{control}_macs2_default_dunnart_downSampled_peaks",
+        name = "{case}_vs_{control}_macs2_default_dunnart_downSampled",
     run:
         shell("macs2 callpeak -f BAMPE -t {input.case} \
         -c {input.control} --keep-dup all \
@@ -237,8 +237,8 @@ rule call_peaks_macs2_pooled_replicates:
         H3K4me3 ="output/logs/H3K4me3_pooled_call_peaks_macs2_default_dunnart_downSampled.log",
         H3K27ac ="output/logs/H3K27ac_pooled_call_peaks_macs2_default_dunnart_downSampled.log"
     params:
-        H3K4me3 = "H3K4me3_pooled_macs2_default_dunnart_downSampled_peaks",
-        H3K27ac = "H3K27ac_pooled_macs2_default_dunnart_downSampled_peaks"
+        H3K4me3 = "H3K4me3_pooled_macs2_default_dunnart_downSampled",
+        H3K27ac = "H3K27ac_pooled_macs2_default_dunnart_downSampled"
     run:
         shell(" macs2 callpeak -f BAMPE -t {input.H3K4me3} \
         -c {input.input} --keep-dup all \
