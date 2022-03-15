@@ -7,6 +7,13 @@ editor_options:
   chunk_output_type: console
 ---
 
+
+```{r setup, include = FALSE} 
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
 # Notes on Whole Genome Alignment
 
 There are a number of online tutorials to build the alignment and nets using Lastz:
