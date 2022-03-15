@@ -13,7 +13,7 @@
 
 <meta name="date" content="2022-02-23" />
 
-<title>mouse_dunnart_data_processing_for_comparison</title>
+<title>Processing mouse and dunnart data for comparison</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -355,7 +355,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">mouse_dunnart_data_processing_for_comparison</h1>
+<h1 class="title toc-ignore">Processing mouse and dunnart data for comparison</h1>
 <h4 class="author">lecook</h4>
 <h4 class="date">2022-02-23</h4>
 
@@ -382,7 +382,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-03-01
+<strong>Last updated:</strong> 2022-03-16
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -430,7 +430,7 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 </div>
 <div id="strongSeedstrongcodesetseed20220209code" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The command <code>set.seed(20220209)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+<p>The command <code>set.seed(20220209)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
 </div>
 </div>
 </div>
@@ -473,16 +473,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreee69f5512379cb1185f85dff6bded43ddca1237d7targetblanke69f551a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/e69f5512379cb1185f85dff6bded43ddca1237d7" target="_blank">e69f551</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree275510f11662865e937b1f347ddbeaa3283117bdtargetblank275510fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/275510f11662865e937b1f347ddbeaa3283117bd" target="_blank">275510f</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreee69f5512379cb1185f85dff6bded43ddca1237d7targetblanke69f551a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree275510f11662865e937b1f347ddbeaa3283117bdtargetblank275510fa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/e69f5512379cb1185f85dff6bded43ddca1237d7" target="_blank">e69f551</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/275510f11662865e937b1f347ddbeaa3283117bd" target="_blank">275510f</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -495,25 +495,833 @@ Ignored files:
     Ignored:    analysis/.Rhistory
     Ignored:    data/genomic_data/
     Ignored:    output/annotations/
+    Ignored:    output/bam_files/
     Ignored:    output/filtered_peaks/
+    Ignored:    output/logs/
+    Ignored:    output/peaks/
     Ignored:    output/plots/
+    Ignored:    output/qc/A-1_input.SeqDepthNorm.bw
+    Ignored:    output/qc/A-1_input.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/A-1_input.ccurve.txt
+    Ignored:    output/qc/A-1_input.extrap.txt
+    Ignored:    output/qc/A-1_input_R1_trimmed.fastq.gz
+    Ignored:    output/qc/A-1_input_est_lib_complex_metrics.txt
+    Ignored:    output/qc/A-2_H3K4me3.SeqDepthNorm.bw
+    Ignored:    output/qc/A-2_H3K4me3.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/A-2_H3K4me3.ccurve.txt
+    Ignored:    output/qc/A-2_H3K4me3.extrap.txt
+    Ignored:    output/qc/A-2_H3K4me3_R1_trimmed.fastq.gz
+    Ignored:    output/qc/A-2_H3K4me3_est_lib_complex_metrics.txt
+    Ignored:    output/qc/A-2_H3K4me3_vs_A-1_input.frip_default.txt
+    Ignored:    output/qc/A-2_H3K4me3_vs_A-1_input.frip_default_dunnart_downSampled.txt
+    Ignored:    output/qc/A-2_H3K4me3_vs_B-1_input.frip_default.txt
+    Ignored:    output/qc/A-2_H3K4me3_vs_B-1_input.frip_default_dunnart_downSampled.txt
+    Ignored:    output/qc/A-3_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/A-3_H3K27ac.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/A-3_H3K27ac.ccurve.txt
+    Ignored:    output/qc/A-3_H3K27ac.extrap.txt
+    Ignored:    output/qc/A-3_H3K27ac_R1_trimmed.fastq.gz
+    Ignored:    output/qc/A-3_H3K27ac_est_lib_complex_metrics.txt
+    Ignored:    output/qc/A-3_H3K27ac_vs_A-1_input.frip_default.txt
+    Ignored:    output/qc/A-3_H3K27ac_vs_A-1_input.frip_default_dunnart_downSampled.txt
+    Ignored:    output/qc/A-3_H3K27ac_vs_B-1_input.frip_default.txt
+    Ignored:    output/qc/A-3_H3K27ac_vs_B-1_input.frip_default_dunnart_downSampled.txt
+    Ignored:    output/qc/B-1_input.SeqDepthNorm.bw
+    Ignored:    output/qc/B-1_input.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/B-1_input.ccurve.txt
+    Ignored:    output/qc/B-1_input.extrap.txt
+    Ignored:    output/qc/B-1_input_R1_trimmed.fastq.gz
+    Ignored:    output/qc/B-1_input_est_lib_complex_metrics.txt
+    Ignored:    output/qc/B-2_H3K4me3.SeqDepthNorm.bw
+    Ignored:    output/qc/B-2_H3K4me3.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/B-2_H3K4me3.ccurve.txt
+    Ignored:    output/qc/B-2_H3K4me3.extrap.txt
+    Ignored:    output/qc/B-2_H3K4me3_R1_trimmed.fastq.gz
+    Ignored:    output/qc/B-2_H3K4me3_est_lib_complex_metrics.txt
+    Ignored:    output/qc/B-2_H3K4me3_vs_A-1_input.frip_default.txt
+    Ignored:    output/qc/B-2_H3K4me3_vs_A-1_input.frip_default_dunnart_downSampled.txt
+    Ignored:    output/qc/B-2_H3K4me3_vs_B-1_input.frip_default.txt
+    Ignored:    output/qc/B-2_H3K4me3_vs_B-1_input.frip_default_dunnart_downSampled.txt
+    Ignored:    output/qc/B-3_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/B-3_H3K27ac.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/B-3_H3K27ac.ccurve.txt
+    Ignored:    output/qc/B-3_H3K27ac.extrap.txt
+    Ignored:    output/qc/B-3_H3K27ac_R1_trimmed.fastq.gz
+    Ignored:    output/qc/B-3_H3K27ac_est_lib_complex_metrics.txt
+    Ignored:    output/qc/B-3_H3K27ac_vs_A-1_input.frip_default.txt
+    Ignored:    output/qc/B-3_H3K27ac_vs_A-1_input.frip_default_dunnart_downSampled.txt
+    Ignored:    output/qc/B-3_H3K27ac_vs_B-1_input.frip_default.txt
+    Ignored:    output/qc/B-3_H3K27ac_vs_B-1_input.frip_default_dunnart_downSampled.txt
+    Ignored:    output/qc/ENCFF011NFM_E12.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF011NFM_vs_ENCFF058AUT_E12.5_H3K27ac.frip.txt
+    Ignored:    output/qc/ENCFF045IPK_E10.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF045IPK_vs_ENCFF825AVI_E10.5_H3K4me3.frip.txt
+    Ignored:    output/qc/ENCFF124TAB_E13.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF124TAB_vs_ENCFF248PGK_E13.5_H3K4me3.frip.txt
+    Ignored:    output/qc/ENCFF124UYX_E10.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF124UYX_vs_ENCFF157KEH_E10.5_H3K4me3.frip.txt
+    Ignored:    output/qc/ENCFF182ZPF_E12.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF182ZPF_vs_ENCFF203JQV_E12.5_H3K4me3.frip.txt
+    Ignored:    output/qc/ENCFF194ORC_E13.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF194ORC_vs_ENCFF117QRC_E13.5_H3K27ac.frip.txt
+    Ignored:    output/qc/ENCFF213EBC_E10.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF213EBC_vs_ENCFF157KEH_E10.5_H3K27ac.frip.txt
+    Ignored:    output/qc/ENCFF258KCR_E15.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF258KCR_vs_ENCFF727QTS_E15.5_H3K4me3.frip.txt
+    Ignored:    output/qc/ENCFF290ZNF_E13.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF290ZNF_vs_ENCFF248PGK_E13.5_H3K27ac.frip.txt
+    Ignored:    output/qc/ENCFF327VAO_E14.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF327VAO_vs_ENCFF784ORI_E14.5_H3K27ac.frip.txt
+    Ignored:    output/qc/ENCFF394TZN_E12.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF394TZN_vs_ENCFF203JQV_E12.5_H3K27ac.frip.txt
+    Ignored:    output/qc/ENCFF401BKM_E15.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF401BKM_vs_ENCFF182XFG_E15.5_H3K4me3.frip.txt
+    Ignored:    output/qc/ENCFF485UDC_E13.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF485UDC_vs_ENCFF117QRC_E13.5_H3K4me3.frip.txt
+    Ignored:    output/qc/ENCFF512SFE_E11.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF512SFE_vs_ENCFF184CUE_E11.5_H3K27ac.frip.txt
+    Ignored:    output/qc/ENCFF515PKL_E11.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF515PKL_vs_ENCFF376FGM_E11.5_H3K27ac.frip.txt
+    Ignored:    output/qc/ENCFF548BRR_E10.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF548BRR_vs_ENCFF825AVI_E10.5_H3K27ac.frip.txt
+    Ignored:    output/qc/ENCFF584JFB_E15.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF584JFB_vs_ENCFF727QTS_E15.5_H3K27ac.frip.txt
+    Ignored:    output/qc/ENCFF665QBJ_E14.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF665QBJ_vs_ENCFF002HZV_E14.5_H3K4me3.frip.txt
+    Ignored:    output/qc/ENCFF707WKL_E15.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF707WKL_vs_ENCFF182XFG_E15.5_H3K27ac.frip.txt
+    Ignored:    output/qc/ENCFF717QDV_E11.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF717QDV_vs_ENCFF376FGM_E11.5_H3K4me3.frip.txt
+    Ignored:    output/qc/ENCFF724DMU_E14.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF724DMU_vs_ENCFF784ORI_E14.5_H3K4me3.frip.txt
+    Ignored:    output/qc/ENCFF760QYZ_E11.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF760QYZ_vs_ENCFF184CUE_E11.5_H3K4me3.frip.txt
+    Ignored:    output/qc/ENCFF902HAR_E14.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF902HAR_vs_ENCFF002HZV_E14.5_H3K27ac.frip.txt
+    Ignored:    output/qc/ENCFF941QJZ_E12.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF941QJZ_vs_ENCFF058AUT_E12.5_H3K4me3.frip.txt
+    Ignored:    output/qc/H3K27ac_multiBAM_fingerprint_metrics.txt
+    Ignored:    output/qc/H3K27ac_multiBAM_fingerprint_rawcounts.txt
+    Ignored:    output/qc/H3K27ac_multibamsum.npz
+    Ignored:    output/qc/H3K27ac_multibamsum.tab
+    Ignored:    output/qc/H3K27ac_pearsoncor_multibamsum_matrix.txt
+    Ignored:    output/qc/H3K27ac_plot_coverage_rawcounts.tab
+    Ignored:    output/qc/H3K4me3_multiBAM_fingerprint_metrics_mouse.txt
+    Ignored:    output/qc/H3K4me3_multiBAM_fingerprint_rawcounts_mouse.txt
+    Ignored:    output/qc/H3K4me3_multibamsum_mouse.npz
+    Ignored:    output/qc/H3K4me3_multibamsum_mouse.tab
+    Ignored:    output/qc/H3K4me3_pearsoncor_multibamsum_matrix_mouse.txt
+    Ignored:    output/qc/H3K4me3_plot_coverage_rawcounts_mouse.tab
+    Ignored:    output/qc/bamPEFragmentSize_rawcounts.tab
+    Ignored:    output/qc/bamPEFragmentSize_rawcounts_dunnart_downSampled.tab
+    Ignored:    output/qc/multiBAM_fingerprint_metrics.txt
+    Ignored:    output/qc/multiBAM_fingerprint_metrics_dunnart_downSampled.txt
+    Ignored:    output/qc/multiBAM_fingerprint_rawcounts.txt
+    Ignored:    output/qc/multiBAM_fingerprint_rawcounts_dunnart_downSampled.txt
+    Ignored:    output/qc/multibamsum.npz
+    Ignored:    output/qc/multibamsum.tab
+    Ignored:    output/qc/multibamsum_dunnart_downSampled.npz
+    Ignored:    output/qc/multibamsum_dunnart_downSampled.tab
+    Ignored:    output/qc/pearsoncor_multibamsum_matrix.txt
+    Ignored:    output/qc/pearsoncor_multibamsum_matrix_dunnart_downSampled.txt
+    Ignored:    output/wga/
     Ignored:    results/
 
 Untracked files:
     Untracked:  .snakemake/
-    Untracked:  code/basic_wrapper.slurm
-    Untracked:  code/configs/metadata.tsv
-    Untracked:  code/slurmjob.stderr
-    Untracked:  code/slurmjob.stdout
-    Untracked:  code/trimfastq.py
+    Untracked:  Rplots.pdf
     Untracked:  data/raw_reads/
-    Untracked:  output/bam_files/
-    Untracked:  output/logs/
-    Untracked:  output/qc/
+    Untracked:  output/bed/
+    Untracked:  output/qc/E10.5_H3K27ac.pooled.macs2
+    Untracked:  output/qc/E10.5_H3K4me3.pooled.macs2
+    Untracked:  output/qc/E11.5_H3K4me3.pooled.macs2
+    Untracked:  output/qc/E12.5_H3K4me3.pooled.macs2
+    Untracked:  output/qc/E13.5_H3K4me3.pooled.macs2
+    Untracked:  output/qc/E14.5_H3K4me3.pooled.macs2
+    Untracked:  output/qc/E15.5_H3K4me3.pooled.macs2
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/H3K27ac_E10.5_overlap.frip
+    Untracked:  output/qc/H3K27ac_E11.5_overlap.frip
+    Untracked:  output/qc/H3K27ac_E12.5_overlap.frip
+    Untracked:  output/qc/H3K27ac_E13.5_overlap.frip
+    Untracked:  output/qc/H3K27ac_E14.5_overlap.frip
+    Untracked:  output/qc/H3K27ac_E15.5_overlap.frip
+    Untracked:  output/qc/H3K27ac_multiBAM_fingerprint.pdf
+    Untracked:  output/qc/H3K27ac_overlap_default_dunnart_downSampled.frip
+    Untracked:  output/qc/H3K27ac_pearsoncor_multibamsum.pdf
+    Untracked:  output/qc/H3K27ac_plot_coverage.pdf
+    Untracked:  output/qc/H3K4me3_overlap_default_dunnart_downSampled.frip
+    Untracked:  output/qc/ucsc_alignment/
+    Untracked:  output/rnaseq/
+    Untracked:  slurm-33953723.out
+    Untracked:  slurm-33953724.out
+    Untracked:  slurm-33953725.out
+    Untracked:  slurm-33953726.out
+    Untracked:  slurm-33953727.out
+    Untracked:  slurm-33953728.out
+    Untracked:  slurm-33953729.out
+    Untracked:  slurm-33953730.out
+    Untracked:  slurm-33953758.out
+    Untracked:  slurm-33953759.out
+    Untracked:  slurm-33953760.out
+    Untracked:  slurm-33953761.out
+    Untracked:  slurm-33953762.out
+    Untracked:  slurm-33953763.out
+    Untracked:  slurm-33953764.out
+    Untracked:  slurm-33953765.out
+    Untracked:  slurm-33954200.out
+    Untracked:  slurm-33954201.out
+    Untracked:  slurm-33954202.out
+    Untracked:  slurm-33954203.out
+    Untracked:  slurm-33954204.out
+    Untracked:  slurm-33954205.out
+    Untracked:  slurm-33954206.out
+    Untracked:  slurm-33954207.out
+    Untracked:  slurm-33954416.out
+    Untracked:  slurm-33954417.out
+    Untracked:  slurm-33954418.out
+    Untracked:  slurm-33954419.out
+    Untracked:  slurm-33954420.out
+    Untracked:  slurm-33954421.out
+    Untracked:  slurm-33954422.out
+    Untracked:  slurm-33954423.out
+    Untracked:  slurm-33954785.out
+    Untracked:  slurm-33954786.out
+    Untracked:  slurm-33954787.out
+    Untracked:  slurm-33954788.out
+    Untracked:  slurm-33954789.out
+    Untracked:  slurm-33954790.out
+    Untracked:  slurm-33954791.out
+    Untracked:  slurm-33954792.out
+    Untracked:  slurm-33954888.out
+    Untracked:  slurm-33954889.out
+    Untracked:  slurm-33954890.out
+    Untracked:  slurm-33954891.out
+    Untracked:  slurm-33954892.out
+    Untracked:  slurm-33954893.out
+    Untracked:  slurm-33954894.out
+    Untracked:  slurm-33954895.out
+    Untracked:  slurm-33954900.out
+    Untracked:  slurm-33954901.out
+    Untracked:  slurm-33954902.out
+    Untracked:  slurm-33954903.out
+    Untracked:  slurm-33954904.out
+    Untracked:  slurm-33954905.out
+    Untracked:  slurm-33954906.out
+    Untracked:  slurm-33954907.out
+    Untracked:  slurm-33955011.out
+    Untracked:  slurm-33955012.out
+    Untracked:  slurm-33955013.out
+    Untracked:  slurm-33955014.out
+    Untracked:  slurm-33955015.out
+    Untracked:  slurm-33955016.out
+    Untracked:  slurm-33955017.out
+    Untracked:  slurm-33955018.out
+    Untracked:  slurm-33955019.out
+    Untracked:  slurm-33955026.out
+    Untracked:  slurm-33955034.out
+    Untracked:  slurm-33955349.out
+    Untracked:  slurm-33955350.out
+    Untracked:  slurm-33955351.out
+    Untracked:  slurm-33955352.out
+    Untracked:  slurm-33955353.out
+    Untracked:  slurm-33955354.out
+    Untracked:  slurm-33955355.out
+    Untracked:  slurm-33955356.out
+    Untracked:  slurm-33955357.out
+    Untracked:  slurm-33955358.out
+    Untracked:  slurm-33955363.out
+    Untracked:  slurm-33955371.out
+    Untracked:  slurm-33955406.out
+    Untracked:  slurm-33955411.out
+    Untracked:  slurm-33955413.out
+    Untracked:  slurm-33955425.out
+    Untracked:  slurm-33955432.out
+    Untracked:  slurm-33955433.out
+    Untracked:  slurm-33955434.out
+    Untracked:  slurm-33955438.out
+    Untracked:  slurm-33955442.out
+    Untracked:  slurm-33955446.out
+    Untracked:  slurm-33955447.out
+    Untracked:  slurm-33955481.out
+    Untracked:  slurm-33955487.out
+    Untracked:  slurm-33955488.out
+    Untracked:  slurm-33955494.out
+    Untracked:  slurm-33955500.out
+    Untracked:  slurm-33955502.out
+    Untracked:  slurm-33955506.out
+    Untracked:  slurm-33955509.out
+    Untracked:  slurm-33955516.out
+    Untracked:  slurm-33955552.out
+    Untracked:  slurm-33955553.out
+    Untracked:  slurm-33955554.out
+    Untracked:  slurm-33955556.out
+    Untracked:  slurm-33955557.out
+    Untracked:  slurm-33955561.out
+    Untracked:  slurm-33955562.out
+    Untracked:  slurm-33955563.out
+    Untracked:  slurm-33955565.out
+    Untracked:  slurm-33955566.out
+    Untracked:  slurm-33955567.out
+    Untracked:  slurm-33955568.out
+    Untracked:  slurm-33955569.out
+    Untracked:  slurm-33955570.out
+    Untracked:  slurm-33955571.out
+    Untracked:  slurm-33955572.out
+    Untracked:  slurm-33955573.out
+    Untracked:  slurm-33955574.out
+    Untracked:  slurm-33955575.out
+    Untracked:  slurm-33955576.out
+    Untracked:  slurm-33955583.out
+    Untracked:  slurm-33955584.out
+    Untracked:  slurm-33955594.out
+    Untracked:  slurm-33955598.out
+    Untracked:  slurm-33955632.out
+    Untracked:  slurm-33955633.out
+    Untracked:  slurm-33955634.out
+    Untracked:  slurm-33955635.out
+    Untracked:  slurm-33955636.out
+    Untracked:  slurm-33955638.out
+    Untracked:  slurm-33955639.out
+    Untracked:  slurm-33955641.out
+    Untracked:  slurm-33955642.out
+    Untracked:  slurm-33955645.out
+    Untracked:  slurm-33955646.out
+    Untracked:  slurm-33955647.out
+    Untracked:  slurm-33955652.out
+    Untracked:  slurm-33955655.out
+    Untracked:  slurm-33955656.out
+    Untracked:  slurm-33955657.out
+    Untracked:  slurm-33955659.out
+    Untracked:  slurm-33955664.out
+    Untracked:  slurm-33955665.out
+    Untracked:  slurm-33955666.out
+    Untracked:  slurm-33955667.out
+    Untracked:  slurm-33955671.out
+    Untracked:  slurm-33955672.out
+    Untracked:  slurm-33955676.out
+    Untracked:  slurm-33955677.out
+    Untracked:  slurm-33955678.out
+    Untracked:  slurm-33955709.out
+    Untracked:  slurm-33955711.out
+    Untracked:  slurm-33955712.out
+    Untracked:  slurm-33955716.out
+    Untracked:  slurm-33955718.out
+    Untracked:  slurm-33955719.out
+    Untracked:  slurm-33955722.out
+    Untracked:  slurm-33955725.out
+    Untracked:  slurm-33955732.out
+    Untracked:  slurm-33955733.out
+    Untracked:  slurm-33955734.out
+    Untracked:  slurm-33955741.out
+    Untracked:  slurm-33955746.out
+    Untracked:  slurm-33955747.out
+    Untracked:  slurm-33955748.out
+    Untracked:  slurm-33955749.out
+    Untracked:  slurm-33955750.out
+    Untracked:  slurm-33955751.out
+    Untracked:  slurm-33955758.out
+    Untracked:  slurm-33955886.out
+    Untracked:  slurm-33955966.out
+    Untracked:  slurm-33955967.out
+    Untracked:  slurm-33955968.out
+    Untracked:  slurm-33956050.out
+    Untracked:  slurm-33956104.out
+    Untracked:  slurm-33956106.out
+    Untracked:  slurm-33956107.out
+    Untracked:  slurm-33956202.out
+    Untracked:  slurm-33956203.out
+    Untracked:  slurm-33956204.out
+    Untracked:  slurm-33956233.out
+    Untracked:  slurm-33956249.out
+    Untracked:  slurm-33956297.out
+    Untracked:  slurm-33956306.out
+    Untracked:  slurm-33956307.out
+    Untracked:  slurm-33956341.out
+    Untracked:  slurm-33956344.out
+    Untracked:  slurm-33956347.out
+    Untracked:  slurm-33956348.out
+    Untracked:  slurm-33956349.out
+    Untracked:  slurm-33956350.out
+    Untracked:  slurm-33956354.out
+    Untracked:  slurm-33956355.out
+    Untracked:  slurm-33956356.out
+    Untracked:  slurm-33956357.out
+    Untracked:  slurm-33956358.out
+    Untracked:  slurm-33956360.out
+    Untracked:  slurm-33956396.out
+    Untracked:  slurm-33956480.out
+    Untracked:  slurm-33956481.out
+    Untracked:  slurm-33956482.out
+    Untracked:  slurm-33956513.out
+    Untracked:  slurm-33956538.out
+    Untracked:  slurm-33956551.out
+    Untracked:  slurm-33956552.out
+    Untracked:  slurm-33956588.out
+    Untracked:  slurm-33956589.out
+    Untracked:  slurm-33956590.out
+    Untracked:  slurm-33956591.out
+    Untracked:  slurm-33956592.out
+    Untracked:  slurm-33956593.out
+    Untracked:  slurm-33956597.out
+    Untracked:  slurm-33956598.out
+    Untracked:  slurm-33956599.out
+    Untracked:  slurm-33956600.out
+    Untracked:  slurm-33956601.out
+    Untracked:  slurm-33956602.out
+    Untracked:  slurm-33956603.out
+    Untracked:  slurm-33956637.out
+    Untracked:  slurm-33956638.out
+    Untracked:  slurm-33956639.out
+    Untracked:  slurm-33956640.out
+    Untracked:  slurm-33956643.out
+    Untracked:  slurm-33956713.out
+    Untracked:  slurm-33956715.out
+    Untracked:  slurm-33956723.out
+    Untracked:  slurm-33956724.out
+    Untracked:  slurm-33956726.out
+    Untracked:  slurm-33956727.out
+    Untracked:  slurm-33956730.out
+    Untracked:  slurm-33956740.out
+    Untracked:  slurm-33956771.out
+    Untracked:  slurm-33956782.out
+    Untracked:  slurm-33956784.out
+    Untracked:  slurm-33956793.out
+    Untracked:  slurm-33956836.out
+    Untracked:  slurm-33956837.out
+    Untracked:  slurm-33956861.out
+    Untracked:  slurm-33956862.out
+    Untracked:  slurm-33956863.out
+    Untracked:  slurm-33956902.out
+    Untracked:  slurm-33956904.out
+    Untracked:  slurm-33956907.out
+    Untracked:  slurm-33956908.out
+    Untracked:  slurm-33956909.out
+    Untracked:  slurm-33956912.out
+    Untracked:  slurm-33956913.out
+    Untracked:  slurm-33956915.out
+    Untracked:  slurm-33956917.out
+    Untracked:  slurm-33956919.out
+    Untracked:  slurm-33956921.out
+    Untracked:  slurm-33956954.out
+    Untracked:  slurm-33956955.out
+    Untracked:  slurm-33956956.out
+    Untracked:  slurm-33956957.out
+    Untracked:  slurm-33956958.out
+    Untracked:  slurm-33956959.out
+    Untracked:  slurm-33956960.out
+    Untracked:  slurm-33956961.out
+    Untracked:  slurm-33956962.out
+    Untracked:  slurm-33956963.out
+    Untracked:  slurm-33956964.out
+    Untracked:  slurm-33956965.out
+    Untracked:  slurm-33956982.out
+    Untracked:  slurm-33956985.out
+    Untracked:  slurm-33956986.out
+    Untracked:  slurm-33956987.out
+    Untracked:  slurm-33956988.out
+    Untracked:  slurm-33956989.out
+    Untracked:  slurm-33956990.out
+    Untracked:  slurm-33956991.out
+    Untracked:  slurm-33956992.out
+    Untracked:  slurm-33956993.out
+    Untracked:  slurm-33956996.out
+    Untracked:  slurm-33957027.out
+    Untracked:  slurm-33957029.out
+    Untracked:  slurm-33957030.out
+    Untracked:  slurm-33957031.out
+    Untracked:  slurm-33957033.out
+    Untracked:  slurm-33957076.out
+    Untracked:  slurm-33957078.out
+    Untracked:  slurm-33957080.out
+    Untracked:  slurm-33957085.out
+    Untracked:  slurm-33957086.out
+    Untracked:  slurm-33957119.out
+    Untracked:  slurm-33957120.out
+    Untracked:  slurm-33957138.out
+    Untracked:  slurm-33957139.out
+    Untracked:  slurm-33957140.out
+    Untracked:  slurm-33957175.out
+    Untracked:  slurm-33957176.out
+    Untracked:  slurm-33957210.out
+    Untracked:  slurm-33957251.out
+    Untracked:  slurm-33957252.out
+    Untracked:  slurm-33957253.out
+    Untracked:  slurm-33957255.out
+    Untracked:  slurm-33957358.out
+    Untracked:  slurm-33957360.out
+    Untracked:  slurm-33957367.out
+    Untracked:  slurm-33957377.out
+    Untracked:  slurm-33957378.out
+    Untracked:  slurm-33957463.out
+    Untracked:  slurm-33957492.out
+    Untracked:  slurm-33957493.out
+    Untracked:  slurm-33957503.out
+    Untracked:  slurm-33957551.out
+    Untracked:  slurm-33957697.out
+    Untracked:  slurm-33957699.out
+    Untracked:  slurm-33957700.out
+    Untracked:  slurm-33957703.out
+    Untracked:  slurm-33957704.out
+    Untracked:  slurm-33957705.out
+    Untracked:  slurm-33957709.out
+    Untracked:  slurm-33957750.out
+    Untracked:  slurm-33957751.out
+    Untracked:  slurm-33957752.out
+    Untracked:  slurm-33957756.out
+    Untracked:  slurm-33957757.out
+    Untracked:  slurm-33957759.out
+    Untracked:  slurm-33957760.out
+    Untracked:  slurm-33957762.out
+    Untracked:  slurm-33957764.out
+    Untracked:  slurm-33957795.out
+    Untracked:  slurm-33957799.out
+    Untracked:  slurm-33957815.out
+    Untracked:  slurm-33957816.out
+    Untracked:  slurm-33957835.out
+    Untracked:  slurm-33957846.out
+    Untracked:  slurm-33957847.out
+    Untracked:  slurm-33957865.out
+    Untracked:  slurm-33957867.out
+    Untracked:  slurm-33957869.out
+    Untracked:  slurm-33958405.out
+    Untracked:  slurm-33958406.out
+    Untracked:  slurm-33958407.out
+    Untracked:  slurm-33958408.out
+    Untracked:  slurm-33958409.out
+    Untracked:  slurm-33958410.out
+    Untracked:  slurm-33958411.out
+    Untracked:  slurm-33958412.out
+    Untracked:  slurm-33958413.out
+    Untracked:  slurm-33958414.out
+    Untracked:  slurm-33958419.out
+    Untracked:  slurm-33958564.out
+    Untracked:  slurm-33958565.out
+    Untracked:  slurm-33958566.out
+    Untracked:  slurm-33958567.out
+    Untracked:  slurm-33958568.out
+    Untracked:  slurm-33958569.out
+    Untracked:  slurm-33958570.out
+    Untracked:  slurm-33958571.out
+    Untracked:  slurm-33958572.out
+    Untracked:  slurm-33958573.out
+    Untracked:  slurm-33958592.out
+    Untracked:  slurm-33958593.out
+    Untracked:  slurm-33958594.out
+    Untracked:  slurm-33958595.out
+    Untracked:  slurm-33958596.out
+    Untracked:  slurm-33958597.out
+    Untracked:  slurm-33958598.out
+    Untracked:  slurm-33958599.out
+    Untracked:  slurm-33958600.out
+    Untracked:  slurm-33958601.out
+    Untracked:  slurm-33958605.out
+    Untracked:  slurm-33958609.out
+    Untracked:  slurm-33958647.out
+    Untracked:  slurm-33958648.out
+    Untracked:  slurm-33958650.out
+    Untracked:  slurm-33958651.out
+    Untracked:  slurm-33958655.out
+    Untracked:  slurm-33958660.out
+    Untracked:  slurm-33958661.out
+    Untracked:  slurm-33958665.out
+    Untracked:  slurm-33958675.out
+    Untracked:  slurm-33958676.out
+    Untracked:  slurm-33958678.out
+    Untracked:  slurm-33958686.out
+    Untracked:  slurm-33958690.out
+    Untracked:  slurm-33958691.out
+    Untracked:  slurm-33958693.out
+    Untracked:  slurm-33958696.out
+    Untracked:  slurm-33958698.out
+    Untracked:  slurm-33958703.out
+    Untracked:  slurm-33958705.out
+    Untracked:  slurm-33958738.out
+    Untracked:  slurm-33958802.out
+    Untracked:  slurm-33958819.out
+    Untracked:  slurm-33958831.out
+    Untracked:  slurm-33958834.out
+    Untracked:  slurm-33958912.out
+    Untracked:  slurm-33958920.out
+    Untracked:  slurm-33958947.out
+    Untracked:  slurm-33958969.out
+    Untracked:  slurm-33959008.out
+    Untracked:  slurm-33959100.out
+    Untracked:  slurm-33959139.out
+    Untracked:  slurm-33959147.out
+    Untracked:  slurm-33959150.out
+    Untracked:  slurm-33959151.out
+    Untracked:  slurm-33959164.out
+    Untracked:  slurm-33959168.out
+    Untracked:  slurm-33959179.out
+    Untracked:  slurm-33959237.out
+    Untracked:  slurm-33959286.out
+    Untracked:  slurm-33959288.out
+    Untracked:  slurm-33959306.out
+    Untracked:  slurm-33959307.out
+    Untracked:  slurm-33959314.out
+    Untracked:  slurm-33959365.out
+    Untracked:  slurm-33959423.out
+    Untracked:  slurm-33959440.out
+    Untracked:  slurm-33959451.out
+    Untracked:  slurm-33959460.out
+    Untracked:  slurm-33959477.out
+    Untracked:  slurm-33959479.out
+    Untracked:  slurm-33959602.out
+    Untracked:  slurm-33959620.out
+    Untracked:  slurm-33959622.out
+    Untracked:  slurm-33959641.out
+    Untracked:  slurm-33959687.out
+    Untracked:  slurm-33959688.out
+    Untracked:  slurm-33959715.out
+    Untracked:  slurm-33959788.out
+    Untracked:  slurm-33959797.out
+    Untracked:  slurm-33959808.out
+    Untracked:  slurm-33959817.out
+    Untracked:  slurm-33959818.out
+    Untracked:  slurm-33959821.out
+    Untracked:  slurm-33959916.out
+    Untracked:  slurm-33959958.out
+    Untracked:  slurm-33960001.out
+    Untracked:  slurm-33960035.out
+    Untracked:  slurm-33960050.out
+    Untracked:  slurm-33960079.out
+    Untracked:  slurm-33960104.out
+    Untracked:  slurm-33960105.out
+    Untracked:  slurm-33960208.out
+    Untracked:  slurm-33960240.out
+    Untracked:  slurm-33960241.out
+    Untracked:  slurm-33960244.out
+    Untracked:  slurm-33960255.out
+    Untracked:  slurm-33960256.out
+    Untracked:  slurm-33960269.out
+    Untracked:  slurm-33960271.out
+    Untracked:  slurm-33960272.out
+    Untracked:  slurm-33960273.out
+    Untracked:  slurm-33960281.out
+    Untracked:  slurm-33960284.out
+    Untracked:  slurm-33960492.out
+    Untracked:  slurm-33960513.out
+    Untracked:  slurm-33960590.out
+    Untracked:  slurm-33960599.out
+    Untracked:  slurm-33960604.out
+    Untracked:  slurm-33960607.out
+    Untracked:  slurm-33960669.out
+    Untracked:  slurm-33960684.out
+    Untracked:  slurm-33960694.out
+    Untracked:  slurm-33960737.out
+    Untracked:  slurm-33960738.out
+    Untracked:  slurm-33960805.out
+    Untracked:  slurm-33960833.out
+    Untracked:  slurm-33960844.out
+    Untracked:  slurm-33960849.out
+    Untracked:  slurm-33960855.out
+    Untracked:  slurm-33960861.out
+    Untracked:  slurm-33960923.out
+    Untracked:  slurm-33960933.out
+    Untracked:  slurm-33960935.out
+    Untracked:  slurm-33960957.out
+    Untracked:  slurm-33960958.out
+    Untracked:  slurm-33960964.out
+    Untracked:  slurm-33960987.out
+    Untracked:  slurm-33961831.out
+    Untracked:  slurm-33964144.out
+    Untracked:  slurm-33965457.out
+    Untracked:  slurm-33965494.out
+    Untracked:  slurm-33965495.out
+    Untracked:  slurm-33965496.out
+    Untracked:  slurm-33965497.out
+    Untracked:  slurm-33965498.out
+    Untracked:  slurm-33965499.out
+    Untracked:  slurm-33965500.out
+    Untracked:  slurm-33965501.out
+    Untracked:  slurm-33965502.out
+    Untracked:  slurm-33965503.out
+    Untracked:  slurm-33965682.out
+    Untracked:  slurm-33965690.out
+    Untracked:  slurm-33965749.out
+    Untracked:  slurm-33965825.out
+    Untracked:  slurm-33965905.out
+    Untracked:  slurm-33965913.out
+    Untracked:  slurm-33965940.out
+    Untracked:  slurm-33966030.out
+    Untracked:  slurm-33966064.out
+    Untracked:  slurm-33966092.out
+    Untracked:  slurm-33966159.out
+    Untracked:  slurm-33966200.out
+    Untracked:  slurm-33966435.out
+    Untracked:  slurm-33982316.out
+    Untracked:  slurm-33982320.out
 
 Unstaged changes:
-    Modified:   .gitignore
-    Deleted:    code/dunnart_peak_calling/trimfastq.py
+    Deleted:    output/qc/H3K4me3_overlap_default.frip
 
 </code></pre>
 <p>
@@ -552,6 +1360,125 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/275510f11662865e937b1f347ddbeaa3283117bd/analysis/mouse_dunnart_data_processing_for_comparison.Rmd" target="_blank">275510f</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-16
+</td>
+<td>
+wflow_publish(“analysis/mouse_dunnart_data_processing_for_comparison.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/faabd9522c06ff8f990736dbddcc55871fdc363d/analysis/mouse_dunnart_data_processing_for_comparison.Rmd" target="_blank">faabd95</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-03
+</td>
+<td>
+updated
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/2103ae7d50dd723698bf11af8da5e04882dcda03/analysis/mouse_dunnart_data_processing_for_comparison.Rmd" target="_blank">2103ae7</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-03
+</td>
+<td>
+updates
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/323d8b6a03950741027f0b6329a51b8f0c31d796/analysis/mouse_dunnart_data_processing_for_comparison.Rmd" target="_blank">323d8b6</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-03
+</td>
+<td>
+copied scripts over
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/ae523af3e11ade3cc2e0c7884c96bfdc5faa66b1/analysis/mouse_dunnart_data_processing_for_comparison.Rmd" target="_blank">ae523af</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-02
+</td>
+<td>
+fix code formatting for bam coverage rule
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/a97d3c57c638c074a308452653233ad3bfc59f48/analysis/mouse_dunnart_data_processing_for_comparison.Rmd" target="_blank">a97d3c5</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-01
+</td>
+<td>
+first commit
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/275d2299013a6db02d57b94c22d287788ec16d15/docs/mouse_dunnart_data_processing_for_comparison.html" target="_blank">275d229</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -632,7 +1559,8 @@ debugged
 <div id="download-mouse-unfiltered-alignments-from-encode" class="section level2">
 <h2>Download mouse unfiltered alignments from ENCODE</h2>
 <p>See <a href="mouse_data_ENCODE.html">mouse_data_ENCODE</a> for details on these samples.</p>
-<pre class="bash"><code>xargs -L 1 curl -O -J -L &lt; ENCODE_files.txt</code></pre>
+<pre class="bash"><code>xargs -L 1 curl -O -J -L &lt; ENCODE_files.txt
+xargs -L 1 curl -O -J -L &lt; control_files.txt</code></pre>
 </div>
 <div id="filter-mouse-alignments" class="section level2">
 <h2>Filter mouse alignments</h2>
@@ -686,15 +1614,15 @@ debugged
 </table>
 <p>See full snakemake script for details: code/mouse_peak_calling/mouse_H3K4me3 and code/mouse_peak_calling/mouse_H3K27ac</p>
 <p>Table. Read alignment quality metrics before and aftering filtering steps</p>
-<table>
+<table style="width:100%;">
 <colgroup>
-<col width="17%" />
-<col width="2%" />
-<col width="2%" />
 <col width="3%" />
-<col width="55%" />
-<col width="5%" />
-<col width="5%" />
+<col width="3%" />
+<col width="2%" />
+<col width="4%" />
+<col width="65%" />
+<col width="6%" />
+<col width="6%" />
 <col width="2%" />
 <col width="2%" />
 <col width="2%" />
@@ -1167,20 +2095,632 @@ bash subsample.sh</code></pre>
 <h3>Plot correlation between BAM files</h3>
 <p><code>plotCorrelation</code> computes the overall similarity between two or more files based on read coverage (or other scores) within genomic regions.</p>
 <p>This helps to determine whether the different sample types can be separated, i.e., samples of different conditions are expected to be more dissimilar to each other than replicates within the same condition.</p>
-<pre class="r"><code>include_graphics(&quot;output/qc/pearsoncor_multibamsum_dunnart_downSampled.png&quot;)
-include_graphics(&quot;output/qc/pearsoncor_multibamsum_dunnart_downSampled.png&quot;)</code></pre>
+<p><embed src="pearsoncor_multibamsum_dunnart_downSampled.pdf" /> <embed src="H3K4me3_pearsoncor_multibamsum_mouse.pdf%22" /> <embed src="H3K27ac_pearsoncor_multibamsum_mouse.pdf%22" /></p>
 </div>
 <div id="fingerprint-plots" class="section level3">
 <h3>Fingerprint plots</h3>
 <p>This tool samples indexed BAM files and plots a profile of cumulative read coverages for each. All reads overlapping a window (bin) of the specified length are counted; these counts are sorted and the cumulative sum is finally plotted.</p>
 <p>It determines how well the signal in the ChIP-seq sample can be differentiated from the background distribution of reads in the control sample.</p>
 <p>An ideal input with perfect uniform distribution of reads along the genome (i.e. without enrichments in open chromatin etc.) and infinite sequencing coverage should generate a straight diagonal line. A very specific and strong ChIP enrichment will be indicated by a prominent and steep rise of the cumulative sum towards the highest rank. This means that a big chunk of reads from the ChIP sample is located in few bins which corresponds to high, narrow enrichments typically seen for transcription factors.</p>
-<pre class="r"><code>include_graphics(&quot;output/qc/multiBAM_fingerprint.png&quot;)</code></pre>
+<p><embed src="multiBAM_fingerprint_dunnart_downSampled.pdf" /> <embed src="H3K4me3_multiBAM_fingerprint_mouse.pdf" /> <embed src="H327ac_multiBAM_fingerprint_mouse.pdf" /></p>
 </div>
-<div id="bam-pe-fragment-size" class="section level3">
-<h3>BAM PE fragment size</h3>
-<p>This tool calculates the fragment sizes for read pairs given a BAM file from paired-end sequencing. Several regions are sampled depending on the size of the genome and number of processors to estimate thesummary statistics on the fragment lengths.</p>
-<pre class="r"><code>include_graphics(&quot;output/qc/bamPEFragmentSize_hist.png&quot;)</code></pre>
+</div>
+<div id="cross-correlation-analysis" class="section level2">
+<h2>Cross-correlation analysis</h2>
+<p>Information from: <a href="https://docs.google.com/document/d/1lG_Rd7fnYgRpSIqrIfuVlAz2dW1VaSQThzk836Db99c/edit" class="uri">https://docs.google.com/document/d/1lG_Rd7fnYgRpSIqrIfuVlAz2dW1VaSQThzk836Db99c/edit</a></p>
+<p>This set of programs operate on mapped Illumina single-end read datasets in tagAlign or BAM format. Because my data is paired-end I need to only use the forward read.</p>
+<p>A high-quality ChIP-seq experiment will produce significant clustering of enriched DNA sequence tags/reads at locations bound by the protein of interest; the expectation is that we can observe a bimodal enrichment of reads (sequence tags) on both the forward and the reverse strands.</p>
+<p>Cross-correlation analysis is done on a filtered (but not-deduped) and subsampled BAM. There is a special fastq trimming for cross-correlation analysis. Read1 fastq is trimmed to 50bp first using trimfastq.py (last modified 2017/11/08, <a href="https://github.com/ENCODE-DCC/chip-seq-pipeline2/blob/master/src/trimfastq.py" class="uri">https://github.com/ENCODE-DCC/chip-seq-pipeline2/blob/master/src/trimfastq.py</a>). And then it is separately mapped as SE. Reads are filtered but duplicates are not removed. Then 15 million reads are randomly sampled and used for cross-correlation analysis.</p>
+<p>ENCODE standards:</p>
+<table>
+<colgroup>
+<col width="4%" />
+<col width="14%" />
+<col width="80%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>col.</th>
+<th>abbreviation</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Filename</td>
+<td>tagAlign/BAM filename</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>numReads</td>
+<td>effective sequencing depth i.e. total number of mapped reads in input file</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>estFragLen</td>
+<td>comma separated strand cross-correlation peak(s) in decreasing order of correlation.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>corr_estFragLen</td>
+<td>comma separated strand cross-correlation value(s) in decreasing order (COL2 follows the same order)</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>phantomPeak</td>
+<td>Read length/phantom peak strand shift</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>corr_phantomPeak</td>
+<td>Correlation value at phantom peak</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>argmin_corr</td>
+<td>strand shift at which cross-correlation is lowest</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>min_corr</td>
+<td>minimum value of cross-correlation</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>NSC</td>
+<td>Normalized strand cross-correlation coefficient (NSC) = COL4 / COL8</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>RSC</td>
+<td>Relative strand cross-correlation coefficient (RSC) = (COL4 - COL8) / (COL6 - COL8)</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>QualityTag</td>
+<td>Quality tag based on thresholded RSC (codes= -2:veryLow, -1:Low, 0:Medium, 1:High, 2:veryHigh)</td>
+</tr>
+</tbody>
+</table>
+<p>NSC; NSC&gt;1.1 (higher values indicate more enrichment; 1 = no enrichment)</p>
+<p>RSC; RSC&gt;0.8 (0 = no signal; &lt;1 low quality ChIP; &gt;1 high enrichment</p>
+<p>Quality tag based on thresholded RSC (codes: -2:veryLow,-1:Low,0:Medium,1:High; 2:veryHigh)</p>
+<p>Table. Peak calling quality metrics for mouse ChIP-seq peaks after peak calling with MACS2</p>
+<table style="width:100%;">
+<colgroup>
+<col width="11%" />
+<col width="4%" />
+<col width="4%" />
+<col width="5%" />
+<col width="8%" />
+<col width="4%" />
+<col width="5%" />
+<col width="5%" />
+<col width="8%" />
+<col width="12%" />
+<col width="14%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"><br> <strong>replicate</strong></th>
+<th align="center"><strong>antibody</strong></th>
+<th align="center"><strong>stage</strong></th>
+<th align="center"><strong>accession ID</strong></th>
+<th align="center"><strong>number </strong> <br> <strong>of peaks</strong></th>
+<th align="center"><strong>FRiP ̂</strong></th>
+<th align="center"><strong>NSC*</strong></th>
+<th align="center"><strong>RSC*</strong></th>
+<th align="center"><strong>Quality </strong> <br> <strong>Tag*</strong></th>
+<th align="center"><strong>% replicate </strong> <br> <strong>reproducibility</strong></th>
+<th align="center"><strong>number of </strong> <br> <strong>consensus </strong> <br> <strong>peaks</strong></th>
+<th align="center"><strong>FRiP^ for </strong> <br> <strong>consensus </strong> <br> <strong>peaks</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">H3K27ac</td>
+<td align="center">E10.5</td>
+<td align="center">ENCFF213EBC</td>
+<td align="center">61169</td>
+<td align="center">0.12</td>
+<td align="center">1.11</td>
+<td align="center">1.15</td>
+<td align="center">1</td>
+<td align="center">45.27</td>
+<td align="center">27688</td>
+<td align="center">0.14</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">H3K27ac</td>
+<td align="center">E10.5</td>
+<td align="center">ENCFF548BRR</td>
+<td align="center">80654</td>
+<td align="center">0.19</td>
+<td align="center">1.19</td>
+<td align="center">1.23</td>
+<td align="center">1</td>
+<td align="center">34.33</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">H3K27ac</td>
+<td align="center">E11.5</td>
+<td align="center">ENCFF512SFE</td>
+<td align="center">25352</td>
+<td align="center">0.07</td>
+<td align="center">1.08</td>
+<td align="center">1.61</td>
+<td align="center">2</td>
+<td align="center">47.93</td>
+<td align="center">12149</td>
+<td align="center">0.06</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">H3K27ac</td>
+<td align="center">E11.5</td>
+<td align="center">ENCFF515PKL</td>
+<td align="center">23732</td>
+<td align="center">0.06</td>
+<td align="center">1.09</td>
+<td align="center">1.97</td>
+<td align="center">2</td>
+<td align="center">51.2</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">H3K27ac</td>
+<td align="center">E12.5</td>
+<td align="center">ENCFF394TZN</td>
+<td align="center">27242</td>
+<td align="center">0.07</td>
+<td align="center">1.08</td>
+<td align="center">1.59</td>
+<td align="center">2</td>
+<td align="center">58.17</td>
+<td align="center">15845</td>
+<td align="center">0.08</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">H3K27ac</td>
+<td align="center">E12.5</td>
+<td align="center">ENCFF011NFM</td>
+<td align="center">62319</td>
+<td align="center">0.11</td>
+<td align="center">1.09</td>
+<td align="center">1.49</td>
+<td align="center">1</td>
+<td align="center">25.43</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">H3K27ac</td>
+<td align="center">E13.5</td>
+<td align="center">ENCFF194ORC</td>
+<td align="center">85874</td>
+<td align="center">0.18</td>
+<td align="center">1.19</td>
+<td align="center">2.14</td>
+<td align="center">2</td>
+<td align="center">35.72</td>
+<td align="center">30671</td>
+<td align="center">0.13</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">H3K27ac</td>
+<td align="center">E13.5</td>
+<td align="center">ENCFF290ZNF</td>
+<td align="center">71246</td>
+<td align="center">0.13</td>
+<td align="center">1.13</td>
+<td align="center">2.05</td>
+<td align="center">2</td>
+<td align="center">43.05</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">H3K27ac</td>
+<td align="center">E14.5</td>
+<td align="center">ENCFF327VAO</td>
+<td align="center">45785</td>
+<td align="center">0.15</td>
+<td align="center">1.19</td>
+<td align="center">1.65</td>
+<td align="center">2</td>
+<td align="center">48.56</td>
+<td align="center">22232</td>
+<td align="center">0.14</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">H3K27ac</td>
+<td align="center">E14.5</td>
+<td align="center">ENCFF902HAR</td>
+<td align="center">44042</td>
+<td align="center">0.14</td>
+<td align="center">1.16</td>
+<td align="center">1.72</td>
+<td align="center">2</td>
+<td align="center">50.48</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">H3K27ac</td>
+<td align="center">E15.5</td>
+<td align="center">ENCFF584JFB</td>
+<td align="center">35724</td>
+<td align="center">0.09</td>
+<td align="center">1.08</td>
+<td align="center">1.49</td>
+<td align="center">1</td>
+<td align="center">51.08</td>
+<td align="center">18246</td>
+<td align="center">0.09</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">H3K27ac</td>
+<td align="center">E15.5</td>
+<td align="center">ENCFF707WKL</td>
+<td align="center">37600</td>
+<td align="center">0.1</td>
+<td align="center">1.1</td>
+<td align="center">1.54</td>
+<td align="center">2</td>
+<td align="center">48.53</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">H3K4me3</td>
+<td align="center">E10.5</td>
+<td align="center">ENCFF124UYX</td>
+<td align="center">29478</td>
+<td align="center">0.44</td>
+<td align="center">2.28</td>
+<td align="center">1.12</td>
+<td align="center">1</td>
+<td align="center">70.77</td>
+<td align="center">20860</td>
+<td align="center">0.47</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">H3K4me3</td>
+<td align="center">E10.5</td>
+<td align="center">ENCFF045IPK</td>
+<td align="center">26820</td>
+<td align="center">0.49</td>
+<td align="center">2.47</td>
+<td align="center">1.15</td>
+<td align="center">1</td>
+<td align="center">77.78</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">H3K4me3</td>
+<td align="center">E11.5</td>
+<td align="center">ENCFF760QYZ</td>
+<td align="center">28388</td>
+<td align="center">0.34</td>
+<td align="center">1.86</td>
+<td align="center">1.25</td>
+<td align="center">1</td>
+<td align="center">66.43</td>
+<td align="center">18857</td>
+<td align="center">0.33</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">H3K4me3</td>
+<td align="center">E11.5</td>
+<td align="center">ENCFF717QDV</td>
+<td align="center">28368</td>
+<td align="center">0.33</td>
+<td align="center">1.81</td>
+<td align="center">1.24</td>
+<td align="center">1</td>
+<td align="center">66.48</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">H3K4me3</td>
+<td align="center">E12.5</td>
+<td align="center">ENCFF182ZPF</td>
+<td align="center">29466</td>
+<td align="center">0.33</td>
+<td align="center">1.93</td>
+<td align="center">1.21</td>
+<td align="center">1</td>
+<td align="center">66.35</td>
+<td align="center">19549</td>
+<td align="center">0.32</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">H3K4me3</td>
+<td align="center">E12.5</td>
+<td align="center">ENCFF941QJZ</td>
+<td align="center">30868</td>
+<td align="center">0.31</td>
+<td align="center">1.67</td>
+<td align="center">1.21</td>
+<td align="center">1</td>
+<td align="center">63.34</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">H3K4me3</td>
+<td align="center">E13.5</td>
+<td align="center">ENCFF485UDC</td>
+<td align="center">29715</td>
+<td align="center">0.4</td>
+<td align="center">2.16</td>
+<td align="center">1.24</td>
+<td align="center">1</td>
+<td align="center">69.78</td>
+<td align="center">20734</td>
+<td align="center">0.41</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">H3K4me3</td>
+<td align="center">E13.5</td>
+<td align="center">ENCFF124TAB</td>
+<td align="center">29547</td>
+<td align="center">0.41</td>
+<td align="center">2.19</td>
+<td align="center">1.24</td>
+<td align="center">1</td>
+<td align="center">70.18</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">H3K4me3</td>
+<td align="center">E14.5</td>
+<td align="center">ENCFF724DMU</td>
+<td align="center">24250</td>
+<td align="center">0.5</td>
+<td align="center">2.34</td>
+<td align="center">1.26</td>
+<td align="center">1</td>
+<td align="center">81.08</td>
+<td align="center">19660</td>
+<td align="center">0.53</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">H3K4me3</td>
+<td align="center">E14.5</td>
+<td align="center">ENCFF665QBJ</td>
+<td align="center">25084</td>
+<td align="center">0.55</td>
+<td align="center">2.54</td>
+<td align="center">1.26</td>
+<td align="center">1</td>
+<td align="center">78.38</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">H3K4me3</td>
+<td align="center">E15.5</td>
+<td align="center">ENCFF258KCR</td>
+<td align="center">23365</td>
+<td align="center">0.36</td>
+<td align="center">2.25</td>
+<td align="center">1.29</td>
+<td align="center">1</td>
+<td align="center">80.11</td>
+<td align="center">18717</td>
+<td align="center">0.39</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">H3K4me3</td>
+<td align="center">E15.5</td>
+<td align="center">ENCFF401BKM</td>
+<td align="center">23920</td>
+<td align="center">0.42</td>
+<td align="center">2.47</td>
+<td align="center">1.33</td>
+<td align="center">1</td>
+<td align="center">78.25</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<p>* computed from 15M reads subsampled ̂ fraction of reads in peaks</p>
+</div>
+<div id="peak-qc" class="section level2">
+<h2>Peak QC</h2>
+<div id="number-of-peaks" class="section level3">
+<h3>Number of peaks</h3>
+<div id="dunnart" class="section level4">
+<h4>Dunnart</h4>
+<pre class="bash"><code>echo &quot;Number of peaks A3 H3K27ac dunnart&quot; | less output/peaks/A-3_H3K27ac_vs_A-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks A2 H3K4me3 dunnart&quot; | less output/peaks/A-2_H3K4me3_vs_A-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks B3 H3K27ac dunnart&quot; | less output/peaks/B-3_H3K27ac_vs_B-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks B2 H3K4me3 dunnart&quot; | less output/peaks/B-2_H3K4me3_vs_B-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l</code></pre>
+<pre><code>74012
+51122
+78381
+52680</code></pre>
+</div>
+<div id="mouse" class="section level4">
+<h4>Mouse</h4>
+<p>H3K4me3</p>
+<pre class="bash"><code>echo &quot;Number of peaks rep 1 E10.5 H3K4me3&quot; | less output/peaks/ENCFF124UYX_vs_ENCFF157KEH_E10.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 2 E10.5 H3K4me3&quot; | less output/peaks/ENCFF045IPK_vs_ENCFF825AVI_E10.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 1 E11.5 H3K4me3&quot; | less output/peaks/ENCFF760QYZ_vs_ENCFF184CUE_E11.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 2 E11.5 H3K4me3&quot; | less output/peaks/ENCFF717QDV_vs_ENCFF376FGM_E11.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 1 E12.5 H3K4me3&quot; | less output/peaks/ENCFF941QJZ_vs_ENCFF058AUT_E12.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 2 E12.5 H3K4me3&quot; | less output/peaks/ENCFF182ZPF_vs_ENCFF203JQV_E12.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 1 E13.5 H3K4me3&quot; | less output/peaks/ENCFF485UDC_vs_ENCFF117QRC_E13.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 2 E13.5 H3K4me3&quot; | less output/peaks/ENCFF124TAB_vs_ENCFF248PGK_E13.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 1 E14.5 H3K4me3&quot; | less output/peaks/ENCFF665QBJ_vs_ENCFF002HZV_E14.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 2 E14.5 H3K4me3&quot; | less output/peaks/ENCFF724DMU_vs_ENCFF784ORI_E14.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 1 E15.5 H3K4me3&quot; | less output/peaks/ENCFF401BKM_vs_ENCFF182XFG_E15.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 2 E15.5 H3K4me3&quot; | less output/peaks/ENCFF258KCR_vs_ENCFF727QTS_E15.5_H3K4me3_macs2_peaks.narrowPeak | wc -l</code></pre>
+<pre><code>55445
+38397
+22460
+24565
+31761
+30108
+31939
+31198
+29300
+27830
+29726
+30338</code></pre>
+<p>H3K27ac</p>
+<pre class="bash"><code>echo &quot;Number of peaks rep 1 E10.5 H3K27ac&quot; | less output/peaks/ENCFF213EBC_vs_ENCFF157KEH_E10.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 2 E10.5 H3K27ac&quot; | less output/peaks/ENCFF548BRR_vs_ENCFF825AVI_E10.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 1 E11.5 H3K27ac&quot; | less output/peaks/ENCFF512SFE_vs_ENCFF184CUE_E11.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 2 E11.5 H3K27ac&quot; | less output/peaks/ENCFF515PKL_vs_ENCFF376FGM_E11.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 1 E12.5 H3K27ac&quot; | less output/peaks/ENCFF011NFM_vs_ENCFF058AUT_E12.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 2 E12.5 H3K27ac&quot; | less output/peaks/ENCFF394TZN_vs_ENCFF203JQV_E12.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 1 E13.5 H3K27ac&quot; | less output/peaks/ENCFF194ORC_vs_ENCFF117QRC_E13.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 2 E13.5 H3K27ac&quot; | less output/peaks/ENCFF290ZNF_vs_ENCFF248PGK_E13.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 1 E14.5 H3K27ac&quot; | less output/peaks/ENCFF902HAR_vs_ENCFF002HZV_E14.5_H3K27ac_macs2_peaks.narrowPeak | wc -l 
+echo &quot;Number of peaks rep 2 E14.5 H3K27ac&quot; | less output/peaks/ENCFF327VAO_vs_ENCFF784ORI_E14.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 1 E15.5 H3K27ac&quot; | less output/peaks/ENCFF707WKL_vs_ENCFF182XFG_E15.5_H3K27ac_macs2_peaks.narrowPeak | wc -l 
+echo &quot;Number of peaks rep 2 E15.5 H3K27ac&quot; | less output/peaks/ENCFF584JFB_vs_ENCFF727QTS_E15.5_H3K27ac_macs2_peaks.narrowPeak | wc -l</code></pre>
+<pre><code>85382
+129598
+34848
+24298
+93296
+93314
+108905
+109580
+85604
+85427
+106242
+107377</code></pre>
+</div>
+</div>
+<div id="consensus-peaksets-for-biological-replicates" class="section level3">
+<h3>Consensus peaksets for biological replicates</h3>
+<div id="number-of-consensus-peaks" class="section level4">
+<h4>Number of consensus peaks</h4>
+<div id="dunnart-1" class="section level5">
+<h5>Dunnart</h5>
+<pre class="bash"><code>echo &quot;Number of consensus H3K4me3 dunnart peaks&quot; | less output/peaks/H3K4me3_overlap_default_dunnart_downSampled_peaks.narrowPeak | wc -l
+echo &quot;Number of consensus H3K27ac dunnart peaks&quot; | less less output/peaks/H3K27ac_overlap_default_dunnart_downSampled_peaks.narrowPeak | wc -l</code></pre>
+<pre><code>27902
+less: No such file or directory
+40610</code></pre>
+</div>
+<div id="mouse-1" class="section level5">
+<h5>Mouse</h5>
+<pre class="bash"><code>echo &quot;Number of consensus H3K4me3 mouse E10.5 peaks&quot; | less output/peaks/H3K4me3_E10.5_overlap.narrowPeak | wc -l
+echo &quot;Number of consensus H3K4me3 mouse E11.5 peaks&quot; | less output/peaks/H3K4me3_E11.5_overlap.narrowPeak | wc -l
+echo &quot;Number of consensus H3K4me3 mouse E12.5 peaks&quot; | less output/peaks/H3K4me3_E12.5_overlap.narrowPeak | wc -l
+echo &quot;Number of consensus H3K4me3 mouse E13.5 peaks&quot; | less output/peaks/H3K4me3_E13.5_overlap.narrowPeak | wc -l
+echo &quot;Number of consensus H3K4me3 mouse E14.5 peaks&quot; | less output/peaks/H3K4me3_E14.5_overlap.narrowPeak | wc -l
+echo &quot;Number of consensus H3K4me3 mouse E15.5 peaks&quot; | less output/peaks/H3K4me3_E15.5_overlap.narrowPeak | wc -l
+echo &quot;Number of consensus H3K27ac mouse E10.5 peaks&quot; | less output/peaks/H3K27ac_E10.5_overlap.narrowPeak | wc -l
+echo &quot;Number of consensus H3K27ac mouse E11.5 peaks&quot; | less output/peaks/H3K27ac_E11.5_overlap.narrowPeak | wc -l
+echo &quot;Number of consensus H3K27ac mouse E12.5 peaks&quot; | less output/peaks/H3K27ac_E12.5_overlap.narrowPeak | wc -l
+echo &quot;Number of consensus H3K27ac mouse E13.5 peaks&quot; | less output/peaks/H3K27ac_E13.5_overlap.narrowPeak | wc -l
+echo &quot;Number of consensus H3K27ac mouse E14.5 peaks&quot; | less output/peaks/H3K27ac_E14.5_overlap.narrowPeak | wc -l
+echo &quot;Number of consensus H3K27ac mouse E15.5 peaks&quot; | less output/peaks/H3K27ac_E15.5_overlap.narrowPeak | wc -l</code></pre>
+<pre><code>28512
+18112
+21756
+23929
+22102
+23375
+52138
+13996
+40281
+51183
+40264
+52152</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="consensus-peaks-and-grouping-into-putative-enhancers-and-promoters" class="section level1">
+<h1>Consensus peaks and grouping into putative enhancers and promoters</h1>
+<p>Find uniquely H3K4me3 sites (i.e. peaks that don’t overlap with H3K27ac):</p>
+<pre class="bash"><code>conda activate chip
+bedtools intersect -v -a output/peaks/H3K4me3_E10.5_overlap.narrowPeak -b output/peaks/H3K27ac_E10.5_overlap.narrowPeak &gt; output/peaks/H3K4me3_E10.5_only.narrowPeak
+bedtools intersect -v -a output/peaks/H3K4me3_E11.5_overlap.narrowPeak -b output/peaks/H3K27ac_E11.5_overlap.narrowPeak &gt; output/peaks/H3K4me3_E11.5_only.narrowPeak
+bedtools intersect -v -a output/peaks/H3K4me3_E12.5_overlap.narrowPeak -b output/peaks/H3K27ac_E12.5_overlap.narrowPeak &gt; output/peaks/H3K4me3_E12.5_only.narrowPeak
+bedtools intersect -v -a output/peaks/H3K4me3_E13.5_overlap.narrowPeak -b output/peaks/H3K27ac_E13.5_overlap.narrowPeak &gt; output/peaks/H3K4me3_E13.5_only.narrowPeak
+bedtools intersect -v -a output/peaks/H3K4me3_E14.5_overlap.narrowPeak -b output/peaks/H3K27ac_E14.5_overlap.narrowPeak &gt; output/peaks/H3K4me3_E14.5_only.narrowPeak
+bedtools intersect -v -a output/peaks/H3K4me3_E15.5_overlap.narrowPeak -b output/peaks/H3K27ac_E15.5_overlap.narrowPeak &gt; output/peaks/H3K4me3_E15.5_only.narrowPeak
+
+
+bedtools intersect -v -a output/peaks/H3K4me3_overlap_default_dunnart_downSampled_peaks.narrowPeak -b output/peaks/H3K27ac_overlap_default_dunnart_downSampled_peaks.narrowPeak &gt; output/peaks/H3K4me3_only_dunnart_downSampled.narrowPeak</code></pre>
+<p>Find unique H3K27ac sites (i.e. peaks that don’t overlap with H3K4me3):</p>
+<pre class="bash"><code>bedtools intersect -v -a output/peaks/H3K27ac_E10.5_overlap.narrowPeak -b output/peaks/H3K4me3_E10.5_overlap.narrowPeak &gt; output/peaks/H3K27ac_E10.5_only.narrowPeak
+bedtools intersect -v -a output/peaks/H3K27ac_E11.5_overlap.narrowPeak -b output/peaks/H3K4me3_E11.5_overlap.narrowPeak &gt; output/peaks/H3K27ac_E11.5_only.narrowPeak
+bedtools intersect -v -a output/peaks/H3K27ac_E12.5_overlap.narrowPeak -b output/peaks/H3K4me3_E12.5_overlap.narrowPeak &gt; output/peaks/H3K27ac_E12.5_only.narrowPeak
+bedtools intersect -v -a output/peaks/H3K27ac_E13.5_overlap.narrowPeak -b output/peaks/H3K4me3_E13.5_overlap.narrowPeak &gt; output/peaks/H3K27ac_E13.5_only.narrowPeak
+bedtools intersect -v -a output/peaks/H3K27ac_E14.5_overlap.narrowPeak -b output/peaks/H3K4me3_E14.5_overlap.narrowPeak &gt; output/peaks/H3K27ac_E14.5_only.narrowPeak
+bedtools intersect -v -a output/peaks/H3K27ac_E15.5_overlap.narrowPeak -b output/peaks/H3K4me3_E15.5_overlap.narrowPeak &gt; output/peaks/H3K27ac_E15.5_only.narrowPeak
+
+
+bedtools intersect -v -a output/peaks/H3K27ac_overlap_default_dunnart_downSampled_peaks.narrowPeak -b output/peaks/H3K4me3_overlap_default_dunnart_downSampled_peaks.narrowPeak &gt; output/peaks/H3K27ac_only_dunnart_downSampled.narrowPeak</code></pre>
+<p>Find peaks common between H3K27ac &amp; H3K4me3 with a reciprocal overlap of at least 50%.</p>
+<pre class="bash"><code>bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_E10.5_overlap.narrowPeak -b output/peaks/H3K27ac_E10.5_overlap.narrowPeak &gt; output/peaks/H3K4me3_and_H3K27ac_E10.5.narrowPeak
+bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_E11.5_overlap.narrowPeak -b output/peaks/H3K27ac_E11.5_overlap.narrowPeak &gt; output/peaks/H3K4me3_and_H3K27ac_E11.5.narrowPeak
+bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_E12.5_overlap.narrowPeak -b output/peaks/H3K27ac_E12.5_overlap.narrowPeak &gt; output/peaks/H3K4me3_and_H3K27ac_E12.5.narrowPeak
+bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_E13.5_overlap.narrowPeak -b output/peaks/H3K27ac_E13.5_overlap.narrowPeak &gt; output/peaks/H3K4me3_and_H3K27ac_E13.5.narrowPeak
+bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_E14.5_overlap.narrowPeak -b output/peaks/H3K27ac_E14.5_overlap.narrowPeak &gt; output/peaks/H3K4me3_and_H3K27ac_E14.5.narrowPeak
+bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_E15.5_overlap.narrowPeak -b output/peaks/H3K27ac_E15.5_overlap.narrowPeak &gt; output/peaks/H3K4me3_and_H3K27ac_E15.5.narrowPeak
+
+bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_overlap_default_dunnart_downSampled_peaks.narrowPeak -b output/peaks/H3K27ac_overlap_default_dunnart_downSampled_peaks.narrowPeak &gt; output/peaks/H3K4me3_H3K27ac_dunnart_downSampled.narrowPeak</code></pre>
+<p>Combine peak files</p>
+<pre class="bash"><code>cat output/peaks/H3K4me3_E10.5_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac_E10.5.narrowPeak | sort -k 4,4 &gt; output/peaks/E10.5_promoter_peaks.narrowPeak
+cat output/peaks/H3K4me3_E11.5_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac_E11.5.narrowPeak | sort -k 4,4 &gt; output/peaks/E11.5_promoter_peaks.narrowPeak
+cat output/peaks/H3K4me3_E12.5_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac_E12.5.narrowPeak | sort -k 4,4 &gt; output/peaks/E12.5_promoter_peaks.narrowPeak
+cat output/peaks/H3K4me3_E13.5_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac_E13.5.narrowPeak | sort -k 4,4 &gt; output/peaks/E13.5_promoter_peaks.narrowPeak
+cat output/peaks/H3K4me3_E14.5_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac_E14.5.narrowPeak | sort -k 4,4 &gt; output/peaks/E14.5_promoter_peaks.narrowPeak
+cat output/peaks/H3K4me3_E15.5_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac_E15.5.narrowPeak | sort -k 4,4 &gt; output/peaks/E15.5_promoter_peaks.narrowPeak
+
+cat output/peaks/H3K4me3_only_dunnart_downSampled.narrowPeak output/peaks/H3K4me3_H3K27ac_dunnart_downSampled.narrowPeak| sort -k 4,4 &gt; output/peaks/dunnart_downSampled_promoter_peaks.narrowPeak
+
+
+cat output/peaks/H3K27ac_E10.5_only.narrowPeak | sort -k 4,4 &gt; output/peaks/E10.5_enhancer_peaks.narrowPeak
+cat output/peaks/H3K27ac_E11.5_only.narrowPeak | sort -k 4,4 &gt; output/peaks/E11.5_enhancer_peaks.narrowPeak
+cat output/peaks/H3K27ac_E12.5_only.narrowPeak | sort -k 4,4 &gt; output/peaks/E12.5_enhancer_peaks.narrowPeak
+cat output/peaks/H3K27ac_E13.5_only.narrowPeak | sort -k 4,4 &gt; output/peaks/E13.5_enhancer_peaks.narrowPeak
+cat output/peaks/H3K27ac_E14.5_only.narrowPeak | sort -k 4,4 &gt; output/peaks/E14.5_enhancer_peaks.narrowPeak
+cat output/peaks/H3K27ac_E15.5_only.narrowPeak | sort -k 4,4 &gt; output/peaks/E15.5_enhancer_peaks.narrowPeak
+cat output/peaks/H3K27ac_only_dunnart_downSampled.narrowPeak | sort -k 4,4 &gt; output/peaks/dunnart_downSampled_enhancer_peaks.narrowPeak</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1197,12 +2737,12 @@ Matrix products: default
 BLAS/LAPACK: /usr/local/easybuild-2019/easybuild/software/compiler/gcc/10.2.0/openblas/0.3.12/lib/libopenblas_haswellp-r0.3.12.so
 
 locale:
- [1] LC_CTYPE=en_GB.UTF-8       LC_NUMERIC=C              
- [3] LC_TIME=en_GB.UTF-8        LC_COLLATE=en_GB.UTF-8    
- [5] LC_MONETARY=en_GB.UTF-8    LC_MESSAGES=en_GB.UTF-8   
- [7] LC_PAPER=en_GB.UTF-8       LC_NAME=C                 
+ [1] LC_CTYPE=en_AU.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_AU.UTF-8        LC_COLLATE=en_AU.UTF-8    
+ [5] LC_MONETARY=en_AU.UTF-8    LC_MESSAGES=en_AU.UTF-8   
+ [7] LC_PAPER=en_AU.UTF-8       LC_NAME=C                 
  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-[11] LC_MEASUREMENT=en_GB.UTF-8 LC_IDENTIFICATION=C       
+[11] LC_MEASUREMENT=en_AU.UTF-8 LC_IDENTIFICATION=C       
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
@@ -1211,10 +2751,10 @@ other attached packages:
 [1] workflowr_1.7.0
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.6        jquerylib_0.1.4   pillar_1.6.1      compiler_4.1.0   
+ [1] Rcpp_1.0.8        jquerylib_0.1.4   pillar_1.6.1      compiler_4.1.0   
  [5] bslib_0.2.5.1     later_1.2.0       git2r_0.28.0      tools_4.1.0      
  [9] getPass_0.2-2     digest_0.6.27     jsonlite_1.7.2    evaluate_0.14    
-[13] lifecycle_1.0.1   tibble_3.1.2      pkgconfig_2.0.3   rlang_1.0.1      
+[13] lifecycle_1.0.1   tibble_3.1.2      pkgconfig_2.0.3   rlang_1.0.2      
 [17] cli_2.5.0         rstudioapi_0.13   yaml_2.2.1        xfun_0.23        
 [21] httr_1.4.2        stringr_1.4.0     knitr_1.33        sass_0.4.0       
 [25] fs_1.5.0          vctrs_0.3.8       rprojroot_2.0.2   glue_1.4.2       
@@ -1222,8 +2762,6 @@ loaded via a namespace (and not attached):
 [33] callr_3.7.0       magrittr_2.0.1    whisker_0.4       ps_1.6.0         
 [37] promises_1.2.0.1  ellipsis_0.3.2    htmltools_0.5.1.1 httpuv_1.6.1     
 [41] utf8_1.2.1        stringi_1.6.2     crayon_1.4.1     </code></pre>
-</div>
-</div>
 </div>
 </div>
 
