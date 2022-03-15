@@ -113,7 +113,13 @@ rule all:
         "output/peaks/H3K4me3_E12.5_overlap.frip",
         "output/peaks/H3K4me3_E13.5_overlap.frip",
         "output/peaks/H3K4me3_E14.5_overlap.frip",
-        "output/peaks/H3K4me3_E15.5_overlap.frip"
+        "output/peaks/H3K4me3_E15.5_overlap.frip",
+        "output/peaks/E10.5_H3K4me3.pooled.macs2_peaks.narrowPeak",
+        "output/peaks/E11.5_H3K4me3.pooled.macs2_peaks.narrowPeak",
+        "output/peaks/E12.5_H3K4me3.pooled.macs2_peaks.narrowPeak",
+        "output/peaks/E13.5_H3K4me3.pooled.macs2_peaks.narrowPeak",
+        "output/peaks/E14.5_H3K4me3.pooled.macs2_peaks.narrowPeak",
+        "output/peaks/E15.5_H3K4me3.pooled.macs2_peaks.narrowPeak"
 
 # ===============================================================================================
 #  1. FASTQC
