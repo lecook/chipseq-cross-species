@@ -473,16 +473,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree275510f11662865e937b1f347ddbeaa3283117bdtargetblank275510fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/275510f11662865e937b1f347ddbeaa3283117bd" target="_blank">275510f</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreec0a179822002c6a07bccd019633d27cd4ff53b09targetblankc0a1798a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/c0a179822002c6a07bccd019633d27cd4ff53b09" target="_blank">c0a1798</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree275510f11662865e937b1f347ddbeaa3283117bdtargetblank275510fa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreec0a179822002c6a07bccd019633d27cd4ff53b09targetblankc0a1798a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/275510f11662865e937b1f347ddbeaa3283117bd" target="_blank">275510f</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/c0a179822002c6a07bccd019633d27cd4ff53b09" target="_blank">c0a1798</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -1360,6 +1360,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/c0a179822002c6a07bccd019633d27cd4ff53b09/analysis/mouse_dunnart_data_processing_for_comparison.Rmd" target="_blank">c0a1798</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-16
+</td>
+<td>
+wflow_publish(“analysis/mouse_dunnart_data_processing_for_comparison.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/841e0f4a232af03bf28cc6c883b6a3e8b7390df9/docs/mouse_dunnart_data_processing_for_comparison.html" target="_blank">841e0f4</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-16
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -2565,66 +2599,122 @@ bash subsample.sh</code></pre>
 <h3>Number of peaks</h3>
 <div id="dunnart" class="section level4">
 <h4>Dunnart</h4>
-<pre class="bash"><code>echo &quot;Number of peaks A3 H3K27ac dunnart&quot; | less output/peaks/A-3_H3K27ac_vs_A-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks A2 H3K4me3 dunnart&quot; | less output/peaks/A-2_H3K4me3_vs_A-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks B3 H3K27ac dunnart&quot; | less output/peaks/B-3_H3K27ac_vs_B-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks B2 H3K4me3 dunnart&quot; | less output/peaks/B-2_H3K4me3_vs_B-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l</code></pre>
-<pre><code>74012
+<pre class="bash"><code>echo &quot;Number of peaks A3 H3K27ac dunnart&quot;
+less output/peaks/A-3_H3K27ac_vs_A-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks A2 H3K4me3 dunnart&quot;
+less output/peaks/A-2_H3K4me3_vs_A-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks B3 H3K27ac dunnart&quot;
+less output/peaks/B-3_H3K27ac_vs_B-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks B2 H3K4me3 dunnart&quot;
+less output/peaks/B-2_H3K4me3_vs_B-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l</code></pre>
+<pre><code>Number of peaks A3 H3K27ac dunnart
+74012
+Number of peaks A2 H3K4me3 dunnart
 51122
+Number of peaks B3 H3K27ac dunnart
 78381
+Number of peaks B2 H3K4me3 dunnart
 52680</code></pre>
 </div>
 <div id="mouse" class="section level4">
 <h4>Mouse</h4>
 <p>H3K4me3</p>
-<pre class="bash"><code>echo &quot;Number of peaks rep 1 E10.5 H3K4me3&quot; | less output/peaks/ENCFF124UYX_vs_ENCFF157KEH_E10.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 2 E10.5 H3K4me3&quot; | less output/peaks/ENCFF045IPK_vs_ENCFF825AVI_E10.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 1 E11.5 H3K4me3&quot; | less output/peaks/ENCFF760QYZ_vs_ENCFF184CUE_E11.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 2 E11.5 H3K4me3&quot; | less output/peaks/ENCFF717QDV_vs_ENCFF376FGM_E11.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 1 E12.5 H3K4me3&quot; | less output/peaks/ENCFF941QJZ_vs_ENCFF058AUT_E12.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 2 E12.5 H3K4me3&quot; | less output/peaks/ENCFF182ZPF_vs_ENCFF203JQV_E12.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 1 E13.5 H3K4me3&quot; | less output/peaks/ENCFF485UDC_vs_ENCFF117QRC_E13.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 2 E13.5 H3K4me3&quot; | less output/peaks/ENCFF124TAB_vs_ENCFF248PGK_E13.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 1 E14.5 H3K4me3&quot; | less output/peaks/ENCFF665QBJ_vs_ENCFF002HZV_E14.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 2 E14.5 H3K4me3&quot; | less output/peaks/ENCFF724DMU_vs_ENCFF784ORI_E14.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 1 E15.5 H3K4me3&quot; | less output/peaks/ENCFF401BKM_vs_ENCFF182XFG_E15.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 2 E15.5 H3K4me3&quot; | less output/peaks/ENCFF258KCR_vs_ENCFF727QTS_E15.5_H3K4me3_macs2_peaks.narrowPeak | wc -l</code></pre>
-<pre><code>55445
+<pre class="bash"><code>echo &quot;Number of peaks rep 1 E10.5 H3K4me3&quot;
+less output/peaks/ENCFF124UYX_vs_ENCFF157KEH_E10.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 2 E10.5 H3K4me3&quot;
+less output/peaks/ENCFF045IPK_vs_ENCFF825AVI_E10.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 1 E11.5 H3K4me3&quot;
+less output/peaks/ENCFF760QYZ_vs_ENCFF184CUE_E11.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 2 E11.5 H3K4me3&quot;
+less output/peaks/ENCFF717QDV_vs_ENCFF376FGM_E11.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 1 E12.5 H3K4me3&quot;
+less output/peaks/ENCFF941QJZ_vs_ENCFF058AUT_E12.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 2 E12.5 H3K4me3&quot;
+less output/peaks/ENCFF182ZPF_vs_ENCFF203JQV_E12.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 1 E13.5 H3K4me3&quot;
+less output/peaks/ENCFF485UDC_vs_ENCFF117QRC_E13.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 2 E13.5 H3K4me3&quot;
+less output/peaks/ENCFF124TAB_vs_ENCFF248PGK_E13.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 1 E14.5 H3K4me3&quot;
+less output/peaks/ENCFF665QBJ_vs_ENCFF002HZV_E14.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 2 E14.5 H3K4me3&quot;
+less output/peaks/ENCFF724DMU_vs_ENCFF784ORI_E14.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 1 E15.5 H3K4me3&quot;
+less output/peaks/ENCFF401BKM_vs_ENCFF182XFG_E15.5_H3K4me3_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 2 E15.5 H3K4me3&quot;
+less output/peaks/ENCFF258KCR_vs_ENCFF727QTS_E15.5_H3K4me3_macs2_peaks.narrowPeak | wc -l</code></pre>
+<pre><code>Number of peaks rep 1 E10.5 H3K4me3
+55445
+Number of peaks rep 2 E10.5 H3K4me3
 38397
+Number of peaks rep 1 E11.5 H3K4me3
 22460
+Number of peaks rep 2 E11.5 H3K4me3
 24565
+Number of peaks rep 1 E12.5 H3K4me3
 31761
+Number of peaks rep 2 E12.5 H3K4me3
 30108
+Number of peaks rep 1 E13.5 H3K4me3
 31939
+Number of peaks rep 2 E13.5 H3K4me3
 31198
+Number of peaks rep 1 E14.5 H3K4me3
 29300
+Number of peaks rep 2 E14.5 H3K4me3
 27830
+Number of peaks rep 1 E15.5 H3K4me3
 29726
+Number of peaks rep 2 E15.5 H3K4me3
 30338</code></pre>
 <p>H3K27ac</p>
-<pre class="bash"><code>echo &quot;Number of peaks rep 1 E10.5 H3K27ac&quot; | less output/peaks/ENCFF213EBC_vs_ENCFF157KEH_E10.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 2 E10.5 H3K27ac&quot; | less output/peaks/ENCFF548BRR_vs_ENCFF825AVI_E10.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 1 E11.5 H3K27ac&quot; | less output/peaks/ENCFF512SFE_vs_ENCFF184CUE_E11.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 2 E11.5 H3K27ac&quot; | less output/peaks/ENCFF515PKL_vs_ENCFF376FGM_E11.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 1 E12.5 H3K27ac&quot; | less output/peaks/ENCFF011NFM_vs_ENCFF058AUT_E12.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 2 E12.5 H3K27ac&quot; | less output/peaks/ENCFF394TZN_vs_ENCFF203JQV_E12.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 1 E13.5 H3K27ac&quot; | less output/peaks/ENCFF194ORC_vs_ENCFF117QRC_E13.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 2 E13.5 H3K27ac&quot; | less output/peaks/ENCFF290ZNF_vs_ENCFF248PGK_E13.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 1 E14.5 H3K27ac&quot; | less output/peaks/ENCFF902HAR_vs_ENCFF002HZV_E14.5_H3K27ac_macs2_peaks.narrowPeak | wc -l 
-echo &quot;Number of peaks rep 2 E14.5 H3K27ac&quot; | less output/peaks/ENCFF327VAO_vs_ENCFF784ORI_E14.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 1 E15.5 H3K27ac&quot; | less output/peaks/ENCFF707WKL_vs_ENCFF182XFG_E15.5_H3K27ac_macs2_peaks.narrowPeak | wc -l 
-echo &quot;Number of peaks rep 2 E15.5 H3K27ac&quot; | less output/peaks/ENCFF584JFB_vs_ENCFF727QTS_E15.5_H3K27ac_macs2_peaks.narrowPeak | wc -l</code></pre>
-<pre><code>85382
+<pre class="bash"><code>echo &quot;Number of peaks rep 1 E10.5 H3K27ac&quot;
+less output/peaks/ENCFF213EBC_vs_ENCFF157KEH_E10.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 2 E10.5 H3K27ac&quot;
+less output/peaks/ENCFF548BRR_vs_ENCFF825AVI_E10.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 1 E11.5 H3K27ac&quot;
+less output/peaks/ENCFF512SFE_vs_ENCFF184CUE_E11.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 2 E11.5 H3K27ac&quot;
+less output/peaks/ENCFF515PKL_vs_ENCFF376FGM_E11.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 1 E12.5 H3K27ac&quot;
+less output/peaks/ENCFF011NFM_vs_ENCFF058AUT_E12.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 2 E12.5 H3K27ac&quot;
+less output/peaks/ENCFF394TZN_vs_ENCFF203JQV_E12.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 1 E13.5 H3K27ac&quot;
+less output/peaks/ENCFF194ORC_vs_ENCFF117QRC_E13.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 2 E13.5 H3K27ac&quot;
+less output/peaks/ENCFF290ZNF_vs_ENCFF248PGK_E13.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 1 E14.5 H3K27ac&quot;
+less output/peaks/ENCFF902HAR_vs_ENCFF002HZV_E14.5_H3K27ac_macs2_peaks.narrowPeak | wc -l 
+echo &quot;Number of peaks rep 2 E14.5 H3K27ac&quot;
+less output/peaks/ENCFF327VAO_vs_ENCFF784ORI_E14.5_H3K27ac_macs2_peaks.narrowPeak | wc -l
+echo &quot;Number of peaks rep 1 E15.5 H3K27ac&quot;
+less output/peaks/ENCFF707WKL_vs_ENCFF182XFG_E15.5_H3K27ac_macs2_peaks.narrowPeak | wc -l 
+echo &quot;Number of peaks rep 2 E15.5 H3K27ac&quot;
+less output/peaks/ENCFF584JFB_vs_ENCFF727QTS_E15.5_H3K27ac_macs2_peaks.narrowPeak | wc -l</code></pre>
+<pre><code>Number of peaks rep 1 E10.5 H3K27ac
+85382
+Number of peaks rep 2 E10.5 H3K27ac
 129598
+Number of peaks rep 1 E11.5 H3K27ac
 34848
+Number of peaks rep 2 E11.5 H3K27ac
 24298
+Number of peaks rep 1 E12.5 H3K27ac
 93296
+Number of peaks rep 2 E12.5 H3K27ac
 93314
+Number of peaks rep 1 E13.5 H3K27ac
 108905
+Number of peaks rep 2 E13.5 H3K27ac
 109580
+Number of peaks rep 1 E14.5 H3K27ac
 85604
+Number of peaks rep 2 E14.5 H3K27ac
 85427
+Number of peaks rep 1 E15.5 H3K27ac
 106242
+Number of peaks rep 2 E15.5 H3K27ac
 107377</code></pre>
 </div>
 </div>
@@ -2634,37 +2724,64 @@ echo &quot;Number of peaks rep 2 E15.5 H3K27ac&quot; | less output/peaks/ENCFF58
 <h4>Number of consensus peaks</h4>
 <div id="dunnart-1" class="section level5">
 <h5>Dunnart</h5>
-<pre class="bash"><code>echo &quot;Number of consensus H3K4me3 dunnart peaks&quot; | less output/peaks/H3K4me3_overlap_default_dunnart_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of consensus H3K27ac dunnart peaks&quot; | less less output/peaks/H3K27ac_overlap_default_dunnart_downSampled_peaks.narrowPeak | wc -l</code></pre>
-<pre><code>27902
-less: No such file or directory
+<pre class="bash"><code>echo &quot;Number of consensus H3K4me3 dunnart peaks&quot;
+less output/peaks/H3K4me3_overlap_default_dunnart_downSampled_peaks.narrowPeak | wc -l
+echo &quot;Number of consensus H3K27ac dunnart peaks&quot;
+less output/peaks/H3K27ac_overlap_default_dunnart_downSampled_peaks.narrowPeak | wc -l</code></pre>
+<pre><code>Number of consensus H3K4me3 dunnart peaks
+27902
+Number of consensus H3K27ac dunnart peaks
 40610</code></pre>
 </div>
 <div id="mouse-1" class="section level5">
 <h5>Mouse</h5>
-<pre class="bash"><code>echo &quot;Number of consensus H3K4me3 mouse E10.5 peaks&quot; | less output/peaks/H3K4me3_E10.5_overlap.narrowPeak | wc -l
-echo &quot;Number of consensus H3K4me3 mouse E11.5 peaks&quot; | less output/peaks/H3K4me3_E11.5_overlap.narrowPeak | wc -l
-echo &quot;Number of consensus H3K4me3 mouse E12.5 peaks&quot; | less output/peaks/H3K4me3_E12.5_overlap.narrowPeak | wc -l
-echo &quot;Number of consensus H3K4me3 mouse E13.5 peaks&quot; | less output/peaks/H3K4me3_E13.5_overlap.narrowPeak | wc -l
-echo &quot;Number of consensus H3K4me3 mouse E14.5 peaks&quot; | less output/peaks/H3K4me3_E14.5_overlap.narrowPeak | wc -l
-echo &quot;Number of consensus H3K4me3 mouse E15.5 peaks&quot; | less output/peaks/H3K4me3_E15.5_overlap.narrowPeak | wc -l
-echo &quot;Number of consensus H3K27ac mouse E10.5 peaks&quot; | less output/peaks/H3K27ac_E10.5_overlap.narrowPeak | wc -l
-echo &quot;Number of consensus H3K27ac mouse E11.5 peaks&quot; | less output/peaks/H3K27ac_E11.5_overlap.narrowPeak | wc -l
-echo &quot;Number of consensus H3K27ac mouse E12.5 peaks&quot; | less output/peaks/H3K27ac_E12.5_overlap.narrowPeak | wc -l
-echo &quot;Number of consensus H3K27ac mouse E13.5 peaks&quot; | less output/peaks/H3K27ac_E13.5_overlap.narrowPeak | wc -l
-echo &quot;Number of consensus H3K27ac mouse E14.5 peaks&quot; | less output/peaks/H3K27ac_E14.5_overlap.narrowPeak | wc -l
-echo &quot;Number of consensus H3K27ac mouse E15.5 peaks&quot; | less output/peaks/H3K27ac_E15.5_overlap.narrowPeak | wc -l</code></pre>
-<pre><code>28512
+<pre class="bash"><code>echo &quot;Number of consensus H3K4me3 mouse E10.5 peaks&quot;
+less output/peaks/H3K4me3_E10.5_overlap.narrowPeak | wc -l
+echo &quot;Number of consensus H3K4me3 mouse E11.5 peaks&quot;
+less output/peaks/H3K4me3_E11.5_overlap.narrowPeak | wc -l
+echo &quot;Number of consensus H3K4me3 mouse E12.5 peaks&quot;
+less output/peaks/H3K4me3_E12.5_overlap.narrowPeak | wc -l
+echo &quot;Number of consensus H3K4me3 mouse E13.5 peaks&quot;
+less output/peaks/H3K4me3_E13.5_overlap.narrowPeak | wc -l
+echo &quot;Number of consensus H3K4me3 mouse E14.5 peaks&quot;
+less output/peaks/H3K4me3_E14.5_overlap.narrowPeak | wc -l
+echo &quot;Number of consensus H3K4me3 mouse E15.5 peaks&quot;
+less output/peaks/H3K4me3_E15.5_overlap.narrowPeak | wc -l
+echo &quot;Number of consensus H3K27ac mouse E10.5 peaks&quot;
+less output/peaks/H3K27ac_E10.5_overlap.narrowPeak | wc -l
+echo &quot;Number of consensus H3K27ac mouse E11.5 peaks&quot;
+less output/peaks/H3K27ac_E11.5_overlap.narrowPeak | wc -l
+echo &quot;Number of consensus H3K27ac mouse E12.5 peaks&quot;
+less output/peaks/H3K27ac_E12.5_overlap.narrowPeak | wc -l
+echo &quot;Number of consensus H3K27ac mouse E13.5 peaks&quot;
+less output/peaks/H3K27ac_E13.5_overlap.narrowPeak | wc -l
+echo &quot;Number of consensus H3K27ac mouse E14.5 peaks&quot;
+less output/peaks/H3K27ac_E14.5_overlap.narrowPeak | wc -l
+echo &quot;Number of consensus H3K27ac mouse E15.5 peaks&quot;
+less output/peaks/H3K27ac_E15.5_overlap.narrowPeak | wc -l</code></pre>
+<pre><code>Number of consensus H3K4me3 mouse E10.5 peaks
+28512
+Number of consensus H3K4me3 mouse E11.5 peaks
 18112
+Number of consensus H3K4me3 mouse E12.5 peaks
 21756
+Number of consensus H3K4me3 mouse E13.5 peaks
 23929
+Number of consensus H3K4me3 mouse E14.5 peaks
 22102
+Number of consensus H3K4me3 mouse E15.5 peaks
 23375
+Number of consensus H3K27ac mouse E10.5 peaks
 52138
+Number of consensus H3K27ac mouse E11.5 peaks
 13996
+Number of consensus H3K27ac mouse E12.5 peaks
 40281
+Number of consensus H3K27ac mouse E13.5 peaks
 51183
+Number of consensus H3K27ac mouse E14.5 peaks
 40264
+Number of consensus H3K27ac mouse E15.5 peaks
 52152</code></pre>
 </div>
 </div>
