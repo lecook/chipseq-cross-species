@@ -1,8 +1,9 @@
 ---
-title: "Cross-species comparison of peaks"
+title: "Cross-species peak level comparisons"
 author: "lecook"
 date: "2022-02-23"
 output: workflowr::wflow_html
 editor_options:
   chunk_output_type: console
 ---
+
