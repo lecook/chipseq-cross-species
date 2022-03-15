@@ -211,7 +211,7 @@ rule call_peaks_macs2:
         "output/peaks/{case}_vs_{control}_macs2_default_dunnart_downSampled_summits.bed",
         "output/peaks/{case}_vs_{control}_macs2_default_dunnart_downSampled_peaks.narrowPeak",
     log:
-        "output/logs/{case}_vs_{control}_call_peaks_macs2_default_dunnart_downSampled_peaks.log"
+        "output/logs/{case}_vs_{control}_call_peaks_macs2_default_dunnart_downSampled.log"
     params:
         name = "{case}_vs_{control}_macs2_default_dunnart_downSampled",
     run:
