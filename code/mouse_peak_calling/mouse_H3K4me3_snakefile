@@ -263,19 +263,19 @@ rule mergeBAMreplicates:
 rule mappingStats:
     input:
         a="output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bam",
-        #b="output/bam_files/{sample}_{stage}_{mark}_q30.dupmark.bam",
-        #c="output/bam_files/{sample}_{stage}_{mark}_q30.sorted.bam",
-        #d="output/bam_files/{sample}_{stage}_{mark}.bam"
+        b="output/bam_files/{sample}_{stage}_{mark}_q30.dupmark.bam",
+        c="output/bam_files/{sample}_{stage}_{mark}_q30.sorted.bam",
+        d="output/bam_files/{sample}_{stage}_{mark}.bam"
     output:
         a="output/qc/{sample}_{stage}_{mark}.dedup.flagstat.qc",
-        #b="output/qc/{sample}_{stage}_{mark}.dupmark.flagstat.qc",
-        #c="output/qc/{sample}_{stage}_{mark}.q30.flagstat.qc",
-        #d="output/qc/{sample}_{stage}_{mark}.unfiltered.flagstat.qc",
+        b="output/qc/{sample}_{stage}_{mark}.dupmark.flagstat.qc",
+        c="output/qc/{sample}_{stage}_{mark}.q30.flagstat.qc",
+        d="output/qc/{sample}_{stage}_{mark}.unfiltered.flagstat.qc",
     run:
         shell("samtools flagstat {input.a} > {output.a}")
-        #shell("samtools flagstat {input.b} > {output.b}")
-        #shell("samtools flagstat {input.c} > {output.c}")
-        #shell("samtools flagstat {input.d} > {output.d}")
+        shell("samtools flagstat {input.b} > {output.b}")
+        shell("samtools flagstat {input.c} > {output.c}")
+        shell("samtools flagstat {input.d} > {output.d}")
 
 
 rule sort_name:
