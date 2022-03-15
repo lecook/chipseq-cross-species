@@ -382,7 +382,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-03-03
+<strong>Last updated:</strong> 2022-03-15
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -430,7 +430,7 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 </div>
 <div id="strongSeedstrongcodesetseed20220209code" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The command <code>set.seed(20220209)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+<p>The command <code>set.seed(20220209)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
 </div>
 </div>
 </div>
@@ -473,16 +473,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree6faef6a42ebd030523f1d7125b5a10aab86f0d48targetblank6faef6aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/6faef6a42ebd030523f1d7125b5a10aab86f0d48" target="_blank">6faef6a</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreebe43c257aafcb4287b3194e8f6da73cab02f22batargetblankbe43c25a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/be43c257aafcb4287b3194e8f6da73cab02f22ba" target="_blank">be43c25</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree6faef6a42ebd030523f1d7125b5a10aab86f0d48targetblank6faef6aa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreebe43c257aafcb4287b3194e8f6da73cab02f22batargetblankbe43c25a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/6faef6a42ebd030523f1d7125b5a10aab86f0d48" target="_blank">6faef6a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/be43c257aafcb4287b3194e8f6da73cab02f22ba" target="_blank">be43c25</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -507,6 +507,7 @@ Ignored files:
     Ignored:    output/qc/A-1_input_R1_trimmed.fastq.gz
     Ignored:    output/qc/A-1_input_est_lib_complex_metrics.txt
     Ignored:    output/qc/A-2_H3K4me3.SeqDepthNorm.bw
+    Ignored:    output/qc/A-2_H3K4me3.SeqDepthNorm_dunnart_downSampled.bw
     Ignored:    output/qc/A-2_H3K4me3.ccurve.txt
     Ignored:    output/qc/A-2_H3K4me3.extrap.txt
     Ignored:    output/qc/A-2_H3K4me3_R1_trimmed.fastq.gz
@@ -534,8 +535,10 @@ Ignored files:
     Ignored:    output/qc/B-2_H3K4me3_R1_trimmed.fastq.gz
     Ignored:    output/qc/B-2_H3K4me3_est_lib_complex_metrics.txt
     Ignored:    output/qc/B-2_H3K4me3_vs_A-1_input.frip_default.txt
+    Ignored:    output/qc/B-2_H3K4me3_vs_A-1_input.frip_default_dunnart_downSampled.txt
     Ignored:    output/qc/B-2_H3K4me3_vs_B-1_input.frip_default.txt
     Ignored:    output/qc/B-3_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/B-3_H3K27ac.SeqDepthNorm_dunnart_downSampled.bw
     Ignored:    output/qc/B-3_H3K27ac.ccurve.txt
     Ignored:    output/qc/B-3_H3K27ac.extrap.txt
     Ignored:    output/qc/B-3_H3K27ac_R1_trimmed.fastq.gz
@@ -543,150 +546,74 @@ Ignored files:
     Ignored:    output/qc/B-3_H3K27ac_vs_A-1_input.frip_default.txt
     Ignored:    output/qc/B-3_H3K27ac_vs_B-1_input.frip_default.txt
     Ignored:    output/qc/bamPEFragmentSize_rawcounts.tab
+    Ignored:    output/qc/bamPEFragmentSize_rawcounts_dunnart_downSampled.tab
     Ignored:    output/qc/multiBAM_fingerprint_metrics.txt
+    Ignored:    output/qc/multiBAM_fingerprint_metrics_dunnart_downSampled.txt
     Ignored:    output/qc/multiBAM_fingerprint_rawcounts.txt
+    Ignored:    output/qc/multiBAM_fingerprint_rawcounts_dunnart_downSampled.txt
     Ignored:    output/qc/multibamsum.npz
     Ignored:    output/qc/multibamsum.tab
+    Ignored:    output/qc/multibamsum_dunnart_downSampled.npz
+    Ignored:    output/qc/multibamsum_dunnart_downSampled.tab
     Ignored:    output/qc/pearsoncor_multibamsum_matrix.txt
+    Ignored:    output/qc/pearsoncor_multibamsum_matrix_dunnart_downSampled.txt
+    Ignored:    output/wga/
     Ignored:    results/
 
 Untracked files:
     Untracked:  .snakemake/
-    Untracked:  H3K27ac_only.narrowPeak
-    Untracked:  H3K4me3_and_H3K27ac.narrowPeak
-    Untracked:  H3K4me3_only.narrowPeak
-    Untracked:  code/basic_wrapper.slurm
-    Untracked:  code/configs/metadata.tsv
-    Untracked:  code/slurmjob.stderr
-    Untracked:  code/slurmjob.stdout
-    Untracked:  code/trimfastq.py
+    Untracked:  Rplots.pdf
     Untracked:  data/raw_reads/
-    Untracked:  dunnart_enhancer_peaks.narrowPeak
-    Untracked:  dunnart_promoter_peaks.narrowPeak
+    Untracked:  output/qc/ucsc_alignment/
     Untracked:  output/rnaseq/
-    Untracked:  slurm-33634648.out
-    Untracked:  slurm-33634649.out
-    Untracked:  slurm-33634650.out
-    Untracked:  slurm-33634651.out
-    Untracked:  slurm-33634652.out
-    Untracked:  slurm-33634653.out
-    Untracked:  slurm-33634669.out
-    Untracked:  slurm-33634682.out
-    Untracked:  slurm-33638735.out
-    Untracked:  slurm-33638749.out
-    Untracked:  slurm-33638750.out
-    Untracked:  slurm-33638751.out
-    Untracked:  slurm-33639342.out
-    Untracked:  slurm-33639343.out
-    Untracked:  slurm-33639344.out
-    Untracked:  slurm-33639345.out
-    Untracked:  slurm-33639346.out
-    Untracked:  slurm-33639347.out
-    Untracked:  slurm-33652974.out
-    Untracked:  slurm-33652975.out
-    Untracked:  slurm-33652976.out
-    Untracked:  slurm-33652977.out
-    Untracked:  slurm-33652978.out
-    Untracked:  slurm-33652979.out
-    Untracked:  slurm-33653279.out
-    Untracked:  slurm-33653280.out
-    Untracked:  slurm-33653281.out
-    Untracked:  slurm-33653282.out
-    Untracked:  slurm-33653283.out
-    Untracked:  slurm-33653284.out
-    Untracked:  slurm-33654225.out
-    Untracked:  slurm-33654226.out
-    Untracked:  slurm-33654227.out
-    Untracked:  slurm-33654228.out
-    Untracked:  slurm-33654229.out
-    Untracked:  slurm-33654230.out
-    Untracked:  slurm-33654264.out
-    Untracked:  slurm-33654265.out
-    Untracked:  slurm-33654266.out
-    Untracked:  slurm-33654267.out
-    Untracked:  slurm-33655778.out
-    Untracked:  slurm-33655779.out
-    Untracked:  slurm-33655780.out
-    Untracked:  slurm-33655781.out
-    Untracked:  slurm-33655782.out
-    Untracked:  slurm-33655783.out
-    Untracked:  slurm-33655867.out
-    Untracked:  slurm-33655869.out
-    Untracked:  slurm-33655871.out
-    Untracked:  slurm-33655873.out
-    Untracked:  slurm-33655936.out
-    Untracked:  slurm-33655937.out
-    Untracked:  slurm-33655964.out
-    Untracked:  slurm-33655966.out
-    Untracked:  slurm-33656003.out
-    Untracked:  slurm-33656023.out
-    Untracked:  slurm-33656024.out
-    Untracked:  slurm-33656025.out
-    Untracked:  slurm-33656027.out
-    Untracked:  slurm-33656056.out
-    Untracked:  slurm-33656089.out
-    Untracked:  slurm-33656090.out
-    Untracked:  slurm-33656102.out
-    Untracked:  slurm-33656104.out
-    Untracked:  slurm-33656170.out
-    Untracked:  slurm-33656224.out
-    Untracked:  slurm-33656227.out
-    Untracked:  slurm-33656228.out
-    Untracked:  slurm-33656312.out
-    Untracked:  slurm-33656357.out
-    Untracked:  slurm-33656358.out
-    Untracked:  slurm-33656364.out
-    Untracked:  slurm-33656365.out
-    Untracked:  slurm-33656409.out
-    Untracked:  slurm-33656545.out
-    Untracked:  slurm-33657362.out
-    Untracked:  slurm-33657363.out
-    Untracked:  slurm-33657364.out
-    Untracked:  slurm-33657365.out
-    Untracked:  slurm-33657366.out
-    Untracked:  slurm-33657367.out
-    Untracked:  slurm-33657375.out
-    Untracked:  slurm-33657376.out
-    Untracked:  slurm-33657625.out
-    Untracked:  slurm-33657626.out
-    Untracked:  slurm-33657627.out
-    Untracked:  slurm-33657628.out
-    Untracked:  slurm-33657629.out
-    Untracked:  slurm-33657630.out
-    Untracked:  slurm-33657636.out
-    Untracked:  slurm-33657638.out
-    Untracked:  slurm-33657645.out
-    Untracked:  slurm-33657646.out
-    Untracked:  slurm-33657677.out
-    Untracked:  slurm-33657688.out
-    Untracked:  slurm-33658782.out
-    Untracked:  slurm-33658783.out
-    Untracked:  slurm-33658784.out
-    Untracked:  slurm-33658785.out
-    Untracked:  slurm-33658786.out
-    Untracked:  slurm-33658787.out
-    Untracked:  slurm-33658861.out
-    Untracked:  slurm-33658862.out
-    Untracked:  slurm-33658863.out
-    Untracked:  slurm-33658864.out
-    Untracked:  slurm-33658865.out
-    Untracked:  slurm-33658866.out
-    Untracked:  slurm-33658867.out
-    Untracked:  slurm-33659733.out
-    Untracked:  slurm-33659734.out
-    Untracked:  slurm-33659735.out
-    Untracked:  slurm-33659736.out
-    Untracked:  slurm-33659737.out
-    Untracked:  slurm-33659738.out
-    Untracked:  slurm-33659745.out
-    Untracked:  slurm-33660501.out
-    Untracked:  slurm-33660617.out
+    Untracked:  slurm-33931929.out
+    Untracked:  slurm-33931930.out
+    Untracked:  slurm-33931931.out
+    Untracked:  slurm-33931932.out
+    Untracked:  slurm-33931933.out
+    Untracked:  slurm-33931934.out
+    Untracked:  slurm-33934389.out
+    Untracked:  slurm-33934390.out
+    Untracked:  slurm-33934391.out
+    Untracked:  slurm-33934392.out
+    Untracked:  slurm-33934393.out
+    Untracked:  slurm-33934394.out
+    Untracked:  slurm-33935177.out
+    Untracked:  slurm-33935178.out
+    Untracked:  slurm-33935179.out
+    Untracked:  slurm-33935180.out
+    Untracked:  slurm-33935181.out
+    Untracked:  slurm-33935182.out
+    Untracked:  slurm-33938210.out
+    Untracked:  slurm-33938211.out
+    Untracked:  slurm-33938212.out
+    Untracked:  slurm-33938213.out
+    Untracked:  slurm-33938214.out
+    Untracked:  slurm-33938215.out
+    Untracked:  slurm-33948861.out
+    Untracked:  slurm-33948862.out
+    Untracked:  slurm-33948863.out
+    Untracked:  slurm-33948864.out
+    Untracked:  slurm-33948865.out
+    Untracked:  slurm-33948866.out
+    Untracked:  slurm-33950657.out
+    Untracked:  slurm-33950658.out
+    Untracked:  slurm-33950659.out
+    Untracked:  slurm-33950660.out
+    Untracked:  slurm-33950661.out
+    Untracked:  slurm-33950662.out
+    Untracked:  slurm-33950663.out
+    Untracked:  slurm-33950664.out
+    Untracked:  slurm-33950810.out
+    Untracked:  slurm-33950814.out
+    Untracked:  slurm-33950815.out
+    Untracked:  slurm-33950822.out
+    Untracked:  slurm-33952537.out
+    Untracked:  slurm-33952538.out
+    Untracked:  slurm-33952553.out
 
 Unstaged changes:
-    Deleted:    code/dunnart_peak_calling/trimfastq.py
-    Deleted:    output/qc/bamPEFragmentSize_hist.png
-    Deleted:    output/qc/multiBAM_fingerprint.png
-    Deleted:    output/qc/pearsoncor_multibamsum.png
+    Modified:   analysis/peak_level_comparisons.Rmd
 
 </code></pre>
 <p>
@@ -725,6 +652,57 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/2103ae7d50dd723698bf11af8da5e04882dcda03/analysis/dunnart_data_processing.Rmd" target="_blank">2103ae7</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-03
+</td>
+<td>
+updates
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/802fa8c2b58dc997fd35e53ad4b7878bcda64fa4/analysis/dunnart_data_processing.Rmd" target="_blank">802fa8c</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-03
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/ac21f8a403b8aac648497516dc7c66752d57bd5a/docs/dunnart_data_processing.html" target="_blank">ac21f8a</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-03
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1362,7 +1340,7 @@ module load bowtie2/2.3.5.1</code></pre>
 <p><code>plotCorrelation</code> computes the overall similarity between two or more files based on read coverage (or other scores) within genomic regions.</p>
 <p>This helps to determine whether the different sample types can be separated, i.e., samples of different conditions are expected to be more dissimilar to each other than replicates within the same condition.</p>
 <div class="figure">
-<img src="pearsoncor_multibamsum.png" alt="Pearson correlation dunnart BAM files" />
+<embed src="pearsoncor_multibamsum.pdf" />
 <p class="caption">Pearson correlation dunnart BAM files</p>
 </div>
 </div>
@@ -1372,7 +1350,7 @@ module load bowtie2/2.3.5.1</code></pre>
 <p>It determines how well the signal in the ChIP-seq sample can be differentiated from the background distribution of reads in the control sample.</p>
 <p>An ideal input with perfect uniform distribution of reads along the genome (i.e. without enrichments in open chromatin etc.) and infinite sequencing coverage should generate a straight diagonal line. A very specific and strong ChIP enrichment will be indicated by a prominent and steep rise of the cumulative sum towards the highest rank. This means that a big chunk of reads from the ChIP sample is located in few bins which corresponds to high, narrow enrichments typically seen for transcription factors.</p>
 <div class="figure">
-<img src="multiBAM_fingerprint.png" alt="Fingerprint plot for dunnart BAM files" />
+<embed src="multiBAM_fingerprint.pdf" />
 <p class="caption">Fingerprint plot for dunnart BAM files</p>
 </div>
 </div>
@@ -1380,7 +1358,7 @@ module load bowtie2/2.3.5.1</code></pre>
 <h3>BAM PE fragment size</h3>
 <p>This tool calculates the fragment sizes for read pairs given a BAM file from paired-end sequencing. Several regions are sampled depending on the size of the genome and number of processors to estimate thesummary statistics on the fragment lengths.</p>
 <div class="figure">
-<img src="bamPEFragmentSize_hist.png" alt="Fragment size for read pairs in a BAM file" />
+<embed src="bamPEFragmentSize_hist.pdf" />
 <p class="caption">Fragment size for read pairs in a BAM file</p>
 </div>
 </div>
@@ -1759,7 +1737,8 @@ colnames(B3) = c(&quot;Filename&quot;, &quot;numReads&quot;, &quot;estFragLen&qu
 </div>
 <div id="peak-qc" class="section level2">
 <h2>Peak QC</h2>
-<p>Number of peaks</p>
+<div id="number-of-peaks" class="section level3">
+<h3>Number of peaks</h3>
 <pre class="bash"><code>less output/peaks/A-3_H3K27ac_vs_A-1_input_macs2_default_peaks.narrowPeak | wc -l</code></pre>
 <pre><code>171653</code></pre>
 <pre class="bash"><code>less output/peaks/A-2_H3K4me3_vs_A-1_input_macs2_default_peaks.narrowPeak | wc -l</code></pre>
@@ -1768,6 +1747,7 @@ colnames(B3) = c(&quot;Filename&quot;, &quot;numReads&quot;, &quot;estFragLen&qu
 <pre><code>173791</code></pre>
 <pre class="bash"><code>less output/peaks/B-2_H3K4me3_vs_B-1_input_macs2_default_peaks.narrowPeak | wc -l</code></pre>
 <pre><code>130443</code></pre>
+</div>
 <div id="fraction-of-reads-in-peaks" class="section level3">
 <h3>Fraction of reads in peaks</h3>
 <p>A-2_H3K4me3 fraction of reads in peaks</p>
@@ -1800,30 +1780,37 @@ Fraction of Reads in Peak =  0.6129931501206433</code></pre>
 <pre><code>118528</code></pre>
 </div>
 </div>
-<div id="group-peaks-into-promoter--and-enhancer--associated-peaks" class="section level2">
-<h2>Group peaks into promoter- and enhancer- associated peaks</h2>
+</div>
+<div id="group-peaks-into-promoter--and-enhancer--associated-peaks" class="section level1">
+<h1>Group peaks into promoter- and enhancer- associated peaks</h1>
 <p>Find uniquely H3K4me3 sites (i.e. peaks that don’t overlap with H3K27ac):</p>
 <pre class="bash"><code>module load bedtools
 bedtools intersect -v -a output/peaks/H3K4me3_overlap_default.narrowPeak -b output/peaks/H3K27ac_overlap_default.narrowPeak &gt; output/peaks/H3K4me3_only.narrowPeak
 less output/peaks/H3K4me3_only.narrowPeak | wc -l</code></pre>
-<pre><code>16391</code></pre>
+<pre><code>bash: module: command not found
+bash: line 1: bedtools: command not found
+0</code></pre>
 <p>Find unique H3K27ac sites (i.e. peaks that don’t overlap with H3K4me3):</p>
 <pre class="bash"><code>module load bedtools
 bedtools intersect -v -a output/peaks/H3K27ac_overlap_default.narrowPeak -b output/peaks/H3K4me3_overlap_default.narrowPeak &gt; output/peaks/H3K27ac_only.narrowPeak
 less output/peaks/H3K27ac_only.narrowPeak | wc -l</code></pre>
-<pre><code>59272</code></pre>
+<pre><code>bash: module: command not found
+bash: line 1: bedtools: command not found
+0</code></pre>
 <p>Find peaks common between H3K27ac &amp; H3K4me3 with a reciprocal overlap of at least 50%.</p>
 <pre class="bash"><code>module load bedtools
 bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_overlap_default.narrowPeak -b output/peaks/H3K27ac_overlap_default.narrowPeak &gt; output/peaks/H3K4me3_and_H3K27ac.narrowPeak
 less output/peaks/H3K4me3_and_H3K27ac.narrowPeak | wc -l</code></pre>
-<pre><code>48541</code></pre>
+<pre><code>bash: module: command not found
+bash: line 1: bedtools: command not found
+0</code></pre>
 <p>Combine files</p>
 <pre class="bash"><code>cat output/peaks/H3K4me3_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac.narrowPeak | sort -k 4,4 &gt; output/peaks/dunnart_promoter_peaks.narrowPeak
 cat output/peaks/H3K27ac_only.narrowPeak | sort -k 4,4 &gt; output/peaks/dunnart_enhancer_peaks.narrowPeak
 less output/peaks/dunnart_promoter_peaks.narrowPeak | wc -l
 less output/peaks/dunnart_enhancer_peaks.narrowPeak | wc -l</code></pre>
-<pre><code>64932
-59272</code></pre>
+<pre><code>0
+0</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1840,12 +1827,12 @@ Matrix products: default
 BLAS/LAPACK: /usr/local/easybuild-2019/easybuild/software/compiler/gcc/10.2.0/openblas/0.3.12/lib/libopenblas_haswellp-r0.3.12.so
 
 locale:
- [1] LC_CTYPE=en_GB.UTF-8       LC_NUMERIC=C              
- [3] LC_TIME=en_GB.UTF-8        LC_COLLATE=en_GB.UTF-8    
- [5] LC_MONETARY=en_GB.UTF-8    LC_MESSAGES=en_GB.UTF-8   
- [7] LC_PAPER=en_GB.UTF-8       LC_NAME=C                 
+ [1] LC_CTYPE=en_AU.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_AU.UTF-8        LC_COLLATE=en_AU.UTF-8    
+ [5] LC_MONETARY=en_AU.UTF-8    LC_MESSAGES=en_AU.UTF-8   
+ [7] LC_PAPER=en_AU.UTF-8       LC_NAME=C                 
  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-[11] LC_MEASUREMENT=en_GB.UTF-8 LC_IDENTIFICATION=C       
+[11] LC_MEASUREMENT=en_AU.UTF-8 LC_IDENTIFICATION=C       
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
@@ -1854,18 +1841,17 @@ other attached packages:
 [1] knitr_1.33        data.table_1.14.0 workflowr_1.7.0  
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.6        highr_0.9         jquerylib_0.1.4   pillar_1.6.1     
+ [1] Rcpp_1.0.8        highr_0.9         jquerylib_0.1.4   pillar_1.6.1     
  [5] compiler_4.1.0    bslib_0.2.5.1     later_1.2.0       git2r_0.28.0     
  [9] tools_4.1.0       getPass_0.2-2     digest_0.6.27     jsonlite_1.7.2   
 [13] evaluate_0.14     lifecycle_1.0.1   tibble_3.1.2      pkgconfig_2.0.3  
-[17] rlang_1.0.1       cli_2.5.0         rstudioapi_0.13   yaml_2.2.1       
+[17] rlang_1.0.2       cli_2.5.0         rstudioapi_0.13   yaml_2.2.1       
 [21] xfun_0.23         httr_1.4.2        stringr_1.4.0     sass_0.4.0       
 [25] fs_1.5.0          vctrs_0.3.8       rprojroot_2.0.2   glue_1.4.2       
 [29] R6_2.5.0          processx_3.5.2    fansi_0.5.0       rmarkdown_2.8    
 [33] callr_3.7.0       magrittr_2.0.1    whisker_0.4       ps_1.6.0         
 [37] promises_1.2.0.1  ellipsis_0.3.2    htmltools_0.5.1.1 httpuv_1.6.1     
 [41] utf8_1.2.1        stringi_1.6.2     crayon_1.4.1     </code></pre>
-</div>
 </div>
 </div>
 
