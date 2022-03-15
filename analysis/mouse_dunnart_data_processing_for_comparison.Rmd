@@ -112,6 +112,7 @@ An ideal input with perfect uniform distribution of reads along the genome (i.e.
 ![Fingerprint plot for mouse downsampled BAM files for H3K4me3](H3K4me3_multiBAM_fingerprint_mouse.pdf)
 ![Fingerprint plot for mouse downsampled BAM files for H3K27ac](H327ac_multiBAM_fingerprint_mouse.pdf)
 
+
 ## Cross-correlation analysis
 Information from: https://docs.google.com/document/d/1lG_Rd7fnYgRpSIqrIfuVlAz2dW1VaSQThzk836Db99c/edit
 
