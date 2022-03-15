@@ -104,19 +104,19 @@ rule all:
         expand("output/bam_files/{case}_{stage}_{mark}_q30.sorted.dedup.bed", zip, case=IPS, stage=STAGE, mark=MARK),
         expand("output/logs/{case}_{stage}_{mark}.bamToBed", zip, case=IPS, stage=STAGE, mark=MARK),
         expand("output/qc/{case}_vs_{control}_{stage}_{mark}.frip.txt", zip, case=IPS, control=INPUTS, stage=STAGE, mark=MARK),
-        directory("output/peaks/pooled/"),
-        #"output/peaks/H3K27ac_E10.5_overlap.narrowPeak",
-        #"output/peaks/H3K27ac_E11.5_overlap.narrowPeak",
-        #"output/peaks/H3K27ac_E12.5_overlap.narrowPeak",
-        #"output/peaks/H3K27ac_E13.5_overlap.narrowPeak",
-        #"output/peaks/H3K27ac_E14.5_overlap.narrowPeak",
-        #"output/peaks/H3K27ac_E15.5_overlap.narrowPeak",
-        #"output/qc/H3K27ac_E10.5_overlap.frip",
-        #"output/qc/H3K27ac_E11.5_overlap.frip",
-        #"output/qc/H3K27ac_E12.5_overlap.frip",
-        #"output/qc/H3K27ac_E13.5_overlap.frip",
-        #"output/qc/H3K27ac_E14.5_overlap.frip",
-        #"output/qc/H3K27ac_E15.5_overlap.frip"
+        directory("output/peaks/"),
+        "output/peaks/H3K27ac_E10.5_overlap.narrowPeak",
+        "output/peaks/H3K27ac_E11.5_overlap.narrowPeak",
+        "output/peaks/H3K27ac_E12.5_overlap.narrowPeak",
+        "output/peaks/H3K27ac_E13.5_overlap.narrowPeak",
+        "output/peaks/H3K27ac_E14.5_overlap.narrowPeak",
+        "output/peaks/H3K27ac_E15.5_overlap.narrowPeak",
+        "output/qc/H3K27ac_E10.5_overlap.frip",
+        "output/qc/H3K27ac_E11.5_overlap.frip",
+        "output/qc/H3K27ac_E12.5_overlap.frip",
+        "output/qc/H3K27ac_E13.5_overlap.frip",
+        "output/qc/H3K27ac_E14.5_overlap.frip",
+        "output/qc/H3K27ac_E15.5_overlap.frip"
 
 # ===============================================================================================
 #  1. FASTQC
@@ -507,7 +507,7 @@ rule call_peaks_macs2_pooled_replicates:
         E14C = "output/bam_files/input_E14.5_H3K27ac_q30.sorted.dedup.bam",
         E15C = "output/bam_files/input_E15.5_H3K27ac_q30.sorted.dedup.bam"
     output:
-        directory("output/peaks/pooled/")
+        directory("output/peaks/")
     log:
         E10 = "output/qc/E10.5_H3K27ac.pooled.macs2",
         E11 = "output/qc/E11.5_H3K27ac.pooled.macs2",
