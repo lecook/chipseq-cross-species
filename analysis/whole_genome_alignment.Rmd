@@ -332,7 +332,7 @@ chainSwap mm10_to_smiCra1_patched_sorted_chainCl_netted_stitched.chain stdout | 
 chainSwap smiCra1_mm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain stdout | nice chainSort stdin stdout > mm10_smiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain
 ```
 
-## Quality control of alignment blocks
+# Quality control of alignment blocks
 
 MafFilter.
 Using mm10-smiCra1 maf file generated using axtToMaf look at the block lengths and genomic coverage.
