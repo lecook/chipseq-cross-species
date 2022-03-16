@@ -97,9 +97,9 @@ bash subsample.sh
 
 This helps to determine whether the different sample types can be separated, i.e., samples of different conditions are expected to be more dissimilar to each other than replicates within the same condition.
 
-![Pearson correlation dunnart downsampled BAM files](pearsoncor_multibamsum_dunnart_downSampled.pdf)
-![Pearson correlation mouse downsampled BAM files for H3K4me3](H3K4me3_pearsoncor_multibamsum_mouse.pdf)
-![Pearson correlation mouse downsampled BAM files for H3K27ac](H3K27ac_pearsoncor_multibamsum_mouse.pdf)
+![Pearson correlation dunnart downsampled BAM files](pearsoncor_multibamsum_dunnart_downSampled.pdf){height=400px width=500px}
+![Pearson correlation mouse downsampled BAM files for H3K4me3](H3K4me3_pearsoncor_multibamsum_mouse.pdf){width=50%}
+![Pearson correlation mouse downsampled BAM files for H3K27ac](H3K27ac_pearsoncor_multibamsum_mouse.pdf){width=50%}
 
 ### Fingerprint plots 
 This tool samples indexed BAM files and plots a profile of cumulative read coverages for each. All reads overlapping a window (bin) of the specified length are counted; these counts are sorted and the cumulative sum is finally plotted.
@@ -180,7 +180,7 @@ Table. Peak calling quality metrics for mouse ChIP-seq peaks after peak calling 
 ### Number of peaks 
 
 #### Dunnart
-```{bash}
+```{bash eval=FALSE}
 echo "Number of peaks A3 H3K27ac dunnart"
 less output/peaks/A-3_H3K27ac_vs_A-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
 echo "Number of peaks A2 H3K4me3 dunnart"
@@ -193,7 +193,7 @@ less output/peaks/B-2_H3K4me3_vs_B-1_input_macs2_default_dunnart_downSampled_pea
 
 #### Mouse
 H3K4me3
-```{bash}
+```{bash eval=FALSE}
 echo "Number of peaks rep 1 E10.5 H3K4me3"
 less output/peaks/ENCFF124UYX_vs_ENCFF157KEH_E10.5_H3K4me3_macs2_downSampled_peaks.narrowPeak | wc -l
 echo "Number of peaks rep 2 E10.5 H3K4me3"
@@ -221,7 +221,7 @@ less output/peaks/ENCFF258KCR_vs_ENCFF727QTS_E15.5_H3K4me3_macs2_downSampled_pea
 ```
 
 H3K27ac
-```{bash}
+```{bash eval=FALSE}
 echo "Number of peaks rep 1 E10.5 H3K27ac"
 less output/peaks/ENCFF213EBC_vs_ENCFF157KEH_E10.5_H3K27ac_macs2_downSampled_peaks.narrowPeak | wc -l
 echo "Number of peaks rep 2 E10.5 H3K27ac"
@@ -251,7 +251,7 @@ less output/peaks/ENCFF584JFB_vs_ENCFF727QTS_E15.5_H3K27ac_macs2_downSampled_pea
 ### Consensus peaksets for biological replicates
 #### Number of consensus peaks 
 ##### Dunnart
-```{bash}
+```{bash eval=FALSE}
 echo "Number of consensus H3K4me3 dunnart peaks"
 less output/peaks/H3K4me3_overlap_default_dunnart_downSampled_peaks.narrowPeak | wc -l
 echo "Number of consensus H3K27ac dunnart peaks"
@@ -259,7 +259,7 @@ less output/peaks/H3K27ac_overlap_default_dunnart_downSampled_peaks.narrowPeak |
 ```
 
 ##### Mouse
-```{bash}
+```{bash eval=FALSE}
 echo "Number of consensus H3K4me3 mouse E10.5 peaks"
 less output/peaks/H3K4me3_E10.5_overlap.narrowPeak | wc -l
 echo "Number of consensus H3K4me3 mouse E11.5 peaks"
@@ -331,7 +331,7 @@ bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_overlap_default_dunnart_dow
 
 Combine peak files
 
-```{bash}
+```{bash eval=FALSE}
 cat output/peaks/H3K4me3_E10.5_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac_E10.5.narrowPeak | sort -k 4,4 > output/peaks/E10.5_promoter_peaks.narrowPeak
 cat output/peaks/H3K4me3_E11.5_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac_E11.5.narrowPeak | sort -k 4,4 > output/peaks/E11.5_promoter_peaks.narrowPeak
 cat output/peaks/H3K4me3_E12.5_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac_E12.5.narrowPeak | sort -k 4,4 > output/peaks/E12.5_promoter_peaks.narrowPeak
