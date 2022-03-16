@@ -174,7 +174,7 @@ Table. Peak calling quality metrics for mouse ChIP-seq peaks after peak calling 
 | 2                                       | H3K4me3          | E15\.5           | ENCFF401BKM       | 23920                          | 0\.42            | 2\.47             | 1\.33             | 1                            | 78\.25                                     |                                                    |                                                     |
 
 \* computed from 15M reads subsampled
- ̂ fraction of reads in peaks
+\ ̂ fraction of reads in peaks
 
 ## Peak QC
 ### Number of peaks 
