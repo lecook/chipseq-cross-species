@@ -193,9 +193,11 @@ rule normalise10Mreads:
         "output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bam"
     output:
         "output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam"
+    params:
+        reads=10000000
     shell:
         """
-        frac=$( samtools idxstats {input} | cut -f3 | awk 'BEGIN {total=0} {total += $1} END {frac=10000000/total; if (frac > 1) {print 1} else {print frac}}' )\
+        frac=$(samtools idxstats {input} | cut -f3 | awk -v ct={reads} 'BEGIN {{total=0}} {{total += $1}} END {{print ct/total}}')\
         samtools view -bs $frac {input} > {output}
         """
 
@@ -489,7 +491,7 @@ rule call_peaks_macs2:
         "output/peaks/{case}_vs_{control}_{stage}_{mark}_macs2_downSampled_summits.bed",
         "output/peaks/{case}_vs_{control}_{stage}_{mark}_macs2_downSampled_peaks.narrowPeak",
     log:
-        "output/logs/{case}_vs_{control}_{stage}_{mark}_call_peaks_macs2.log"
+        "output/logs/{case}_vs_{control}_{stage}_{mark}_call_peaks_macs2_downSampled.log"
     params:
         name = "{case}_vs_{control}_{stage}_{mark}_macs2_downSampled",
     shell:
