@@ -490,7 +490,7 @@ rule call_peaks_macs2:
         "output/peaks/{case}_vs_{control}_{stage}_{mark}_macs2_downSampled_summits.bed",
         "output/peaks/{case}_vs_{control}_{stage}_{mark}_macs2_downSampled_peaks.narrowPeak",
     log:
-        "output/logs/{case}_vs_{control}_{stage}_{mark}_call_peaks_macs2.log"
+        "output/logs/{case}_vs_{control}_{stage}_{mark}_call_peaks_macs2_downSampled.log"
     params:
         name = "{case}_vs_{control}_{stage}_{mark}_macs2_downSampled",
     shell:
