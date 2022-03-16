@@ -485,11 +485,11 @@ rule call_peaks_macs2:
     params:
         name = "{case}_vs_{control}_{stage}_{mark}_macs2",
     shell:
-        " macs2 callpeak -f BAM -t {input.case} \
+        """ macs2 callpeak -f BAM -t {input.case} \
         -c {input.control} --keep-dup all \
         --outdir output/peaks/ -p 0.01 \
         -n {params.name} \
-        -g mm 2> {log} "
+        -g mm 2> {log} """
 
 rule call_peaks_macs2_pooled_replicates:
     input:

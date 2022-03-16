@@ -523,7 +523,7 @@ rule call_peaks_macs2:
     run:
         shell("macs2 callpeak -f BAMPE -t {input.case} \
         -c {input.control} --keep-dup all \
-        --outdir output/peaks/  \
+        --outdir output/peaks/ -p 0.01 \
         -n {params.name} \
         -g 2740338543 2> {log}")
 
