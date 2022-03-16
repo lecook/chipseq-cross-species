@@ -98,8 +98,8 @@ bash subsample.sh
 This helps to determine whether the different sample types can be separated, i.e., samples of different conditions are expected to be more dissimilar to each other than replicates within the same condition.
 
 ![Pearson correlation dunnart downsampled BAM files](pearsoncor_multibamsum_dunnart_downSampled.pdf)
-![Pearson correlation mouse downsampled BAM files for H3K4me3](H3K4me3_pearsoncor_multibamsum_mouse.pdf")
-![Pearson correlation mouse downsampled BAM files for H3K27ac](H3K27ac_pearsoncor_multibamsum_mouse.pdf")
+![Pearson correlation mouse downsampled BAM files for H3K4me3](H3K4me3_pearsoncor_multibamsum_mouse.pdf)
+![Pearson correlation mouse downsampled BAM files for H3K27ac](H3K27ac_pearsoncor_multibamsum_mouse.pdf)
 
 ### Fingerprint plots 
 This tool samples indexed BAM files and plots a profile of cumulative read coverages for each. All reads overlapping a window (bin) of the specified length are counted; these counts are sorted and the cumulative sum is finally plotted.
@@ -110,7 +110,8 @@ An ideal input with perfect uniform distribution of reads along the genome (i.e.
 
 ![Fingerprint plot for dunnart downsampled BAM files](multiBAM_fingerprint_dunnart_downSampled.pdf)
 ![Fingerprint plot for mouse downsampled BAM files for H3K4me3](H3K4me3_multiBAM_fingerprint_mouse.pdf)
-![Fingerprint plot for mouse downsampled BAM files for H3K27ac](H327ac_multiBAM_fingerprint_mouse.pdf)
+![Fingerprint plot for mouse downsampled BAM files for H3K27ac](H3K27ac_multiBAM_fingerprint_mouse.pdf)
+
 
 ## Cross-correlation analysis
 Information from: https://docs.google.com/document/d/1lG_Rd7fnYgRpSIqrIfuVlAz2dW1VaSQThzk836Db99c/edit
