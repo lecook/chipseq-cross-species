@@ -111,18 +111,18 @@ rule all:
         "output/peaks/E13.5_H3K27ac.pooled.macs2_downSampled_peaks.narrowPeak",
         "output/peaks/E14.5_H3K27ac.pooled.macs2_downSampled_peaks.narrowPeak",
         "output/peaks/E15.5_H3K27ac.pooled.macs2_downSampled_peaks.narrowPeak",
-        "output/peaks/H3K27ac_E10.5_overlap.narrowPeak",
-        "output/peaks/H3K27ac_E11.5_overlap.narrowPeak",
-        "output/peaks/H3K27ac_E12.5_overlap.narrowPeak",
-        "output/peaks/H3K27ac_E13.5_overlap.narrowPeak",
-        "output/peaks/H3K27ac_E14.5_overlap.narrowPeak",
-        "output/peaks/H3K27ac_E15.5_overlap.narrowPeak",
-        "output/qc/H3K27ac_E10.5_overlap.frip",
-        "output/qc/H3K27ac_E11.5_overlap.frip",
-        "output/qc/H3K27ac_E12.5_overlap.frip",
-        "output/qc/H3K27ac_E13.5_overlap.frip",
-        "output/qc/H3K27ac_E14.5_overlap.frip",
-        "output/qc/H3K27ac_E15.5_overlap.frip"
+        #"output/peaks/H3K27ac_E10.5_overlap.narrowPeak",
+        #"output/peaks/H3K27ac_E11.5_overlap.narrowPeak",
+        #"output/peaks/H3K27ac_E12.5_overlap.narrowPeak",
+        #"output/peaks/H3K27ac_E13.5_overlap.narrowPeak",
+        #"output/peaks/H3K27ac_E14.5_overlap.narrowPeak",
+        #"output/peaks/H3K27ac_E15.5_overlap.narrowPeak",
+        #"output/qc/H3K27ac_E10.5_overlap.frip",
+        #"output/qc/H3K27ac_E11.5_overlap.frip",
+        #"output/qc/H3K27ac_E12.5_overlap.frip",
+        #"output/qc/H3K27ac_E13.5_overlap.frip",
+        #"output/qc/H3K27ac_E14.5_overlap.frip",
+        #"output/qc/H3K27ac_E15.5_overlap.frip"
 
 # ===============================================================================================
 #  1. FASTQC
