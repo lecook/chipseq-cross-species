@@ -1,0 +1,151 @@
+---
+title: "Mouse and dunnart peak features"
+author: "lecook"
+date: "2022-03-16"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Set-up
+
+```{r}
+# Load in libraries
+library(data.table) 
+library(tidyverse)
+library(ggridges)
+library(ggpubr)
+library(reshape2)
+library(RColorBrewer)
+library(ggplot2)
+library(VennDiagram)
+library(viridis)
+library(hrbrthemes)
+library(gghalves)
+library(multcompView)
+
+plot_dir <- "output/plots/"
+fullPeak_dir <- "output/peaks/"
+annot_dir <- "output/annotations/"
+filterPeaks_dir <- "output/filtered_peaks/"
+
+## Set the fonts up so that each plot is the saved the same way.
+font <- theme(axis.text.x = element_text(size = 25),
+        axis.text.y = element_text(size = 25),
+        axis.title.x = element_text(size = 25),
+        axis.title.y = element_text(size = 25), 
+        legend.title = element_text(size = 25), legend.text = element_text(size = 25))
+```
+
+
+## Peak features
+```{r}
+files =list.files(fileList, pattern= "*5.narrowPeak|*only.narrowPeak|*downSampled.narrowPeak", full.names=T) # create list of files in directory
+files = as.list(files)
+data = lapply(files, function(x) fread(x, header=FALSE, sep="\t", quote = "", na.strings=c("", "NA")))
+
+
+data[[1]]$mark = "H3K27ac"
+data[[2]]$mark = "H3K27ac"
+data[[3]]$mark = "H3K27ac"
+data[[4]]$mark = "H3K27ac"
+data[[5]]$mark = "H3K27ac"
+data[[6]]$mark = "H3K27ac"
+data[[7]]$mark = "H3K27ac"
+data[[8]]$mark = "H3K27ac_H3K4me3"
+data[[9]]$mark = "H3K27ac_H3K4me3"
+data[[10]]$mark = "H3K27ac_H3K4me3"
+data[[11]]$mark = "H3K27ac_H3K4me3"
+data[[12]]$mark = "H3K27ac_H3K4me3"
+data[[13]]$mark = "H3K27ac_H3K4me3"
+data[[14]]$mark = "H3K4me3"
+data[[15]]$mark = "H3K4me3"
+data[[16]]$mark = "H3K4me3"
+data[[17]]$mark = "H3K4me3"
+data[[18]]$mark = "H3K4me3"
+data[[19]]$mark = "H3K4me3"
+data[[20]]$mark = "H3K27ac_H3K4me3"
+data[[21]]$mark = "H3K4me3"
+
+
+data[[1]]$sample = "E10.5"
+data[[2]]$sample = "E11.5"
+data[[3]]$sample = "E12.5"
+data[[4]]$sample = "E13.5"
+data[[5]]$sample = "E14.5"
+data[[6]]$sample = "E15.5"
+data[[7]]$sample = "dunnart"
+data[[8]]$sample = "E10.5"
+data[[9]]$sample = "E11.5"
+data[[10]]$sample = "E12.5"
+data[[11]]$sample = "E13.5"
+data[[12]]$sample = "E14.5"
+data[[13]]$sample = "E15.5"
+data[[14]]$sample = "E10.5"
+data[[15]]$sample = "E11.5"
+data[[16]]$sample = "E12.5"
+data[[17]]$sample = "E13.5"
+data[[18]]$sample = "E14.5"
+data[[19]]$sample = "E15.5"
+data[[20]]$sample = "dunnart"
+data[[21]]$sample = "dunnart"
+
+## Plot stacked bar graph with number of peaks for each
+combined.peaks <- rbindlist(data,)
+combined.tbl <- with(combined.peaks, table(sample, mark))
+combined.tbl <- as.data.frame(combined.tbl)
+
+p <- ggplot(combined.tbl, aes(factor(sample), Freq, fill=mark)) + 
+  geom_bar(position=position_stack(reverse = TRUE), stat="identity") +
+  theme_minimal() + ylab("Number of peaks") +
+  xlab("")
+
+p
+
+pdf(file=paste0(plot_dir, combined.tbl.stack), width = 10, height = 7)
+print(p)
+dev.off()
+
+# Peak lengths for H3K4me3 and H3K27ac
+fullPeaks$length <- (fullPeaks$V3 - fullPeaks$V2)
+    level_order <- c('promoter', 'enhancer', 'H3K4me3', 'H3K27ac')
+
+    ## Plot peak lengths
+    p <- ggplot(fullPeaks, aes(factor(group, level = level_order), y = log10(length))) + 
+    geom_half_violin(aes(fill=factor(group), color=factor(group)),
+    side = "r", 
+    position = "dodge"
+    )+
+    geom_boxplot(aes(color=factor(group)),
+    width = .15, 
+    outlier.shape = NA,
+    fill=c("#FCF8EC","#FCF8EC","#F5F6F7","#E4F3F1"),
+    position = position_dodge(width=.1)
+    ) +
+    coord_cartesian(xlim = c(1.2, NA), clip = "off") + theme_bw() + xlab("") + ylab("Log10 Peak Length") 
+    pdf(file=paste0(plot_dir, peak.length.plot), width = 10, height = 7)
+    print(p +  scale_color_manual(values = c("#E9C46A","#E9C46A","#264653","#2A9D8F")) +
+    scale_fill_manual(values = c("#F1DAA2","#F1DAA2","#AEBABF","#7AC2B9")) + coord_flip())
+    dev.off()
+
+    ## Plot peak intensity
+    p <- ggplot(fullPeaks, aes(factor(group, level = level_order), y = log10(V7))) + 
+    geom_half_violin(aes(fill=factor(group), color=factor(group)),
+    side = "r", 
+    position = "dodge"
+    )+
+    geom_boxplot(aes(color=factor(group)),
+    width = .15, 
+    outlier.shape = NA,
+    fill=c("#FCF8EC","#FCF8EC","#F5F6F7","#E4F3F1"),
+    position = position_dodge(width=.1)
+    ) +
+    coord_cartesian(xlim = c(1.2, NA), clip = "off") + theme_bw() + xlab("") + ylab("Log10 Peak Intensity") 
+    pdf(file=paste0(plot_dir, peak.intensity.plot), width = 10, height = 7)
+    print(p +  scale_color_manual(values = c("#E9C46A","#E9C46A","#264653","#2A9D8F")) +
+    scale_fill_manual(values = c("#F1DAA2","#F1DAA2","#AEBABF","#7AC2B9")) + coord_flip())
+    dev.off()  
+```
+
+
+
