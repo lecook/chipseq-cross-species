@@ -198,7 +198,7 @@ rule normalise10Mreads:
     params:
         reads=10000000
     run:
-        shell('frac=$( samtools idxstats {input} | cut -f3 | awk -v ct={reads} \'BEGIN {{total=0}} {{total += $1}} END {{print ct/total}}\')')
+        shell('frac=$( samtools idxstats {input} | cut -f3 | awk -v ct={params.reads} \'BEGIN {{total=0}} {{total += $1}} END {{print ct/total}}\')')
         shell('samtools view -bs $frac {input} > {output}')
 
 rule indexBam:
