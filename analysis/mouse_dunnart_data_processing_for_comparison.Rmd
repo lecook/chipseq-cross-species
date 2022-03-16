@@ -97,7 +97,7 @@ bash subsample.sh
 
 This helps to determine whether the different sample types can be separated, i.e., samples of different conditions are expected to be more dissimilar to each other than replicates within the same condition.
 
-```{r, echo=FALSE, out.width="50%", fig.cap="Pearson correlation dunnart downsampled BAM files"}
+```{r, out.width="50%", fig.cap="Pearson correlation dunnart downsampled BAM files"}
 knitr::include_graphics("docs/pearsoncor_multibamsum_dunnart_downSampled.pdf")
 ```
 
