@@ -218,7 +218,7 @@ rule call_peaks_macs2:
         shell("macs2 callpeak -f BAMPE -t {input.case} \
         -c {input.control} --keep-dup all \
         --outdir output/peaks/  \
-        -n {params.name} \
+        -n {params.name} -p 0.01 \
         -g 2740338543 2> {log}")
 
 rule call_peaks_macs2_pooled_replicates:
