@@ -577,7 +577,7 @@ rule bamToBed:
 rule frip:
     input:
         bed = "output/bam_files/{case}_{stage}_{mark}_downSampled_q30.sorted.dedup.bed",
-        peak = "output/peaks/{case}_vs_{control}_{stage}_{mark}_downSampled_macs2_peaks.narrowPeak"
+        peak = "output/peaks/{case}_vs_{control}_{stage}_{mark}_macs2_downSampled_peaks.narrowPeak"
     output:
         "output/qc/{case}_vs_{control}_{stage}_{mark}_downSampled.frip.txt"
     shell:
