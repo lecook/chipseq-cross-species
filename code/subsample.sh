@@ -1,6 +1,6 @@
 ## Command to subsample bam files
 
-TRA=($(for file in *_q30.sorted.dedup.bam; do echo $file |cut -d "_" -f 1-2;done))
+TRA=($(for file in *q30.sorted.dedup.bam; do echo $file |cut -d "_" -f 1-2;done))
 
 echo ${TRA[@]}
 
