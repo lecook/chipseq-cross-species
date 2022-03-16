@@ -97,7 +97,7 @@ bash subsample.sh
 
 This helps to determine whether the different sample types can be separated, i.e., samples of different conditions are expected to be more dissimilar to each other than replicates within the same condition.
 
-![Pearson correlation dunnart downsampled BAM files](pearsoncor_multibamsum_dunnart_downSampled.pdf){height=400px width=500px}
+![Pearson correlation dunnart downsampled BAM files](pearsoncor_multibamsum_dunnart_downSampled.pdf){height=600px width=600px}
 ![Pearson correlation mouse downsampled BAM files for H3K4me3](H3K4me3_pearsoncor_multibamsum_mouse.pdf){width=50%}
 ![Pearson correlation mouse downsampled BAM files for H3K27ac](H3K27ac_pearsoncor_multibamsum_mouse.pdf){width=50%}
 
