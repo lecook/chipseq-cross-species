@@ -184,16 +184,16 @@ rule dedup:
     shell:
         "samtools view -F 1804 -b {input} | samtools sort -o {output} - 2> {log}"
 
-rule normalise10Mreads:
-    input:
-        "output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bam"
-    output:
-        "output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam"
-    params:
-        reads=10000000
-    shell:
-        """frac="samtools idxstats {input} | cut -f3 | awk -v ct={params.reads} 'BEGIN {{total=0}} {{total += $1}} END {{print ct/total}}'" \
-        samtools view -bs $frac {input} > {output}"""
+# rule normalise10Mreads:
+#     input:
+#         "output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bam"
+#     output:
+#         "output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam"
+#     params:
+#         reads=10000000
+#     shell:
+#         """frac="samtools idxstats {input} | cut -f3 | awk -v ct={params.reads} 'BEGIN {{total=0}} {{total += $1}} END {{print ct/total}}'" \
+#         samtools view -bs $frac {input} > {output}"""
 
 rule indexBam:
     input:
