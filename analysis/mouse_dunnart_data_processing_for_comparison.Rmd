@@ -20,15 +20,6 @@ xargs -L 1 curl -O -J -L < control_files.txt
 ## Filter mouse alignments
 Uses samtools and picards MarkDuplicates to remove low quality reads. This is based on and in accordance with the ENCODE Guidelines and pipeline (https://github.com/ENCODE-DCC/chip-seq-pipeline2)
 
-__Library Complexity ChIP-seq Standards:__
-
-| PBC1 | PBC2 | Bottlenecking level | NRF | Complexity | Flag colors |
-|:-:|:-:|:-:|:-:|:-:|:-:|
-| < 0.5 | < 1 | Severe | < 0.5 | Concerning | Orange |
-| 0.5 ≤ PBC1 < 0.8 | 1 ≤ PBC2 < 3 | Moderate | 0.5 ≤ NRF < 0.8 | Acceptable | Yellow |
-| 0.8 ≤ PBC1 < 0.9 | 3 ≤ PBC2 < 10 | Mild | 0.8 ≤ NRF < 0.9 | Compliant | None |
-| ≥ 0.9 | ≥ 10 | None | > 0.9 | Ideal | None |
-
 See full snakemake script for details: code/mouse_peak_calling/mouse_H3K4me3 and code/mouse_peak_calling/mouse_H3K27ac
 
 
@@ -59,10 +50,45 @@ stats2[stats2$processing == "edup"]$processing <- "duplicates removed"
 stats2[stats2$processing == "nfiltered"]$processing <- "mapped reads" 
 stats2[stats2$processing == "Pq30"]$processing <- "remove orphan reads and MAPQ < 30" 
 
+setcolorder(stats2, c("file", "processing", "num_reads"))
+
 kable(stats2, caption="Table. Read alignment quality metrics before and after filtering steps")
 ```
 
+## Library complexity
 
+__Library Complexity ChIP-seq Standards:__
+
+| PBC1 | PBC2 | Bottlenecking level | NRF | Complexity | Flag colors |
+|:-:|:-:|:-:|:-:|:-:|:-:|
+| < 0.5 | < 1 | Severe | < 0.5 | Concerning | Orange |
+| 0.5 ≤ PBC1 < 0.8 | 1 ≤ PBC2 < 3 | Moderate | 0.5 ≤ NRF < 0.8 | Acceptable | Yellow |
+| 0.8 ≤ PBC1 < 0.9 | 3 ≤ PBC2 < 10 | Mild | 0.8 ≤ NRF < 0.9 | Compliant | None |
+| ≥ 0.9 | ≥ 10 | None | > 0.9 | Ideal | None |
+
+
+```{r echo=FALSE, warning = FALSE, message = FALSE}
+
+lib.complex <- list.files("output/qc", pattern = "*pbc.qc", full.names = T) # create list of files in directory
+filenames <- sub('\\.pbc.qc$', '', basename(lib.complex)) 
+files <- as.list(lib.complex)
+data <- lapply(files, function(x) data.table::fread(x, header = FALSE, sep = "\t", quote = "", na.strings = c("", "NA")))
+
+names(data) <- filenames
+stats <- Map(dplyr::mutate, data, file = names(data))
+stats <- rbindlist(stats,)
+
+colnames(stats) = c("TotalReadPairs", "DistinctReadPairs", 
+                "OneReadPair", "TwoReadPairs",
+                "NRF=Distinct/Total", "PBC1=OnePair/Distinct",
+                "PBC2=OnePair/TwoPair", "file")
+setcolorder(stats, c("file", "TotalReadPairs", "DistinctReadPairs", 
+                "OneReadPair", "TwoReadPairs",
+                "NRF=Distinct/Total", "PBC1=OnePair/Distinct",
+                "PBC2=OnePair/TwoPair"))
+
+kable(stats, caption="Table. Library complexity metrics")
+```
 
 ## Normalise dunnart and mouse BAM files to 10M reads 
 
@@ -131,8 +157,32 @@ RSC; RSC>0.8 (0 = no signal; <1 low quality ChIP; >1 high enrichment
 
 Quality tag based on thresholded RSC (codes: -2:veryLow,-1:Low,0:Medium,1:High; 2:veryHigh)
 
-Table. Peak calling quality metrics for mouse ChIP-seq peaks after peak calling with MACS2
+Table. 
 
+```{r echo=FALSE, warning = FALSE, message = FALSE}
+
+ssp <- list.files("output/qc", pattern = "*cc.qc", full.names = T) # create list of files in directory
+filenames <- sub('\\_filt_15Mreads.SE.cc.qc$', '', basename(ssp)) 
+files <- as.list(ssp)
+data <- lapply(files, function(x) data.table::fread(x, header = FALSE, sep = "\t", quote = "", na.strings = c("", "NA")))
+
+names(data) <- filenames
+stats <- Map(dplyr::mutate, data, file = names(data))
+stats <- rbindlist(stats,)
+stats <- stats[,-1]
+colnames(stats) = c("numReads", "estFragLen", 
+                "corr_estFragLen", "PhantomPeak",
+                "corr_phantomPeak", "argmin_corr",
+                "min_corr", "phantomPeakCoef", "relPhantomPeakCoef",
+                "QualityTag", "file")
+setcolorder(stats, c("file", "numReads", "estFragLen", 
+                "corr_estFragLen", "PhantomPeak",
+                "corr_phantomPeak", "argmin_corr",
+                "min_corr", "phantomPeakCoef", "relPhantomPeakCoef",
+                "QualityTag"))
+
+kable(stats, caption="Table. Peak calling quality metrics for mouse and dunnart ChIP-seq peaks after peak calling with MACS2")
+```
 
 ## Peak QC
 ### Number of peaks 
