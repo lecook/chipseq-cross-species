@@ -508,7 +508,12 @@ rule call_peaks_macs2_pooled_replicates:
         E14C = "output/bam_files/input_E14.5_H3K27ac_downSampled_q30.sorted.dedup.bam",
         E15C = "output/bam_files/input_E15.5_H3K27ac_downSampled_q30.sorted.dedup.bam"
     output:
-        directory("output/peaks/")
+       "output/peaks/E10.5_H3K27ac.pooled.macs2_downSampled_peaks.narrowPeak",
+        "output/peaks/E11.5_H3K27ac.pooled.macs2_downSampled_peaks.narrowPeak",
+        "output/peaks/E12.5_H3K27ac.pooled.macs2_downSampled_peaks.narrowPeak",
+        "output/peaks/E13.5_H3K27ac.pooled.macs2_downSampled_peaks.narrowPeak",
+        "output/peaks/E14.5_H3K27ac.pooled.macs2_downSampled_peaks.narrowPeak",
+        "output/peaks/E15.5_H3K27ac.pooled.macs2_downSampled_peaks.narrowPeak"
     log:
         E10 = "output/qc/E10.5_H3K27ac.pooled.macs2_downSampled",
         E11 = "output/qc/E11.5_H3K27ac.pooled.macs2_downSampled",

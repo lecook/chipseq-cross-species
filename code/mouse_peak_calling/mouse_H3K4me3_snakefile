@@ -109,18 +109,18 @@ rule all:
         "E13.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
         "E14.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
         "E15.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
-        # "output/peaks/H3K4me3_E10.5_overlap.narrowPeak",
-        # "output/peaks/H3K4me3_E11.5_overlap.narrowPeak",
-        # "output/peaks/H3K4me3_E12.5_overlap.narrowPeak",
-        # "output/peaks/H3K4me3_E13.5_overlap.narrowPeak",
-        # "output/peaks/H3K4me3_E14.5_overlap.narrowPeak",
-        # "output/peaks/H3K4me3_E15.5_overlap.narrowPeak",
-        # "output/peaks/H3K4me3_E10.5_overlap.frip",
-        # "output/peaks/H3K4me3_E11.5_overlap.frip",
-        # "output/peaks/H3K4me3_E12.5_overlap.frip",
-        # "output/peaks/H3K4me3_E13.5_overlap.frip",
-        # "output/peaks/H3K4me3_E14.5_overlap.frip",
-        # "output/peaks/H3K4me3_E15.5_overlap.frip"
+        "output/peaks/H3K4me3_E10.5_overlap.narrowPeak",
+        "output/peaks/H3K4me3_E11.5_overlap.narrowPeak",
+        "output/peaks/H3K4me3_E12.5_overlap.narrowPeak",
+        "output/peaks/H3K4me3_E13.5_overlap.narrowPeak",
+        "output/peaks/H3K4me3_E14.5_overlap.narrowPeak",
+        "output/peaks/H3K4me3_E15.5_overlap.narrowPeak",
+        "output/peaks/H3K4me3_E10.5_overlap.frip",
+        "output/peaks/H3K4me3_E11.5_overlap.frip",
+        "output/peaks/H3K4me3_E12.5_overlap.frip",
+        "output/peaks/H3K4me3_E13.5_overlap.frip",
+        "output/peaks/H3K4me3_E14.5_overlap.frip",
+        "output/peaks/H3K4me3_E15.5_overlap.frip"
 
 # ===============================================================================================
 #  1. FASTQC
@@ -514,12 +514,12 @@ rule call_peaks_macs2_pooled_replicates:
         E14C = "output/bam_files/input_E14.5_H3K4me3_downSampled_q30.sorted.dedup.bam",
         E15C = "output/bam_files/input_E15.5_H3K4me3_downSampled_q30.sorted.dedup.bam"
     output:
-        E14 = "E14.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
-        E15 = "E15.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
-        E10 = "E10.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
-        E13 = "E13.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
-        E12 = "E12.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
-        E11 = "E11.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak"
+        "E14.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
+        "E15.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
+        "E10.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
+        "E13.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
+        "E12.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
+        "E11.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak"
     log:
         E10 = "output/qc/E10.5_H3K4me3.pooled.macs2_downSampled.log",
         E11 = "output/qc/E11.5_H3K4me3.pooled.macs2_downSampled.log",
@@ -528,12 +528,12 @@ rule call_peaks_macs2_pooled_replicates:
         E14 = "output/qc/E14.5_H3K4me3.pooled.macs2_downSampled.log",
         E15 = "output/qc/E15.5_H3K4me3.pooled.macs2_downSampled.log"
     params:
-        "output/peaks/E10.5_H3K4me3.pooled.macs2_downSampled",
-        "output/peaks/E11.5_H3K4me3.pooled.macs2_downSampled",
-        "output/peaks/E12.5_H3K4me3.pooled.macs2_downSampled",
-        "output/peaks/E13.5_H3K4me3.pooled.macs2_downSampled",
-        "output/peaks/E14.5_H3K4me3.pooled.macs2_downSampled",
-        "output/peaks/E15.5_H3K4me3.pooled.macs2_downSampled"
+        E10 = "output/peaks/E10.5_H3K4me3.pooled.macs2_downSampled",
+        E11 = "output/peaks/E11.5_H3K4me3.pooled.macs2_downSampled",
+        E12 = "output/peaks/E12.5_H3K4me3.pooled.macs2_downSampled",
+        E13 = "output/peaks/E13.5_H3K4me3.pooled.macs2_downSampled",
+        E14 = "output/peaks/E14.5_H3K4me3.pooled.macs2_downSampled",
+        E15 = "output/peaks/E15.5_H3K4me3.pooled.macs2_downSampled"
     run:
         shell("macs2 callpeak -f BAM -t {input.E10} \
         -c {input.E10C} --keep-dup all \
