@@ -335,7 +335,8 @@ rule estimate_lib_complexity:
 
 rule deeptools_summary:
     input:
-        expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam"], zip, sample=all_samples, stage=STAGE, mark = MARK)
+        bam = expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam"], zip, sample=all_samples, stage=STAGE, mark = MARK)
+        bai = expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bai"], zip, sample=all_samples, stage=STAGE, mark = MARK)
     output:
         sum="output/qc/H3K4me3_multibamsum_mouse.npz",
         counts="output/qc/H3K4me3_multibamsum_mouse.tab"
@@ -345,7 +346,7 @@ rule deeptools_summary:
     shell:
         " multiBamSummary bins \
         -p {threads} \
-        -b {input} \
+        -b {input.bam} \
         --centerReads \
         -out {output.sum} \
         --outRawCounts {output.counts} 2> {log}"
@@ -370,8 +371,8 @@ rule deeptools_correlation:
 
 rule deeptools_coverage:
     input:
-        bam = "output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam",
-        bai = "output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bai"
+        bam = expand("output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam", zip , sample=all_samples, stage=STAGE, mark = MARK)
+        bai = expand("output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bai", zip, , sample=all_samples, stage=STAGE, mark = MARK)
     output:
         "output/qc/{sample}_{stage}_{mark}.SeqDepthNorm_mouse.bw"
     log:
