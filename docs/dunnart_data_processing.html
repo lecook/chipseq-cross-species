@@ -473,16 +473,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree90852d50562ffd3dc9bb0cdfe0acf101bb1c2dedtargetblank90852d5a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/90852d50562ffd3dc9bb0cdfe0acf101bb1c2ded" target="_blank">90852d5</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree6dff483ad2bd86856547d4c8e045c6f7c3d0f37atargetblank6dff483a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/6dff483ad2bd86856547d4c8e045c6f7c3d0f37a" target="_blank">6dff483</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree90852d50562ffd3dc9bb0cdfe0acf101bb1c2dedtargetblank90852d5a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree6dff483ad2bd86856547d4c8e045c6f7c3d0f37atargetblank6dff483a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/90852d50562ffd3dc9bb0cdfe0acf101bb1c2ded" target="_blank">90852d5</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/6dff483ad2bd86856547d4c8e045c6f7c3d0f37a" target="_blank">6dff483</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -586,6 +586,7 @@ Untracked files:
     Untracked:  output/qc/ENCFF058AUT_E12.5_H3K27ac.dupmark.qc
     Untracked:  output/qc/ENCFF058AUT_E12.5_H3K4me3.dupmark.qc
     Untracked:  output/qc/ENCFF117QRC_E13.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF117QRC_E13.5_H3K4me3.dupmark.qc
     Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.dupmark.qc
     Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.dupmark.qc
     Untracked:  output/qc/ENCFF157KEH_E10.5_H3K27ac.dupmark.qc
@@ -601,6 +602,7 @@ Untracked files:
     Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
     Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac_filt_15Mreads.SE.cc.qc
     Untracked:  output/qc/ENCFF203JQV_E12.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF203JQV_E12.5_H3K4me3.dupmark.qc
     Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.dedup.flagstat.qc
     Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.downSampled.flagstat.qc
     Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.dupmark.flagstat.qc
@@ -834,6 +836,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/6dff483ad2bd86856547d4c8e045c6f7c3d0f37a/analysis/dunnart_data_processing.Rmd" target="_blank">6dff483</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-17
+</td>
+<td>
+wflow_publish(“analysis/dunnart_data_processing.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/0ad6e870fe714c1fb56fb177f6e91b676380d26a/docs/dunnart_data_processing.html" target="_blank">0ad6e87</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-17
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1641,7 +1677,7 @@ module load bowtie2/2.3.5.1</code></pre>
 <p><code>plotCorrelation</code> computes the overall similarity between two or more files based on read coverage (or other scores) within genomic regions.</p>
 <p>This helps to determine whether the different sample types can be separated, i.e., samples of different conditions are expected to be more dissimilar to each other than replicates within the same condition.</p>
 <div class="figure">
-<embed src="pearsoncor_multibamsum.pdf" height="500" />
+<embed src="pearsoncor_multibamsum.pdf" width="600" height="500" />
 <p class="caption">Pearson correlation dunnart BAM files</p>
 </div>
 </div>
@@ -1651,7 +1687,7 @@ module load bowtie2/2.3.5.1</code></pre>
 <p>It determines how well the signal in the ChIP-seq sample can be differentiated from the background distribution of reads in the control sample.</p>
 <p>An ideal input with perfect uniform distribution of reads along the genome (i.e. without enrichments in open chromatin etc.) and infinite sequencing coverage should generate a straight diagonal line. A very specific and strong ChIP enrichment will be indicated by a prominent and steep rise of the cumulative sum towards the highest rank. This means that a big chunk of reads from the ChIP sample is located in few bins which corresponds to high, narrow enrichments typically seen for transcription factors.</p>
 <div class="figure">
-<embed src="multiBAM_fingerprint.pdf" height="500" />
+<embed src="multiBAM_fingerprint.pdf" width="600" height="500" />
 <p class="caption">Fingerprint plot for dunnart BAM files</p>
 </div>
 </div>
@@ -1659,7 +1695,7 @@ module load bowtie2/2.3.5.1</code></pre>
 <h3>BAM PE fragment size</h3>
 <p>This tool calculates the fragment sizes for read pairs given a BAM file from paired-end sequencing. Several regions are sampled depending on the size of the genome and number of processors to estimate thesummary statistics on the fragment lengths.</p>
 <div class="figure">
-<embed src="bamPEFragmentSize_hist.pdf" height="500" />
+<embed src="bamPEFragmentSize_hist.pdf" width="600" height="500" />
 <p class="caption">Fragment size for read pairs in a BAM file</p>
 </div>
 </div>
