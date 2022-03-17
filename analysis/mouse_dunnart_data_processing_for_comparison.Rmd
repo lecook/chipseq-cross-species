@@ -20,6 +20,43 @@ xargs -L 1 curl -O -J -L < control_files.txt
 ## Filter mouse alignments
 Uses samtools and picards MarkDuplicates to remove low quality reads. This is based on and in accordance with the ENCODE Guidelines and pipeline (https://github.com/ENCODE-DCC/chip-seq-pipeline2)
 
+See full snakemake script for details: code/mouse_peak_calling/mouse_H3K4me3 and code/mouse_peak_calling/mouse_H3K27ac
+
+
+
+```{r echo=FALSE, warning = FALSE, message = FALSE}
+library(data.table)
+library(dplyr)
+library(stringr)
+library(purrr)
+library(tidyverse)
+library(knitr)
+
+flagstats <- list.files("output/qc", pattern = "*dedup.flagstat.qc|*PPq30.flagstat.qc|*unfiltered.flagstat.qc", full.names = T) # create list of files in directory
+filenames <- sub('\\.flagstat.qc$', '', basename(flagstats)) 
+files <- as.list(flagstats)
+data <- lapply(files, function(x) data.table::fread(x, header = FALSE, sep = "\t", quote = "", na.strings = c("", "NA")))
+names(data) <- filenames
+
+stats <- lapply(data, function(x) x[1, ])
+stats <- lapply(stats, function(x) data.table(read_count = substr(x, 1, 9)))
+stats <- Map(dplyr::mutate, stats, file = names(stats))
+stats <- rbindlist(stats,)
+names <- str_split_fixed(stats$file, "\\.[A-Za-z]", 2)
+stats2 <- as.data.table(cbind(stats$read_count, names))
+
+colnames(stats2) <- c("num_reads", "file", "processing")
+stats2[stats2$processing == "edup"]$processing <- "duplicates removed" 
+stats2[stats2$processing == "nfiltered"]$processing <- "mapped reads" 
+stats2[stats2$processing == "Pq30"]$processing <- "remove orphan reads and MAPQ < 30" 
+
+setcolorder(stats2, c("file", "processing", "num_reads"))
+
+kable(stats2, caption="Table. Read alignment quality metrics before and after filtering steps")
+```
+
+## Library complexity
+
 __Library Complexity ChIP-seq Standards:__
 
 | PBC1 | PBC2 | Bottlenecking level | NRF | Complexity | Flag colors |
@@ -29,53 +66,29 @@ __Library Complexity ChIP-seq Standards:__
 | 0.8 ≤ PBC1 < 0.9 | 3 ≤ PBC2 < 10 | Mild | 0.8 ≤ NRF < 0.9 | Compliant | None |
 | ≥ 0.9 | ≥ 10 | None | > 0.9 | Ideal | None |
 
-See full snakemake script for details: code/mouse_peak_calling/mouse_H3K4me3 and code/mouse_peak_calling/mouse_H3K27ac
 
-Table. Read alignment quality metrics before and aftering filtering steps
+```{r echo=FALSE, warning = FALSE, message = FALSE}
 
-|                                                                                      |               |            |                   | **read counts **                                                                                                                                                                                                                                                             |                            |                              |            |             |              |
-| ---------------: | :------------ | :--------- | :---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | -------------------------: | ---------------------------: | ---------: | ----------: | -----------: |
-| **replicate**    | **antibody**  | **stage**  | **accession ID**  | *bwa * <br> *alignment*    | *filtered * <br> *readŝ*  | *remove * <br> *duplicates*  | **NRF\***  | **PBC1\***  | **PBC2\***   |
-| 1                | H3K27ac       | E10\.5     | ENCFF213EBC       | 86919825                                                                                                                                                                                                                                                                     | 74296920                   | 61061524                     | 0\.83      | 0\.83       | 5\.53        |
-| 2                | H3K27ac       | E10\.5     | ENCFF548BRR       | 49113729                                                                                                                                                                                                                                                                     | 43572898                   | 38069875                     | 0\.88      | 0\.88       | 8\.03        |
-| 1                | H3K27ac       | E11\.5     | ENCFF512SFE       | 1714339                                                                                                                                                                                                                                                                      | 12827968                   | 11879316                     | 0\.93      | 0\.93       | 13\.76       |
-| 2                | H3K27ac       | E11\.5     | ENCFF515PKL       | 18419756                                                                                                                                                                                                                                                                     | 13753883                   | 11961286                     | 0\.88      | 0\.88       | 7\.7         |
-| 2                | H3K27ac       | E12\.5     | ENCFF011NFM       | 41510259                                                                                                                                                                                                                                                                     | 32754035                   | 28442356                     | 0\.88      | 0\.88       | 7\.55        |
-| 1                | H3K27ac       | E13\.5     | ENCFF194ORC       | 47508791                                                                                                                                                                                                                                                                     | 39115139                   | 23235076                     | 0\.64      | 0\.62       | 2\.49        |
-| 2                | H3K27ac       | E13\.5     | ENCFF290ZNF       | 46476048                                                                                                                                                                                                                                                                     | 37416425                   | 26624266                     | 0\.74      | 0\.73       | 3\.52        |
-| 1                | H3K27ac       | E14\.5     | ENCFF327VAO       | 37480089                                                                                                                                                                                                                                                                     | 30104464                   | 19228162                     | 0\.66      | 0\.64       | 2\.53        |
-| 2                | H3K27ac       | E14\.5     | ENCFF902HAR       | 27840473                                                                                                                                                                                                                                                                     | 22156787                   | 15203030                     | 0\.69      | 0\.67       | 2\.68        |
-| 1                | H3K27ac       | E15\.5     | ENCFF584JFB       | 51675307                                                                                                                                                                                                                                                                     | 40125566                   | 35551034                     | 0\.9       | 0\.9        | 9\.61        |
-| 2                | H3K27ac       | E15\.5     | ENCFF707WKL       | 38499223                                                                                                                                                                                                                                                                     | 30334974                   | 27522173                     | 0\.92      | 0\.92       | 11\.76       |
-| 1                | H3K4me3       | E10\.5     | ENCFF124UYX       | 74283697                                                                                                                                                                                                                                                                     | 65480729                   | 47429840                     | 0\.73      | 0\.76       | 4\.51        |
-| 2                | H3K4me3       | E10\.5     | ENCFF045IPK       | 39305102                                                                                                                                                                                                                                                                     | 34283317                   | 27327155                     | 0\.8       | 0\.82       | 5\.7         |
-| 1                | H3K4me3       | E11\.5     | ENCFF760QYZ       | 24048599                                                                                                                                                                                                                                                                     | 17547752                   | 16515484                     | 0\.95      | 0\.95       | 20\.21       |
-| 2                | H3K4me3       | E11\.5     | ENCFF717QDV       | 19425608                                                                                                                                                                                                                                                                     | 14136366                   | 13504654                     | 0\.96      | 0\.97       | 26\.71       |
-| 1                | H3K4me3       | E12\.5     | ENCFF182ZPF       | 37674883                                                                                                                                                                                                                                                                     | 30140587                   | 26489691                     | 0\.89      | 0\.89       | 9\.29        |
-| 2                | H3K4me3       | E12\.5     | ENCFF941QJZ       | 38463605                                                                                                                                                                                                                                                                     | 29985012                   | 26459778                     | 0\.89      | 0\.9        | 9\.44        |
-| 1                | H3K4me3       | E13\.5     | ENCFF485UDC       | 47478873                                                                                                                                                                                                                                                                     | 38287309                   | 33094082                     | 0\.89      | 0\.9        | 10\.81       |
-| 2                | H3K4me3       | E13\.5     | ENCFF124TAB       | 47598002                                                                                                                                                                                                                                                                     | 38139564                   | 33020017                     | 0\.89      | 0\.91       | 11\.12       |
-| 1                | H3K4me3       | E14\.5     | ENCFF724DMU       | 25402316                                                                                                                                                                                                                                                                     | 18964886                   | 17278836                     | 0\.92      | 0\.93       | 13\.9        |
-| 2                | H3K4me3       | E14\.5     | ENCFF665QBJ       | 28852674                                                                                                                                                                                                                                                                     | 22484958                   | 19804325                     | 0\.9       | 0\.9        | 10\.56       |
-| 1                | H3K4me3       | E15\.5     | ENCFF258KCR       | 55588923                                                                                                                                                                                                                                                                     | 44138244                   | 38278946                     | 0\.89      | 0\.91       | 12\.05       |
-| 2                | H3K4me3       | E15\.5     | ENCFF401BKM       | 42617927                                                                                                                                                                                                                                                                     | 34005723                   | 29687861                     | 0\.9       | 0\.91       | 12\.13       |
-| 1                | input control | E10\.5     | ENCFF157KEH       | 75962416                                                                                                                                                                                                                                                                     | 57382820                   | 55915261                     | 0\.98      | 0\.98       | 45\.2        |
-| 2                | input control | E10\.5     | ENCFF825AVI       | 70250734                                                                                                                                                                                                                                                                     | 53358758                   | 51796823                     | 0\.98      | 0\.98       | 38\.64       |
-| 1                | input control | E11\.5     | ENCFF184CUE       | 14581637                                                                                                                                                                                                                                                                     | 10190363                   | 10031334                     | 0\.99      | 0\.99       | 69\.67       |
-| 2                | input control | E11\.5     | ENCFF376FGM       | 16001082                                                                                                                                                                                                                                                                     | 11239845                   | 11033934                     | 0\.99      | 0\.99       | 59\.63       |
-| 1                | input control | E12\.5     | ENCFF203JQV       | 74367126                                                                                                                                                                                                                                                                     | 54966177                   | 52895081                     | 0\.97      | 0\.97       | 29\.47       |
-| 2                | input control | E12\.5     | ENCFF058AUT       | 68220307                                                                                                                                                                                                                                                                     | 50400902                   | 48480815                     | 0\.97      | 0\.97       | 29\.1        |
-| 1                | input control | E13\.5     | ENCFF117QRC       | 77084648                                                                                                                                                                                                                                                                     | 56275163                   | 53582563                     | 0\.97      | 0\.97       | 30\.93       |
-| 2                | input control | E13\.5     | ENCFF248PGK       | 66492732                                                                                                                                                                                                                                                                     | 48343406                   | 46564874                     | 0\.98      | 0\.98       | 38\.51       |
-| 1                | input control | E14\.5     | ENCFF784ORI       | 35480589                                                                                                                                                                                                                                                                     | 25431770                   | 24573359                     | 0\.97      | 0\.97       | 32\.34       |
-| 2                | input control | E14\.5     | ENCFF002HZV       | 33021720                                                                                                                                                                                                                                                                     | 23658223                   | 23199516                     | 0\.99      | 0\.99       | 57\.52       |
-| 1                | input control | E15\.5     | ENCFF727QTS       | 72318210                                                                                                                                                                                                                                                                     | 51828288                   | 50444903                     | 0\.98      | 0\.99       | 52\.73       |
-| 2                | input control | E15\.5     | ENCFF182XFG       | 86322714                                                                                                                                                                                                                                                                     | 63335464                   | 60305840                     | 0\.97      | 0\.97       | 28\.35       |
+lib.complex <- list.files("output/qc", pattern = "*pbc.qc", full.names = T) # create list of files in directory
+filenames <- sub('\\.pbc.qc$', '', basename(lib.complex)) 
+files <- as.list(lib.complex)
+data <- lapply(files, function(x) data.table::fread(x, header = FALSE, sep = "\t", quote = "", na.strings = c("", "NA")))
 
-* calculated from a subsample of ~10-15M aligned reads prior to removing MarkDuplicates
+names(data) <- filenames
+stats <- Map(dplyr::mutate, data, file = names(data))
+stats <- rbindlist(stats,)
 
- ̂ excluded low quality (MAPQ30) and orphaned reads
+colnames(stats) = c("TotalReadPairs", "DistinctReadPairs", 
+                "OneReadPair", "TwoReadPairs",
+                "NRF=Distinct/Total", "PBC1=OnePair/Distinct",
+                "PBC2=OnePair/TwoPair", "file")
+setcolorder(stats, c("file", "TotalReadPairs", "DistinctReadPairs", 
+                "OneReadPair", "TwoReadPairs",
+                "NRF=Distinct/Total", "PBC1=OnePair/Distinct",
+                "PBC2=OnePair/TwoPair"))
 
+kable(stats, caption="Table. Library complexity metrics")
+```
 
 ## Normalise dunnart and mouse BAM files to 10M reads 
 
@@ -144,37 +157,32 @@ RSC; RSC>0.8 (0 = no signal; <1 low quality ChIP; >1 high enrichment
 
 Quality tag based on thresholded RSC (codes: -2:veryLow,-1:Low,0:Medium,1:High; 2:veryHigh)
 
-Table. Peak calling quality metrics for mouse ChIP-seq peaks after peak calling with MACS2
+Table. 
 
-|  <br> **replicate**                     | **antibody**     | **stage**        | **accession ID**  | **number ** <br> **of peaks**  | **FRiP ̂**       | **NSC\***         | **RSC\***         | **Quality ** <br> **Tag\***  | **% replicate ** <br> **reproducibility**  | **number of ** <br> **consensus ** <br> **peaks**  | **FRiP^ for ** <br> **consensus ** <br> **peaks**   |
-| :-------------------------------------: | :--------------: | :--------------: | :---------------: | :----------------------------: | :--------------: | :---------------: | :---------------: | :--------------------------: | :----------------------------------------: | :------------------------------------------------: | :-------------------------------------------------: |
-| 1                                       | H3K27ac          | E10\.5           | ENCFF213EBC       | 61169                          | 0\.12            | 1\.11             | 1\.15             | 1                            | 45\.27                                     | 27688                                              | 0\.14                                               |
-| 2                                       | H3K27ac          | E10\.5           | ENCFF548BRR       | 80654                          | 0\.19            | 1\.19             | 1\.23             | 1                            | 34\.33                                     |                                                    |                                                     |
-| 1                                       | H3K27ac          | E11\.5           | ENCFF512SFE       | 25352                          | 0\.07            | 1\.08             | 1\.61             | 2                            | 47\.93                                     | 12149                                              | 0\.06                                               |
-| 2                                       | H3K27ac          | E11\.5           | ENCFF515PKL       | 23732                          | 0\.06            | 1\.09             | 1\.97             | 2                            | 51\.2                                      |                                                    |                                                     |
-| 1                                       | H3K27ac          | E12\.5           | ENCFF394TZN       | 27242                          | 0\.07            | 1\.08             | 1\.59             | 2                            | 58\.17                                     | 15845                                              | 0\.08                                               |
-| 2                                       | H3K27ac          | E12\.5           | ENCFF011NFM       | 62319                          | 0\.11            | 1\.09             | 1\.49             | 1                            | 25\.43                                     |                                                    |                                                     |
-| 1                                       | H3K27ac          | E13\.5           | ENCFF194ORC       | 85874                          | 0\.18            | 1\.19             | 2\.14             | 2                            | 35\.72                                     | 30671                                              | 0\.13                                               |
-| 2                                       | H3K27ac          | E13\.5           | ENCFF290ZNF       | 71246                          | 0\.13            | 1\.13             | 2\.05             | 2                            | 43\.05                                     |                                                    |                                                     |
-| 1                                       | H3K27ac          | E14\.5           | ENCFF327VAO       | 45785                          | 0\.15            | 1\.19             | 1\.65             | 2                            | 48\.56                                     | 22232                                              | 0\.14                                               |
-| 2                                       | H3K27ac          | E14\.5           | ENCFF902HAR       | 44042                          | 0\.14            | 1\.16             | 1\.72             | 2                            | 50\.48                                     |                                                    |                                                     |
-| 1                                       | H3K27ac          | E15\.5           | ENCFF584JFB       | 35724                          | 0\.09            | 1\.08             | 1\.49             | 1                            | 51\.08                                     | 18246                                              | 0\.09                                               |
-| 2                                       | H3K27ac          | E15\.5           | ENCFF707WKL       | 37600                          | 0\.1             | 1\.1              | 1\.54             | 2                            | 48\.53                                     |                                                    |                                                     |
-| 1                                       | H3K4me3          | E10\.5           | ENCFF124UYX       | 29478                          | 0\.44            | 2\.28             | 1\.12             | 1                            | 70\.77                                     | 20860                                              | 0\.47                                               |
-| 2                                       | H3K4me3          | E10\.5           | ENCFF045IPK       | 26820                          | 0\.49            | 2\.47             | 1\.15             | 1                            | 77\.78                                     |                                                    |                                                     |
-| 1                                       | H3K4me3          | E11\.5           | ENCFF760QYZ       | 28388                          | 0\.34            | 1\.86             | 1\.25             | 1                            | 66\.43                                     | 18857                                              | 0\.33                                               |
-| 2                                       | H3K4me3          | E11\.5           | ENCFF717QDV       | 28368                          | 0\.33            | 1\.81             | 1\.24             | 1                            | 66\.48                                     |                                                    |                                                     |
-| 1                                       | H3K4me3          | E12\.5           | ENCFF182ZPF       | 29466                          | 0\.33            | 1\.93             | 1\.21             | 1                            | 66\.35                                     | 19549                                              | 0\.32                                               |
-| 2                                       | H3K4me3          | E12\.5           | ENCFF941QJZ       | 30868                          | 0\.31            | 1\.67             | 1\.21             | 1                            | 63\.34                                     |                                                    |                                                     |
-| 1                                       | H3K4me3          | E13\.5           | ENCFF485UDC       | 29715                          | 0\.4             | 2\.16             | 1\.24             | 1                            | 69\.78                                     | 20734                                              | 0\.41                                               |
-| 2                                       | H3K4me3          | E13\.5           | ENCFF124TAB       | 29547                          | 0\.41            | 2\.19             | 1\.24             | 1                            | 70\.18                                     |                                                    |                                                     |
-| 1                                       | H3K4me3          | E14\.5           | ENCFF724DMU       | 24250                          | 0\.5             | 2\.34             | 1\.26             | 1                            | 81\.08                                     | 19660                                              | 0\.53                                               |
-| 2                                       | H3K4me3          | E14\.5           | ENCFF665QBJ       | 25084                          | 0\.55            | 2\.54             | 1\.26             | 1                            | 78\.38                                     |                                                    |                                                     |
-| 1                                       | H3K4me3          | E15\.5           | ENCFF258KCR       | 23365                          | 0\.36            | 2\.25             | 1\.29             | 1                            | 80\.11                                     | 18717                                              | 0\.39                                               |
-| 2                                       | H3K4me3          | E15\.5           | ENCFF401BKM       | 23920                          | 0\.42            | 2\.47             | 1\.33             | 1                            | 78\.25                                     |                                                    |                                                     |
+```{r echo=FALSE, warning = FALSE, message = FALSE}
 
-\* computed from 15M reads subsampled
-\ ̂ fraction of reads in peaks
+ssp <- list.files("output/qc", pattern = "*cc.qc", full.names = T) # create list of files in directory
+filenames <- sub('\\_filt_15Mreads.SE.cc.qc$', '', basename(ssp)) 
+files <- as.list(ssp)
+data <- lapply(files, function(x) data.table::fread(x, header = FALSE, sep = "\t", quote = "", na.strings = c("", "NA")))
+
+names(data) <- filenames
+stats <- Map(dplyr::mutate, data, file = names(data))
+stats <- rbindlist(stats,)
+stats <- stats[,-1]
+colnames(stats) = c("numReads", "estFragLen", 
+                "corr_estFragLen", "PhantomPeak",
+                "corr_phantomPeak", "argmin_corr",
+                "min_corr", "phantomPeakCoef", "relPhantomPeakCoef",
+                "QualityTag", "file")
+setcolorder(stats, c("file", "numReads", "estFragLen", 
+                "corr_estFragLen", "PhantomPeak",
+                "corr_phantomPeak", "argmin_corr",
+                "min_corr", "phantomPeakCoef", "relPhantomPeakCoef",
+                "QualityTag"))
+
+kable(stats, caption="Table. Peak calling quality metrics for mouse and dunnart ChIP-seq peaks after peak calling with MACS2")
+```
 
 ## Peak QC
 ### Number of peaks 
