@@ -29,7 +29,7 @@ echo "Working dir is $wd"
 
 file_dir="$wd/$input_dir"
 qc_dir="$wd/qc"
-out_file="$wd/qc/finalqc.txt"
+out_file="$wd/$qc_dir/finalqc.txt"
 
 ## run command
 echo "Getting filenames and count"
@@ -40,7 +40,6 @@ for f in "$file_dir/"*."${file_type}"; do
     if [[ $f == *.gz ]]; then
         gunzip -nc "$f" | wc -l >> counts.out
     elif [[ $f == *.bam ]]; then
-        module load samtools/1.9
         samtools view "$f" | wc -l >> counts.out 
     fi
 done
