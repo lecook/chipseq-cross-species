@@ -169,7 +169,7 @@ rule markDups:
         bam="output/bam_files/{sample}_{stage}_{mark}_q30.dupmark.bam",
         dupQC="output/bam_files/{sample}_{stage}_{mark}.dupmark.qc"
     log:
-        "output/logs/{sample}_{stage}_{mark}.dedup"
+        "output/logs/{sample}_{stage}_{mark}.dupmark"
     shell:
         "picard MarkDuplicates I={input} O={output.bam} METRICS_FILE={output.dupQC} REMOVE_DUPLICATES=false ASSUME_SORTED=true 2> {log}"
 
