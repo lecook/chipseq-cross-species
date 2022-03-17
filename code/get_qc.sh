@@ -7,8 +7,7 @@
 helpFunction()
 {
    echo ""
-   echo "Usage: $0 -g genome -i input_dir -f file_type"
-   echo -e "\t-g genome assembly (e.g. hg38)"
+   echo "Usage: $0 -i input_dir -f file_type"
    echo -e "\t-i Directory where the bams/narrowPeak files are stored"
    echo -e "\t-f file type that must be processed (e.g., bam)"
    exit 1 # Exit script after printing help
@@ -16,7 +15,6 @@ helpFunction()
 
 while getopts "g:i:f:" flag; do
     case "${flag}" in
-        g) genome="$OPTARG";;
         i) input_dir="$OPTARG";;
         f) file_type="$OPTARG";;
         ?) helpFunction ;; # Print helpFunction 
@@ -25,13 +23,13 @@ done
 
 
 basedir='/data/projects/punim0586/lecook/chipseq-cross-species'
-wd="$basedir/output/$input_dir"
+wd="$basedir/output"
 
 echo "Working dir is $wd"
 
-file_dir="$wd/bam_files"
+file_dir="$wd/$input_dir"
 qc_dir="$wd/qc"
-out_file="$qc_dir/finalqc.txt"
+out_file="$wd/qc/finalqc.txt"
 
 ## run command
 echo "Getting filenames and count"
