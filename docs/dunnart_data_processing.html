@@ -473,16 +473,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree6dff483ad2bd86856547d4c8e045c6f7c3d0f37atargetblank6dff483a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/6dff483ad2bd86856547d4c8e045c6f7c3d0f37a" target="_blank">6dff483</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree445618ed70432ca1cb83c15526551976a1b329e0targetblank445618ea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/445618ed70432ca1cb83c15526551976a1b329e0" target="_blank">445618e</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree6dff483ad2bd86856547d4c8e045c6f7c3d0f37atargetblank6dff483a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree445618ed70432ca1cb83c15526551976a1b329e0targetblank445618ea" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/6dff483ad2bd86856547d4c8e045c6f7c3d0f37a" target="_blank">6dff483</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/445618ed70432ca1cb83c15526551976a1b329e0" target="_blank">445618e</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -836,6 +836,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/445618ed70432ca1cb83c15526551976a1b329e0/analysis/dunnart_data_processing.Rmd" target="_blank">445618e</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-17
+</td>
+<td>
+wflow_publish(“analysis/dunnart_data_processing.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/4d5909161f280506ad2df362ff12a5c8aa58c900/docs/dunnart_data_processing.html" target="_blank">4d59091</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-17
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1666,7 +1700,93 @@ module load bowtie2/2.3.5.1</code></pre>
 </tbody>
 </table>
 <p>See full snakemake script for details: code/dunnart_peak_calling/dunnart_snakefile.</p>
-<p>Table. Read alignment quality metrics before and aftering filtering steps | ** ** <br> ** ** | ** ** | ** <strong>read counts</strong> ** | ** ** | ** ** | ** ** | ** ** | ** ** | | :————————–: | :—————–: | :————————–: | :———————-: | :————————: | :————–: | :—————: | :—————-: | | <strong>Sample</strong> | <strong>Antibody</strong> | <em>bowtie2 alignment</em> | <em>filtered reads*</em> | <em>remove duplicates</em> | <strong>NRF*</strong> | <strong>PBC1*</strong> | <strong>PBC2*</strong> | | A-1 | input | 130587134 | 87165286 | 47645260 | 07773602 | 07774519 | 4445728 | | A-2 | H3K4me3 | 103324742 | 62678360 | 35617708 | 07789709 | 07789661 | 47754989 | | A-3 | H3K27ac | 131071676 | 86503078 | 45700530 | 07761768 | 07761687 | 41196586 | | B-1 | input | 111574640 | 72303316 | 44433864 | 08820313 | 08819974 | 55545324 | | B-2 | H3K4me3 | 114146802 | 67048994 | 42357180 | 08831032 | 08830749 | 58898224 | | B-3 | H3K27ac | 104714846 | 66615704 | 43939460 | 08847255 | 08847022 | 65529168 |</p>
+<p>Table. Read alignment quality metrics before and aftering filtering steps</p>
+<table style="width:100%;">
+<colgroup>
+<col width="6%" />
+<col width="8%" />
+<col width="18%" />
+<col width="16%" />
+<col width="18%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Sample</th>
+<th align="center">Antibody</th>
+<th align="center">bowtie2 alignment</th>
+<th align="center">filtered reads^</th>
+<th align="center">remove duplicates</th>
+<th align="center">NRF*</th>
+<th align="center">PBC1*</th>
+<th align="center">PBC2*</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">A-1</td>
+<td align="center">input</td>
+<td align="center">130587134</td>
+<td align="center">87165286</td>
+<td align="center">47645260</td>
+<td align="center">0.773602</td>
+<td align="center">0.774519</td>
+<td align="center">4.45728</td>
+</tr>
+<tr class="even">
+<td align="center">A-2</td>
+<td align="center">H3K4me3</td>
+<td align="center">103324742</td>
+<td align="center">62678360</td>
+<td align="center">35617708</td>
+<td align="center">0.789709</td>
+<td align="center">0.789661</td>
+<td align="center">4.754989</td>
+</tr>
+<tr class="odd">
+<td align="center">A-3</td>
+<td align="center">H3K27ac</td>
+<td align="center">131071676</td>
+<td align="center">86503078</td>
+<td align="center">45700530</td>
+<td align="center">0.761768</td>
+<td align="center">0.761687</td>
+<td align="center">4.196586</td>
+</tr>
+<tr class="even">
+<td align="center">B-1</td>
+<td align="center">input</td>
+<td align="center">111574640</td>
+<td align="center">72303316</td>
+<td align="center">44433864</td>
+<td align="center">0.820313</td>
+<td align="center">0.819974</td>
+<td align="center">5.545324</td>
+</tr>
+<tr class="odd">
+<td align="center">B-2</td>
+<td align="center">H3K4me3</td>
+<td align="center">114146802</td>
+<td align="center">67048994</td>
+<td align="center">42357180</td>
+<td align="center">0.831032</td>
+<td align="center">0.830749</td>
+<td align="center">5.898224</td>
+</tr>
+<tr class="even">
+<td align="center">B-3</td>
+<td align="center">H3K27ac</td>
+<td align="center">104714846</td>
+<td align="center">66615704</td>
+<td align="center">43939460</td>
+<td align="center">0.847255</td>
+<td align="center">0.847022</td>
+<td align="center">6.529168</td>
+</tr>
+</tbody>
+</table>
 <p>* calculated from a subsample of ~10-15M aligned reads prior to removing duplicates</p>
 <p>^ excluded low quality (MAPQ 30) and orphaned reads</p>
 </div>
