@@ -514,7 +514,12 @@ rule call_peaks_macs2_pooled_replicates:
         E14C = "output/bam_files/input_E14.5_H3K4me3_downSampled_q30.sorted.dedup.bam",
         E15C = "output/bam_files/input_E15.5_H3K4me3_downSampled_q30.sorted.dedup.bam"
     output:
-        directory("output/peaks")
+        E14 = "E14.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
+        E15 = "E15.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
+        E10 = "E10.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
+        E13 = "E13.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
+        E12 = "E12.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
+        E11 = "E11.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak"
     log:
         E10 = "output/qc/E10.5_H3K4me3.pooled.macs2_downSampled.log",
         E11 = "output/qc/E11.5_H3K4me3.pooled.macs2_downSampled.log",
@@ -523,41 +528,41 @@ rule call_peaks_macs2_pooled_replicates:
         E14 = "output/qc/E14.5_H3K4me3.pooled.macs2_downSampled.log",
         E15 = "output/qc/E15.5_H3K4me3.pooled.macs2_downSampled.log"
     params:
-        E10 = "E10.5_H3K4me3.pooled.macs2_downSampled",
-        E11 = "E11.5_H3K4me3.pooled.macs2_downSampled",
-        E12 = "E12.5_H3K4me3.pooled.macs2_downSampled",
-        E13 = "E13.5_H3K4me3.pooled.macs2_downSampled",
-        E14 = "E14.5_H3K4me3.pooled.macs2_downSampled",
-        E15 = "E15.5_H3K4me3.pooled.macs2_downSampled"
+        "output/peaks/E10.5_H3K4me3.pooled.macs2_downSampled",
+        "output/peaks/E11.5_H3K4me3.pooled.macs2_downSampled",
+        "output/peaks/E12.5_H3K4me3.pooled.macs2_downSampled",
+        "output/peaks/E13.5_H3K4me3.pooled.macs2_downSampled",
+        "output/peaks/E14.5_H3K4me3.pooled.macs2_downSampled",
+        "output/peaks/E15.5_H3K4me3.pooled.macs2_downSampled"
     run:
         shell("macs2 callpeak -f BAM -t {input.E10} \
         -c {input.E10C} --keep-dup all \
-        --outdir {output} -p 0.01 \
+        --outdir output/peaks -p 0.01 \
         -n {params.E10} \
         -g mm 2> {log.E10}" )
         shell("macs2 callpeak -f BAM -t {input.E11} \
         -c {input.E11C} --keep-dup all \
-        --outdir {output} -p 0.01 \
+        --outdir output/peaks -p 0.01 \
         -n {params.E11} \
         -g mm 2> {log.E11}" )
         shell("macs2 callpeak -f BAM -t {input.E12} \
         -c {input.E12C} --keep-dup all \
-        --outdir {output} -p 0.01 \
+        --outdir output/peaks -p 0.01 \
         -n {params.E12} \
         -g mm 2> {log.E12}" )
         shell("macs2 callpeak -f BAM -t {input.E13} \
         -c {input.E13C} --keep-dup all \
-        --outdir {output} -p 0.01 \
+        --outdir output/peaks -p 0.01 \
         -n {params.E13} \
         -g mm 2> {log.E13}" )
         shell("macs2 callpeak -f BAM -t {input.E14} \
         -c {input.E14C} --keep-dup all \
-        --outdir {output} -p 0.01 \
+        --outdir output/peaks -p 0.01 \
         -n {params.E14} \
         -g mm 2> {log.E14}" )
         shell("macs2 callpeak -f BAM -t {input.E15} \
         -c {input.E15C} --keep-dup all \
-        --outdir {output} -p 0.01 \
+        --outdir output/peaks -p 0.01 \
         -n {params.E15} \
         -g mm 2> {log.E15}" )
 
