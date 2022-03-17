@@ -24,7 +24,7 @@ while getopts "g:i:f:" flag; do
 done
 
 
-basedir='/data/projects/punim0586/lecook/chipseq-cross-species/'
+basedir='/data/projects/punim0586/lecook/chipseq-cross-species'
 wd="$basedir/output/$input_dir"
 
 echo "Working dir is $wd"
@@ -47,7 +47,7 @@ for f in "$file_dir/"*."${file_type}"; do
     fi
 done
 
-cd "$wd/Files"
+cd "$wd/bam_files"
 
 paste -d "\t" names.out counts.out > "$qc_dir"/stat_qc.out
 rm names.out 
