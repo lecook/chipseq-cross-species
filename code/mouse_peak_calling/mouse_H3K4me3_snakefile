@@ -103,7 +103,6 @@ rule all:
         expand("output/bam_files/{case}_{stage}_{mark}_downSampled_q30.sorted.dedup.bed", zip, case=IPS, stage=STAGE, mark=MARK),
         expand("output/logs/{case}_{stage}_{mark}_downSampled.bamToBed", zip, case=IPS, stage=STAGE, mark=MARK),
         expand("output/qc/{case}_vs_{control}_{stage}_{mark}_downSampled.frip.txt", zip, case=IPS, control=INPUTS, stage=STAGE, mark=MARK),
-        directory("output/peaks/pooled"),
         "output/peaks/H3K4me3_E10.5_overlap.narrowPeak",
         "output/peaks/H3K4me3_E11.5_overlap.narrowPeak",
         "output/peaks/H3K4me3_E12.5_overlap.narrowPeak",
