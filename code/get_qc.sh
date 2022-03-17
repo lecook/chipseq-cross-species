@@ -56,6 +56,6 @@ rm counts.out
 ## Call custom python script to make final spreadsheet
 
 echo "Making spreadsheet"
-python "$basedir"/common_scripts/make_spreadsheet.py "$qc_dir"/stat_qc.out $out_file
+python "$basedir"/code/make_spreadsheet.py "$qc_dir"/stat_qc.out $out_file
 
 rm "$qc_dir"/stat_qc.out
