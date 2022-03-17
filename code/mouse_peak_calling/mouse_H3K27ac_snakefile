@@ -330,7 +330,8 @@ rule estimate_lib_complexity:
 
 rule deeptools_summary:
     input:
-        expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam"], zip, sample=all_samples, stage=STAGE, mark=MARK)
+        bam = expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam"], zip, sample=all_samples, stage=STAGE, mark=MARK)
+        bai = expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bai"], zip, sample=all_samples, stage=STAGE, mark=MARK)
     output:
         sum="output/qc/H3K27ac_multibamsum_mouse.npz",
         counts="output/qc/H3K27ac_multibamsum_mouse.tab"
@@ -340,13 +341,14 @@ rule deeptools_summary:
     shell:
         " multiBamSummary bins \
         -p {threads} \
-        -b {input} \
+        -b {input.bam} \
         --centerReads \
         -out {output.sum} \
         --outRawCounts {output.counts} 2> {log}"
 
 rule deeptools_correlation:
-    input: "output/qc/H3K27ac_multibamsum_mouse.npz"
+    input: 
+        "output/qc/H3K27ac_multibamsum_mouse.npz"
     output:
         fig="docs/H3K27ac_pearsoncor_multibamsum_mouse.pdf",
         matrix="output/qc/H3K27ac_pearsoncor_multibamsum_matrix_mouse.txt"
