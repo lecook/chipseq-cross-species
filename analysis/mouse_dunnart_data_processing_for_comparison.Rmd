@@ -33,7 +33,7 @@ See full snakemake script for details: code/mouse_peak_calling/mouse_H3K4me3 and
 
 
 
-```{r warning = FALSE, message = FALSE}
+```{r echo=FALSE, warning = FALSE, message = FALSE}
 library(data.table)
 library(dplyr)
 library(stringr)
