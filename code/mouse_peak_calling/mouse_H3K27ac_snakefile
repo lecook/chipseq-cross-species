@@ -328,22 +328,22 @@ rule estimate_lib_complexity:
 #   > bamCoverage (read depth normalised bigWig files)
 # ===============================================================================================
 
-rule deeptools_summary:
-    input:
-        expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam"], zip, sample=all_samples, stage=STAGE, mark=MARK)
-    output:
-        sum="output/qc/H3K27ac_multibamsum_mouse.npz",
-        counts="output/qc/H3K27ac_multibamsum_mouse.tab"
-    threads: 32
-    log:
-        "output/logs/H3K27ac_multisummary_mouse.deepTools"
-    shell:
-        " multiBamSummary bins \
-        -p {threads} \
-        -b {input} \
-        --centerReads \
-        -out {output.sum} \
-        --outRawCounts {output.counts} 2> {log}"
+# rule deeptools_summary:
+#     input:
+#         expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam"], zip, sample=all_samples, stage=STAGE, mark=MARK)
+#     output:
+#         sum="output/qc/H3K27ac_multibamsum_mouse.npz",
+#         counts="output/qc/H3K27ac_multibamsum_mouse.tab"
+#     threads: 32
+#     log:
+#         "output/logs/H3K27ac_multisummary_mouse.deepTools"
+#     shell:
+#         " multiBamSummary bins \
+#         -p {threads} \
+#         -b {input} \
+#         --centerReads \
+#         -out {output.sum} \
+#         --outRawCounts {output.counts} 2> {log}"
 
 rule deeptools_correlation:
     input: "output/qc/H3K27ac_multibamsum_mouse.npz"
