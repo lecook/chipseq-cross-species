@@ -510,19 +510,19 @@ rule call_peaks_macs2_pooled_replicates:
     output:
         directory("output/peaks/pooled")
     log:
-        E10 = "output/qc/E10.5_H3K4me3.pooled.macs2_downSampled",
-        E11 = "output/qc/E11.5_H3K4me3.pooled.macs2_downSampled",
-        E12 = "output/qc/E12.5_H3K4me3.pooled.macs2_downSampled",
-        E13 = "output/qc/E13.5_H3K4me3.pooled.macs2_downSampled",
-        E14 = "output/qc/E14.5_H3K4me3.pooled.macs2_downSampled",
-        E15 = "output/qc/E15.5_H3K4me3.pooled.macs2_downSampled"
+        E10 = "output/qc/E10.5_H3K4me3.pooled.macs2_downSampled.log",
+        E11 = "output/qc/E11.5_H3K4me3.pooled.macs2_downSampled.log",
+        E12 = "output/qc/E12.5_H3K4me3.pooled.macs2_downSampled.log",
+        E13 = "output/qc/E13.5_H3K4me3.pooled.macs2_downSampled.log",
+        E14 = "output/qc/E14.5_H3K4me3.pooled.macs2_downSampled.log",
+        E15 = "output/qc/E15.5_H3K4me3.pooled.macs2_downSampled.log"
     params:
-        E10 = "E10.5_H3K4me3.pooled.macs2_downSampled",
-        E11 = "E11.5_H3K4me3.pooled.macs2_downSampled",
-        E12 = "E12.5_H3K4me3.pooled.macs2_downSampled",
-        E13 = "E13.5_H3K4me3.pooled.macs2_downSampled",
-        E14 = "E14.5_H3K4me3.pooled.macs2_downSampled",
-        E15 = "E15.5_H3K4me3.pooled.macs2_downSampled"
+        E10 = "E10.5_H3K4me3.pooled.macs2_downSampled_peaks",
+        E11 = "E11.5_H3K4me3.pooled.macs2_downSampled_peaks",
+        E12 = "E12.5_H3K4me3.pooled.macs2_downSampled_peaks",
+        E13 = "E13.5_H3K4me3.pooled.macs2_downSampled_peaks",
+        E14 = "E14.5_H3K4me3.pooled.macs2_downSampled_peaks",
+        E15 = "E15.5_H3K4me3.pooled.macs2_downSampled_peaks"
     run:
         shell("macs2 callpeak -f BAM -t {input.E10} \
         -c {input.E10C} --keep-dup all \
