@@ -371,7 +371,7 @@ rule deeptools_correlation:
 
 rule deeptools_coverage:
     input:
-        bam = expand("output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam", zip , sample=all_samples, stage=STAGE, mark = MARK)
+        bam = expand("output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam", zip , sample=all_samples, stage=STAGE, mark = MARK),
         bai = expand("output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bai", zip, , sample=all_samples, stage=STAGE, mark = MARK)
     output:
         "output/qc/{sample}_{stage}_{mark}.SeqDepthNorm_mouse.bw"
