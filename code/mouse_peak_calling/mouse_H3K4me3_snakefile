@@ -340,16 +340,16 @@ rule deeptools_summary:
     output:
         sum="output/qc/H3K4me3_multibamsum_mouse.npz",
         counts="output/qc/H3K4me3_multibamsum_mouse.tab"
-    threads: 32
+     threads: 32
     log:
-        "output/logs/H3K4me3_multisummary_mouse.deepTools"
-    shell:
-        " multiBamSummary bins \
+        "output/logs/multisummary.deepTools"
+    run:
+        shell("multiBamSummary bins \
         -p {threads} \
         -b {input.bam} \
         --centerReads \
         -out {output.sum} \
-        --outRawCounts {output.counts} 2> {log}"
+        --outRawCounts {output.counts} 2> {log}")
 
 rule deeptools_correlation:
     input: "output/qc/H3K4me3_multibamsum_mouse.npz"
@@ -358,8 +358,8 @@ rule deeptools_correlation:
         matrix="output/qc/H3K4me3_pearsoncor_multibamsum_matrix_mouse.txt"
     log:
         "output/logs/H3K4me3_correlation_mouse.deepTools"
-    shell:
-        "plotCorrelation \
+    run:
+        shell("plotCorrelation \
         --corData {input} \
         --plotFile {output.fig} \
         --outFileCorMatrix {output.matrix} \
@@ -367,7 +367,7 @@ rule deeptools_correlation:
         --whatToPlot heatmap \
         --skipZeros \
         --plotNumbers \
-        --colorMap RdYlBu 2> {log}"
+        --colorMap RdYlBu 2> {log}")
 
 rule deeptools_coverage:
     input:
@@ -391,15 +391,15 @@ rule deeptools_fingerprint:
     threads: 32
     log:
         "output/logs/H3K4me3_fingerprint_mouse.deepTools"
-    shell:
-        "plotFingerprint -p {threads} \
+    run:
+        shell("plotFingerprint -p {threads} \
         -b {input.bam} \
         --plotFile {output.fig} \
         --outQualityMetrics {output.metrics} \
         --outRawCounts {output.rawcounts} \
         --minMappingQuality 20 \
         --skipZeros \
-        --centerReads 2> {log}"
+        --centerReads 2> {log}")
 
 rule deeptools_plotCoverage:
     input:
@@ -410,11 +410,11 @@ rule deeptools_plotCoverage:
         rawcounts="output/qc/H3K4me3_plot_coverage_rawcounts_mouse.tab"
     log:
         "output/logs/H3K4me3_plotCoverage_mouse.deepTools"
-    shell:
-        "plotCoverage --bamfiles {input.bam} --plotFile {output.fig} \
+    run:
+        run("plotCoverage --bamfiles {input.bam} --plotFile {output.fig} \
         -n 1000000 \
         --outRawCounts {output.rawcounts} \
-        --ignoreDuplicates 2> {log}"
+        --ignoreDuplicates 2> {log}")
 
 
 
