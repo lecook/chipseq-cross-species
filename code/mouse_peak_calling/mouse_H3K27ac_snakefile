@@ -373,9 +373,11 @@ rule deeptools_coverage:
         "output/qc/{sample}_{stage}_{mark}.SeqDepthNorm.bw"
     log:
         "output/logs/{sample}_{stage}_{mark}_coverage.deepTools"
-    shell:
-        "bamCoverage --bam {input.bam} --binSize 10 --normalizeUsing RPGC --effectiveGenomeSize 2308125349 --numberOfProcessors 4 -o {output} 2> {log}"
-
+    run:
+        shell("bamCoverage --bam {input.bam} --binSize 10 \
+        --normalizeUsing RPGC --effectiveGenomeSize 2308125349 \
+        -o {output} 2> {log}")
+        
 rule deeptools_fingerprint:
     input:
         bam = expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam"], zip, sample=all_samples, stage=STAGE, mark = MARK),
