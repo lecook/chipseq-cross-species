@@ -34,11 +34,6 @@ with open(config['SAMPLES'], "r") as f:
         STAGE.append(row[2])
 f.close()
 
-## multiple samples may use the same control input files
-unique_inputs = list(set(INPUTS))
-unique_marks = list(set(MARK))
-unique_stages = list(set(STAGE))
-
 ## combine all samples
 all_samples = IPS + INPUTS
 
@@ -335,8 +330,8 @@ rule estimate_lib_complexity:
 
 rule deeptools_summary:
     input:
-        bam = expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam"], zip, sample=all_samples, stage=STAGE, mark = MARK),
-        bai = expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bai"], zip, sample=all_samples, stage=STAGE, mark = MARK)
+        bam = expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam"], sample=all_samples, stage=STAGE, mark = MARK),
+        bai = expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bai"], sample=all_samples, stage=STAGE, mark = MARK)
     output:
         sum="output/qc/H3K4me3_multibamsum_mouse.npz",
         counts="output/qc/H3K4me3_multibamsum_mouse.tab"
