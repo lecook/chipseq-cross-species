@@ -340,7 +340,7 @@ rule deeptools_summary:
     output:
         sum="output/qc/H3K4me3_multibamsum_mouse.npz",
         counts="output/qc/H3K4me3_multibamsum_mouse.tab"
-     threads: 32
+    threads: 32
     log:
         "output/logs/multisummary.deepTools"
     run:
