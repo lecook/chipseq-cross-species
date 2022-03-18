@@ -473,16 +473,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreec30b38fbbb1000e7056cca024c7a79ec1359b4a1targetblankc30b38fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/c30b38fbbb1000e7056cca024c7a79ec1359b4a1" target="_blank">c30b38f</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree57627940490c12f01d762f0c873d7b91ddb668edtargetblank5762794a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/57627940490c12f01d762f0c873d7b91ddb668ed" target="_blank">5762794</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreec30b38fbbb1000e7056cca024c7a79ec1359b4a1targetblankc30b38fa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree57627940490c12f01d762f0c873d7b91ddb668edtargetblank5762794a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/c30b38fbbb1000e7056cca024c7a79ec1359b4a1" target="_blank">c30b38f</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/57627940490c12f01d762f0c873d7b91ddb668ed" target="_blank">5762794</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -634,6 +634,13 @@ Untracked files:
     Untracked:  Rplots.pdf
     Untracked:  code/.swp
     Untracked:  data/raw_reads/
+    Untracked:  output/qc/A-1_input.downSampled.flagstat.qc
+    Untracked:  output/qc/A-1_input_downSampled.flagstat.qc
+    Untracked:  output/qc/A-2_H3K4me3_downSampled.flagstat.qc
+    Untracked:  output/qc/A-3_H3K27ac_downSampled.flagstat.qc
+    Untracked:  output/qc/B-1_input_downSampled.flagstat.qc
+    Untracked:  output/qc/B-2_H3K4me3_downSampled.flagstat.qc
+    Untracked:  output/qc/B-3_H3K27ac_downSampled.flagstat.qc
     Untracked:  output/qc/E10.5_H3K27ac.pooled.macs2_downSampled
     Untracked:  output/qc/E10.5_H3K4me3.pooled.macs2_downSampled.log
     Untracked:  output/qc/E11.5_H3K27ac.pooled.macs2_downSampled
@@ -1061,6 +1068,7 @@ Untracked files:
     Untracked:  slurm-34100042.out
     Untracked:  slurm-34100075.out
     Untracked:  slurm-34100078.out
+    Untracked:  slurm-34100088.out
 
 Unstaged changes:
     Modified:   code/configs/cluster.json
@@ -1103,6 +1111,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/57627940490c12f01d762f0c873d7b91ddb668ed/docs/mouse_dunnart_data_processing_for_comparison.html" target="_blank">5762794</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-18
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -2068,19 +2093,29 @@ xargs -L 1 curl -O -J -L &lt; control_files.txt</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
+<td align="left">A-1_input_downSampled</td>
+<td align="left"></td>
+<td align="left">9994998 +</td>
+</tr>
+<tr class="even">
 <td align="left">A-1_input</td>
 <td align="left">duplicates removed</td>
 <td align="left">47645260</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">A-1_input</td>
 <td align="left">remove orphan reads and MAPQ &lt; 30</td>
 <td align="left">87165286</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">A-1_input</td>
 <td align="left">mapped reads</td>
 <td align="left">130587134</td>
+</tr>
+<tr class="odd">
+<td align="left">A-2_H3K4me3_downSampled</td>
+<td align="left"></td>
+<td align="left">9995100 +</td>
 </tr>
 <tr class="even">
 <td align="left">A-2_H3K4me3</td>
@@ -2098,19 +2133,29 @@ xargs -L 1 curl -O -J -L &lt; control_files.txt</code></pre>
 <td align="left">103324742</td>
 </tr>
 <tr class="odd">
+<td align="left">A-3_H3K27ac_downSampled</td>
+<td align="left"></td>
+<td align="left">10000116</td>
+</tr>
+<tr class="even">
 <td align="left">A-3_H3K27ac</td>
 <td align="left">duplicates removed</td>
 <td align="left">45700530</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">A-3_H3K27ac</td>
 <td align="left">remove orphan reads and MAPQ &lt; 30</td>
 <td align="left">86503078</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">A-3_H3K27ac</td>
 <td align="left">mapped reads</td>
 <td align="left">131071676</td>
+</tr>
+<tr class="odd">
+<td align="left">B-1_input_downSampled</td>
+<td align="left"></td>
+<td align="left">9995472 +</td>
 </tr>
 <tr class="even">
 <td align="left">B-1_input</td>
@@ -2128,19 +2173,29 @@ xargs -L 1 curl -O -J -L &lt; control_files.txt</code></pre>
 <td align="left">111574640</td>
 </tr>
 <tr class="odd">
+<td align="left">B-2_H3K4me3_downSampled</td>
+<td align="left"></td>
+<td align="left">10003240</td>
+</tr>
+<tr class="even">
 <td align="left">B-2_H3K4me3</td>
 <td align="left">duplicates removed</td>
 <td align="left">42357180</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">B-2_H3K4me3</td>
 <td align="left">remove orphan reads and MAPQ &lt; 30</td>
 <td align="left">67048994</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">B-2_H3K4me3</td>
 <td align="left">mapped reads</td>
 <td align="left">114146802</td>
+</tr>
+<tr class="odd">
+<td align="left">B-3_H3K27ac_downSampled</td>
+<td align="left"></td>
+<td align="left">10003238</td>
 </tr>
 <tr class="even">
 <td align="left">B-3_H3K27ac</td>
