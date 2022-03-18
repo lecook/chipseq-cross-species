@@ -32,7 +32,7 @@ library(purrr)
 library(tidyverse)
 library(knitr)
 
-flagstats <- list.files("output/qc", pattern = "*dedup.flagstat.qc|*PPq30.flagstat.qc|*unfiltered.flagstat.qc", full.names = T) # create list of files in directory
+flagstats <- list.files("output/qc", pattern = "*dedup.flagstat.qc|*PPq30.flagstat.qc|*unfiltered.flagstat.qc|*q30.flagstat.qc|*downSampled.flagstat.qc", full.names = T) # create list of files in directory
 filenames <- sub('\\.flagstat.qc$', '', basename(flagstats)) 
 files <- as.list(flagstats)
 data <- lapply(files, function(x) data.table::fread(x, header = FALSE, sep = "\t", quote = "", na.strings = c("", "NA")))
@@ -49,6 +49,8 @@ colnames(stats2) <- c("num_reads", "file", "processing")
 stats2[stats2$processing == "edup"]$processing <- "duplicates removed" 
 stats2[stats2$processing == "nfiltered"]$processing <- "mapped reads" 
 stats2[stats2$processing == "Pq30"]$processing <- "remove orphan reads and MAPQ < 30" 
+stats2[stats2$processing == "30"]$processing <- "remove orphan reads and MAPQ < 30" 
+stats2[stats2$processing == "ownSampled"]$processing <- "subsampled 10 million reads" 
 
 setcolorder(stats2, c("file", "processing", "num_reads"))
 
