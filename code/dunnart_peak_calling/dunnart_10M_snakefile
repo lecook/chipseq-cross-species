@@ -97,6 +97,14 @@ rule mergeBAMreplicates:
         shell("samtools merge {output.H3K27ac} {input.H3K27ac} 2> {log.H3K27ac}")
         shell("samtools merge {output.control} {input.control} 2> {log.control}")
 
+rule mappingStats:
+    input:
+        "output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bam",
+    output:
+        "output/qc/{sample}.downSampled.flagstat.qc",
+    run:
+        shell("samtools flagstat {input} > {output}")
+
 # ===============================================================================================
 #  2. deepTools
 #   > multiBAMsummary
