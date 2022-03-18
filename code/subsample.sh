@@ -9,8 +9,10 @@ for tr in ${TRA[@]};
 do
 echo ${tr}
 
-frac=$( samtools idxstats ${tr}q30.sorted.dedup.bam | cut -f3 | awk 'BEGIN {total=0} {total += $1} END {frac=10000000/total; if (frac > 1) {print 1} else {print frac}}' )
+samtools index ${tr}q30.sorted.dedup.bam ${tr}q30.sorted.dedup.bai
 
-samtools view -bs $frac ${tr}q30.sorted.dedup.bam > test/${tr}_downSampled_q30.sorted.dedup.bam
+#frac=$( samtools idxstats ${tr}q30.sorted.dedup.bam | cut -f3 | awk 'BEGIN {total=0} {total += $1} END {frac=10000000/total; if (frac > 1) {print 1} else {print frac}}' )
+
+#samtools view -bs $frac ${tr}q30.sorted.dedup.bam > test/${tr}_downSampled_q30.sorted.dedup.bam
 
 done
