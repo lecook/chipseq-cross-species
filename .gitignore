@@ -25,3 +25,4 @@ output/qc/*.txt
 output/qc/*.npz
 output/qc/*.tab
 output/wga/*
+data/geo_submission/*
