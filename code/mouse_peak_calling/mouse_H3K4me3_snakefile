@@ -104,18 +104,18 @@ rule all:
         "E13.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
         "E14.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
         "E15.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
-        # "output/peaks/H3K4me3_E10.5_overlap.narrowPeak",
-        # "output/peaks/H3K4me3_E11.5_overlap.narrowPeak",
-        # "output/peaks/H3K4me3_E12.5_overlap.narrowPeak",
-        # "output/peaks/H3K4me3_E13.5_overlap.narrowPeak",
-        # "output/peaks/H3K4me3_E14.5_overlap.narrowPeak",
-        # "output/peaks/H3K4me3_E15.5_overlap.narrowPeak",
-        # "output/peaks/H3K4me3_E10.5_overlap.frip",
-        # "output/peaks/H3K4me3_E11.5_overlap.frip",
-        # "output/peaks/H3K4me3_E12.5_overlap.frip",
-        # "output/peaks/H3K4me3_E13.5_overlap.frip",
-        # "output/peaks/H3K4me3_E14.5_overlap.frip",
-        # "output/peaks/H3K4me3_E15.5_overlap.frip"
+        "output/peaks/H3K4me3_E10.5_overlap.narrowPeak",
+        "output/peaks/H3K4me3_E11.5_overlap.narrowPeak",
+        "output/peaks/H3K4me3_E12.5_overlap.narrowPeak",
+        "output/peaks/H3K4me3_E13.5_overlap.narrowPeak",
+        "output/peaks/H3K4me3_E14.5_overlap.narrowPeak",
+        "output/peaks/H3K4me3_E15.5_overlap.narrowPeak",
+        "output/peaks/H3K4me3_E10.5_overlap.frip",
+        "output/peaks/H3K4me3_E11.5_overlap.frip",
+        "output/peaks/H3K4me3_E12.5_overlap.frip",
+        "output/peaks/H3K4me3_E13.5_overlap.frip",
+        "output/peaks/H3K4me3_E14.5_overlap.frip",
+        "output/peaks/H3K4me3_E15.5_overlap.frip"
 
 # ===============================================================================================
 #  1. FASTQC
@@ -490,12 +490,12 @@ rule call_peaks_macs2:
         "output/logs/{case}_vs_{control}_{stage}_{mark}_call_peaks_macs2_downSampled.log"
     params:
         name = "{case}_vs_{control}_{stage}_{mark}_macs2_downSampled",
-    shell:
-        """ macs2 callpeak -f BAM -t {input.case} \
+    run:
+        shell("macs2 callpeak -f BAM -t {input.case} \
         -c {input.control} --keep-dup all \
         --outdir output/peaks/ -p 0.01 \
         -n {params.name} \
-        -g mm 2> {log} """
+        -g mm 2> {log}")
 
 rule call_peaks_macs2_pooled_replicates:
     input:
