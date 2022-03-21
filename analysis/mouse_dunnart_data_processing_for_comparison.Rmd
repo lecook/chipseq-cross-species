@@ -54,6 +54,9 @@ stats2[stats2$processing == "ownSampled"]$processing <- "subsampled 10 million r
 
 setcolorder(stats2, c("file", "processing", "num_reads"))
 
+# remove + from num_reads
+stats2[stats2$processing == "subsampled 10 million reads"]$num_reads <- data.table(substr(stats2[stats2$processing == "subsampled 10 million reads"]$num_reads, 1,8))
+
 kable(stats2, caption="Table. Read alignment quality metrics before and after filtering steps")
 ```
 
