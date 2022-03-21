@@ -308,7 +308,7 @@ echo "Number of consensus H3K27ac mouse E15.5 peaks"
 less output/peaks/H3K27ac_E15.5_overlap.narrowPeak | wc -l
 ```
 
-# Consensus peaks and grouping into putative enhancers and promoters
+# Grouping peaks into putative enhancers and promoters
 
 Find uniquely H3K4me3 sites (i.e. peaks that don't overlap with H3K27ac):
 
