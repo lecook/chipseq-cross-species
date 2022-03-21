@@ -505,7 +505,7 @@ rule call_peaks_macs2_pooled_replicates:
         E14C = "output/bam_files/input_E14.5_H3K4me3_downSampled_q30.sorted.dedup.bam",
         E15C = "output/bam_files/input_E15.5_H3K4me3_downSampled_q30.sorted.dedup.bam"
     output:
-       "output/peaks/E10.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
+        "output/peaks/E10.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
         "output/peaks/E11.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
         "output/peaks/E12.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
         "output/peaks/E13.5_H3K4me3.pooled.macs2_downSampled_peaks.narrowPeak",
