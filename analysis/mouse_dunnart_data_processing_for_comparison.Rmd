@@ -341,7 +341,7 @@ bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_overlap_default_dunnart_dow
 
 Combine peak files
 
-```{bash eval=FALSE}
+```{bash}
 cat output/peaks/H3K4me3_E10.5_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac_E10.5.narrowPeak | sort -k 4,4 > output/peaks/E10.5_promoter_peaks.narrowPeak
 cat output/peaks/H3K4me3_E11.5_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac_E11.5.narrowPeak | sort -k 4,4 > output/peaks/E11.5_promoter_peaks.narrowPeak
 cat output/peaks/H3K4me3_E12.5_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac_E12.5.narrowPeak | sort -k 4,4 > output/peaks/E12.5_promoter_peaks.narrowPeak
