@@ -330,8 +330,7 @@ rule estimate_lib_complexity:
 
 rule deeptools_summary:
     input:
-        bam = expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam"], zip, sample=all_samples, stage=STAGE, mark=MARK),
-        bai = expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam.bai"], zip, sample=all_samples, stage=STAGE, mark=MARK)
+        bam = expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam", "output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bai"], sample=all_samples, stage=STAGE, mark=MARK)
     output:
         sum="output/qc/H3K27ac_multibamsum_mouse.npz",
         counts="output/qc/H3K27ac_multibamsum_mouse.tab"
@@ -380,8 +379,7 @@ rule deeptools_coverage:
         
 rule deeptools_fingerprint:
     input:
-        bam = expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam"], sample=all_samples, stage=STAGE, mark = MARK),
-        bai = expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bai"], sample=all_samples, stage=STAGE, mark = MARK)
+        bam = expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam", "output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bai"], sample=all_samples, stage=STAGE, mark = MARK)
     output:
         fig="docs/H3K27ac_multiBAM_fingerprint_mouse.pdf",
         metrics="output/qc/H3K27ac_multiBAM_fingerprint_metrics_mouse.txt",
@@ -401,8 +399,7 @@ rule deeptools_fingerprint:
 
 rule deeptools_plotCoverage:
     input:
-        bam = expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam"], sample=all_samples, stage=STAGE, mark=MARK),
-        bai = expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bai"], sample=all_samples, stage=STAGE, mark=MARK)
+        bam = expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam", "output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bai"], sample=all_samples, stage=STAGE, mark=MARK)
     output:
         fig="docs/H3K27ac_plot_coverage_mouse.pdf",
         rawcounts="output/qc/H3K27ac_plot_coverage_rawcounts_mouse.tab"
