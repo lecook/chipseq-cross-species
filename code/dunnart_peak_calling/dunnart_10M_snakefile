@@ -68,17 +68,6 @@ rule all:
         "output/qc/H3K4me3_overlap_default_dunnart_downSampled.frip",
         "output/qc/H3K27ac_overlap_default_dunnart_downSampled.frip"
 
-
-rule indexBam:
-    input:
-        "output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bam"
-    output:
-        "output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bai"
-    log:
-        "output/logs/{sample}downSampled.indexBam"
-    shell:
-        "samtools index -c {input} {output} 2> {log}"
-
 rule mergeBAMreplicates:
     input:
         H3K4me3 = ["output/bam_files/A-2_H3K4me3_downSampled.PPq30.sorted.dedup.bam",  "output/bam_files/B-2_H3K4me3_downSampled.PPq30.sorted.dedup.bam"],
@@ -96,6 +85,16 @@ rule mergeBAMreplicates:
         shell("samtools merge {output.H3K4me3} {input.H3K4me3} 2> {log.H3K4me3}")
         shell("samtools merge {output.H3K27ac} {input.H3K27ac} 2> {log.H3K27ac}")
         shell("samtools merge {output.control} {input.control} 2> {log.control}")
+
+rule indexBam:
+    input:
+        "output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bam"
+    output:
+        "output/bam_files/{sample}_downSampled.PPq30.sorted.dedup.bai"
+    log:
+        "output/logs/{sample}downSampled.indexBam"
+    shell:
+        "samtools index -c {input} {output} 2> {log}"
 
 rule mappingStats:
     input:
