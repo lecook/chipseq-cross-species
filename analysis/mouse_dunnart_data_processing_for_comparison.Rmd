@@ -162,7 +162,6 @@ RSC; RSC>0.8 (0 = no signal; <1 low quality ChIP; >1 high enrichment
 
 Quality tag based on thresholded RSC (codes: -2:veryLow,-1:Low,0:Medium,1:High; 2:veryHigh)
 
-Table. 
 
 ```{r echo=FALSE, warning = FALSE, message = FALSE}
 
@@ -270,6 +269,31 @@ echo "Number of peaks rep 2 E15.5 H3K27ac"
 less output/peaks/ENCFF584JFB_vs_ENCFF727QTS_E15.5_H3K27ac_macs2_downSampled_peaks.narrowPeak | wc -l
 ```
 
+### Fraction of reads in peaks 
+
+```{r echo=FALSE, warning = FALSE, message = FALSE}
+
+files <- list.files("output/qc", pattern = "*.frip_default_dunnart_downSampled.txt|*downSampled.frip.txt", full.names = T) # create list of files in directory
+filenames <- sub('\\.txt$', '', basename(files)) 
+files <- as.list(files)
+data <- lapply(files, function(x) data.table::fread(x, header = FALSE, sep = "\t", quote = "", na.strings = c("", "NA")))
+names(data) <- filenames
+
+stats <- lapply(data, function(x) data.table(t(x)))
+stats <- lapply(stats, function(x) data.table(reads_in_peaks = substr(x$V1, 45, 55), total_reads =substr(x$V2, 24,35), fraction_reads_in_peaks = substr(x$V3, 30,36)))
+
+stats <- Map(dplyr::mutate, stats, peak_file = names(stats))
+stats <- rbindlist(stats,)
+
+stats$peak_file[1:4] <- substr(str_subset(stats$peak_file,"dunnart"), 1,24)
+stats$peak_file[5:28] <- substr(str_subset(stats$peak_file,"frip"), 1,40)
+
+setcolorder(stats, c("peak_file", "total_reads", "reads_in_peaks", "fraction_reads_in_peaks"))
+
+
+kable(stats, caption="Table. Fraction of reads in peaks for replicate peak files")
+```
+
 ### Consensus peaksets for biological replicates
 #### Number of consensus peaks 
 ##### Dunnart
@@ -306,6 +330,32 @@ echo "Number of consensus H3K27ac mouse E14.5 peaks"
 less output/peaks/H3K27ac_E14.5_overlap.narrowPeak | wc -l
 echo "Number of consensus H3K27ac mouse E15.5 peaks"
 less output/peaks/H3K27ac_E15.5_overlap.narrowPeak | wc -l
+```
+
+#### Fraction of reads in peaks for consensus peaks
+
+```{r echo=FALSE, warning = FALSE, message = FALSE}
+files <- list.files("output/qc", pattern = "*default_dunnart_downSampled.frip|*overlap.frip", full.names = T) # create list of files in directory
+filenames <- sub('\\.frip$', '', basename(files)) 
+files <- as.list(files)
+data <- lapply(files, function(x) data.table::fread(x, header = FALSE, sep = "\t", quote = "", na.strings = c("", "NA")))
+names(data) <- filenames
+
+stats <- lapply(data, function(x) data.table(t(x)))
+stats <- lapply(stats, function(x) data.table(reads_in_peaks = substr(x$V1, 45, 55), total_reads =substr(x$V2, 24,35), fraction_reads_in_peaks = substr(x$V3, 30,36)))
+
+stats <- Map(dplyr::mutate, stats, peak_file = names(stats))
+stats <- rbindlist(stats,)
+
+stats$peak_file[c(1:6, 8:13)] <- substr(str_subset(stats$peak_file,".5_overlap"), 1,13)
+stats$peak_file[c(7,14)] <- paste(substr(str_subset(stats$peak_file,"downSampled"), 1, 7), 
+                                  substr(str_subset(stats$peak_file,"downSampled"), 25, 31), 
+                                  sep="_")
+
+setcolorder(stats, c("peak_file", "total_reads", "reads_in_peaks", "fraction_reads_in_peaks"))
+
+
+kable(stats, caption="Table. Fraction of reads in peaks for replicate peak files")
 ```
 
 # Grouping peaks into putative enhancers and promoters
