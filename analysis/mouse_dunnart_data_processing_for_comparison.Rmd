@@ -194,14 +194,23 @@ kable(stats, caption="Table. Peak calling quality metrics for mouse and dunnart 
 
 #### Dunnart
 ```{bash}
-echo "Number of peaks A3 H3K27ac dunnart"
+echo "Number of peaks A3 H3K27ac dunnart default"
 less output/peaks/A-3_H3K27ac_vs_A-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
-echo "Number of peaks A2 H3K4me3 dunnart"
+echo "Number of peaks A2 H3K4me3 dunnart default"
 less output/peaks/A-2_H3K4me3_vs_A-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
-echo "Number of peaks B3 H3K27ac dunnart"
+echo "Number of peaks B3 H3K27ac dunnart default"
 less output/peaks/B-3_H3K27ac_vs_B-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
-echo "Number of peaks B2 H3K4me3 dunnart"
+echo "Number of peaks B2 H3K4me3 dunnart default"
 less output/peaks/B-2_H3K4me3_vs_B-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
+
+echo "Number of peaks A3 H3K27ac dunnart P < 0.01"
+less output/peaks/A-3_H3K27ac_vs_A-1_input_macs2_p0.01_dunnart_downSampled_peaks.narrowPeak | wc -l
+echo "Number of peaks A2 H3K4me3 dunnart P < 0.01"
+less output/peaks/A-2_H3K4me3_vs_A-1_input_macs2_p0.01_dunnart_downSampled_peaks.narrowPeak | wc -l
+echo "Number of peaks B3 H3K27ac dunnart P < 0.01"
+less output/peaks/B-3_H3K27ac_vs_B-1_input_macs2_p0.01_dunnart_downSampled_peaks.narrowPeak | wc -l
+echo "Number of peaks B2 H3K4me3 dunnart P < 0.01"
+less output/peaks/B-2_H3K4me3_vs_B-1_input_macs2_p0.01_dunnart_downSampled_peaks.narrowPeak | wc -l
 ```
 
 #### Mouse
