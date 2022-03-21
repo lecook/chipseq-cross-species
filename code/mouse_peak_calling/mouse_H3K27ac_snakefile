@@ -35,11 +35,6 @@ with open(config['SAMPLES'], "r") as f:
         STAGE.append(row[2])
 f.close()
 
-## multiple samples may use the same control input files
-unique_inputs = list(set(INPUTS))
-unique_marks = list(set(MARK))
-unique_stages = list(set(STAGE))
-
 ## combine all samples
 all_samples = IPS + INPUTS
 print(all_samples)
@@ -49,15 +44,15 @@ print(all_samples)
 
 rule all:
     input:
-        expand("output/bam_files/{sample}_{stage}_{mark}_q30.sorted.bam", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        expand("output/bam_files/{sample}_{stage}_{mark}_q30.dupmark.bam", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        expand("output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bam", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        expand("output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bai", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        expand("output/qc/{sample}_{stage}_{mark}.dedup.flagstat.qc", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        expand("output/qc/{sample}_{stage}_{mark}.dupmark.flagstat.qc", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        expand("output/qc/{sample}_{stage}_{mark}.q30.flagstat.qc", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        expand("output/qc/{sample}_{stage}_{mark}.unfiltered.flagstat.qc", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        expand("output/qc/{sample}_{stage}_{mark}.downSampled.flagstat.qc", zip, sample=all_samples, stage=STAGE, mark=MARK),
+        expand("output/bam_files/{sample}_{stage}_H3K27ac_q30.sorted.bam", zip, sample=all_samples, stage=STAGE),
+        expand("output/bam_files/{sample}_{stage}_H3K27ac_q30.dupmark.bam", zip, sample=all_samples, stage=STAGE),
+        expand("output/bam_files/{sample}_{stage}_H3K27ac_q30.sorted.dedup.bam", zip, sample=all_samples, stage=STAGE),
+        expand("output/bam_files/{sample}_{stage}_H3K27ac_downSampled_q30.sorted.dedup.bai", zip, sample=all_samples, stage=STAGE),
+        expand("output/qc/{sample}_{stage}_H3K27ac.dedup.flagstat.qc", zip, sample=all_samples, stage=STAGE),
+        expand("output/qc/{sample}_{stage}_H3K27ac.dupmark.flagstat.qc", zip, sample=all_samples, stage=STAGE),
+        expand("output/qc/{sample}_{stage}_H3K27ac.q30.flagstat.qc", zip, sample=all_samples, stage=STAGE),
+        expand("output/qc/{sample}_{stage}_H3K27ac.unfiltered.flagstat.qc", zip, sample=all_samples, stage=STAGE),
+        expand("output/qc/{sample}_{stage}_H3K27ac.downSampled.flagstat.qc", zip, sample=all_samples, stage=STAGE),
         "output/bam_files/E10.5_H3K27ac_downSampled_q30.sorted.pooled.dedup.bam",
         "output/bam_files/E11.5_H3K27ac_downSampled_q30.sorted.pooled.dedup.bam",
         "output/bam_files/E12.5_H3K27ac_downSampled_q30.sorted.pooled.dedup.bam",
@@ -82,28 +77,28 @@ rule all:
         "output/logs/input_E13.5_H3K27ac_downSampled.mergeBAM",
         "output/logs/input_E14.5_H3K27ac_downSampled.mergeBAM",
         "output/logs/input_E15.5_H3K27ac_downSampled.mergeBAM",
-        expand("output/qc/{mark}_multibamsum_mouse.npz", mark = MARK),
-        expand("output/qc/{mark}_multibamsum_mouse.tab", mark = MARK),
+        "output/qc/H3K27ac_multibamsum_mouse.npz",
+        "output/qc/H3K27ac_multibamsum_mouse.tab",
         # "docs/H3K27ac_pearsoncor_multibamsum_mouse.pdf",
         # "output/qc/H3K27ac_pearsoncor_multibamsum_matrix_mouse.txt",
-        # expand("output/qc/{sample}_{stage}_{mark}.SeqDepthNorm.bw", zip, sample=all_samples, stage=STAGE, mark=MARK),
+        # expand("output/qc/{sample}_{stage}_H3K27ac.SeqDepthNorm.bw", zip, sample=all_samples, stage=STAGE),
         # "docs/H3K27ac_multiBAM_fingerprint_mouse.pdf",
         # "output/qc/H3K27ac_multiBAM_fingerprint_metrics_mouse.txt",
         # "output/qc/H3K27ac_multiBAM_fingerprint_rawcounts_mouse.txt",
         # "docs/H3K27ac_plot_coverage_mouse.pdf",
         # "output/qc/H3K27ac_plot_coverage_rawcounts_mouse.tab",
-        expand("output/bam_files/{sample}_{stage}_{mark}_q30.dupmark.tmp.bam", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        expand("output/logs/{sample}_{stage}_{mark}.pbc.sort", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        expand("output/qc/{sample}_{stage}_{mark}.pbc.qc", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        expand("output/qc/{sample}_{stage}_{mark}_filt_15Mreads.SE.cc.qc",zip, sample=all_samples, stage=STAGE, mark=MARK),
-        expand("output/qc/{sample}_{stage}_{mark}_filt_15Mreads.SE.cc.plot.pdf", zip, sample=all_samples, stage=STAGE, mark=MARK),
-        expand("output/peaks/{case}_vs_{control}_{stage}_{mark}_macs2_downSampled_peaks.narrowPeak", zip, case=IPS, control=INPUTS, stage=STAGE, mark=MARK),
-        expand("output/peaks/{case}_vs_{control}_{stage}_{mark}_macs2_downSampled_peaks.xls", zip, case=IPS, control=INPUTS, stage=STAGE, mark=MARK),
-        expand("output/peaks/{case}_vs_{control}_{stage}_{mark}_macs2_downSampled_summits.bed", zip, case=IPS, control=INPUTS, stage=STAGE, mark=MARK),
-        expand("output/logs/{case}_vs_{control}_{stage}_{mark}_call_peaks_macs2_downSampled.log", zip, case=IPS, control=INPUTS, stage=STAGE, mark=MARK),
-        expand("output/bam_files/{case}_{stage}_{mark}_downSampled_q30.sorted.dedup.bed", zip, case=IPS, stage=STAGE, mark=MARK),
-        expand("output/logs/{case}_{stage}_{mark}_downSampled.bamToBed", zip, case=IPS, stage=STAGE, mark=MARK),
-        expand("output/qc/{case}_vs_{control}_{stage}_{mark}_downSampled.frip.txt", zip, case=IPS, control=INPUTS, stage=STAGE, mark=MARK),
+        expand("output/bam_files/{sample}_{stage}_H3K27ac_q30.dupmark.tmp.bam", zip, sample=all_samples, stage=STAGE),
+        expand("output/logs/{sample}_{stage}_H3K27ac.pbc.sort", zip, sample=all_samples, stage=STAGE),
+        expand("output/qc/{sample}_{stage}_H3K27ac.pbc.qc", zip, sample=all_samples, stage=STAGE),
+        expand("output/qc/{sample}_{stage}_H3K27ac_filt_15Mreads.SE.cc.qc",zip, sample=all_samples, stage=STAGE),
+        expand("output/qc/{sample}_{stage}_H3K27ac_filt_15Mreads.SE.cc.plot.pdf", zip, sample=all_samples, stage=STAGE),
+        expand("output/peaks/{case}_vs_{control}_{stage}_H3K27ac_macs2_downSampled_peaks.narrowPeak", zip, case=IPS, control=INPUTS, stage=STAGE),
+        expand("output/peaks/{case}_vs_{control}_{stage}_H3K27ac_macs2_downSampled_peaks.xls", zip, case=IPS, control=INPUTS, stage=STAGE),
+        expand("output/peaks/{case}_vs_{control}_{stage}_H3K27ac_macs2_downSampled_summits.bed", zip, case=IPS, control=INPUTS, stage=STAGE),
+        expand("output/logs/{case}_vs_{control}_{stage}_H3K27ac_call_peaks_macs2_downSampled.log", zip, case=IPS, control=INPUTS, stage=STAGE),
+        expand("output/bam_files/{case}_{stage}_H3K27ac_downSampled_q30.sorted.dedup.bed", zip, case=IPS, stage=STAGE),
+        expand("output/logs/{case}_{stage}_H3K27ac_downSampled.bamToBed", zip, case=IPS, stage=STAGE),
+        expand("output/qc/{case}_vs_{control}_{stage}_H3K27ac_downSampled.frip.txt", zip, case=IPS, control=INPUTS, stage=STAGE),
         "output/peaks/H3K27ac_E10.5_overlap.narrowPeak",
         "output/peaks/H3K27ac_E11.5_overlap.narrowPeak",
         "output/peaks/H3K27ac_E12.5_overlap.narrowPeak",
@@ -154,40 +149,40 @@ rule all:
 
 rule filter:
     input:
-        "output/bam_files/{sample}_{stage}_{mark}.bam"
+        "output/bam_files/{sample}_{stage}_H3K27ac.bam"
     output:
-        "output/bam_files/{sample}_{stage}_{mark}_q30.sorted.bam"
+        "output/bam_files/{sample}_{stage}_H3K27ac_q30.sorted.bam"
     log:
-        "output/logs/{sample}_{stage}_{mark}.filter"
+        "output/logs/{sample}_{stage}_H3K27ac.filter"
     shell:
         "samtools view -b -F 1804 -q 30 {input} | samtools sort -o {output} - 2> {log}"
 
 rule markDups:
     input:
-        "output/bam_files/{sample}_{stage}_{mark}_q30.sorted.bam"
+        "output/bam_files/{sample}_{stage}_H3K27ac_q30.sorted.bam"
     output:
-        bam="output/bam_files/{sample}_{stage}_{mark}_q30.dupmark.bam",
-        dupQC="output/bam_files/{sample}_{stage}_{mark}.dupmark.qc"
+        bam="output/bam_files/{sample}_{stage}_H3K27ac_q30.dupmark.bam",
+        dupQC="output/bam_files/{sample}_{stage}_H3K27ac.dupmark.qc"
     log:
-        "output/logs/{sample}_{stage}_{mark}.dupmark"
+        "output/logs/{sample}_{stage}_H3K27ac.dupmark"
     shell:
         "picard MarkDuplicates I={input} O={output.bam} METRICS_FILE={output.dupQC} REMOVE_DUPLICATES=false ASSUME_SORTED=true 2> {log}"
 
 rule dedup:
     input:
-        "output/bam_files/{sample}_{stage}_{mark}_q30.dupmark.bam"
+        "output/bam_files/{sample}_{stage}_H3K27ac_q30.dupmark.bam"
     output:
-        "output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bam"
+        "output/bam_files/{sample}_{stage}_H3K27ac_q30.sorted.dedup.bam"
     log:
-        "output/logs/{sample}_{stage}_{mark}.dedup"
+        "output/logs/{sample}_{stage}_H3K27ac.dedup"
     shell:
         "samtools view -F 1804 -b {input} | samtools sort -o {output} - 2> {log}"
 
 # rule normalise10Mreads:
 #     input:
-#         "output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bam"
+#         "output/bam_files/{sample}_{stage}_H3K27ac_q30.sorted.dedup.bam"
 #     output:
-#         "output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam"
+#         "output/bam_files/{sample}_{stage}_H3K27ac_downSampled_q30.sorted.dedup.bam"
 #     params:
 #         reads=10000000
 #     shell:
@@ -196,11 +191,11 @@ rule dedup:
 
 rule indexBam:
     input:
-        "output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam"
+        "output/bam_files/{sample}_{stage}_H3K27ac_downSampled_q30.sorted.dedup.bam"
     output:
-        "output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bai"
+        "output/bam_files/{sample}_{stage}_H3K27ac_downSampled_q30.sorted.dedup.bai"
     log:
-        "output/logs/{sample}_{stage}_{mark}_downSampled.indexBam"
+        "output/logs/{sample}_{stage}_H3K27ac_downSampled.indexBam"
     shell:
         "samtools index {input} {output} 2> {log}"
 
@@ -268,17 +263,17 @@ rule mergeBAMreplicates:
 
 rule mappingStats:
     input:
-        a="output/bam_files/{sample}_{stage}_{mark}_q30.sorted.dedup.bam",
-        b="output/bam_files/{sample}_{stage}_{mark}_q30.dupmark.bam",
-        c="output/bam_files/{sample}_{stage}_{mark}_q30.sorted.bam",
-        d="output/bam_files/{sample}_{stage}_{mark}.bam", 
-        e="output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam"
+        a="output/bam_files/{sample}_{stage}_H3K27ac_q30.sorted.dedup.bam",
+        b="output/bam_files/{sample}_{stage}_H3K27ac_q30.dupmark.bam",
+        c="output/bam_files/{sample}_{stage}_H3K27ac_q30.sorted.bam",
+        d="output/bam_files/{sample}_{stage}_H3K27ac.bam", 
+        e="output/bam_files/{sample}_{stage}_H3K27ac_downSampled_q30.sorted.dedup.bam"
     output:
-        a="output/qc/{sample}_{stage}_{mark}.dedup.flagstat.qc",
-        b="output/qc/{sample}_{stage}_{mark}.dupmark.flagstat.qc",
-        c="output/qc/{sample}_{stage}_{mark}.q30.flagstat.qc",
-        d="output/qc/{sample}_{stage}_{mark}.unfiltered.flagstat.qc",
-        e="output/qc/{sample}_{stage}_{mark}.downSampled.flagstat.qc"
+        a="output/qc/{sample}_{stage}_H3K27ac.dedup.flagstat.qc",
+        b="output/qc/{sample}_{stage}_H3K27ac.dupmark.flagstat.qc",
+        c="output/qc/{sample}_{stage}_H3K27ac.q30.flagstat.qc",
+        d="output/qc/{sample}_{stage}_H3K27ac.unfiltered.flagstat.qc",
+        e="output/qc/{sample}_{stage}_H3K27ac.downSampled.flagstat.qc"
     run:
         shell("samtools flagstat {input.a} > {output.a}")
         shell("samtools flagstat {input.b} > {output.b}")
@@ -288,21 +283,21 @@ rule mappingStats:
 
 rule sort_name:
      input:
-         "output/bam_files/{sample}_{stage}_{mark}_q30.dupmark.bam"
+         "output/bam_files/{sample}_{stage}_H3K27ac_q30.dupmark.bam"
      output:
-         tmp = "output/bam_files/{sample}_{stage}_{mark}_q30.dupmark.tmp.bam"
+         tmp = "output/bam_files/{sample}_{stage}_H3K27ac_q30.dupmark.tmp.bam"
      log:
-         "output/logs/{sample}_{stage}_{mark}.pbc.sort"
+         "output/logs/{sample}_{stage}_H3K27ac.pbc.sort"
      run:
          shell("samtools sort -n {input} -o {output.tmp} 2> {log}")
 
 rule estimate_lib_complexity:
      input:
-         "output/bam_files/{sample}_{stage}_{mark}_q30.dupmark.tmp.bam"
+         "output/bam_files/{sample}_{stage}_H3K27ac_q30.dupmark.tmp.bam"
      output:
-         qc = "output/qc/{sample}_{stage}_{mark}.pbc.qc",
+         qc = "output/qc/{sample}_{stage}_H3K27ac.pbc.qc",
      log:
-         "output/logs/{sample}_{stage}_{mark}.pbc"
+         "output/logs/{sample}_{stage}_H3K27ac.pbc"
      shell:
         """bedtools bamtobed -i {input} | grep -v 'chrM' \
         | awk 'BEGIN{{OFS="\\t"}}{{print $1,$2,$3,$6}}' \
@@ -330,13 +325,13 @@ rule estimate_lib_complexity:
 
 rule deeptools_summary:
     input:
-        bam = expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam"], sample=all_samples, stage = STAGE, mark= MARK)
+        bam = expand(["output/bam_files/{sample}_{stage}_H3K27ac_downSampled_q30.sorted.dedup.bam"], zip, sample=all_samples, stage = STAGE)
     output:
-        sum="output/qc/{mark}_multibamsum_mouse.npz",
-        counts="output/qc/{mark}_multibamsum_mouse.tab"
+        sum="output/qc/H3K27ac_multibamsum_mouse.npz",
+        counts="output/qc/H3K27ac_multibamsum_mouse.tab"
     threads: 32
     log:
-        "output/logs/{mark}_multisummary_mouse_downSampled.deepTools"
+        "output/logs/H3K27ac_multisummary_mouse_downSampled.deepTools"
     run:
         shell("multiBamSummary bins \
         -p {threads} \
@@ -366,12 +361,12 @@ rule deeptools_correlation:
 
 rule deeptools_coverage:
     input:
-        bam = "output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam",
-        bai = "output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bai"
+        bam = "output/bam_files/{sample}_{stage}_H3K27ac_downSampled_q30.sorted.dedup.bam",
+        bai = "output/bam_files/{sample}_{stage}_H3K27ac_downSampled_q30.sorted.dedup.bai"
     output:
-        "output/qc/{sample}_{stage}_{mark}.SeqDepthNorm.bw"
+        "output/qc/{sample}_{stage}_H3K27ac.SeqDepthNorm.bw"
     log:
-        "output/logs/{sample}_{stage}_{mark}_coverage.deepTools"
+        "output/logs/{sample}_{stage}_H3K27ac_coverage.deepTools"
     run:
         shell("bamCoverage --bam {input.bam} --binSize 10 \
         --normalizeUsing RPGC --effectiveGenomeSize 2308125349 \
@@ -379,7 +374,7 @@ rule deeptools_coverage:
         
 rule deeptools_fingerprint:
     input:
-        bam = expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam", "output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bai"], sample=all_samples, stage=STAGE, mark = MARK)
+        bam = expand(["output/bam_files/{sample}_{stage}_H3K27ac_downSampled_q30.sorted.dedup.bam", "output/bam_files/{sample}_{stage}_H3K27ac_downSampled_q30.sorted.dedup.bai"], zip, sample=all_samples, stage=STAGE)
     output:
         fig="docs/H3K27ac_multiBAM_fingerprint_mouse.pdf",
         metrics="output/qc/H3K27ac_multiBAM_fingerprint_metrics_mouse.txt",
@@ -399,7 +394,7 @@ rule deeptools_fingerprint:
 
 rule deeptools_plotCoverage:
     input:
-        bam = expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam", "output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bai"], sample=all_samples, stage=STAGE, mark=MARK)
+        bam = expand(["output/bam_files/{sample}_{stage}_H3K27ac_downSampled_q30.sorted.dedup.bam", "output/bam_files/{sample}_{stage}_H3K27ac_downSampled_q30.sorted.dedup.bai"], zip, sample=all_samples, stage=STAGE)
     output:
         fig="docs/H3K27ac_plot_coverage_mouse.pdf",
         rawcounts="output/qc/H3K27ac_plot_coverage_rawcounts_mouse.tab"
@@ -418,9 +413,9 @@ rule deeptools_plotCoverage:
 
 rule bamtobed_crossC:
     input:
-        "output/bam_files/{sample}_{stage}_{mark}_q30.dupmark.bam"
+        "output/bam_files/{sample}_{stage}_H3K27ac_q30.dupmark.bam"
     output:
-        tagAlign = "output/bam_files/{sample}_{stage}_{mark}_q30_SE.tagAlign.gz"
+        tagAlign = "output/bam_files/{sample}_{stage}_H3K27ac_q30_SE.tagAlign.gz"
     shell:
         """
         bedtools bamtobed -i {input} | \
@@ -432,10 +427,10 @@ rule bamtobed_crossC:
 ## Estimate read length from first 100 reads
 rule subsample_aligned_reads:
     input:
-        "output/bam_files/{sample}_{stage}_{mark}_q30_SE.tagAlign.gz"
+        "output/bam_files/{sample}_{stage}_H3K27ac_q30_SE.tagAlign.gz"
     output:
-        subsample = "output/bam_files/{sample}_{stage}_{mark}.filt.sample.15Mreads.SE.tagAlign.gz",
-        tmp = "output/bam_files/{sample}_{stage}_{mark}_R1_trimmed_q30_SE.tagAlign.tmp"
+        subsample = "output/bam_files/{sample}_{stage}_H3K27ac.filt.sample.15Mreads.SE.tagAlign.gz",
+        tmp = "output/bam_files/{sample}_{stage}_H3K27ac_R1_trimmed_q30_SE.tagAlign.tmp"
     params:
         nreads= 15000000
     run:
@@ -454,12 +449,12 @@ rule subsample_aligned_reads:
 
 rule cross_correlation_SSP:
     input:
-        "output/bam_files/{sample}_{stage}_{mark}.filt.sample.15Mreads.SE.tagAlign.gz"
+        "output/bam_files/{sample}_{stage}_H3K27ac.filt.sample.15Mreads.SE.tagAlign.gz"
     output:
-        CC_SCORES_FILE="output/qc/{sample}_{stage}_{mark}_filt_15Mreads.SE.cc.qc",
-        CC_PLOT_FILE="output/qc/{sample}_{stage}_{mark}_filt_15Mreads.SE.cc.plot.pdf"
+        CC_SCORES_FILE="output/qc/{sample}_{stage}_H3K27ac_filt_15Mreads.SE.cc.qc",
+        CC_PLOT_FILE="output/qc/{sample}_{stage}_H3K27ac_filt_15Mreads.SE.cc.plot.pdf"
     log:
-        "output/logs/{sample}_{stage}_{mark}_filt_15Mreads.SE.spp.log"
+        "output/logs/{sample}_{stage}_H3K27ac_filt_15Mreads.SE.spp.log"
     params:
         EXCLUSION_RANGE_MIN=-500,
         EXCLUSION_RANGE_MAX=85
@@ -477,16 +472,16 @@ rule cross_correlation_SSP:
 
 rule call_peaks_macs2:
     input:
-        control = "output/bam_files/{control}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam",
-        case = "output/bam_files/{case}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam"
+        control = "output/bam_files/{control}_{stage}_H3K27ac_downSampled_q30.sorted.dedup.bam",
+        case = "output/bam_files/{case}_{stage}_H3K27ac_downSampled_q30.sorted.dedup.bam"
     output:
-        "output/peaks/{case}_vs_{control}_{stage}_{mark}_macs2_downSampled_peaks.xls",
-        "output/peaks/{case}_vs_{control}_{stage}_{mark}_macs2_downSampled_summits.bed",
-        "output/peaks/{case}_vs_{control}_{stage}_{mark}_macs2_downSampled_peaks.narrowPeak",
+        "output/peaks/{case}_vs_{control}_{stage}_H3K27ac_macs2_downSampled_peaks.xls",
+        "output/peaks/{case}_vs_{control}_{stage}_H3K27ac_macs2_downSampled_summits.bed",
+        "output/peaks/{case}_vs_{control}_{stage}_H3K27ac_macs2_downSampled_peaks.narrowPeak",
     log:
-        "output/logs/{case}_vs_{control}_{stage}_{mark}_call_peaks_macs2_downSampled.log"
+        "output/logs/{case}_vs_{control}_{stage}_H3K27ac_call_peaks_macs2_downSampled.log"
     params:
-        name = "{case}_vs_{control}_{stage}_{mark}_macs2_downSampled",
+        name = "{case}_vs_{control}_{stage}_H3K27ac_macs2_downSampled",
     shell:
         """ macs2 callpeak -f BAM -t {input.case} \
         -c {input.control} --keep-dup all \
@@ -570,21 +565,21 @@ rule call_peaks_macs2_pooled_replicates:
 ## Convert BAM to tagAlign file for calculating FRiP QC metric (Fraction of reads in peaks)
 rule bamToBed:
     input:
-        "output/bam_files/{case}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam"
+        "output/bam_files/{case}_{stage}_H3K27ac_downSampled_q30.sorted.dedup.bam"
     output:
-        "output/bam_files/{case}_{stage}_{mark}_downSampled_q30.sorted.dedup.bed"
+        "output/bam_files/{case}_{stage}_H3K27ac_downSampled_q30.sorted.dedup.bed"
     log:
-        "output/logs/{case}_{stage}_{mark}_downSampled.bamToBed"
+        "output/logs/{case}_{stage}_H3K27ac_downSampled.bamToBed"
     shell:
         "samtools sort -n {input} | bedtools bamtobed -i - > {output}"
 
 # ## Fraction of reads in peaks
 rule frip:
     input:
-        bed = "output/bam_files/{case}_{stage}_{mark}_downSampled_q30.sorted.dedup.bed",
-        peak = "output/peaks/{case}_vs_{control}_{stage}_{mark}_macs2_downSampled_peaks.narrowPeak"
+        bed = "output/bam_files/{case}_{stage}_H3K27ac_downSampled_q30.sorted.dedup.bed",
+        peak = "output/peaks/{case}_vs_{control}_{stage}_H3K27ac_macs2_downSampled_peaks.narrowPeak"
     output:
-        "output/qc/{case}_vs_{control}_{stage}_{mark}_downSampled.frip.txt"
+        "output/qc/{case}_vs_{control}_{stage}_H3K27ac_downSampled.frip.txt"
     shell:
         "python code/encode_frip.py {input.bed} {input.peak} > {output}"
 
