@@ -330,7 +330,7 @@ rule estimate_lib_complexity:
 
 rule deeptools_summary:
     input:
-        bam = expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam"])
+        bam = expand(["output/bam_files/{sample}_{stage}_{mark}_downSampled_q30.sorted.dedup.bam"], sample=all_samples, stage = STAGE)
     output:
         sum="output/qc/{mark}_multibamsum_mouse.npz",
         counts="output/qc/{mark}_multibamsum_mouse.tab"
