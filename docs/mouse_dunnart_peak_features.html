@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="lecook" />
+
+<meta name="date" content="2022-03-16" />
+
+<title>Mouse and dunnart peak features</title>
+
+<script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">chipseq_cross_species</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/lecook/chipseq-cross-species">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Mouse and dunnart peak features</h1>
+<h4 class="author">lecook</h4>
+<h4 class="date">2022-03-16</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2022-03-22
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>chipseq-cross-species/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220209code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20220209)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20220209code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20220209)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreee189f4c5b692e06aa38d4aa2f02a787fbb6221b5targetblanke189f4ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/e189f4c5b692e06aa38d4aa2f02a787fbb6221b5" target="_blank">e189f4c</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreee189f4c5b692e06aa38d4aa2f02a787fbb6221b5targetblanke189f4ca" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/e189f4c5b692e06aa38d4aa2f02a787fbb6221b5" target="_blank">e189f4c</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .RData
+    Ignored:    .Rhistory
+    Ignored:    analysis/.RData
+    Ignored:    analysis/.Rhistory
+    Ignored:    analysis/figure/
+    Ignored:    data/genomic_data/
+    Ignored:    data/geo_submission/
+    Ignored:    output/annotations/
+    Ignored:    output/bam_files/
+    Ignored:    output/filtered_peaks/
+    Ignored:    output/logs/
+    Ignored:    output/peaks/
+    Ignored:    output/plots/
+    Ignored:    output/qc/A-1_input.SeqDepthNorm.bw
+    Ignored:    output/qc/A-1_input.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/A-1_input.ccurve.txt
+    Ignored:    output/qc/A-1_input.extrap.txt
+    Ignored:    output/qc/A-1_input_R1_trimmed.fastq.gz
+    Ignored:    output/qc/A-1_input_est_lib_complex_metrics.txt
+    Ignored:    output/qc/A-2_H3K4me3.SeqDepthNorm.bw
+    Ignored:    output/qc/A-2_H3K4me3.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/A-2_H3K4me3.ccurve.txt
+    Ignored:    output/qc/A-2_H3K4me3.extrap.txt
+    Ignored:    output/qc/A-2_H3K4me3_R1_trimmed.fastq.gz
+    Ignored:    output/qc/A-2_H3K4me3_est_lib_complex_metrics.txt
+    Ignored:    output/qc/A-2_H3K4me3_vs_A-1_input.frip_default_dunnart_downSampled.txt
+    Ignored:    output/qc/A-2_H3K4me3_vs_A-1_input.frip_p0.01_dunnart_downSampled.txt
+    Ignored:    output/qc/A-3_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/A-3_H3K27ac.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/A-3_H3K27ac.ccurve.txt
+    Ignored:    output/qc/A-3_H3K27ac.extrap.txt
+    Ignored:    output/qc/A-3_H3K27ac_R1_trimmed.fastq.gz
+    Ignored:    output/qc/A-3_H3K27ac_est_lib_complex_metrics.txt
+    Ignored:    output/qc/A-3_H3K27ac_vs_A-1_input.frip_default_dunnart_downSampled.txt
+    Ignored:    output/qc/A-3_H3K27ac_vs_A-1_input.frip_p0.01_dunnart_downSampled.txt
+    Ignored:    output/qc/B-1_input.SeqDepthNorm.bw
+    Ignored:    output/qc/B-1_input.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/B-1_input.ccurve.txt
+    Ignored:    output/qc/B-1_input.extrap.txt
+    Ignored:    output/qc/B-1_input_R1_trimmed.fastq.gz
+    Ignored:    output/qc/B-1_input_est_lib_complex_metrics.txt
+    Ignored:    output/qc/B-2_H3K4me3.SeqDepthNorm.bw
+    Ignored:    output/qc/B-2_H3K4me3.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/B-2_H3K4me3.ccurve.txt
+    Ignored:    output/qc/B-2_H3K4me3.extrap.txt
+    Ignored:    output/qc/B-2_H3K4me3_R1_trimmed.fastq.gz
+    Ignored:    output/qc/B-2_H3K4me3_est_lib_complex_metrics.txt
+    Ignored:    output/qc/B-2_H3K4me3_vs_B-1_input.frip_default_dunnart_downSampled.txt
+    Ignored:    output/qc/B-2_H3K4me3_vs_B-1_input.frip_p0.01_dunnart_downSampled.txt
+    Ignored:    output/qc/B-3_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/B-3_H3K27ac.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/B-3_H3K27ac.ccurve.txt
+    Ignored:    output/qc/B-3_H3K27ac.extrap.txt
+    Ignored:    output/qc/B-3_H3K27ac_R1_trimmed.fastq.gz
+    Ignored:    output/qc/B-3_H3K27ac_est_lib_complex_metrics.txt
+    Ignored:    output/qc/B-3_H3K27ac_vs_B-1_input.frip_default_dunnart_downSampled.txt
+    Ignored:    output/qc/B-3_H3K27ac_vs_B-1_input.frip_p0.01_dunnart_downSampled.txt
+    Ignored:    output/qc/ENCFF011NFM_E12.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF011NFM_vs_ENCFF058AUT_E12.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF045IPK_E10.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF045IPK_vs_ENCFF825AVI_E10.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF124TAB_E13.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF124TAB_vs_ENCFF248PGK_E13.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF124UYX_E10.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF124UYX_vs_ENCFF157KEH_E10.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF182ZPF_E12.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF182ZPF_vs_ENCFF203JQV_E12.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF194ORC_E13.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF194ORC_vs_ENCFF117QRC_E13.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF213EBC_E10.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF213EBC_vs_ENCFF157KEH_E10.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF258KCR_E15.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF258KCR_vs_ENCFF727QTS_E15.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF290ZNF_E13.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF290ZNF_vs_ENCFF248PGK_E13.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF327VAO_E14.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF327VAO_vs_ENCFF784ORI_E14.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF394TZN_E12.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF394TZN_vs_ENCFF203JQV_E12.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF401BKM_E15.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF401BKM_vs_ENCFF182XFG_E15.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF485UDC_E13.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF485UDC_vs_ENCFF117QRC_E13.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF512SFE_E11.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF512SFE_vs_ENCFF184CUE_E11.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF515PKL_E11.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF515PKL_vs_ENCFF376FGM_E11.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF548BRR_E10.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF548BRR_vs_ENCFF825AVI_E10.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF584JFB_E15.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF584JFB_vs_ENCFF727QTS_E15.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF665QBJ_E14.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF665QBJ_vs_ENCFF002HZV_E14.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF707WKL_E15.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF707WKL_vs_ENCFF182XFG_E15.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF717QDV_E11.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF717QDV_vs_ENCFF376FGM_E11.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF724DMU_E14.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF724DMU_vs_ENCFF784ORI_E14.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF760QYZ_E11.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF760QYZ_vs_ENCFF184CUE_E11.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF902HAR_E14.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF902HAR_vs_ENCFF002HZV_E14.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF941QJZ_E12.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF941QJZ_vs_ENCFF058AUT_E12.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/H3K27ac_multiBAM_fingerprint_metrics.txt
+    Ignored:    output/qc/H3K27ac_multiBAM_fingerprint_metrics_mouse.txt
+    Ignored:    output/qc/H3K27ac_multiBAM_fingerprint_rawcounts.txt
+    Ignored:    output/qc/H3K27ac_multiBAM_fingerprint_rawcounts_mouse.txt
+    Ignored:    output/qc/H3K27ac_multibamsum.npz
+    Ignored:    output/qc/H3K27ac_multibamsum.tab
+    Ignored:    output/qc/H3K27ac_multibamsum_mouse.npz
+    Ignored:    output/qc/H3K27ac_multibamsum_mouse.tab
+    Ignored:    output/qc/H3K27ac_pearsoncor_multibamsum_matrix.txt
+    Ignored:    output/qc/H3K27ac_pearsoncor_multibamsum_matrix_mouse.txt
+    Ignored:    output/qc/H3K27ac_plot_coverage_rawcounts.tab
+    Ignored:    output/qc/H3K27ac_plot_coverage_rawcounts_mouse.tab
+    Ignored:    output/qc/H3K4me3_multiBAM_fingerprint_metrics_mouse.txt
+    Ignored:    output/qc/H3K4me3_multiBAM_fingerprint_rawcounts_mouse.txt
+    Ignored:    output/qc/H3K4me3_pearsoncor_multibamsum_matrix_mouse.txt
+    Ignored:    output/qc/bamPEFragmentSize_rawcounts.tab
+    Ignored:    output/qc/bamPEFragmentSize_rawcounts_dunnart_downSampled.tab
+    Ignored:    output/qc/multiBAM_fingerprint_metrics.txt
+    Ignored:    output/qc/multiBAM_fingerprint_metrics_dunnart_downSampled.txt
+    Ignored:    output/qc/multiBAM_fingerprint_rawcounts.txt
+    Ignored:    output/qc/multiBAM_fingerprint_rawcounts_dunnart_downSampled.txt
+    Ignored:    output/qc/multibamsum.npz
+    Ignored:    output/qc/multibamsum.tab
+    Ignored:    output/qc/multibamsum_dunnart_downSampled.npz
+    Ignored:    output/qc/multibamsum_dunnart_downSampled.tab
+    Ignored:    output/qc/multibamsum_mouse.npz
+    Ignored:    output/qc/multibamsum_mouse.tab
+    Ignored:    output/qc/pearsoncor_multibamsum_matrix.txt
+    Ignored:    output/qc/pearsoncor_multibamsum_matrix_dunnart_downSampled.txt
+    Ignored:    output/qc/pearsoncor_multibamsum_matrix_mouse.txt
+    Ignored:    output/wga/
+
+Untracked files:
+    Untracked:  .snakemake/
+    Untracked:  Rplots.pdf
+    Untracked:  code/.swp
+    Untracked:  data/raw_reads/
+    Untracked:  output/qc/A-1_input.downSampled.flagstat.qc
+    Untracked:  output/qc/A-2_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/A-3_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/B-1_input.downSampled.flagstat.qc
+    Untracked:  output/qc/B-2_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/B-3_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/E10.5_H3K27ac.pooled.macs2_downSampled
+    Untracked:  output/qc/E10.5_H3K4me3.pooled.macs2_downSampled
+    Untracked:  output/qc/E10.5_H3K4me3.pooled.macs2_downSampled.log
+    Untracked:  output/qc/E11.5_H3K27ac.pooled.macs2_downSampled
+    Untracked:  output/qc/E11.5_H3K4me3.pooled.macs2_downSampled
+    Untracked:  output/qc/E11.5_H3K4me3.pooled.macs2_downSampled.log
+    Untracked:  output/qc/E12.5_H3K27ac.pooled.macs2_downSampled
+    Untracked:  output/qc/E12.5_H3K4me3.pooled.macs2_downSampled
+    Untracked:  output/qc/E12.5_H3K4me3.pooled.macs2_downSampled.log
+    Untracked:  output/qc/E13.5_H3K27ac.pooled.macs2_downSampled
+    Untracked:  output/qc/E13.5_H3K4me3.pooled.macs2_downSampled
+    Untracked:  output/qc/E13.5_H3K4me3.pooled.macs2_downSampled.log
+    Untracked:  output/qc/E14.5_H3K27ac.pooled.macs2_downSampled
+    Untracked:  output/qc/E14.5_H3K4me3.pooled.macs2_downSampled
+    Untracked:  output/qc/E14.5_H3K4me3.pooled.macs2_downSampled.log
+    Untracked:  output/qc/E15.5_H3K27ac.pooled.macs2_downSampled
+    Untracked:  output/qc/E15.5_H3K4me3.pooled.macs2_downSampled
+    Untracked:  output/qc/E15.5_H3K4me3.pooled.macs2_downSampled.log
+    Untracked:  output/qc/ENCFF002HZV_E14.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF002HZV_E14.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF058AUT_E12.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF058AUT_E12.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF117QRC_E13.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF117QRC_E13.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF157KEH_E10.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF157KEH_E10.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF182XFG_E15.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF182XFG_E15.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF184CUE_E11.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF184CUE_E11.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF203JQV_E12.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF203JQV_E12.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF248PGK_E13.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF248PGK_E13.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF376FGM_E11.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF376FGM_E11.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF727QTS_E15.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF727QTS_E15.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF784ORI_E14.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF784ORI_E14.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF825AVI_E10.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF825AVI_E10.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/H3K27ac_E10.5_overlap.frip
+    Untracked:  output/qc/H3K27ac_E11.5_overlap.frip
+    Untracked:  output/qc/H3K27ac_E12.5_overlap.frip
+    Untracked:  output/qc/H3K27ac_E13.5_overlap.frip
+    Untracked:  output/qc/H3K27ac_E14.5_overlap.frip
+    Untracked:  output/qc/H3K27ac_E15.5_overlap.frip
+    Untracked:  output/qc/H3K27ac_multiBAM_fingerprint.pdf
+    Untracked:  output/qc/H3K27ac_overlap_default_dunnart_downSampled.frip
+    Untracked:  output/qc/H3K27ac_pearsoncor_multibamsum.pdf
+    Untracked:  output/qc/H3K27ac_plot_coverage.pdf
+    Untracked:  output/qc/H3K4me3_E10.5_overlap.frip
+    Untracked:  output/qc/H3K4me3_E11.5_overlap.frip
+    Untracked:  output/qc/H3K4me3_E12.5_overlap.frip
+    Untracked:  output/qc/H3K4me3_E13.5_overlap.frip
+    Untracked:  output/qc/H3K4me3_E14.5_overlap.frip
+    Untracked:  output/qc/H3K4me3_E15.5_overlap.frip
+    Untracked:  output/qc/H3K4me3_overlap_default_dunnart_downSampled.frip
+    Untracked:  output/qc/H3K4me3_overlap_p0.01_dunnart_downSampled.frip
+    Untracked:  output/qc/ucsc_alignment/
+    Untracked:  output/rnaseq/
+
+Unstaged changes:
+    Modified:   code/configs/cluster.json
+    Deleted:    output/qc/H3K4me3_overlap_default.frip
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/mouse_dunnart_peak_features.Rmd</code>) and HTML (<code>docs/mouse_dunnart_peak_features.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/e189f4c5b692e06aa38d4aa2f02a787fbb6221b5/analysis/mouse_dunnart_peak_features.Rmd" target="_blank">e189f4c</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-22
+</td>
+<td>
+wflow_publish(“analysis/mouse_dunnart_peak_features.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/a605c331c57243ceba6ce5d9a36b385844da5bff/analysis/mouse_dunnart_peak_features.Rmd" target="_blank">a605c33</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-16
+</td>
+<td>
+updated
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="set-up" class="section level2">
+<h2>Set-up</h2>
+<pre class="r"><code># Load in libraries
+library(ChIPseeker)
+library(GenomicFeatures)
+library(ggplot2)
+library(data.table)
+library(dplyr)
+
+plot_dir &lt;- &quot;output/plots/&quot;
+fullPeak_dir &lt;- &quot;output/peaks/&quot;
+annot_dir &lt;- &quot;output/annotations/&quot;
+filterPeaks_dir &lt;- &quot;output/filtered_peaks/&quot;
+
+## Set the fonts up so that each plot is the saved the same way.
+font &lt;- theme(axis.text.x = element_text(size = 25),
+        axis.text.y = element_text(size = 25),
+        axis.title.x = element_text(size = 25),
+        axis.title.y = element_text(size = 25), 
+        legend.title = element_text(size = 25), legend.text = element_text(size = 25))</code></pre>
+</div>
+<div id="peak-features" class="section level2">
+<h2>Peak features</h2>
+<div id="peak-counts" class="section level3">
+<h3>Peak counts</h3>
+<pre class="r"><code>files =list.files(fullPeak_dir, pattern= &quot;*5.narrowPeak|*only.narrowPeak|*downSampled.narrowPeak&quot;, full.names=T) # create list of files in directory
+files = as.list(files)
+data = lapply(files, function(x) fread(x, header=FALSE, sep=&quot;\t&quot;, quote = &quot;&quot;, na.strings=c(&quot;&quot;, &quot;NA&quot;)))
+
+
+data[[1]]$mark = &quot;H3K27ac&quot;
+data[[2]]$mark = &quot;H3K27ac&quot;
+data[[3]]$mark = &quot;H3K27ac&quot;
+data[[4]]$mark = &quot;H3K27ac&quot;
+data[[5]]$mark = &quot;H3K27ac&quot;
+data[[6]]$mark = &quot;H3K27ac&quot;
+data[[7]]$mark = &quot;H3K27ac&quot;
+data[[8]]$mark = &quot;H3K27ac_H3K4me3&quot;
+data[[9]]$mark = &quot;H3K27ac_H3K4me3&quot;
+data[[10]]$mark = &quot;H3K27ac_H3K4me3&quot;
+data[[11]]$mark = &quot;H3K27ac_H3K4me3&quot;
+data[[12]]$mark = &quot;H3K27ac_H3K4me3&quot;
+data[[13]]$mark = &quot;H3K27ac_H3K4me3&quot;
+data[[14]]$mark = &quot;H3K4me3&quot;
+data[[15]]$mark = &quot;H3K4me3&quot;
+data[[16]]$mark = &quot;H3K4me3&quot;
+data[[17]]$mark = &quot;H3K4me3&quot;
+data[[18]]$mark = &quot;H3K4me3&quot;
+data[[19]]$mark = &quot;H3K4me3&quot;
+data[[20]]$mark = &quot;H3K27ac_H3K4me3&quot;
+data[[21]]$mark = &quot;H3K4me3&quot;
+
+
+data[[1]]$sample = &quot;E10.5&quot;
+data[[2]]$sample = &quot;E11.5&quot;
+data[[3]]$sample = &quot;E12.5&quot;
+data[[4]]$sample = &quot;E13.5&quot;
+data[[5]]$sample = &quot;E14.5&quot;
+data[[6]]$sample = &quot;E15.5&quot;
+data[[7]]$sample = &quot;dunnart&quot;
+data[[8]]$sample = &quot;E10.5&quot;
+data[[9]]$sample = &quot;E11.5&quot;
+data[[10]]$sample = &quot;E12.5&quot;
+data[[11]]$sample = &quot;E13.5&quot;
+data[[12]]$sample = &quot;E14.5&quot;
+data[[13]]$sample = &quot;E15.5&quot;
+data[[14]]$sample = &quot;E10.5&quot;
+data[[15]]$sample = &quot;E11.5&quot;
+data[[16]]$sample = &quot;E12.5&quot;
+data[[17]]$sample = &quot;E13.5&quot;
+data[[18]]$sample = &quot;E14.5&quot;
+data[[19]]$sample = &quot;E15.5&quot;
+data[[20]]$sample = &quot;dunnart&quot;
+data[[21]]$sample = &quot;dunnart&quot;
+
+## Plot stacked bar graph with number of peaks for each
+combined.peaks &lt;- rbindlist(data,)
+combined.tbl &lt;- with(combined.peaks, table(sample, mark))
+combined.tbl &lt;- as.data.frame(combined.tbl)
+
+p &lt;- ggplot(combined.tbl, aes(factor(sample), Freq, fill=mark)) + 
+  geom_bar(position=position_stack(reverse = TRUE), stat=&quot;identity&quot;) +
+  theme_minimal() + ylab(&quot;Number of peaks&quot;) +
+  xlab(&quot;&quot;) + scale_color_manual(values = c(&quot;#ffd166&quot;, &quot;#299d8f&quot;, &quot;#244653&quot;)) + scale_fill_manual(values = c(&quot;#ffd166&quot;, &quot;#299d8f&quot;, &quot;#244653&quot;)) +
+  theme_bw()
+
+p</code></pre>
+<p><img src="figure/mouse_dunnart_peak_features.Rmd/unnamed-chunk-2-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>pdf(file=paste0(plot_dir, &quot;number_of_mouse_dunnart_peaks.pdf&quot;), width = 10, height = 7)
+print(p + font)
+dev.off()</code></pre>
+<pre><code>svg 
+  2 </code></pre>
+</div>
+<div id="peak-lengths-for-h3k4me3-and-h3k27ac" class="section level3">
+<h3>Peak lengths for H3K4me3 and H3K27ac</h3>
+<pre class="r"><code>files =list.files(fullPeak_dir, pattern= &quot;*enhancer_peaks.narrowPeak|*promoter_peaks.narrowPeak&quot;, full.names=T) # create list of files in directory
+filenames &lt;- sub(&#39;\\.narrowPeak$&#39;, &#39;&#39;, basename(files)) 
+files = as.list(files)
+data = lapply(files, function(x) fread(x, header=FALSE, sep=&quot;\t&quot;, quote = &quot;&quot;, na.strings=c(&quot;&quot;, &quot;NA&quot;)))
+names(data) &lt;- filenames
+
+df1 = Map(mutate, data[c(1,3,5,7,9,11,13)], cre = &quot;enhancer&quot;)
+df2 = Map(mutate, data[c(2,4,6,8,10,12,14)], cre = &quot;promoter&quot;)
+data = append(df1, df2)
+
+df1 = Map(mutate, data[c(1,8)], group = &quot;dunnart&quot;)
+df2 = Map(mutate, data[c(2,9)], group = &quot;E10.5&quot;)
+df3 = Map(mutate, data[c(3,10)], group = &quot;E11.5&quot;)
+df4 = Map(mutate, data[c(4,11)], group = &quot;E12.5&quot;)
+df5 = Map(mutate, data[c(5,12)], group = &quot;E13.5&quot;)
+df6 = Map(mutate, data[c(6,13)], group = &quot;E14.5&quot;)
+df7 = Map(mutate, data[c(7,14)], group = &quot;E15.5&quot;)
+
+data &lt;- append(df1, df2)
+data &lt;- append(data, df3)
+data = append(data, df4)
+data = append(data, df5)
+data = append(data, df6)
+data = append(data, df7)
+
+data = rbindlist(data,)
+data$length = data$V3 - data$V2
+
+p = ggplot(data, aes(x=factor(group), y=log10(length), fill = cre)) + geom_violin(aes(fill=factor(cre)),
+              position = position_dodge(width=0.8)) + 
+  geom_boxplot(aes(fill=factor(cre)), 
+               width=.2,
+               outlier.shape = NA,
+               notch=FALSE,
+               position = position_dodge(width=0.8)) +
+  theme_bw() + xlab(&quot;&quot;) + ylab(&quot;Log10 Peak Length&quot;) +  scale_color_manual(values = c(&quot;#efc769&quot;, &quot;#1a6259&quot;)) +
+    scale_fill_manual(values = c(&quot;#ffe29f&quot;,&quot;#8db1ac&quot;))
+p</code></pre>
+<p><img src="figure/mouse_dunnart_peak_features.Rmd/unnamed-chunk-3-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>pdf(file=paste0(plot_dir, &quot;mouse_dunnart_peak_lengths.pdf&quot;), width = 10, height = 7)
+print(p  + font)
+dev.off()</code></pre>
+<pre><code>svg 
+  2 </code></pre>
+</div>
+<div id="plot-peak-intensity" class="section level3">
+<h3>Plot peak intensity</h3>
+<pre class="r"><code>p = ggplot(data, aes(x=factor(group), y=log10(V7), fill = cre)) + geom_violin(aes(fill=factor(cre)),
+              position = position_dodge(width=0.8)) + 
+  geom_boxplot(aes(fill=factor(cre)), 
+               width=.2,
+               outlier.shape = NA,
+               notch=FALSE,
+               position = position_dodge(width=0.8)) +
+  theme_bw() + xlab(&quot;&quot;) + ylab(&quot;Log10 Peak Length&quot;) +  scale_color_manual(values = c(&quot;#efc769&quot;, &quot;#1a6259&quot;)) +
+    scale_fill_manual(values = c(&quot;#ffe29f&quot;,&quot;#8db1ac&quot;))
+p</code></pre>
+<p><img src="figure/mouse_dunnart_peak_features.Rmd/unnamed-chunk-4-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>pdf(file=paste0(plot_dir, &quot;mouse_dunnart_peak_intensity.pdf&quot;), width = 10, height = 7)
+print(p  + font)
+dev.off()</code></pre>
+<pre><code>svg 
+  2 </code></pre>
+</div>
+</div>
+<div id="annotate-dunnart-peaks" class="section level1">
+<h1>Annotate dunnart peaks</h1>
+<p>The easiest way to call the nearest genes for the peaks in the dunnart is to use the ChIPseeker package (Guangchuang Yu 2021) as it allows easy integration of non-model organism genomes and has well documented instructions on incorporating BYO genomes with the package. To use the ChIPseeker to annotate peaks, firstly a txdb is needed for the dunnart annotation file. A TxDb class is a container for storing transcript annotations. The dunnart genome doesn’t have a de novo annotation so instead the Tasmanian devil annotation (RefSeq) has been lifted over to the dunnart genome using LiftOff (<a href="https://github.com/agshumate/Liftoff" class="uri">https://github.com/agshumate/Liftoff</a>).</p>
+<div id="gene-id-conversion-tables" class="section level2">
+<h2>Gene ID conversion tables</h2>
+<p>For downstream analyses, conversion tables between gene databases and between species is needed. This is because the ENSEMBL/ENTREZ IDs for the Tasmanian Devil have fewer links to databases such as GO terms etc. For this I have two conversion tables: 1. Converts Tasmanian devil RefSeq to Tasmanian Devil ENSEMBL IDs 2. Convert Tasmanian Devil ENSEMBL IDs to mouse ENSEMBL IDs</p>
+<p>Additionally I have a list of background genes for calculating GO enrichment. This background list includes all devil genes that have an orthologous mouse gene ID in the ensembl database.</p>
+</div>
+<div id="annotation-files" class="section level2">
+<h2>Annotation files</h2>
+<pre class="r"><code># Using ENSEMBL version 103 for both the mouse and devil to keep it consistent
+## Annotation file for the mouse
+
+mm10_txdb &lt;- makeTxDbFromBiomart(biomart=&quot;ENSEMBL_MART_ENSEMBL&quot;,
+                    dataset=&quot;mmusculus_gene_ensembl&quot;,
+                    host=&quot;http://feb2021.archive.ensembl.org&quot;)
+seqlevelsStyle(mm10_txdb) &lt;- &quot;UCSC&quot;
+
+## Make txdb for dunnart annotation file
+smiCra_txdb &lt;- makeTxDbFromGFF(&quot;data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr2.gff&quot;)
+
+## Convert geneIDs
+### Tables downloaded from biomart and collated
+df2 &lt;- read.table(&quot;output/annotations/devil_to_mouse_ensembl.txt&quot;, header=TRUE, sep=&quot;\t&quot;) ## conversion table for devil ENSEMBL to mouse ENSEMBL
+df3 &lt;- read.table(&quot;output/annotations/refseq_to_ensembl.txt&quot;, header=TRUE, sep=&quot;\t&quot;) ## convertsion table for devil refseq to devil ENSEMBL
+bg = fread(&quot;output/annotations/go_background_orthologousENSEMBL_biomart.txt&quot;, header = FALSE)
+bg = unlist(bg, use.names = FALSE)</code></pre>
+</div>
+<div id="annotate-peak-files-with-chipseeker" class="section level2">
+<h2>Annotate peak files with ChIPseeker</h2>
+<div id="mouse" class="section level3">
+<h3>Mouse</h3>
+<pre class="r"><code>## Anotate peak files
+annotatePeaksmm10 &lt;- function(peak, outFile){
+  
+  # Annotate peak file based on mouse ENSEMBL annotation
+  peakAnno &lt;- annotatePeak(peak, tssRegion = c(-3000, 3000), TxDb = mm10_txdb)
+  
+  # Write annotation to file
+  write.table(peakAnno, outFile, sep=&quot;\t&quot;, quote=F, row.names=F)
+}
+
+annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E10.5_enhancer_peaks.narrowPeak&quot;), outFile = paste0(annot_dir, &quot;E10.5_enhancer_annotation.txt&quot;))</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:57:04 
+&gt;&gt; preparing features information...         2022-03-22 15:57:04 
+&gt;&gt; identifying nearest features...       2022-03-22 15:57:05 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:57:06 
+&gt;&gt; assigning genomic annotation...       2022-03-22 15:57:06 
+&gt;&gt; assigning chromosome lengths          2022-03-22 15:57:24 
+&gt;&gt; done...                   2022-03-22 15:57:24 </code></pre>
+<pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E11.5_enhancer_peaks.narrowPeak&quot;), outFile = paste0(annot_dir, &quot;E11.5_enhancer_annotation.txt&quot;))</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:57:24 
+&gt;&gt; preparing features information...         2022-03-22 15:57:24 
+&gt;&gt; identifying nearest features...       2022-03-22 15:57:24 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:57:25 
+&gt;&gt; assigning genomic annotation...       2022-03-22 15:57:25 
+&gt;&gt; assigning chromosome lengths          2022-03-22 15:57:27 
+&gt;&gt; done...                   2022-03-22 15:57:27 </code></pre>
+<pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E12.5_enhancer_peaks.narrowPeak&quot;), outFile = paste0(annot_dir, &quot;E12.5_enhancer_annotation.txt&quot;))</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:57:27 
+&gt;&gt; preparing features information...         2022-03-22 15:57:27 
+&gt;&gt; identifying nearest features...       2022-03-22 15:57:27 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:57:28 
+&gt;&gt; assigning genomic annotation...       2022-03-22 15:57:28 
+&gt;&gt; assigning chromosome lengths          2022-03-22 15:57:30 
+&gt;&gt; done...                   2022-03-22 15:57:31 </code></pre>
+<pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E13.5_enhancer_peaks.narrowPeak&quot;), outFile = paste0(annot_dir, &quot;E13.5_enhancer_annotation.txt&quot;))</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:57:31 
+&gt;&gt; preparing features information...         2022-03-22 15:57:31 
+&gt;&gt; identifying nearest features...       2022-03-22 15:57:31 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:57:31 
+&gt;&gt; assigning genomic annotation...       2022-03-22 15:57:31 
+&gt;&gt; assigning chromosome lengths          2022-03-22 15:57:34 
+&gt;&gt; done...                   2022-03-22 15:57:34 </code></pre>
+<pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E14.5_enhancer_peaks.narrowPeak&quot;), outFile = paste0(annot_dir, &quot;E14.5_enhancer_annotation.txt&quot;))</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:57:34 
+&gt;&gt; preparing features information...         2022-03-22 15:57:34 
+&gt;&gt; identifying nearest features...       2022-03-22 15:57:34 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:57:34 
+&gt;&gt; assigning genomic annotation...       2022-03-22 15:57:34 
+&gt;&gt; assigning chromosome lengths          2022-03-22 15:57:37 
+&gt;&gt; done...                   2022-03-22 15:57:37 </code></pre>
+<pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E15.5_enhancer_peaks.narrowPeak&quot;), outFile = paste0(annot_dir,&quot;E15.5_enhancer_annotation.txt&quot;))</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:57:37 
+&gt;&gt; preparing features information...         2022-03-22 15:57:37 
+&gt;&gt; identifying nearest features...       2022-03-22 15:57:37 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:57:37 
+&gt;&gt; assigning genomic annotation...       2022-03-22 15:57:37 
+&gt;&gt; assigning chromosome lengths          2022-03-22 15:57:40 
+&gt;&gt; done...                   2022-03-22 15:57:40 </code></pre>
+<pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E10.5_promoter_peaks.narrowPeak&quot;), outFile = paste0(annot_dir,&quot;E10.5_promoter_annotation.txt&quot;))</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:57:40 
+&gt;&gt; preparing features information...         2022-03-22 15:57:40 
+&gt;&gt; identifying nearest features...       2022-03-22 15:57:40 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:57:41 
+&gt;&gt; assigning genomic annotation...       2022-03-22 15:57:41 
+&gt;&gt; assigning chromosome lengths          2022-03-22 15:57:44 
+&gt;&gt; done...                   2022-03-22 15:57:44 </code></pre>
+<pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E11.5_promoter_peaks.narrowPeak&quot;), outFile = paste0(annot_dir,&quot;E11.5_promoter_annotation.txt&quot;))</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:57:44 
+&gt;&gt; preparing features information...         2022-03-22 15:57:44 
+&gt;&gt; identifying nearest features...       2022-03-22 15:57:44 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:57:45 
+&gt;&gt; assigning genomic annotation...       2022-03-22 15:57:45 
+&gt;&gt; assigning chromosome lengths          2022-03-22 15:57:48 
+&gt;&gt; done...                   2022-03-22 15:57:48 </code></pre>
+<pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E12.5_promoter_peaks.narrowPeak&quot;), outFile = paste0(annot_dir,&quot;E12.5_promoter_annotation.txt&quot;))</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:57:48 
+&gt;&gt; preparing features information...         2022-03-22 15:57:49 
+&gt;&gt; identifying nearest features...       2022-03-22 15:57:49 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:57:49 
+&gt;&gt; assigning genomic annotation...       2022-03-22 15:57:49 
+&gt;&gt; assigning chromosome lengths          2022-03-22 15:57:52 
+&gt;&gt; done...                   2022-03-22 15:57:52 </code></pre>
+<pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E13.5_promoter_peaks.narrowPeak&quot;), outFile = paste0(annot_dir,&quot;E13.5_promoter_annotation.txt&quot;))</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:57:52 
+&gt;&gt; preparing features information...         2022-03-22 15:57:52 
+&gt;&gt; identifying nearest features...       2022-03-22 15:57:52 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:57:53 
+&gt;&gt; assigning genomic annotation...       2022-03-22 15:57:53 
+&gt;&gt; assigning chromosome lengths          2022-03-22 15:57:56 
+&gt;&gt; done...                   2022-03-22 15:57:56 </code></pre>
+<pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E14.5_promoter_peaks.narrowPeak&quot;), outFile = paste0(annot_dir,&quot;E14.5_promoter_annotation.txt&quot;))</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:57:56 
+&gt;&gt; preparing features information...         2022-03-22 15:57:56 
+&gt;&gt; identifying nearest features...       2022-03-22 15:57:56 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:57:57 
+&gt;&gt; assigning genomic annotation...       2022-03-22 15:57:57 
+&gt;&gt; assigning chromosome lengths          2022-03-22 15:58:00 
+&gt;&gt; done...                   2022-03-22 15:58:00 </code></pre>
+<pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E15.5_promoter_peaks.narrowPeak&quot;), outFile = paste0(annot_dir,&quot;E15.5_promoter_annotation.txt&quot;))</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:58:00 
+&gt;&gt; preparing features information...         2022-03-22 15:58:00 
+&gt;&gt; identifying nearest features...       2022-03-22 15:58:00 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:58:01 
+&gt;&gt; assigning genomic annotation...       2022-03-22 15:58:01 
+&gt;&gt; assigning chromosome lengths          2022-03-22 15:58:04 
+&gt;&gt; done...                   2022-03-22 15:58:04 </code></pre>
+</div>
+<div id="dunnart" class="section level3">
+<h3>Dunnart</h3>
+<pre class="r"><code>annotatePeaks &lt;- function(peak, outFile, outFile1, outFile2, GOenrich, kegg, backg){
+  
+  # Annotate peak file based on dunnart GFF
+  peakAnno &lt;- ChIPseeker::annotatePeak(peak = peak, tssRegion = c(-3000, 3000), TxDb = smiCra_txdb)
+
+  # Write annotation to file
+  write.table(peakAnno, file = paste0(annot_dir, outFile), sep = &quot;\t&quot;, quote = F, row.names = F)
+  
+  peakAnnoDF &lt;- as.data.frame(peakAnno, row.names = NULL)
+  # # Convert refseq IDs and geneIDs to devil ensembl IDs
+  df2 &lt;- read.table(&quot;output/annotations/devil_to_mouse_ensembl.txt&quot;, header=TRUE, sep=&quot;\t&quot;) ## conversion table for devil ENSEMBL to mouse ENSEMBL
+  df3 &lt;- read.table(&quot;output/annotations/refseq_to_ensembl.txt&quot;, header=TRUE, sep=&quot;\t&quot;) ## convertsion table for devil refseq to devil ENSEMBL
+
+  peakAnnoDF$ensemblgeneID &lt;- df2$Gene.stable.ID[match(unlist(peakAnnoDF$geneId), df2$Gene.name)]
+  peakAnnoDF$ensemblgeneID &lt;- replace(peakAnnoDF$ensemblgeneID,is.na(peakAnnoDF$ensemblgeneID),&quot;-&quot;)
+  peakAnnoDF$transcriptIdAltered &lt;- gsub(&quot;\\..*&quot;,&quot;&quot;, peakAnnoDF$transcriptId)
+  peakAnnoDF$refseqID &lt;- df3$Ensembl.Gene.ID[match(unlist(peakAnnoDF$transcriptIdAltered), df3$RefSeq.mRNA.Accession)]
+  peakAnnoDF$refseqID &lt;- replace(peakAnnoDF$refseqID,is.na(peakAnnoDF$refseqID),&quot;-&quot;)
+  peakAnnoDF$combined &lt;- ifelse(peakAnnoDF$refseqID == &quot;-&quot;, peakAnnoDF$ensemblgeneID, peakAnnoDF$refseqID)
+  peakAnnoDF$combined[peakAnnoDF$combined == as.character(&quot;-&quot;)] &lt;- NA
+
+  peakAnnoDF &lt;- peakAnnoDF[!is.na(peakAnnoDF$combined),]
+  write.table(peakAnnoDF, paste0(annot_dir, outFile2), sep = &quot;\t&quot;, quote = F, row.names = F)
+  # # Convert devil ensembl to mouse ensembl
+  peakAnnoDF$mouseensembl &lt;- df2$Mouse.gene.stable.ID[match(unlist(peakAnnoDF$combined), df2$Gene.stable.ID)]
+  # # Write annotation with converted IDs 
+  peakAnnoDF$mouseensembl[peakAnnoDF$mouseensembl == as.character(&quot;&quot;)] &lt;- NA
+  peakAnnoDF &lt;- peakAnnoDF[!is.na(peakAnnoDF$mouseensembl),]
+  write.table(peakAnnoDF, paste0(annot_dir, outFile1), sep = &quot;\t&quot;, quote = F, row.names = F)
+}
+
+
+### Enhancer-associated peaks annotation
+annotatePeaks(peak = paste0(fullPeak_dir, &quot;dunnart_downSampled_enhancer_peaks.narrowPeak&quot;), outFile = &quot;dunnart_downSampled_enhancer_annotation.txt&quot;, backg = unlist(fread(&quot;output/annotations/go_background_orthologousENSEMBL_biomart.txt&quot;, header = FALSE), use.names = FALSE),
+  outFile1 = &quot;dunnart_downSampled_enhancer_annotationConvertedIDs.txt&quot;, outFile2 = &quot;dunnart_enhancer_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:58:04 
+&gt;&gt; preparing features information...         2022-03-22 15:58:04 
+&gt;&gt; identifying nearest features...       2022-03-22 15:58:05 </code></pre>
+<pre><code>Warning in .Seqinfo.mergexy(x, y): Each of the 2 combined objects has sequence levels not in the other:
+  - in &#39;x&#39;: scaffold00197_pilon_pilon, scaffold00231_pilon_pilon, scaffold00251_pilon_pilon, scaffold00262_pilon_pilon, scaffold00282_pilon_pilon, scaffold00331_pilon_pilon, scaffold00370_pilon_pilon
+  - in &#39;y&#39;: scaffold00067_pilon_pilon, scaffold00108_pilon_pilon, scaffold00123_pilon_pilon, scaffold00129_pilon_pilon, scaffold00131_pilon_pilon, scaffold00145_pilon_pilon, scaffold00152_pilon_pilon, scaffold00156_pilon_pilon, scaffold00161_pilon_pilon, scaffold00162_pilon_pilon, scaffold00163_pilon_pilon, scaffold00169_pilon_pilon, scaffold00170_pilon_pilon, scaffold00172_pilon_pilon, scaffold00175_pilon_pilon, scaffold00176_pilon_pilon, scaffold00178_pilon_pilon, scaffold00181_pilon_pilon, scaffold00182_pilon_pilon, scaffold00184_pilon_pilon, scaffold00189_pilon_pilon, scaffold00192_pilon_pilon, scaffold00193_pilon_pilon, scaffold00194_pilon_pilon, scaffold00198_pilon_pilon, scaffold00199_pilon_pilon, scaffold00205_pilon_pilon, scaffold00207_pilon_pilon, scaffold00209_pilon_pilon, scaffold00213_pilon_pilon, scaffold00214_pilon_pilon, scaffold00215_pilon_pilon, scaffold00217_pilon_pilon, scaffold00218_pilon_pilon, scaffold00219_pilon_pilon, scaffold00221_pilon_pilon, scaffold00225_pilon_pilon, scaffold00227_pilon_pilon, scaffold00228_pilon_pilon, scaffold00229_pilon_pilon, scaffold00230_pilon_pilon, scaffold00234_pilon_pilon, scaffold00235_pilon_pilon, scaffold00236_pilon_pilon, scaffold00238_pilon_pilon, scaffold00240_pilon_pilon, scaffold00245_pilon_pilon, scaffold00247_pilon_pilon, scaffold00253_pilon_pilon, scaffold00255_pilon_pilon, scaffold00256_pilon_pilon, scaffold00257_pilon_pilon, scaffold00258_pilon_pilon, scaffold00267_pilon_pilon, scaffold00268_pilon_pilon, scaffold00269_pilon_pilon, scaffold00270_pilon_pilon, scaffold00273_pilon_pilon, scaffold00274_pilon_pilon, scaffold00276_pilon_pilon, scaffold00277_pilon_pilon, scaffold00278_pilon_pilon, scaffold00286_pilon_pilon, scaffold00288_pilon_pilon, scaffold00293_pilon_pilon, scaffold00294_pilon_pilon, scaffold00295_pilon_pilon, scaffold00298_pilon_pilon, scaffold00305_pilon_pilon, scaffold00311_pilon_pilon, scaffold00317_pilon_pilon, scaffold00322_pilon_pilon, scaffold00326_pilon_pilon, scaffold00349_pilon_pilon, scaffold00413_pilon_pilon, scaffold00426_pilon_pilon, scaffold00541_pilon_pilon, scaffold00556_pilon_pilon, scaffold00574_pilon_pilon, scaffold00593_pilon_pilon, scaffold00594_pilon_pilon
+  Make sure to always combine/compare objects based on the same reference
+  genome (use suppressWarnings() to suppress this warning).</code></pre>
+<pre><code>&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:58:05 
+&gt;&gt; assigning genomic annotation...       2022-03-22 15:58:05 </code></pre>
+<pre><code>Warning in .Seqinfo.mergexy(x, y): Each of the 2 combined objects has sequence levels not in the other:
+  - in &#39;x&#39;: scaffold00197_pilon_pilon, scaffold00231_pilon_pilon, scaffold00251_pilon_pilon, scaffold00262_pilon_pilon, scaffold00282_pilon_pilon, scaffold00331_pilon_pilon, scaffold00370_pilon_pilon
+  - in &#39;y&#39;: scaffold00067_pilon_pilon, scaffold00108_pilon_pilon, scaffold00123_pilon_pilon, scaffold00129_pilon_pilon, scaffold00131_pilon_pilon, scaffold00145_pilon_pilon, scaffold00152_pilon_pilon, scaffold00156_pilon_pilon, scaffold00161_pilon_pilon, scaffold00162_pilon_pilon, scaffold00163_pilon_pilon, scaffold00169_pilon_pilon, scaffold00170_pilon_pilon, scaffold00172_pilon_pilon, scaffold00175_pilon_pilon, scaffold00176_pilon_pilon, scaffold00178_pilon_pilon, scaffold00181_pilon_pilon, scaffold00182_pilon_pilon, scaffold00184_pilon_pilon, scaffold00189_pilon_pilon, scaffold00192_pilon_pilon, scaffold00193_pilon_pilon, scaffold00194_pilon_pilon, scaffold00198_pilon_pilon, scaffold00199_pilon_pilon, scaffold00205_pilon_pilon, scaffold00207_pilon_pilon, scaffold00209_pilon_pilon, scaffold00213_pilon_pilon, scaffold00214_pilon_pilon, scaffold00215_pilon_pilon, scaffold00217_pilon_pilon, scaffold00218_pilon_pilon, scaffold00219_pilon_pilon, scaffold00221_pilon_pilon, scaffold00225_pilon_pilon, scaffold00227_pilon_pilon, scaffold00228_pilon_pilon, scaffold00229_pilon_pilon, scaffold00230_pilon_pilon, scaffold00234_pilon_pilon, scaffold00235_pilon_pilon, scaffold00236_pilon_pilon, scaffold00238_pilon_pilon, scaffold00240_pilon_pilon, scaffold00245_pilon_pilon, scaffold00247_pilon_pilon, scaffold00253_pilon_pilon, scaffold00255_pilon_pilon, scaffold00256_pilon_pilon, scaffold00257_pilon_pilon, scaffold00258_pilon_pilon, scaffold00267_pilon_pilon, scaffold00268_pilon_pilon, scaffold00269_pilon_pilon, scaffold00270_pilon_pilon, scaffold00273_pilon_pilon, scaffold00274_pilon_pilon, scaffold00276_pilon_pilon, scaffold00277_pilon_pilon, scaffold00278_pilon_pilon, scaffold00286_pilon_pilon, scaffold00288_pilon_pilon, scaffold00293_pilon_pilon, scaffold00294_pilon_pilon, scaffold00295_pilon_pilon, scaffold00298_pilon_pilon, scaffold00305_pilon_pilon, scaffold00311_pilon_pilon, scaffold00317_pilon_pilon, scaffold00322_pilon_pilon, scaffold00326_pilon_pilon, scaffold00349_pilon_pilon, scaffold00413_pilon_pilon, scaffold00426_pilon_pilon, scaffold00541_pilon_pilon, scaffold00556_pilon_pilon, scaffold00574_pilon_pilon, scaffold00593_pilon_pilon, scaffold00594_pilon_pilon
+  Make sure to always combine/compare objects based on the same reference
+  genome (use suppressWarnings() to suppress this warning).
+
+Warning in .Seqinfo.mergexy(x, y): Each of the 2 combined objects has sequence levels not in the other:
+  - in &#39;x&#39;: scaffold00197_pilon_pilon, scaffold00231_pilon_pilon, scaffold00251_pilon_pilon, scaffold00262_pilon_pilon, scaffold00282_pilon_pilon, scaffold00331_pilon_pilon, scaffold00370_pilon_pilon
+  - in &#39;y&#39;: scaffold00067_pilon_pilon, scaffold00108_pilon_pilon, scaffold00123_pilon_pilon, scaffold00129_pilon_pilon, scaffold00131_pilon_pilon, scaffold00145_pilon_pilon, scaffold00152_pilon_pilon, scaffold00156_pilon_pilon, scaffold00161_pilon_pilon, scaffold00162_pilon_pilon, scaffold00163_pilon_pilon, scaffold00169_pilon_pilon, scaffold00170_pilon_pilon, scaffold00172_pilon_pilon, scaffold00175_pilon_pilon, scaffold00176_pilon_pilon, scaffold00178_pilon_pilon, scaffold00181_pilon_pilon, scaffold00182_pilon_pilon, scaffold00184_pilon_pilon, scaffold00189_pilon_pilon, scaffold00192_pilon_pilon, scaffold00193_pilon_pilon, scaffold00194_pilon_pilon, scaffold00198_pilon_pilon, scaffold00199_pilon_pilon, scaffold00205_pilon_pilon, scaffold00207_pilon_pilon, scaffold00209_pilon_pilon, scaffold00213_pilon_pilon, scaffold00214_pilon_pilon, scaffold00215_pilon_pilon, scaffold00217_pilon_pilon, scaffold00218_pilon_pilon, scaffold00219_pilon_pilon, scaffold00221_pilon_pilon, scaffold00225_pilon_pilon, scaffold00227_pilon_pilon, scaffold00228_pilon_pilon, scaffold00229_pilon_pilon, scaffold00230_pilon_pilon, scaffold00234_pilon_pilon, scaffold00235_pilon_pilon, scaffold00236_pilon_pilon, scaffold00238_pilon_pilon, scaffold00240_pilon_pilon, scaffold00245_pilon_pilon, scaffold00247_pilon_pilon, scaffold00253_pilon_pilon, scaffold00255_pilon_pilon, scaffold00256_pilon_pilon, scaffold00257_pilon_pilon, scaffold00258_pilon_pilon, scaffold00267_pilon_pilon, scaffold00268_pilon_pilon, scaffold00269_pilon_pilon, scaffold00270_pilon_pilon, scaffold00273_pilon_pilon, scaffold00274_pilon_pilon, scaffold00276_pilon_pilon, scaffold00277_pilon_pilon, scaffold00278_pilon_pilon, scaffold00286_pilon_pilon, scaffold00288_pilon_pilon, scaffold00293_pilon_pilon, scaffold00294_pilon_pilon, scaffold00295_pilon_pilon, scaffold00298_pilon_pilon, scaffold00305_pilon_pilon, scaffold00311_pilon_pilon, scaffold00317_pilon_pilon, scaffold00322_pilon_pilon, scaffold00326_pilon_pilon, scaffold00349_pilon_pilon, scaffold00413_pilon_pilon, scaffold00426_pilon_pilon, scaffold00541_pilon_pilon, scaffold00556_pilon_pilon, scaffold00574_pilon_pilon, scaffold00593_pilon_pilon, scaffold00594_pilon_pilon
+  Make sure to always combine/compare objects based on the same reference
+  genome (use suppressWarnings() to suppress this warning).
+
+Warning in .Seqinfo.mergexy(x, y): Each of the 2 combined objects has sequence levels not in the other:
+  - in &#39;x&#39;: scaffold00197_pilon_pilon, scaffold00231_pilon_pilon, scaffold00251_pilon_pilon, scaffold00262_pilon_pilon, scaffold00282_pilon_pilon, scaffold00331_pilon_pilon, scaffold00370_pilon_pilon
+  - in &#39;y&#39;: scaffold00067_pilon_pilon, scaffold00108_pilon_pilon, scaffold00123_pilon_pilon, scaffold00129_pilon_pilon, scaffold00131_pilon_pilon, scaffold00145_pilon_pilon, scaffold00152_pilon_pilon, scaffold00156_pilon_pilon, scaffold00161_pilon_pilon, scaffold00162_pilon_pilon, scaffold00163_pilon_pilon, scaffold00169_pilon_pilon, scaffold00170_pilon_pilon, scaffold00172_pilon_pilon, scaffold00175_pilon_pilon, scaffold00176_pilon_pilon, scaffold00178_pilon_pilon, scaffold00181_pilon_pilon, scaffold00182_pilon_pilon, scaffold00184_pilon_pilon, scaffold00189_pilon_pilon, scaffold00192_pilon_pilon, scaffold00193_pilon_pilon, scaffold00194_pilon_pilon, scaffold00198_pilon_pilon, scaffold00199_pilon_pilon, scaffold00205_pilon_pilon, scaffold00207_pilon_pilon, scaffold00209_pilon_pilon, scaffold00213_pilon_pilon, scaffold00214_pilon_pilon, scaffold00215_pilon_pilon, scaffold00217_pilon_pilon, scaffold00218_pilon_pilon, scaffold00219_pilon_pilon, scaffold00221_pilon_pilon, scaffold00225_pilon_pilon, scaffold00227_pilon_pilon, scaffold00228_pilon_pilon, scaffold00229_pilon_pilon, scaffold00230_pilon_pilon, scaffold00234_pilon_pilon, scaffold00235_pilon_pilon, scaffold00236_pilon_pilon, scaffold00238_pilon_pilon, scaffold00240_pilon_pilon, scaffold00245_pilon_pilon, scaffold00247_pilon_pilon, scaffold00253_pilon_pilon, scaffold00255_pilon_pilon, scaffold00256_pilon_pilon, scaffold00257_pilon_pilon, scaffold00258_pilon_pilon, scaffold00267_pilon_pilon, scaffold00268_pilon_pilon, scaffold00269_pilon_pilon, scaffold00270_pilon_pilon, scaffold00273_pilon_pilon, scaffold00274_pilon_pilon, scaffold00276_pilon_pilon, scaffold00277_pilon_pilon, scaffold00278_pilon_pilon, scaffold00286_pilon_pilon, scaffold00288_pilon_pilon, scaffold00293_pilon_pilon, scaffold00294_pilon_pilon, scaffold00295_pilon_pilon, scaffold00298_pilon_pilon, scaffold00305_pilon_pilon, scaffold00311_pilon_pilon, scaffold00317_pilon_pilon, scaffold00322_pilon_pilon, scaffold00326_pilon_pilon, scaffold00349_pilon_pilon, scaffold00413_pilon_pilon, scaffold00426_pilon_pilon, scaffold00541_pilon_pilon, scaffold00556_pilon_pilon, scaffold00574_pilon_pilon, scaffold00593_pilon_pilon, scaffold00594_pilon_pilon
+  Make sure to always combine/compare objects based on the same reference
+  genome (use suppressWarnings() to suppress this warning).
+
+Warning in .Seqinfo.mergexy(x, y): Each of the 2 combined objects has sequence levels not in the other:
+  - in &#39;x&#39;: scaffold00197_pilon_pilon, scaffold00231_pilon_pilon, scaffold00251_pilon_pilon, scaffold00262_pilon_pilon, scaffold00282_pilon_pilon, scaffold00331_pilon_pilon, scaffold00370_pilon_pilon
+  - in &#39;y&#39;: scaffold00067_pilon_pilon, scaffold00108_pilon_pilon, scaffold00123_pilon_pilon, scaffold00129_pilon_pilon, scaffold00131_pilon_pilon, scaffold00145_pilon_pilon, scaffold00152_pilon_pilon, scaffold00156_pilon_pilon, scaffold00161_pilon_pilon, scaffold00162_pilon_pilon, scaffold00163_pilon_pilon, scaffold00169_pilon_pilon, scaffold00170_pilon_pilon, scaffold00172_pilon_pilon, scaffold00175_pilon_pilon, scaffold00176_pilon_pilon, scaffold00178_pilon_pilon, scaffold00181_pilon_pilon, scaffold00182_pilon_pilon, scaffold00184_pilon_pilon, scaffold00189_pilon_pilon, scaffold00192_pilon_pilon, scaffold00193_pilon_pilon, scaffold00194_pilon_pilon, scaffold00198_pilon_pilon, scaffold00199_pilon_pilon, scaffold00205_pilon_pilon, scaffold00207_pilon_pilon, scaffold00209_pilon_pilon, scaffold00213_pilon_pilon, scaffold00214_pilon_pilon, scaffold00215_pilon_pilon, scaffold00217_pilon_pilon, scaffold00218_pilon_pilon, scaffold00219_pilon_pilon, scaffold00221_pilon_pilon, scaffold00225_pilon_pilon, scaffold00227_pilon_pilon, scaffold00228_pilon_pilon, scaffold00229_pilon_pilon, scaffold00230_pilon_pilon, scaffold00234_pilon_pilon, scaffold00235_pilon_pilon, scaffold00236_pilon_pilon, scaffold00238_pilon_pilon, scaffold00240_pilon_pilon, scaffold00245_pilon_pilon, scaffold00247_pilon_pilon, scaffold00253_pilon_pilon, scaffold00255_pilon_pilon, scaffold00256_pilon_pilon, scaffold00257_pilon_pilon, scaffold00258_pilon_pilon, scaffold00267_pilon_pilon, scaffold00268_pilon_pilon, scaffold00269_pilon_pilon, scaffold00270_pilon_pilon, scaffold00273_pilon_pilon, scaffold00274_pilon_pilon, scaffold00276_pilon_pilon, scaffold00277_pilon_pilon, scaffold00278_pilon_pilon, scaffold00286_pilon_pilon, scaffold00288_pilon_pilon, scaffold00293_pilon_pilon, scaffold00294_pilon_pilon, scaffold00295_pilon_pilon, scaffold00298_pilon_pilon, scaffold00305_pilon_pilon, scaffold00311_pilon_pilon, scaffold00317_pilon_pilon, scaffold00322_pilon_pilon, scaffold00326_pilon_pilon, scaffold00349_pilon_pilon, scaffold00413_pilon_pilon, scaffold00426_pilon_pilon, scaffold00541_pilon_pilon, scaffold00556_pilon_pilon, scaffold00574_pilon_pilon, scaffold00593_pilon_pilon, scaffold00594_pilon_pilon
+  Make sure to always combine/compare objects based on the same reference
+  genome (use suppressWarnings() to suppress this warning).</code></pre>
+<pre><code>&gt;&gt; assigning chromosome lengths          2022-03-22 15:58:17 
+&gt;&gt; done...                   2022-03-22 15:58:17 </code></pre>
+<pre class="r"><code>### Promoter-associated peaks annotation
+annotatePeaks(peak = paste0(fullPeak_dir, &quot;dunnart_downSampled_promoter_peaks.narrowPeak&quot;), outFile = &quot;dunnart_downSampled_promoter_annotation.txt&quot;, backg = unlist(fread(&quot;output/annotations/go_background_orthologousENSEMBL_biomart.txt&quot;, header = FALSE), use.names = FALSE),
+  outFile1 = &quot;dunnart_downSampled_promoter_annotationConvertedIDs.txt&quot;, outFile2 = &quot;dunnart_downSampled_promoter_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:58:18 
+&gt;&gt; preparing features information...         2022-03-22 15:58:18 
+&gt;&gt; identifying nearest features...       2022-03-22 15:58:18 </code></pre>
+<pre><code>Warning in .Seqinfo.mergexy(x, y): Each of the 2 combined objects has sequence levels not in the other:
+  - in &#39;x&#39;: scaffold00139_pilon_pilon, scaffold00155_pilon_pilon, scaffold00177_pilon_pilon, scaffold00188_pilon_pilon, scaffold00197_pilon_pilon, scaffold00206_pilon_pilon, scaffold00222_pilon_pilon, scaffold00231_pilon_pilon, scaffold00239_pilon_pilon, scaffold00241_pilon_pilon, scaffold00244_pilon_pilon, scaffold00250_pilon_pilon, scaffold00251_pilon_pilon, scaffold00252_pilon_pilon, scaffold00259_pilon_pilon, scaffold00260_pilon_pilon, scaffold00282_pilon_pilon, scaffold00290_pilon_pilon, scaffold00319_pilon_pilon, scaffold00320_pilon_pilon, scaffold00321_pilon_pilon, scaffold00324_pilon_pilon, scaffold00335_pilon_pilon, scaffold00493_pilon_pilon
+  - in &#39;y&#39;: scaffold00198_pilon_pilon, scaffold00229_pilon_pilon, scaffold00238_pilon_pilon, scaffold00240_pilon_pilon, scaffold00256_pilon_pilon, scaffold00258_pilon_pilon, scaffold00276_pilon_pilon, scaffold00277_pilon_pilon, scaffold00294_pilon_pilon, scaffold00298_pilon_pilon, scaffold00305_pilon_pilon, scaffold00311_pilon_pilon, scaffold00317_pilon_pilon, scaffold00326_pilon_pilon, scaffold00349_pilon_pilon, scaffold00413_pilon_pilon, scaffold00424_pilon_pilon, scaffold00426_pilon_pilon, scaffold00541_pilon_pilon, scaffold00556_pilon_pilon, scaffold00574_pilon_pilon, scaffold00593_pilon_pilon, scaffold00594_pilon_pilon
+  Make sure to always combine/compare objects based on the same reference
+  genome (use suppressWarnings() to suppress this warning).</code></pre>
+<pre><code>&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:58:18 
+&gt;&gt; assigning genomic annotation...       2022-03-22 15:58:18 </code></pre>
+<pre><code>Warning in .Seqinfo.mergexy(x, y): Each of the 2 combined objects has sequence levels not in the other:
+  - in &#39;x&#39;: scaffold00139_pilon_pilon, scaffold00155_pilon_pilon, scaffold00177_pilon_pilon, scaffold00188_pilon_pilon, scaffold00197_pilon_pilon, scaffold00206_pilon_pilon, scaffold00222_pilon_pilon, scaffold00231_pilon_pilon, scaffold00239_pilon_pilon, scaffold00241_pilon_pilon, scaffold00244_pilon_pilon, scaffold00250_pilon_pilon, scaffold00251_pilon_pilon, scaffold00252_pilon_pilon, scaffold00259_pilon_pilon, scaffold00260_pilon_pilon, scaffold00282_pilon_pilon, scaffold00290_pilon_pilon, scaffold00319_pilon_pilon, scaffold00320_pilon_pilon, scaffold00321_pilon_pilon, scaffold00324_pilon_pilon, scaffold00335_pilon_pilon, scaffold00493_pilon_pilon
+  - in &#39;y&#39;: scaffold00198_pilon_pilon, scaffold00229_pilon_pilon, scaffold00238_pilon_pilon, scaffold00240_pilon_pilon, scaffold00256_pilon_pilon, scaffold00258_pilon_pilon, scaffold00276_pilon_pilon, scaffold00277_pilon_pilon, scaffold00294_pilon_pilon, scaffold00298_pilon_pilon, scaffold00305_pilon_pilon, scaffold00311_pilon_pilon, scaffold00317_pilon_pilon, scaffold00326_pilon_pilon, scaffold00349_pilon_pilon, scaffold00413_pilon_pilon, scaffold00424_pilon_pilon, scaffold00426_pilon_pilon, scaffold00541_pilon_pilon, scaffold00556_pilon_pilon, scaffold00574_pilon_pilon, scaffold00593_pilon_pilon, scaffold00594_pilon_pilon
+  Make sure to always combine/compare objects based on the same reference
+  genome (use suppressWarnings() to suppress this warning).</code></pre>
+<pre><code>Warning in .Seqinfo.mergexy(x, y): Each of the 2 combined objects has sequence levels not in the other:
+  - in &#39;x&#39;: scaffold00139_pilon_pilon, scaffold00155_pilon_pilon, scaffold00177_pilon_pilon, scaffold00188_pilon_pilon, scaffold00197_pilon_pilon, scaffold00206_pilon_pilon, scaffold00222_pilon_pilon, scaffold00231_pilon_pilon, scaffold00239_pilon_pilon, scaffold00241_pilon_pilon, scaffold00244_pilon_pilon, scaffold00250_pilon_pilon, scaffold00251_pilon_pilon, scaffold00252_pilon_pilon, scaffold00259_pilon_pilon, scaffold00260_pilon_pilon, scaffold00282_pilon_pilon, scaffold00290_pilon_pilon, scaffold00319_pilon_pilon, scaffold00320_pilon_pilon, scaffold00321_pilon_pilon, scaffold00324_pilon_pilon, scaffold00335_pilon_pilon, scaffold00493_pilon_pilon
+  - in &#39;y&#39;: scaffold00198_pilon_pilon, scaffold00229_pilon_pilon, scaffold00238_pilon_pilon, scaffold00240_pilon_pilon, scaffold00256_pilon_pilon, scaffold00258_pilon_pilon, scaffold00276_pilon_pilon, scaffold00277_pilon_pilon, scaffold00294_pilon_pilon, scaffold00298_pilon_pilon, scaffold00305_pilon_pilon, scaffold00311_pilon_pilon, scaffold00317_pilon_pilon, scaffold00326_pilon_pilon, scaffold00349_pilon_pilon, scaffold00413_pilon_pilon, scaffold00424_pilon_pilon, scaffold00426_pilon_pilon, scaffold00541_pilon_pilon, scaffold00556_pilon_pilon, scaffold00574_pilon_pilon, scaffold00593_pilon_pilon, scaffold00594_pilon_pilon
+  Make sure to always combine/compare objects based on the same reference
+  genome (use suppressWarnings() to suppress this warning).
+
+Warning in .Seqinfo.mergexy(x, y): Each of the 2 combined objects has sequence levels not in the other:
+  - in &#39;x&#39;: scaffold00139_pilon_pilon, scaffold00155_pilon_pilon, scaffold00177_pilon_pilon, scaffold00188_pilon_pilon, scaffold00197_pilon_pilon, scaffold00206_pilon_pilon, scaffold00222_pilon_pilon, scaffold00231_pilon_pilon, scaffold00239_pilon_pilon, scaffold00241_pilon_pilon, scaffold00244_pilon_pilon, scaffold00250_pilon_pilon, scaffold00251_pilon_pilon, scaffold00252_pilon_pilon, scaffold00259_pilon_pilon, scaffold00260_pilon_pilon, scaffold00282_pilon_pilon, scaffold00290_pilon_pilon, scaffold00319_pilon_pilon, scaffold00320_pilon_pilon, scaffold00321_pilon_pilon, scaffold00324_pilon_pilon, scaffold00335_pilon_pilon, scaffold00493_pilon_pilon
+  - in &#39;y&#39;: scaffold00198_pilon_pilon, scaffold00229_pilon_pilon, scaffold00238_pilon_pilon, scaffold00240_pilon_pilon, scaffold00256_pilon_pilon, scaffold00258_pilon_pilon, scaffold00276_pilon_pilon, scaffold00277_pilon_pilon, scaffold00294_pilon_pilon, scaffold00298_pilon_pilon, scaffold00305_pilon_pilon, scaffold00311_pilon_pilon, scaffold00317_pilon_pilon, scaffold00326_pilon_pilon, scaffold00349_pilon_pilon, scaffold00413_pilon_pilon, scaffold00424_pilon_pilon, scaffold00426_pilon_pilon, scaffold00541_pilon_pilon, scaffold00556_pilon_pilon, scaffold00574_pilon_pilon, scaffold00593_pilon_pilon, scaffold00594_pilon_pilon
+  Make sure to always combine/compare objects based on the same reference
+  genome (use suppressWarnings() to suppress this warning).
+
+Warning in .Seqinfo.mergexy(x, y): Each of the 2 combined objects has sequence levels not in the other:
+  - in &#39;x&#39;: scaffold00139_pilon_pilon, scaffold00155_pilon_pilon, scaffold00177_pilon_pilon, scaffold00188_pilon_pilon, scaffold00197_pilon_pilon, scaffold00206_pilon_pilon, scaffold00222_pilon_pilon, scaffold00231_pilon_pilon, scaffold00239_pilon_pilon, scaffold00241_pilon_pilon, scaffold00244_pilon_pilon, scaffold00250_pilon_pilon, scaffold00251_pilon_pilon, scaffold00252_pilon_pilon, scaffold00259_pilon_pilon, scaffold00260_pilon_pilon, scaffold00282_pilon_pilon, scaffold00290_pilon_pilon, scaffold00319_pilon_pilon, scaffold00320_pilon_pilon, scaffold00321_pilon_pilon, scaffold00324_pilon_pilon, scaffold00335_pilon_pilon, scaffold00493_pilon_pilon
+  - in &#39;y&#39;: scaffold00198_pilon_pilon, scaffold00229_pilon_pilon, scaffold00238_pilon_pilon, scaffold00240_pilon_pilon, scaffold00256_pilon_pilon, scaffold00258_pilon_pilon, scaffold00276_pilon_pilon, scaffold00277_pilon_pilon, scaffold00294_pilon_pilon, scaffold00298_pilon_pilon, scaffold00305_pilon_pilon, scaffold00311_pilon_pilon, scaffold00317_pilon_pilon, scaffold00326_pilon_pilon, scaffold00349_pilon_pilon, scaffold00413_pilon_pilon, scaffold00424_pilon_pilon, scaffold00426_pilon_pilon, scaffold00541_pilon_pilon, scaffold00556_pilon_pilon, scaffold00574_pilon_pilon, scaffold00593_pilon_pilon, scaffold00594_pilon_pilon
+  Make sure to always combine/compare objects based on the same reference
+  genome (use suppressWarnings() to suppress this warning).</code></pre>
+<pre><code>&gt;&gt; assigning chromosome lengths          2022-03-22 15:58:20 
+&gt;&gt; done...                   2022-03-22 15:58:20 </code></pre>
+</div>
+</div>
+<div id="distance-to-nearest-tss" class="section level2">
+<h2>Distance to nearest TSS</h2>
+<p>Now see where the peaks are located in relation to the TSS. Promoters should be reasonably close to the TSS and enhancers more distal to the TSS. Plot distance to TSS for all unfiltered peaks</p>
+<pre class="r"><code>files =list.files(annot_dir, pattern= &quot;*.5_enhancer_annotation.txt|*.5_promoter_annotation.txt|*downSampled_promoter_annotationConvertedIDs.txt|*downSampled_enhancer_annotationConvertedIDs.txt&quot;, full.names=T) # create list of files in directory
+filenames &lt;- sub(&#39;\\_annotation.txt$&#39;, &#39;&#39;, basename(files)) 
+filenames &lt;- sub(&#39;\\_annotationConvertedIDs.txt$&#39;, &#39;&#39;, basename(filenames)) 
+
+files = as.list(files)
+data = lapply(files, function(x) fread(x, header=TRUE, sep=&quot;\t&quot;, quote = &quot;&quot;, na.strings=c(&quot;&quot;, &quot;NA&quot;))) # read in all files
+names(data) &lt;- filenames
+
+
+df1 = Map(mutate, data[c(1,3,5,7,9,11,13)], cre = &quot;enhancer&quot;)
+df2 = Map(mutate, data[c(2,4,6,8,10,12,14)], cre = &quot;promoter&quot;)
+data = append(df1, df2)
+
+df1 = Map(mutate, data[c(1,8)], group = &quot;dunnart&quot;)
+df2 = Map(mutate, data[c(2,9)], group = &quot;E10.5&quot;)
+df3 = Map(mutate, data[c(3,10)], group = &quot;E11.5&quot;)
+df4 = Map(mutate, data[c(4,11)], group = &quot;E12.5&quot;)
+df5 = Map(mutate, data[c(5,12)], group = &quot;E13.5&quot;)
+df6 = Map(mutate, data[c(6,13)], group = &quot;E14.5&quot;)
+df7 = Map(mutate, data[c(7,14)], group = &quot;E15.5&quot;)
+
+data &lt;- append(df1, df2)
+data &lt;- append(data, df3)
+data = append(data, df4)
+data = append(data, df5)
+data = append(data, df6)
+data = append(data, df7)
+
+data_add_distance = suppressWarnings(lapply(data, function(x) x[,log10_abs_dist:=log10(abs(distanceToTSS)+1)][,log10_abs_dist:=ifelse(distanceToTSS&lt;0,-log10_abs_dist,log10_abs_dist)]))
+
+data_subset = lapply(data_add_distance, function(x) x %&gt;% select(cre, group, log10_abs_dist) )
+data_bind = rbindlist(data_subset,)
+enhancers &lt;- data_bind[data_bind$cre == &quot;enhancer&quot;]
+promoters &lt;- data_bind[data_bind$cre == &quot;promoter&quot;]
+
+p &lt;- ggplot(enhancers, aes(x=log10_abs_dist, color = group)) + 
+  geom_density() + scale_color_manual(values = c(&quot;#fbb03b&quot;, rep(&quot;#ffd166&quot;,7))) + scale_fill_manual(values = c(&quot;#fbb03b&quot;, rep(&quot;#ffd166&quot;,7))) + theme_bw() + scale_y_continuous(limits=c(0,0.33), labels = scales::percent) + 
+    scale_x_continuous(limits=c(-8, 8))
+p + ggtitle(&quot;enhancer distance to nearest TSS&quot;)</code></pre>
+<p><img src="figure/mouse_dunnart_peak_features.Rmd/unnamed-chunk-8-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>pdf(file = paste0(plot_dir, &quot;mouse_dunnart_enhancer_distTSS.pdf&quot;), width=10, height = 7)
+print(p + font)
+dev.off()</code></pre>
+<pre><code>svg 
+  2 </code></pre>
+<pre class="r"><code>p &lt;- ggplot(promoters, aes(x=log10_abs_dist, color = group)) + 
+  geom_density() + scale_color_manual(values = c(&quot;#1a6259&quot;, rep(&quot;#2a9d8f&quot;,7))) + scale_fill_manual(values = c(&quot;#1a6259&quot;, rep(&quot;#2a9d8f&quot;,7))) + theme_bw() + scale_y_continuous(limits=c(0,0.8), labels = scales::percent) + 
+    scale_x_continuous(limits=c(-8, 8))
+p + ggtitle(&quot;promoter distance to nearest TSS&quot;)</code></pre>
+<p><img src="figure/mouse_dunnart_peak_features.Rmd/unnamed-chunk-8-2.svg" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>pdf(file = paste0(plot_dir, &quot;mouse_dunnart_promoter_distTSS.pdf&quot;), width=10, height = 7)
+print(p + font)
+dev.off()</code></pre>
+<pre><code>svg 
+  2 </code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.1.0 (2021-05-18)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Red Hat Enterprise Linux
+
+Matrix products: default
+BLAS/LAPACK: /usr/local/easybuild-2019/easybuild/software/compiler/gcc/10.2.0/openblas/0.3.12/lib/libopenblas_haswellp-r0.3.12.so
+
+locale:
+ [1] LC_CTYPE=en_AU.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_AU.UTF-8        LC_COLLATE=en_AU.UTF-8    
+ [5] LC_MONETARY=en_AU.UTF-8    LC_MESSAGES=en_AU.UTF-8   
+ [7] LC_PAPER=en_AU.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_AU.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats4    stats     graphics  grDevices utils     datasets  methods  
+[8] base     
+
+other attached packages:
+ [1] dplyr_1.0.8            data.table_1.14.0      ggplot2_3.3.3         
+ [4] GenomicFeatures_1.46.5 AnnotationDbi_1.56.2   Biobase_2.54.0        
+ [7] GenomicRanges_1.46.1   GenomeInfoDb_1.30.1    IRanges_2.28.0        
+[10] S4Vectors_0.32.3       BiocGenerics_0.40.0    ChIPseeker_1.30.3     
+[13] workflowr_1.7.0       
+
+loaded via a namespace (and not attached):
+  [1] shadowtext_0.1.1                       
+  [2] fastmatch_1.1-0                        
+  [3] BiocFileCache_2.2.1                    
+  [4] plyr_1.8.6                             
+  [5] igraph_1.2.6                           
+  [6] lazyeval_0.2.2                         
+  [7] splines_4.1.0                          
+  [8] BiocParallel_1.28.3                    
+  [9] digest_0.6.27                          
+ [10] yulab.utils_0.0.4                      
+ [11] htmltools_0.5.1.1                      
+ [12] GOSemSim_2.20.0                        
+ [13] viridis_0.6.2                          
+ [14] GO.db_3.14.0                           
+ [15] fansi_0.5.0                            
+ [16] magrittr_2.0.1                         
+ [17] memoise_2.0.0                          
+ [18] Biostrings_2.62.0                      
+ [19] graphlayouts_0.7.1                     
+ [20] matrixStats_0.61.0                     
+ [21] enrichplot_1.14.2                      
+ [22] prettyunits_1.1.1                      
+ [23] colorspace_2.0-1                       
+ [24] blob_1.2.1                             
+ [25] rappdirs_0.3.3                         
+ [26] ggrepel_0.9.1                          
+ [27] xfun_0.23                              
+ [28] callr_3.7.0                            
+ [29] crayon_1.4.1                           
+ [30] RCurl_1.98-1.3                         
+ [31] jsonlite_1.7.2                         
+ [32] scatterpie_0.1.7                       
+ [33] TxDb.Hsapiens.UCSC.hg19.knownGene_3.2.2
+ [34] ape_5.5                                
+ [35] glue_1.4.2                             
+ [36] polyclip_1.10-0                        
+ [37] gtable_0.3.0                           
+ [38] zlibbioc_1.40.0                        
+ [39] XVector_0.34.0                         
+ [40] DelayedArray_0.20.0                    
+ [41] scales_1.1.1                           
+ [42] DOSE_3.20.1                            
+ [43] DBI_1.1.1                              
+ [44] Rcpp_1.0.8.3                           
+ [45] plotrix_3.8-1                          
+ [46] viridisLite_0.4.0                      
+ [47] progress_1.2.2                         
+ [48] tidytree_0.3.9                         
+ [49] gridGraphics_0.5-1                     
+ [50] bit_4.0.4                              
+ [51] httr_1.4.2                             
+ [52] fgsea_1.20.0                           
+ [53] gplots_3.1.1                           
+ [54] RColorBrewer_1.1-2                     
+ [55] ellipsis_0.3.2                         
+ [56] pkgconfig_2.0.3                        
+ [57] XML_3.99-0.6                           
+ [58] farver_2.1.0                           
+ [59] sass_0.4.0                             
+ [60] dbplyr_2.1.1                           
+ [61] utf8_1.2.1                             
+ [62] labeling_0.4.2                         
+ [63] ggplotify_0.1.0                        
+ [64] tidyselect_1.1.1                       
+ [65] rlang_1.0.2                            
+ [66] reshape2_1.4.4                         
+ [67] later_1.2.0                            
+ [68] munsell_0.5.0                          
+ [69] tools_4.1.0                            
+ [70] cachem_1.0.5                           
+ [71] cli_2.5.0                              
+ [72] generics_0.1.0                         
+ [73] RSQLite_2.2.7                          
+ [74] evaluate_0.14                          
+ [75] stringr_1.4.0                          
+ [76] fastmap_1.1.0                          
+ [77] yaml_2.2.1                             
+ [78] ggtree_3.2.1                           
+ [79] processx_3.5.2                         
+ [80] knitr_1.33                             
+ [81] bit64_4.0.5                            
+ [82] fs_1.5.0                               
+ [83] tidygraph_1.2.0                        
+ [84] caTools_1.18.2                         
+ [85] purrr_0.3.4                            
+ [86] KEGGREST_1.34.0                        
+ [87] ggraph_2.0.5                           
+ [88] nlme_3.1-152                           
+ [89] whisker_0.4                            
+ [90] aplot_0.1.2                            
+ [91] DO.db_2.9                              
+ [92] xml2_1.3.2                             
+ [93] biomaRt_2.50.3                         
+ [94] compiler_4.1.0                         
+ [95] rstudioapi_0.13                        
+ [96] filelock_1.0.2                         
+ [97] curl_4.3.1                             
+ [98] png_0.1-7                              
+ [99] treeio_1.18.1                          
+[100] tibble_3.1.2                           
+[101] tweenr_1.0.2                           
+[102] bslib_0.2.5.1                          
+[103] stringi_1.6.2                          
+[104] highr_0.9                              
+[105] ps_1.6.0                               
+[106] lattice_0.20-44                        
+[107] Matrix_1.3-4                           
+[108] vctrs_0.3.8                            
+[109] pillar_1.6.1                           
+[110] lifecycle_1.0.1                        
+[111] jquerylib_0.1.4                        
+[112] bitops_1.0-7                           
+[113] patchwork_1.1.1                        
+[114] httpuv_1.6.1                           
+[115] rtracklayer_1.54.0                     
+[116] qvalue_2.26.0                          
+[117] R6_2.5.0                               
+[118] BiocIO_1.4.0                           
+[119] promises_1.2.0.1                       
+[120] KernSmooth_2.23-20                     
+[121] gridExtra_2.3                          
+[122] gtools_3.8.2                           
+[123] boot_1.3-28                            
+[124] MASS_7.3-54                            
+[125] assertthat_0.2.1                       
+[126] SummarizedExperiment_1.24.0            
+[127] rprojroot_2.0.2                        
+[128] rjson_0.2.20                           
+[129] withr_2.4.2                            
+[130] GenomicAlignments_1.30.0               
+[131] Rsamtools_2.10.0                       
+[132] GenomeInfoDbData_1.2.7                 
+[133] parallel_4.1.0                         
+[134] hms_1.1.0                              
+[135] grid_4.1.0                             
+[136] ggfun_0.0.5                            
+[137] tidyr_1.1.3                            
+[138] rmarkdown_2.8                          
+[139] MatrixGenerics_1.6.0                   
+[140] git2r_0.28.0                           
+[141] getPass_0.2-2                          
+[142] ggforce_0.3.3                          
+[143] restfulr_0.0.13                        </code></pre>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
