@@ -9,20 +9,13 @@ editor_options:
 
 ## Set-up
 
-```{r}
+```{r warning=FALSE, message=FALSE}
 # Load in libraries
-library(data.table) 
-library(tidyverse)
-library(ggridges)
-library(ggpubr)
-library(reshape2)
-library(RColorBrewer)
+library(ChIPseeker)
+library(GenomicFeatures)
 library(ggplot2)
-library(VennDiagram)
-library(viridis)
-library(hrbrthemes)
-library(gghalves)
-library(multcompView)
+library(data.table)
+library(dplyr)
 
 plot_dir <- "output/plots/"
 fullPeak_dir <- "output/peaks/"
@@ -39,8 +32,9 @@ font <- theme(axis.text.x = element_text(size = 25),
 
 
 ## Peak features
-```{r}
-files =list.files(fileList, pattern= "*5.narrowPeak|*only.narrowPeak|*downSampled.narrowPeak", full.names=T) # create list of files in directory
+### Peak counts
+```{r warning=FALSE, message=FALSE}
+files =list.files(fullPeak_dir, pattern= "*5.narrowPeak|*only.narrowPeak|*downSampled.narrowPeak", full.names=T) # create list of files in directory
 files = as.list(files)
 data = lapply(files, function(x) fread(x, header=FALSE, sep="\t", quote = "", na.strings=c("", "NA")))
 
@@ -98,54 +92,246 @@ combined.tbl <- as.data.frame(combined.tbl)
 p <- ggplot(combined.tbl, aes(factor(sample), Freq, fill=mark)) + 
   geom_bar(position=position_stack(reverse = TRUE), stat="identity") +
   theme_minimal() + ylab("Number of peaks") +
-  xlab("")
+  xlab("") + scale_color_manual(values = c("#ffd166", "#299d8f", "#244653")) + scale_fill_manual(values = c("#ffd166", "#299d8f", "#244653")) +
+  theme_bw()
 
 p
 
-pdf(file=paste0(plot_dir, combined.tbl.stack), width = 10, height = 7)
-print(p)
+
+
+pdf(file=paste0(plot_dir, "number_of_mouse_dunnart_peaks.pdf"), width = 10, height = 7)
+print(p + font)
 dev.off()
-
-# Peak lengths for H3K4me3 and H3K27ac
-fullPeaks$length <- (fullPeaks$V3 - fullPeaks$V2)
-    level_order <- c('promoter', 'enhancer', 'H3K4me3', 'H3K27ac')
-
-    ## Plot peak lengths
-    p <- ggplot(fullPeaks, aes(factor(group, level = level_order), y = log10(length))) + 
-    geom_half_violin(aes(fill=factor(group), color=factor(group)),
-    side = "r", 
-    position = "dodge"
-    )+
-    geom_boxplot(aes(color=factor(group)),
-    width = .15, 
-    outlier.shape = NA,
-    fill=c("#FCF8EC","#FCF8EC","#F5F6F7","#E4F3F1"),
-    position = position_dodge(width=.1)
-    ) +
-    coord_cartesian(xlim = c(1.2, NA), clip = "off") + theme_bw() + xlab("") + ylab("Log10 Peak Length") 
-    pdf(file=paste0(plot_dir, peak.length.plot), width = 10, height = 7)
-    print(p +  scale_color_manual(values = c("#E9C46A","#E9C46A","#264653","#2A9D8F")) +
-    scale_fill_manual(values = c("#F1DAA2","#F1DAA2","#AEBABF","#7AC2B9")) + coord_flip())
-    dev.off()
-
-    ## Plot peak intensity
-    p <- ggplot(fullPeaks, aes(factor(group, level = level_order), y = log10(V7))) + 
-    geom_half_violin(aes(fill=factor(group), color=factor(group)),
-    side = "r", 
-    position = "dodge"
-    )+
-    geom_boxplot(aes(color=factor(group)),
-    width = .15, 
-    outlier.shape = NA,
-    fill=c("#FCF8EC","#FCF8EC","#F5F6F7","#E4F3F1"),
-    position = position_dodge(width=.1)
-    ) +
-    coord_cartesian(xlim = c(1.2, NA), clip = "off") + theme_bw() + xlab("") + ylab("Log10 Peak Intensity") 
-    pdf(file=paste0(plot_dir, peak.intensity.plot), width = 10, height = 7)
-    print(p +  scale_color_manual(values = c("#E9C46A","#E9C46A","#264653","#2A9D8F")) +
-    scale_fill_manual(values = c("#F1DAA2","#F1DAA2","#AEBABF","#7AC2B9")) + coord_flip())
-    dev.off()  
 ```
 
+
+### Peak lengths for H3K4me3 and H3K27ac
+```{r warning=FALSE, message=FALSE}
+files =list.files(fullPeak_dir, pattern= "*enhancer_peaks.narrowPeak|*promoter_peaks.narrowPeak", full.names=T) # create list of files in directory
+filenames <- sub('\\.narrowPeak$', '', basename(files)) 
+files = as.list(files)
+data = lapply(files, function(x) fread(x, header=FALSE, sep="\t", quote = "", na.strings=c("", "NA")))
+names(data) <- filenames
+
+df1 = Map(mutate, data[c(1,3,5,7,9,11,13)], cre = "enhancer")
+df2 = Map(mutate, data[c(2,4,6,8,10,12,14)], cre = "promoter")
+data = append(df1, df2)
+
+df1 = Map(mutate, data[c(1,8)], group = "dunnart")
+df2 = Map(mutate, data[c(2,9)], group = "E10.5")
+df3 = Map(mutate, data[c(3,10)], group = "E11.5")
+df4 = Map(mutate, data[c(4,11)], group = "E12.5")
+df5 = Map(mutate, data[c(5,12)], group = "E13.5")
+df6 = Map(mutate, data[c(6,13)], group = "E14.5")
+df7 = Map(mutate, data[c(7,14)], group = "E15.5")
+
+data <- append(df1, df2)
+data <- append(data, df3)
+data = append(data, df4)
+data = append(data, df5)
+data = append(data, df6)
+data = append(data, df7)
+
+data = rbindlist(data,)
+data$length = data$V3 - data$V2
+
+p = ggplot(data, aes(x=factor(group), y=log10(length), fill = cre)) + geom_violin(aes(fill=factor(cre)),
+              position = position_dodge(width=0.8)) + 
+  geom_boxplot(aes(fill=factor(cre)), 
+               width=.2,
+               outlier.shape = NA,
+               notch=FALSE,
+               position = position_dodge(width=0.8)) +
+  theme_bw() + xlab("") + ylab("Log10 Peak Length") +  scale_color_manual(values = c("#efc769", "#1a6259")) +
+    scale_fill_manual(values = c("#ffe29f","#8db1ac"))
+p
+pdf(file=paste0(plot_dir, "mouse_dunnart_peak_lengths.pdf"), width = 10, height = 7)
+print(p  + font)
+dev.off()
+```
+
+
+### Plot peak intensity
+```{r warning=FALSE, message=FALSE}
+p = ggplot(data, aes(x=factor(group), y=log10(V7), fill = cre)) + geom_violin(aes(fill=factor(cre)),
+              position = position_dodge(width=0.8)) + 
+  geom_boxplot(aes(fill=factor(cre)), 
+               width=.2,
+               outlier.shape = NA,
+               notch=FALSE,
+               position = position_dodge(width=0.8)) +
+  theme_bw() + xlab("") + ylab("Log10 Peak Length") +  scale_color_manual(values = c("#efc769", "#1a6259")) +
+    scale_fill_manual(values = c("#ffe29f","#8db1ac"))
+p
+pdf(file=paste0(plot_dir, "mouse_dunnart_peak_intensity.pdf"), width = 10, height = 7)
+print(p  + font)
+dev.off()
+```
+
+# Annotate dunnart peaks
+The easiest way to call the nearest genes for the peaks in the dunnart is to use the ChIPseeker package (Guangchuang Yu 2021) as it allows easy integration of non-model organism genomes and has well documented instructions on incorporating BYO genomes with the package.
+To use the ChIPseeker to annotate peaks, firstly a txdb is needed for the dunnart annotation file. A TxDb class is a container for storing transcript annotations. The dunnart genome doesn't have a de novo annotation so instead the Tasmanian devil annotation (RefSeq) has been lifted over to the dunnart genome using LiftOff (https://github.com/agshumate/Liftoff). 
+
+## Gene ID conversion tables
+For downstream analyses, conversion tables between gene databases and between species is needed.
+This is because the ENSEMBL/ENTREZ IDs for the Tasmanian Devil have fewer links to databases such as GO terms etc.
+For this I have two conversion tables: 
+1. Converts Tasmanian devil RefSeq to Tasmanian Devil ENSEMBL IDs
+2. Convert Tasmanian Devil ENSEMBL IDs to mouse ENSEMBL IDs
+
+Additionally I have a list of background genes for calculating GO enrichment. This background list includes all devil genes that have an orthologous mouse gene ID in the ensembl database.
+
+## Annotation files
+```{r warning=FALSE, message=FALSE}
+# Using ENSEMBL version 103 for both the mouse and devil to keep it consistent
+## Annotation file for the mouse
+
+mm10_txdb <- makeTxDbFromBiomart(biomart="ENSEMBL_MART_ENSEMBL",
+                    dataset="mmusculus_gene_ensembl",
+                    host="http://feb2021.archive.ensembl.org")
+seqlevelsStyle(mm10_txdb) <- "UCSC"
+
+## Make txdb for dunnart annotation file
+smiCra_txdb <- makeTxDbFromGFF("data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr2.gff")
+
+## Convert geneIDs
+### Tables downloaded from biomart and collated
+df2 <- read.table("output/annotations/devil_to_mouse_ensembl.txt", header=TRUE, sep="\t") ## conversion table for devil ENSEMBL to mouse ENSEMBL
+df3 <- read.table("output/annotations/refseq_to_ensembl.txt", header=TRUE, sep="\t") ## convertsion table for devil refseq to devil ENSEMBL
+bg = fread("output/annotations/go_background_orthologousENSEMBL_biomart.txt", header = FALSE)
+bg = unlist(bg, use.names = FALSE)
+```
+
+## Annotate peak files with ChIPseeker
+### Mouse
+
+```{r warning=FALSE, message=FALSE}
+## Anotate peak files
+annotatePeaksmm10 <- function(peak, outFile){
+  
+  # Annotate peak file based on mouse ENSEMBL annotation
+  peakAnno <- annotatePeak(peak, tssRegion = c(-3000, 3000), TxDb = mm10_txdb)
+  
+  # Write annotation to file
+  write.table(peakAnno, outFile, sep="\t", quote=F, row.names=F)
+}
+
+annotatePeaksmm10(peak = paste0(fullPeak_dir, "E10.5_enhancer_peaks.narrowPeak"), outFile = paste0(annot_dir, "E10.5_enhancer_annotation.txt"))
+annotatePeaksmm10(peak = paste0(fullPeak_dir, "E11.5_enhancer_peaks.narrowPeak"), outFile = paste0(annot_dir, "E11.5_enhancer_annotation.txt"))
+annotatePeaksmm10(peak = paste0(fullPeak_dir, "E12.5_enhancer_peaks.narrowPeak"), outFile = paste0(annot_dir, "E12.5_enhancer_annotation.txt"))
+annotatePeaksmm10(peak = paste0(fullPeak_dir, "E13.5_enhancer_peaks.narrowPeak"), outFile = paste0(annot_dir, "E13.5_enhancer_annotation.txt"))
+annotatePeaksmm10(peak = paste0(fullPeak_dir, "E14.5_enhancer_peaks.narrowPeak"), outFile = paste0(annot_dir, "E14.5_enhancer_annotation.txt"))
+annotatePeaksmm10(peak = paste0(fullPeak_dir, "E15.5_enhancer_peaks.narrowPeak"), outFile = paste0(annot_dir,"E15.5_enhancer_annotation.txt"))
+annotatePeaksmm10(peak = paste0(fullPeak_dir, "E10.5_promoter_peaks.narrowPeak"), outFile = paste0(annot_dir,"E10.5_promoter_annotation.txt"))
+annotatePeaksmm10(peak = paste0(fullPeak_dir, "E11.5_promoter_peaks.narrowPeak"), outFile = paste0(annot_dir,"E11.5_promoter_annotation.txt"))
+annotatePeaksmm10(peak = paste0(fullPeak_dir, "E12.5_promoter_peaks.narrowPeak"), outFile = paste0(annot_dir,"E12.5_promoter_annotation.txt"))
+annotatePeaksmm10(peak = paste0(fullPeak_dir, "E13.5_promoter_peaks.narrowPeak"), outFile = paste0(annot_dir,"E13.5_promoter_annotation.txt"))
+annotatePeaksmm10(peak = paste0(fullPeak_dir, "E14.5_promoter_peaks.narrowPeak"), outFile = paste0(annot_dir,"E14.5_promoter_annotation.txt"))
+annotatePeaksmm10(peak = paste0(fullPeak_dir, "E15.5_promoter_peaks.narrowPeak"), outFile = paste0(annot_dir,"E15.5_promoter_annotation.txt"))
+```
+
+### Dunnart
+```{r}
+annotatePeaks <- function(peak, outFile, outFile1, outFile2, GOenrich, kegg, backg){
+  
+  # Annotate peak file based on dunnart GFF
+  peakAnno <- ChIPseeker::annotatePeak(peak = peak, tssRegion = c(-3000, 3000), TxDb = smiCra_txdb)
+
+  # Write annotation to file
+  write.table(peakAnno, file = paste0(annot_dir, outFile), sep = "\t", quote = F, row.names = F)
+  
+  peakAnnoDF <- as.data.frame(peakAnno, row.names = NULL)
+  # # Convert refseq IDs and geneIDs to devil ensembl IDs
+  df2 <- read.table("output/annotations/devil_to_mouse_ensembl.txt", header=TRUE, sep="\t") ## conversion table for devil ENSEMBL to mouse ENSEMBL
+  df3 <- read.table("output/annotations/refseq_to_ensembl.txt", header=TRUE, sep="\t") ## convertsion table for devil refseq to devil ENSEMBL
+
+  peakAnnoDF$ensemblgeneID <- df2$Gene.stable.ID[match(unlist(peakAnnoDF$geneId), df2$Gene.name)]
+  peakAnnoDF$ensemblgeneID <- replace(peakAnnoDF$ensemblgeneID,is.na(peakAnnoDF$ensemblgeneID),"-")
+  peakAnnoDF$transcriptIdAltered <- gsub("\\..*","", peakAnnoDF$transcriptId)
+  peakAnnoDF$refseqID <- df3$Ensembl.Gene.ID[match(unlist(peakAnnoDF$transcriptIdAltered), df3$RefSeq.mRNA.Accession)]
+  peakAnnoDF$refseqID <- replace(peakAnnoDF$refseqID,is.na(peakAnnoDF$refseqID),"-")
+  peakAnnoDF$combined <- ifelse(peakAnnoDF$refseqID == "-", peakAnnoDF$ensemblgeneID, peakAnnoDF$refseqID)
+  peakAnnoDF$combined[peakAnnoDF$combined == as.character("-")] <- NA
+
+  peakAnnoDF <- peakAnnoDF[!is.na(peakAnnoDF$combined),]
+  write.table(peakAnnoDF, paste0(annot_dir, outFile2), sep = "\t", quote = F, row.names = F)
+  # # Convert devil ensembl to mouse ensembl
+  peakAnnoDF$mouseensembl <- df2$Mouse.gene.stable.ID[match(unlist(peakAnnoDF$combined), df2$Gene.stable.ID)]
+  # # Write annotation with converted IDs 
+  peakAnnoDF$mouseensembl[peakAnnoDF$mouseensembl == as.character("")] <- NA
+  peakAnnoDF <- peakAnnoDF[!is.na(peakAnnoDF$mouseensembl),]
+  write.table(peakAnnoDF, paste0(annot_dir, outFile1), sep = "\t", quote = F, row.names = F)
+}
+
+
+### Enhancer-associated peaks annotation
+annotatePeaks(peak = paste0(fullPeak_dir, "dunnart_downSampled_enhancer_peaks.narrowPeak"), outFile = "dunnart_downSampled_enhancer_annotation.txt", backg = unlist(fread("output/annotations/go_background_orthologousENSEMBL_biomart.txt", header = FALSE), use.names = FALSE),
+  outFile1 = "dunnart_downSampled_enhancer_annotationConvertedIDs.txt", outFile2 = "dunnart_enhancer_annotationConvertedIDs_t.devil.txt")
+
+### Promoter-associated peaks annotation
+annotatePeaks(peak = paste0(fullPeak_dir, "dunnart_downSampled_promoter_peaks.narrowPeak"), outFile = "dunnart_downSampled_promoter_annotation.txt", backg = unlist(fread("output/annotations/go_background_orthologousENSEMBL_biomart.txt", header = FALSE), use.names = FALSE),
+  outFile1 = "dunnart_downSampled_promoter_annotationConvertedIDs.txt", outFile2 = "dunnart_downSampled_promoter_annotationConvertedIDs_t.devil.txt")
+
+```
+
+## Distance to nearest TSS
+Now see where the peaks are located in relation to the TSS. Promoters should be reasonably close to the TSS and enhancers more distal to the TSS. 
+Plot distance to TSS for all unfiltered peaks 
+
+```{r warning=FALSE, message=FALSE}
+files =list.files(annot_dir, pattern= "*.5_enhancer_annotation.txt|*.5_promoter_annotation.txt|*downSampled_promoter_annotationConvertedIDs.txt|*downSampled_enhancer_annotationConvertedIDs.txt", full.names=T) # create list of files in directory
+filenames <- sub('\\_annotation.txt$', '', basename(files)) 
+filenames <- sub('\\_annotationConvertedIDs.txt$', '', basename(filenames)) 
+
+files = as.list(files)
+data = lapply(files, function(x) fread(x, header=TRUE, sep="\t", quote = "", na.strings=c("", "NA"))) # read in all files
+names(data) <- filenames
+
+
+df1 = Map(mutate, data[c(1,3,5,7,9,11,13)], cre = "enhancer")
+df2 = Map(mutate, data[c(2,4,6,8,10,12,14)], cre = "promoter")
+data = append(df1, df2)
+
+df1 = Map(mutate, data[c(1,8)], group = "dunnart")
+df2 = Map(mutate, data[c(2,9)], group = "E10.5")
+df3 = Map(mutate, data[c(3,10)], group = "E11.5")
+df4 = Map(mutate, data[c(4,11)], group = "E12.5")
+df5 = Map(mutate, data[c(5,12)], group = "E13.5")
+df6 = Map(mutate, data[c(6,13)], group = "E14.5")
+df7 = Map(mutate, data[c(7,14)], group = "E15.5")
+
+data <- append(df1, df2)
+data <- append(data, df3)
+data = append(data, df4)
+data = append(data, df5)
+data = append(data, df6)
+data = append(data, df7)
+
+data_add_distance = suppressWarnings(lapply(data, function(x) x[,log10_abs_dist:=log10(abs(distanceToTSS)+1)][,log10_abs_dist:=ifelse(distanceToTSS<0,-log10_abs_dist,log10_abs_dist)]))
+
+data_subset = lapply(data_add_distance, function(x) x %>% select(cre, group, log10_abs_dist) )
+data_bind = rbindlist(data_subset,)
+enhancers <- data_bind[data_bind$cre == "enhancer"]
+promoters <- data_bind[data_bind$cre == "promoter"]
+
+p <- ggplot(enhancers, aes(x=log10_abs_dist, color = group)) + 
+  geom_density() + scale_color_manual(values = c("#fbb03b", rep("#ffd166",7))) + scale_fill_manual(values = c("#fbb03b", rep("#ffd166",7))) + theme_bw() + scale_y_continuous(limits=c(0,0.33), labels = scales::percent) + 
+    scale_x_continuous(limits=c(-8, 8))
+p + ggtitle("enhancer distance to nearest TSS")
+
+pdf(file = paste0(plot_dir, "mouse_dunnart_enhancer_distTSS.pdf"), width=10, height = 7)
+print(p + font)
+dev.off()
+
+p <- ggplot(promoters, aes(x=log10_abs_dist, color = group)) + 
+  geom_density() + scale_color_manual(values = c("#1a6259", rep("#2a9d8f",7))) + scale_fill_manual(values = c("#1a6259", rep("#2a9d8f",7))) + theme_bw() + scale_y_continuous(limits=c(0,0.8), labels = scales::percent) + 
+    scale_x_continuous(limits=c(-8, 8))
+p + ggtitle("promoter distance to nearest TSS")
+
+pdf(file = paste0(plot_dir, "mouse_dunnart_promoter_distTSS.pdf"), width=10, height = 7)
+print(p + font)
+dev.off()
+    
+```
 
 
