@@ -476,16 +476,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreee189f4c5b692e06aa38d4aa2f02a787fbb6221b5targetblanke189f4ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/e189f4c5b692e06aa38d4aa2f02a787fbb6221b5" target="_blank">e189f4c</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree4af5b5626c4a9bad1dd862aff8c07fe91d6b8552targetblank4af5b56a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/4af5b5626c4a9bad1dd862aff8c07fe91d6b8552" target="_blank">4af5b56</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreee189f4c5b692e06aa38d4aa2f02a787fbb6221b5targetblanke189f4ca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree4af5b5626c4a9bad1dd862aff8c07fe91d6b8552targetblank4af5b56a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/e189f4c5b692e06aa38d4aa2f02a787fbb6221b5" target="_blank">e189f4c</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/4af5b5626c4a9bad1dd862aff8c07fe91d6b8552" target="_blank">4af5b56</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -496,7 +496,6 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    analysis/.RData
     Ignored:    analysis/.Rhistory
-    Ignored:    analysis/figure/
     Ignored:    data/genomic_data/
     Ignored:    data/geo_submission/
     Ignored:    output/annotations/
@@ -965,6 +964,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/4af5b5626c4a9bad1dd862aff8c07fe91d6b8552/analysis/mouse_dunnart_peak_features.Rmd" target="_blank">4af5b56</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-22
+</td>
+<td>
+wflow_publish(“analysis/mouse_dunnart_peak_features.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/900f96f54d36ed1b72a0b7214a5f664dd7da9f66/docs/mouse_dunnart_peak_features.html" target="_blank">900f96f</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-22
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/lecook/chipseq-cross-species/blob/e189f4c5b692e06aa38d4aa2f02a787fbb6221b5/analysis/mouse_dunnart_peak_features.Rmd" target="_blank">e189f4c</a>
 </td>
 <td>
@@ -1089,6 +1122,43 @@ p &lt;- ggplot(combined.tbl, aes(factor(sample), Freq, fill=mark)) +
 
 p</code></pre>
 <p><img src="figure/mouse_dunnart_peak_features.Rmd/unnamed-chunk-2-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-1">
+Past versions of unnamed-chunk-2-1.svg
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/900f96f54d36ed1b72a0b7214a5f664dd7da9f66/docs/figure/mouse_dunnart_peak_features.Rmd/unnamed-chunk-2-1.svg" target="_blank">900f96f</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-22
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>pdf(file=paste0(plot_dir, &quot;number_of_mouse_dunnart_peaks.pdf&quot;), width = 10, height = 7)
 print(p + font)
 dev.off()</code></pre>
@@ -1136,6 +1206,43 @@ p = ggplot(data, aes(x=factor(group), y=log10(length), fill = cre)) + geom_violi
     scale_fill_manual(values = c(&quot;#ffe29f&quot;,&quot;#8db1ac&quot;))
 p</code></pre>
 <p><img src="figure/mouse_dunnart_peak_features.Rmd/unnamed-chunk-3-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.svg
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/900f96f54d36ed1b72a0b7214a5f664dd7da9f66/docs/figure/mouse_dunnart_peak_features.Rmd/unnamed-chunk-3-1.svg" target="_blank">900f96f</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-22
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>pdf(file=paste0(plot_dir, &quot;mouse_dunnart_peak_lengths.pdf&quot;), width = 10, height = 7)
 print(p  + font)
 dev.off()</code></pre>
@@ -1155,6 +1262,43 @@ dev.off()</code></pre>
     scale_fill_manual(values = c(&quot;#ffe29f&quot;,&quot;#8db1ac&quot;))
 p</code></pre>
 <p><img src="figure/mouse_dunnart_peak_features.Rmd/unnamed-chunk-4-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.svg
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/900f96f54d36ed1b72a0b7214a5f664dd7da9f66/docs/figure/mouse_dunnart_peak_features.Rmd/unnamed-chunk-4-1.svg" target="_blank">900f96f</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-22
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>pdf(file=paste0(plot_dir, &quot;mouse_dunnart_peak_intensity.pdf&quot;), width = 10, height = 7)
 print(p  + font)
 dev.off()</code></pre>
@@ -1205,101 +1349,101 @@ annotatePeaksmm10 &lt;- function(peak, outFile){
 }
 
 annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E10.5_enhancer_peaks.narrowPeak&quot;), outFile = paste0(annot_dir, &quot;E10.5_enhancer_annotation.txt&quot;))</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:57:04 
-&gt;&gt; preparing features information...         2022-03-22 15:57:04 
-&gt;&gt; identifying nearest features...       2022-03-22 15:57:05 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:57:06 
-&gt;&gt; assigning genomic annotation...       2022-03-22 15:57:06 
-&gt;&gt; assigning chromosome lengths          2022-03-22 15:57:24 
-&gt;&gt; done...                   2022-03-22 15:57:24 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 16:13:12 
+&gt;&gt; preparing features information...         2022-03-22 16:13:12 
+&gt;&gt; identifying nearest features...       2022-03-22 16:13:13 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 16:13:14 
+&gt;&gt; assigning genomic annotation...       2022-03-22 16:13:14 
+&gt;&gt; assigning chromosome lengths          2022-03-22 16:13:37 
+&gt;&gt; done...                   2022-03-22 16:13:37 </code></pre>
 <pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E11.5_enhancer_peaks.narrowPeak&quot;), outFile = paste0(annot_dir, &quot;E11.5_enhancer_annotation.txt&quot;))</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:57:24 
-&gt;&gt; preparing features information...         2022-03-22 15:57:24 
-&gt;&gt; identifying nearest features...       2022-03-22 15:57:24 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:57:25 
-&gt;&gt; assigning genomic annotation...       2022-03-22 15:57:25 
-&gt;&gt; assigning chromosome lengths          2022-03-22 15:57:27 
-&gt;&gt; done...                   2022-03-22 15:57:27 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 16:13:37 
+&gt;&gt; preparing features information...         2022-03-22 16:13:37 
+&gt;&gt; identifying nearest features...       2022-03-22 16:13:37 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 16:13:37 
+&gt;&gt; assigning genomic annotation...       2022-03-22 16:13:37 
+&gt;&gt; assigning chromosome lengths          2022-03-22 16:13:41 
+&gt;&gt; done...                   2022-03-22 16:13:41 </code></pre>
 <pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E12.5_enhancer_peaks.narrowPeak&quot;), outFile = paste0(annot_dir, &quot;E12.5_enhancer_annotation.txt&quot;))</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:57:27 
-&gt;&gt; preparing features information...         2022-03-22 15:57:27 
-&gt;&gt; identifying nearest features...       2022-03-22 15:57:27 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:57:28 
-&gt;&gt; assigning genomic annotation...       2022-03-22 15:57:28 
-&gt;&gt; assigning chromosome lengths          2022-03-22 15:57:30 
-&gt;&gt; done...                   2022-03-22 15:57:31 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 16:13:41 
+&gt;&gt; preparing features information...         2022-03-22 16:13:41 
+&gt;&gt; identifying nearest features...       2022-03-22 16:13:41 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 16:13:42 
+&gt;&gt; assigning genomic annotation...       2022-03-22 16:13:42 
+&gt;&gt; assigning chromosome lengths          2022-03-22 16:13:45 
+&gt;&gt; done...                   2022-03-22 16:13:45 </code></pre>
 <pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E13.5_enhancer_peaks.narrowPeak&quot;), outFile = paste0(annot_dir, &quot;E13.5_enhancer_annotation.txt&quot;))</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:57:31 
-&gt;&gt; preparing features information...         2022-03-22 15:57:31 
-&gt;&gt; identifying nearest features...       2022-03-22 15:57:31 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:57:31 
-&gt;&gt; assigning genomic annotation...       2022-03-22 15:57:31 
-&gt;&gt; assigning chromosome lengths          2022-03-22 15:57:34 
-&gt;&gt; done...                   2022-03-22 15:57:34 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 16:13:45 
+&gt;&gt; preparing features information...         2022-03-22 16:13:46 
+&gt;&gt; identifying nearest features...       2022-03-22 16:13:46 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 16:13:47 
+&gt;&gt; assigning genomic annotation...       2022-03-22 16:13:47 
+&gt;&gt; assigning chromosome lengths          2022-03-22 16:13:51 
+&gt;&gt; done...                   2022-03-22 16:13:51 </code></pre>
 <pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E14.5_enhancer_peaks.narrowPeak&quot;), outFile = paste0(annot_dir, &quot;E14.5_enhancer_annotation.txt&quot;))</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:57:34 
-&gt;&gt; preparing features information...         2022-03-22 15:57:34 
-&gt;&gt; identifying nearest features...       2022-03-22 15:57:34 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:57:34 
-&gt;&gt; assigning genomic annotation...       2022-03-22 15:57:34 
-&gt;&gt; assigning chromosome lengths          2022-03-22 15:57:37 
-&gt;&gt; done...                   2022-03-22 15:57:37 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 16:13:51 
+&gt;&gt; preparing features information...         2022-03-22 16:13:51 
+&gt;&gt; identifying nearest features...       2022-03-22 16:13:51 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 16:13:51 
+&gt;&gt; assigning genomic annotation...       2022-03-22 16:13:51 
+&gt;&gt; assigning chromosome lengths          2022-03-22 16:13:55 
+&gt;&gt; done...                   2022-03-22 16:13:55 </code></pre>
 <pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E15.5_enhancer_peaks.narrowPeak&quot;), outFile = paste0(annot_dir,&quot;E15.5_enhancer_annotation.txt&quot;))</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:57:37 
-&gt;&gt; preparing features information...         2022-03-22 15:57:37 
-&gt;&gt; identifying nearest features...       2022-03-22 15:57:37 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:57:37 
-&gt;&gt; assigning genomic annotation...       2022-03-22 15:57:37 
-&gt;&gt; assigning chromosome lengths          2022-03-22 15:57:40 
-&gt;&gt; done...                   2022-03-22 15:57:40 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 16:13:55 
+&gt;&gt; preparing features information...         2022-03-22 16:13:56 
+&gt;&gt; identifying nearest features...       2022-03-22 16:13:56 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 16:13:57 
+&gt;&gt; assigning genomic annotation...       2022-03-22 16:13:57 
+&gt;&gt; assigning chromosome lengths          2022-03-22 16:14:01 
+&gt;&gt; done...                   2022-03-22 16:14:01 </code></pre>
 <pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E10.5_promoter_peaks.narrowPeak&quot;), outFile = paste0(annot_dir,&quot;E10.5_promoter_annotation.txt&quot;))</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:57:40 
-&gt;&gt; preparing features information...         2022-03-22 15:57:40 
-&gt;&gt; identifying nearest features...       2022-03-22 15:57:40 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:57:41 
-&gt;&gt; assigning genomic annotation...       2022-03-22 15:57:41 
-&gt;&gt; assigning chromosome lengths          2022-03-22 15:57:44 
-&gt;&gt; done...                   2022-03-22 15:57:44 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 16:14:02 
+&gt;&gt; preparing features information...         2022-03-22 16:14:02 
+&gt;&gt; identifying nearest features...       2022-03-22 16:14:02 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 16:14:02 
+&gt;&gt; assigning genomic annotation...       2022-03-22 16:14:02 
+&gt;&gt; assigning chromosome lengths          2022-03-22 16:14:06 
+&gt;&gt; done...                   2022-03-22 16:14:06 </code></pre>
 <pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E11.5_promoter_peaks.narrowPeak&quot;), outFile = paste0(annot_dir,&quot;E11.5_promoter_annotation.txt&quot;))</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:57:44 
-&gt;&gt; preparing features information...         2022-03-22 15:57:44 
-&gt;&gt; identifying nearest features...       2022-03-22 15:57:44 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:57:45 
-&gt;&gt; assigning genomic annotation...       2022-03-22 15:57:45 
-&gt;&gt; assigning chromosome lengths          2022-03-22 15:57:48 
-&gt;&gt; done...                   2022-03-22 15:57:48 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 16:14:06 
+&gt;&gt; preparing features information...         2022-03-22 16:14:06 
+&gt;&gt; identifying nearest features...       2022-03-22 16:14:06 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 16:14:08 
+&gt;&gt; assigning genomic annotation...       2022-03-22 16:14:08 
+&gt;&gt; assigning chromosome lengths          2022-03-22 16:14:12 
+&gt;&gt; done...                   2022-03-22 16:14:12 </code></pre>
 <pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E12.5_promoter_peaks.narrowPeak&quot;), outFile = paste0(annot_dir,&quot;E12.5_promoter_annotation.txt&quot;))</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:57:48 
-&gt;&gt; preparing features information...         2022-03-22 15:57:49 
-&gt;&gt; identifying nearest features...       2022-03-22 15:57:49 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:57:49 
-&gt;&gt; assigning genomic annotation...       2022-03-22 15:57:49 
-&gt;&gt; assigning chromosome lengths          2022-03-22 15:57:52 
-&gt;&gt; done...                   2022-03-22 15:57:52 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 16:14:12 
+&gt;&gt; preparing features information...         2022-03-22 16:14:12 
+&gt;&gt; identifying nearest features...       2022-03-22 16:14:12 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 16:14:13 
+&gt;&gt; assigning genomic annotation...       2022-03-22 16:14:13 
+&gt;&gt; assigning chromosome lengths          2022-03-22 16:14:17 
+&gt;&gt; done...                   2022-03-22 16:14:17 </code></pre>
 <pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E13.5_promoter_peaks.narrowPeak&quot;), outFile = paste0(annot_dir,&quot;E13.5_promoter_annotation.txt&quot;))</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:57:52 
-&gt;&gt; preparing features information...         2022-03-22 15:57:52 
-&gt;&gt; identifying nearest features...       2022-03-22 15:57:52 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:57:53 
-&gt;&gt; assigning genomic annotation...       2022-03-22 15:57:53 
-&gt;&gt; assigning chromosome lengths          2022-03-22 15:57:56 
-&gt;&gt; done...                   2022-03-22 15:57:56 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 16:14:17 
+&gt;&gt; preparing features information...         2022-03-22 16:14:18 
+&gt;&gt; identifying nearest features...       2022-03-22 16:14:18 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 16:14:19 
+&gt;&gt; assigning genomic annotation...       2022-03-22 16:14:19 
+&gt;&gt; assigning chromosome lengths          2022-03-22 16:14:23 
+&gt;&gt; done...                   2022-03-22 16:14:23 </code></pre>
 <pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E14.5_promoter_peaks.narrowPeak&quot;), outFile = paste0(annot_dir,&quot;E14.5_promoter_annotation.txt&quot;))</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:57:56 
-&gt;&gt; preparing features information...         2022-03-22 15:57:56 
-&gt;&gt; identifying nearest features...       2022-03-22 15:57:56 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:57:57 
-&gt;&gt; assigning genomic annotation...       2022-03-22 15:57:57 
-&gt;&gt; assigning chromosome lengths          2022-03-22 15:58:00 
-&gt;&gt; done...                   2022-03-22 15:58:00 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 16:14:23 
+&gt;&gt; preparing features information...         2022-03-22 16:14:23 
+&gt;&gt; identifying nearest features...       2022-03-22 16:14:23 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 16:14:24 
+&gt;&gt; assigning genomic annotation...       2022-03-22 16:14:24 
+&gt;&gt; assigning chromosome lengths          2022-03-22 16:14:29 
+&gt;&gt; done...                   2022-03-22 16:14:29 </code></pre>
 <pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E15.5_promoter_peaks.narrowPeak&quot;), outFile = paste0(annot_dir,&quot;E15.5_promoter_annotation.txt&quot;))</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:58:00 
-&gt;&gt; preparing features information...         2022-03-22 15:58:00 
-&gt;&gt; identifying nearest features...       2022-03-22 15:58:00 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:58:01 
-&gt;&gt; assigning genomic annotation...       2022-03-22 15:58:01 
-&gt;&gt; assigning chromosome lengths          2022-03-22 15:58:04 
-&gt;&gt; done...                   2022-03-22 15:58:04 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 16:14:29 
+&gt;&gt; preparing features information...         2022-03-22 16:14:29 
+&gt;&gt; identifying nearest features...       2022-03-22 16:14:29 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 16:14:30 
+&gt;&gt; assigning genomic annotation...       2022-03-22 16:14:30 
+&gt;&gt; assigning chromosome lengths          2022-03-22 16:14:34 
+&gt;&gt; done...                   2022-03-22 16:14:34 </code></pre>
 </div>
 <div id="dunnart" class="section level3">
 <h3>Dunnart</h3>
@@ -1338,78 +1482,23 @@ annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E10.5_enhancer_peaks.narrowP
 ### Enhancer-associated peaks annotation
 annotatePeaks(peak = paste0(fullPeak_dir, &quot;dunnart_downSampled_enhancer_peaks.narrowPeak&quot;), outFile = &quot;dunnart_downSampled_enhancer_annotation.txt&quot;, backg = unlist(fread(&quot;output/annotations/go_background_orthologousENSEMBL_biomart.txt&quot;, header = FALSE), use.names = FALSE),
   outFile1 = &quot;dunnart_downSampled_enhancer_annotationConvertedIDs.txt&quot;, outFile2 = &quot;dunnart_enhancer_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:58:04 
-&gt;&gt; preparing features information...         2022-03-22 15:58:04 
-&gt;&gt; identifying nearest features...       2022-03-22 15:58:05 </code></pre>
-<pre><code>Warning in .Seqinfo.mergexy(x, y): Each of the 2 combined objects has sequence levels not in the other:
-  - in &#39;x&#39;: scaffold00197_pilon_pilon, scaffold00231_pilon_pilon, scaffold00251_pilon_pilon, scaffold00262_pilon_pilon, scaffold00282_pilon_pilon, scaffold00331_pilon_pilon, scaffold00370_pilon_pilon
-  - in &#39;y&#39;: scaffold00067_pilon_pilon, scaffold00108_pilon_pilon, scaffold00123_pilon_pilon, scaffold00129_pilon_pilon, scaffold00131_pilon_pilon, scaffold00145_pilon_pilon, scaffold00152_pilon_pilon, scaffold00156_pilon_pilon, scaffold00161_pilon_pilon, scaffold00162_pilon_pilon, scaffold00163_pilon_pilon, scaffold00169_pilon_pilon, scaffold00170_pilon_pilon, scaffold00172_pilon_pilon, scaffold00175_pilon_pilon, scaffold00176_pilon_pilon, scaffold00178_pilon_pilon, scaffold00181_pilon_pilon, scaffold00182_pilon_pilon, scaffold00184_pilon_pilon, scaffold00189_pilon_pilon, scaffold00192_pilon_pilon, scaffold00193_pilon_pilon, scaffold00194_pilon_pilon, scaffold00198_pilon_pilon, scaffold00199_pilon_pilon, scaffold00205_pilon_pilon, scaffold00207_pilon_pilon, scaffold00209_pilon_pilon, scaffold00213_pilon_pilon, scaffold00214_pilon_pilon, scaffold00215_pilon_pilon, scaffold00217_pilon_pilon, scaffold00218_pilon_pilon, scaffold00219_pilon_pilon, scaffold00221_pilon_pilon, scaffold00225_pilon_pilon, scaffold00227_pilon_pilon, scaffold00228_pilon_pilon, scaffold00229_pilon_pilon, scaffold00230_pilon_pilon, scaffold00234_pilon_pilon, scaffold00235_pilon_pilon, scaffold00236_pilon_pilon, scaffold00238_pilon_pilon, scaffold00240_pilon_pilon, scaffold00245_pilon_pilon, scaffold00247_pilon_pilon, scaffold00253_pilon_pilon, scaffold00255_pilon_pilon, scaffold00256_pilon_pilon, scaffold00257_pilon_pilon, scaffold00258_pilon_pilon, scaffold00267_pilon_pilon, scaffold00268_pilon_pilon, scaffold00269_pilon_pilon, scaffold00270_pilon_pilon, scaffold00273_pilon_pilon, scaffold00274_pilon_pilon, scaffold00276_pilon_pilon, scaffold00277_pilon_pilon, scaffold00278_pilon_pilon, scaffold00286_pilon_pilon, scaffold00288_pilon_pilon, scaffold00293_pilon_pilon, scaffold00294_pilon_pilon, scaffold00295_pilon_pilon, scaffold00298_pilon_pilon, scaffold00305_pilon_pilon, scaffold00311_pilon_pilon, scaffold00317_pilon_pilon, scaffold00322_pilon_pilon, scaffold00326_pilon_pilon, scaffold00349_pilon_pilon, scaffold00413_pilon_pilon, scaffold00426_pilon_pilon, scaffold00541_pilon_pilon, scaffold00556_pilon_pilon, scaffold00574_pilon_pilon, scaffold00593_pilon_pilon, scaffold00594_pilon_pilon
-  Make sure to always combine/compare objects based on the same reference
-  genome (use suppressWarnings() to suppress this warning).</code></pre>
-<pre><code>&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:58:05 
-&gt;&gt; assigning genomic annotation...       2022-03-22 15:58:05 </code></pre>
-<pre><code>Warning in .Seqinfo.mergexy(x, y): Each of the 2 combined objects has sequence levels not in the other:
-  - in &#39;x&#39;: scaffold00197_pilon_pilon, scaffold00231_pilon_pilon, scaffold00251_pilon_pilon, scaffold00262_pilon_pilon, scaffold00282_pilon_pilon, scaffold00331_pilon_pilon, scaffold00370_pilon_pilon
-  - in &#39;y&#39;: scaffold00067_pilon_pilon, scaffold00108_pilon_pilon, scaffold00123_pilon_pilon, scaffold00129_pilon_pilon, scaffold00131_pilon_pilon, scaffold00145_pilon_pilon, scaffold00152_pilon_pilon, scaffold00156_pilon_pilon, scaffold00161_pilon_pilon, scaffold00162_pilon_pilon, scaffold00163_pilon_pilon, scaffold00169_pilon_pilon, scaffold00170_pilon_pilon, scaffold00172_pilon_pilon, scaffold00175_pilon_pilon, scaffold00176_pilon_pilon, scaffold00178_pilon_pilon, scaffold00181_pilon_pilon, scaffold00182_pilon_pilon, scaffold00184_pilon_pilon, scaffold00189_pilon_pilon, scaffold00192_pilon_pilon, scaffold00193_pilon_pilon, scaffold00194_pilon_pilon, scaffold00198_pilon_pilon, scaffold00199_pilon_pilon, scaffold00205_pilon_pilon, scaffold00207_pilon_pilon, scaffold00209_pilon_pilon, scaffold00213_pilon_pilon, scaffold00214_pilon_pilon, scaffold00215_pilon_pilon, scaffold00217_pilon_pilon, scaffold00218_pilon_pilon, scaffold00219_pilon_pilon, scaffold00221_pilon_pilon, scaffold00225_pilon_pilon, scaffold00227_pilon_pilon, scaffold00228_pilon_pilon, scaffold00229_pilon_pilon, scaffold00230_pilon_pilon, scaffold00234_pilon_pilon, scaffold00235_pilon_pilon, scaffold00236_pilon_pilon, scaffold00238_pilon_pilon, scaffold00240_pilon_pilon, scaffold00245_pilon_pilon, scaffold00247_pilon_pilon, scaffold00253_pilon_pilon, scaffold00255_pilon_pilon, scaffold00256_pilon_pilon, scaffold00257_pilon_pilon, scaffold00258_pilon_pilon, scaffold00267_pilon_pilon, scaffold00268_pilon_pilon, scaffold00269_pilon_pilon, scaffold00270_pilon_pilon, scaffold00273_pilon_pilon, scaffold00274_pilon_pilon, scaffold00276_pilon_pilon, scaffold00277_pilon_pilon, scaffold00278_pilon_pilon, scaffold00286_pilon_pilon, scaffold00288_pilon_pilon, scaffold00293_pilon_pilon, scaffold00294_pilon_pilon, scaffold00295_pilon_pilon, scaffold00298_pilon_pilon, scaffold00305_pilon_pilon, scaffold00311_pilon_pilon, scaffold00317_pilon_pilon, scaffold00322_pilon_pilon, scaffold00326_pilon_pilon, scaffold00349_pilon_pilon, scaffold00413_pilon_pilon, scaffold00426_pilon_pilon, scaffold00541_pilon_pilon, scaffold00556_pilon_pilon, scaffold00574_pilon_pilon, scaffold00593_pilon_pilon, scaffold00594_pilon_pilon
-  Make sure to always combine/compare objects based on the same reference
-  genome (use suppressWarnings() to suppress this warning).
-
-Warning in .Seqinfo.mergexy(x, y): Each of the 2 combined objects has sequence levels not in the other:
-  - in &#39;x&#39;: scaffold00197_pilon_pilon, scaffold00231_pilon_pilon, scaffold00251_pilon_pilon, scaffold00262_pilon_pilon, scaffold00282_pilon_pilon, scaffold00331_pilon_pilon, scaffold00370_pilon_pilon
-  - in &#39;y&#39;: scaffold00067_pilon_pilon, scaffold00108_pilon_pilon, scaffold00123_pilon_pilon, scaffold00129_pilon_pilon, scaffold00131_pilon_pilon, scaffold00145_pilon_pilon, scaffold00152_pilon_pilon, scaffold00156_pilon_pilon, scaffold00161_pilon_pilon, scaffold00162_pilon_pilon, scaffold00163_pilon_pilon, scaffold00169_pilon_pilon, scaffold00170_pilon_pilon, scaffold00172_pilon_pilon, scaffold00175_pilon_pilon, scaffold00176_pilon_pilon, scaffold00178_pilon_pilon, scaffold00181_pilon_pilon, scaffold00182_pilon_pilon, scaffold00184_pilon_pilon, scaffold00189_pilon_pilon, scaffold00192_pilon_pilon, scaffold00193_pilon_pilon, scaffold00194_pilon_pilon, scaffold00198_pilon_pilon, scaffold00199_pilon_pilon, scaffold00205_pilon_pilon, scaffold00207_pilon_pilon, scaffold00209_pilon_pilon, scaffold00213_pilon_pilon, scaffold00214_pilon_pilon, scaffold00215_pilon_pilon, scaffold00217_pilon_pilon, scaffold00218_pilon_pilon, scaffold00219_pilon_pilon, scaffold00221_pilon_pilon, scaffold00225_pilon_pilon, scaffold00227_pilon_pilon, scaffold00228_pilon_pilon, scaffold00229_pilon_pilon, scaffold00230_pilon_pilon, scaffold00234_pilon_pilon, scaffold00235_pilon_pilon, scaffold00236_pilon_pilon, scaffold00238_pilon_pilon, scaffold00240_pilon_pilon, scaffold00245_pilon_pilon, scaffold00247_pilon_pilon, scaffold00253_pilon_pilon, scaffold00255_pilon_pilon, scaffold00256_pilon_pilon, scaffold00257_pilon_pilon, scaffold00258_pilon_pilon, scaffold00267_pilon_pilon, scaffold00268_pilon_pilon, scaffold00269_pilon_pilon, scaffold00270_pilon_pilon, scaffold00273_pilon_pilon, scaffold00274_pilon_pilon, scaffold00276_pilon_pilon, scaffold00277_pilon_pilon, scaffold00278_pilon_pilon, scaffold00286_pilon_pilon, scaffold00288_pilon_pilon, scaffold00293_pilon_pilon, scaffold00294_pilon_pilon, scaffold00295_pilon_pilon, scaffold00298_pilon_pilon, scaffold00305_pilon_pilon, scaffold00311_pilon_pilon, scaffold00317_pilon_pilon, scaffold00322_pilon_pilon, scaffold00326_pilon_pilon, scaffold00349_pilon_pilon, scaffold00413_pilon_pilon, scaffold00426_pilon_pilon, scaffold00541_pilon_pilon, scaffold00556_pilon_pilon, scaffold00574_pilon_pilon, scaffold00593_pilon_pilon, scaffold00594_pilon_pilon
-  Make sure to always combine/compare objects based on the same reference
-  genome (use suppressWarnings() to suppress this warning).
-
-Warning in .Seqinfo.mergexy(x, y): Each of the 2 combined objects has sequence levels not in the other:
-  - in &#39;x&#39;: scaffold00197_pilon_pilon, scaffold00231_pilon_pilon, scaffold00251_pilon_pilon, scaffold00262_pilon_pilon, scaffold00282_pilon_pilon, scaffold00331_pilon_pilon, scaffold00370_pilon_pilon
-  - in &#39;y&#39;: scaffold00067_pilon_pilon, scaffold00108_pilon_pilon, scaffold00123_pilon_pilon, scaffold00129_pilon_pilon, scaffold00131_pilon_pilon, scaffold00145_pilon_pilon, scaffold00152_pilon_pilon, scaffold00156_pilon_pilon, scaffold00161_pilon_pilon, scaffold00162_pilon_pilon, scaffold00163_pilon_pilon, scaffold00169_pilon_pilon, scaffold00170_pilon_pilon, scaffold00172_pilon_pilon, scaffold00175_pilon_pilon, scaffold00176_pilon_pilon, scaffold00178_pilon_pilon, scaffold00181_pilon_pilon, scaffold00182_pilon_pilon, scaffold00184_pilon_pilon, scaffold00189_pilon_pilon, scaffold00192_pilon_pilon, scaffold00193_pilon_pilon, scaffold00194_pilon_pilon, scaffold00198_pilon_pilon, scaffold00199_pilon_pilon, scaffold00205_pilon_pilon, scaffold00207_pilon_pilon, scaffold00209_pilon_pilon, scaffold00213_pilon_pilon, scaffold00214_pilon_pilon, scaffold00215_pilon_pilon, scaffold00217_pilon_pilon, scaffold00218_pilon_pilon, scaffold00219_pilon_pilon, scaffold00221_pilon_pilon, scaffold00225_pilon_pilon, scaffold00227_pilon_pilon, scaffold00228_pilon_pilon, scaffold00229_pilon_pilon, scaffold00230_pilon_pilon, scaffold00234_pilon_pilon, scaffold00235_pilon_pilon, scaffold00236_pilon_pilon, scaffold00238_pilon_pilon, scaffold00240_pilon_pilon, scaffold00245_pilon_pilon, scaffold00247_pilon_pilon, scaffold00253_pilon_pilon, scaffold00255_pilon_pilon, scaffold00256_pilon_pilon, scaffold00257_pilon_pilon, scaffold00258_pilon_pilon, scaffold00267_pilon_pilon, scaffold00268_pilon_pilon, scaffold00269_pilon_pilon, scaffold00270_pilon_pilon, scaffold00273_pilon_pilon, scaffold00274_pilon_pilon, scaffold00276_pilon_pilon, scaffold00277_pilon_pilon, scaffold00278_pilon_pilon, scaffold00286_pilon_pilon, scaffold00288_pilon_pilon, scaffold00293_pilon_pilon, scaffold00294_pilon_pilon, scaffold00295_pilon_pilon, scaffold00298_pilon_pilon, scaffold00305_pilon_pilon, scaffold00311_pilon_pilon, scaffold00317_pilon_pilon, scaffold00322_pilon_pilon, scaffold00326_pilon_pilon, scaffold00349_pilon_pilon, scaffold00413_pilon_pilon, scaffold00426_pilon_pilon, scaffold00541_pilon_pilon, scaffold00556_pilon_pilon, scaffold00574_pilon_pilon, scaffold00593_pilon_pilon, scaffold00594_pilon_pilon
-  Make sure to always combine/compare objects based on the same reference
-  genome (use suppressWarnings() to suppress this warning).
-
-Warning in .Seqinfo.mergexy(x, y): Each of the 2 combined objects has sequence levels not in the other:
-  - in &#39;x&#39;: scaffold00197_pilon_pilon, scaffold00231_pilon_pilon, scaffold00251_pilon_pilon, scaffold00262_pilon_pilon, scaffold00282_pilon_pilon, scaffold00331_pilon_pilon, scaffold00370_pilon_pilon
-  - in &#39;y&#39;: scaffold00067_pilon_pilon, scaffold00108_pilon_pilon, scaffold00123_pilon_pilon, scaffold00129_pilon_pilon, scaffold00131_pilon_pilon, scaffold00145_pilon_pilon, scaffold00152_pilon_pilon, scaffold00156_pilon_pilon, scaffold00161_pilon_pilon, scaffold00162_pilon_pilon, scaffold00163_pilon_pilon, scaffold00169_pilon_pilon, scaffold00170_pilon_pilon, scaffold00172_pilon_pilon, scaffold00175_pilon_pilon, scaffold00176_pilon_pilon, scaffold00178_pilon_pilon, scaffold00181_pilon_pilon, scaffold00182_pilon_pilon, scaffold00184_pilon_pilon, scaffold00189_pilon_pilon, scaffold00192_pilon_pilon, scaffold00193_pilon_pilon, scaffold00194_pilon_pilon, scaffold00198_pilon_pilon, scaffold00199_pilon_pilon, scaffold00205_pilon_pilon, scaffold00207_pilon_pilon, scaffold00209_pilon_pilon, scaffold00213_pilon_pilon, scaffold00214_pilon_pilon, scaffold00215_pilon_pilon, scaffold00217_pilon_pilon, scaffold00218_pilon_pilon, scaffold00219_pilon_pilon, scaffold00221_pilon_pilon, scaffold00225_pilon_pilon, scaffold00227_pilon_pilon, scaffold00228_pilon_pilon, scaffold00229_pilon_pilon, scaffold00230_pilon_pilon, scaffold00234_pilon_pilon, scaffold00235_pilon_pilon, scaffold00236_pilon_pilon, scaffold00238_pilon_pilon, scaffold00240_pilon_pilon, scaffold00245_pilon_pilon, scaffold00247_pilon_pilon, scaffold00253_pilon_pilon, scaffold00255_pilon_pilon, scaffold00256_pilon_pilon, scaffold00257_pilon_pilon, scaffold00258_pilon_pilon, scaffold00267_pilon_pilon, scaffold00268_pilon_pilon, scaffold00269_pilon_pilon, scaffold00270_pilon_pilon, scaffold00273_pilon_pilon, scaffold00274_pilon_pilon, scaffold00276_pilon_pilon, scaffold00277_pilon_pilon, scaffold00278_pilon_pilon, scaffold00286_pilon_pilon, scaffold00288_pilon_pilon, scaffold00293_pilon_pilon, scaffold00294_pilon_pilon, scaffold00295_pilon_pilon, scaffold00298_pilon_pilon, scaffold00305_pilon_pilon, scaffold00311_pilon_pilon, scaffold00317_pilon_pilon, scaffold00322_pilon_pilon, scaffold00326_pilon_pilon, scaffold00349_pilon_pilon, scaffold00413_pilon_pilon, scaffold00426_pilon_pilon, scaffold00541_pilon_pilon, scaffold00556_pilon_pilon, scaffold00574_pilon_pilon, scaffold00593_pilon_pilon, scaffold00594_pilon_pilon
-  Make sure to always combine/compare objects based on the same reference
-  genome (use suppressWarnings() to suppress this warning).</code></pre>
-<pre><code>&gt;&gt; assigning chromosome lengths          2022-03-22 15:58:17 
-&gt;&gt; done...                   2022-03-22 15:58:17 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 16:14:34 
+&gt;&gt; preparing features information...         2022-03-22 16:14:35 
+&gt;&gt; identifying nearest features...       2022-03-22 16:14:35 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 16:14:35 
+&gt;&gt; assigning genomic annotation...       2022-03-22 16:14:35 
+&gt;&gt; assigning chromosome lengths          2022-03-22 16:14:53 
+&gt;&gt; done...                   2022-03-22 16:14:53 </code></pre>
 <pre class="r"><code>### Promoter-associated peaks annotation
 annotatePeaks(peak = paste0(fullPeak_dir, &quot;dunnart_downSampled_promoter_peaks.narrowPeak&quot;), outFile = &quot;dunnart_downSampled_promoter_annotation.txt&quot;, backg = unlist(fread(&quot;output/annotations/go_background_orthologousENSEMBL_biomart.txt&quot;, header = FALSE), use.names = FALSE),
   outFile1 = &quot;dunnart_downSampled_promoter_annotationConvertedIDs.txt&quot;, outFile2 = &quot;dunnart_downSampled_promoter_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-22 15:58:18 
-&gt;&gt; preparing features information...         2022-03-22 15:58:18 
-&gt;&gt; identifying nearest features...       2022-03-22 15:58:18 </code></pre>
-<pre><code>Warning in .Seqinfo.mergexy(x, y): Each of the 2 combined objects has sequence levels not in the other:
-  - in &#39;x&#39;: scaffold00139_pilon_pilon, scaffold00155_pilon_pilon, scaffold00177_pilon_pilon, scaffold00188_pilon_pilon, scaffold00197_pilon_pilon, scaffold00206_pilon_pilon, scaffold00222_pilon_pilon, scaffold00231_pilon_pilon, scaffold00239_pilon_pilon, scaffold00241_pilon_pilon, scaffold00244_pilon_pilon, scaffold00250_pilon_pilon, scaffold00251_pilon_pilon, scaffold00252_pilon_pilon, scaffold00259_pilon_pilon, scaffold00260_pilon_pilon, scaffold00282_pilon_pilon, scaffold00290_pilon_pilon, scaffold00319_pilon_pilon, scaffold00320_pilon_pilon, scaffold00321_pilon_pilon, scaffold00324_pilon_pilon, scaffold00335_pilon_pilon, scaffold00493_pilon_pilon
-  - in &#39;y&#39;: scaffold00198_pilon_pilon, scaffold00229_pilon_pilon, scaffold00238_pilon_pilon, scaffold00240_pilon_pilon, scaffold00256_pilon_pilon, scaffold00258_pilon_pilon, scaffold00276_pilon_pilon, scaffold00277_pilon_pilon, scaffold00294_pilon_pilon, scaffold00298_pilon_pilon, scaffold00305_pilon_pilon, scaffold00311_pilon_pilon, scaffold00317_pilon_pilon, scaffold00326_pilon_pilon, scaffold00349_pilon_pilon, scaffold00413_pilon_pilon, scaffold00424_pilon_pilon, scaffold00426_pilon_pilon, scaffold00541_pilon_pilon, scaffold00556_pilon_pilon, scaffold00574_pilon_pilon, scaffold00593_pilon_pilon, scaffold00594_pilon_pilon
-  Make sure to always combine/compare objects based on the same reference
-  genome (use suppressWarnings() to suppress this warning).</code></pre>
-<pre><code>&gt;&gt; calculating distance from peak to TSS...  2022-03-22 15:58:18 
-&gt;&gt; assigning genomic annotation...       2022-03-22 15:58:18 </code></pre>
-<pre><code>Warning in .Seqinfo.mergexy(x, y): Each of the 2 combined objects has sequence levels not in the other:
-  - in &#39;x&#39;: scaffold00139_pilon_pilon, scaffold00155_pilon_pilon, scaffold00177_pilon_pilon, scaffold00188_pilon_pilon, scaffold00197_pilon_pilon, scaffold00206_pilon_pilon, scaffold00222_pilon_pilon, scaffold00231_pilon_pilon, scaffold00239_pilon_pilon, scaffold00241_pilon_pilon, scaffold00244_pilon_pilon, scaffold00250_pilon_pilon, scaffold00251_pilon_pilon, scaffold00252_pilon_pilon, scaffold00259_pilon_pilon, scaffold00260_pilon_pilon, scaffold00282_pilon_pilon, scaffold00290_pilon_pilon, scaffold00319_pilon_pilon, scaffold00320_pilon_pilon, scaffold00321_pilon_pilon, scaffold00324_pilon_pilon, scaffold00335_pilon_pilon, scaffold00493_pilon_pilon
-  - in &#39;y&#39;: scaffold00198_pilon_pilon, scaffold00229_pilon_pilon, scaffold00238_pilon_pilon, scaffold00240_pilon_pilon, scaffold00256_pilon_pilon, scaffold00258_pilon_pilon, scaffold00276_pilon_pilon, scaffold00277_pilon_pilon, scaffold00294_pilon_pilon, scaffold00298_pilon_pilon, scaffold00305_pilon_pilon, scaffold00311_pilon_pilon, scaffold00317_pilon_pilon, scaffold00326_pilon_pilon, scaffold00349_pilon_pilon, scaffold00413_pilon_pilon, scaffold00424_pilon_pilon, scaffold00426_pilon_pilon, scaffold00541_pilon_pilon, scaffold00556_pilon_pilon, scaffold00574_pilon_pilon, scaffold00593_pilon_pilon, scaffold00594_pilon_pilon
-  Make sure to always combine/compare objects based on the same reference
-  genome (use suppressWarnings() to suppress this warning).</code></pre>
-<pre><code>Warning in .Seqinfo.mergexy(x, y): Each of the 2 combined objects has sequence levels not in the other:
-  - in &#39;x&#39;: scaffold00139_pilon_pilon, scaffold00155_pilon_pilon, scaffold00177_pilon_pilon, scaffold00188_pilon_pilon, scaffold00197_pilon_pilon, scaffold00206_pilon_pilon, scaffold00222_pilon_pilon, scaffold00231_pilon_pilon, scaffold00239_pilon_pilon, scaffold00241_pilon_pilon, scaffold00244_pilon_pilon, scaffold00250_pilon_pilon, scaffold00251_pilon_pilon, scaffold00252_pilon_pilon, scaffold00259_pilon_pilon, scaffold00260_pilon_pilon, scaffold00282_pilon_pilon, scaffold00290_pilon_pilon, scaffold00319_pilon_pilon, scaffold00320_pilon_pilon, scaffold00321_pilon_pilon, scaffold00324_pilon_pilon, scaffold00335_pilon_pilon, scaffold00493_pilon_pilon
-  - in &#39;y&#39;: scaffold00198_pilon_pilon, scaffold00229_pilon_pilon, scaffold00238_pilon_pilon, scaffold00240_pilon_pilon, scaffold00256_pilon_pilon, scaffold00258_pilon_pilon, scaffold00276_pilon_pilon, scaffold00277_pilon_pilon, scaffold00294_pilon_pilon, scaffold00298_pilon_pilon, scaffold00305_pilon_pilon, scaffold00311_pilon_pilon, scaffold00317_pilon_pilon, scaffold00326_pilon_pilon, scaffold00349_pilon_pilon, scaffold00413_pilon_pilon, scaffold00424_pilon_pilon, scaffold00426_pilon_pilon, scaffold00541_pilon_pilon, scaffold00556_pilon_pilon, scaffold00574_pilon_pilon, scaffold00593_pilon_pilon, scaffold00594_pilon_pilon
-  Make sure to always combine/compare objects based on the same reference
-  genome (use suppressWarnings() to suppress this warning).
-
-Warning in .Seqinfo.mergexy(x, y): Each of the 2 combined objects has sequence levels not in the other:
-  - in &#39;x&#39;: scaffold00139_pilon_pilon, scaffold00155_pilon_pilon, scaffold00177_pilon_pilon, scaffold00188_pilon_pilon, scaffold00197_pilon_pilon, scaffold00206_pilon_pilon, scaffold00222_pilon_pilon, scaffold00231_pilon_pilon, scaffold00239_pilon_pilon, scaffold00241_pilon_pilon, scaffold00244_pilon_pilon, scaffold00250_pilon_pilon, scaffold00251_pilon_pilon, scaffold00252_pilon_pilon, scaffold00259_pilon_pilon, scaffold00260_pilon_pilon, scaffold00282_pilon_pilon, scaffold00290_pilon_pilon, scaffold00319_pilon_pilon, scaffold00320_pilon_pilon, scaffold00321_pilon_pilon, scaffold00324_pilon_pilon, scaffold00335_pilon_pilon, scaffold00493_pilon_pilon
-  - in &#39;y&#39;: scaffold00198_pilon_pilon, scaffold00229_pilon_pilon, scaffold00238_pilon_pilon, scaffold00240_pilon_pilon, scaffold00256_pilon_pilon, scaffold00258_pilon_pilon, scaffold00276_pilon_pilon, scaffold00277_pilon_pilon, scaffold00294_pilon_pilon, scaffold00298_pilon_pilon, scaffold00305_pilon_pilon, scaffold00311_pilon_pilon, scaffold00317_pilon_pilon, scaffold00326_pilon_pilon, scaffold00349_pilon_pilon, scaffold00413_pilon_pilon, scaffold00424_pilon_pilon, scaffold00426_pilon_pilon, scaffold00541_pilon_pilon, scaffold00556_pilon_pilon, scaffold00574_pilon_pilon, scaffold00593_pilon_pilon, scaffold00594_pilon_pilon
-  Make sure to always combine/compare objects based on the same reference
-  genome (use suppressWarnings() to suppress this warning).
-
-Warning in .Seqinfo.mergexy(x, y): Each of the 2 combined objects has sequence levels not in the other:
-  - in &#39;x&#39;: scaffold00139_pilon_pilon, scaffold00155_pilon_pilon, scaffold00177_pilon_pilon, scaffold00188_pilon_pilon, scaffold00197_pilon_pilon, scaffold00206_pilon_pilon, scaffold00222_pilon_pilon, scaffold00231_pilon_pilon, scaffold00239_pilon_pilon, scaffold00241_pilon_pilon, scaffold00244_pilon_pilon, scaffold00250_pilon_pilon, scaffold00251_pilon_pilon, scaffold00252_pilon_pilon, scaffold00259_pilon_pilon, scaffold00260_pilon_pilon, scaffold00282_pilon_pilon, scaffold00290_pilon_pilon, scaffold00319_pilon_pilon, scaffold00320_pilon_pilon, scaffold00321_pilon_pilon, scaffold00324_pilon_pilon, scaffold00335_pilon_pilon, scaffold00493_pilon_pilon
-  - in &#39;y&#39;: scaffold00198_pilon_pilon, scaffold00229_pilon_pilon, scaffold00238_pilon_pilon, scaffold00240_pilon_pilon, scaffold00256_pilon_pilon, scaffold00258_pilon_pilon, scaffold00276_pilon_pilon, scaffold00277_pilon_pilon, scaffold00294_pilon_pilon, scaffold00298_pilon_pilon, scaffold00305_pilon_pilon, scaffold00311_pilon_pilon, scaffold00317_pilon_pilon, scaffold00326_pilon_pilon, scaffold00349_pilon_pilon, scaffold00413_pilon_pilon, scaffold00424_pilon_pilon, scaffold00426_pilon_pilon, scaffold00541_pilon_pilon, scaffold00556_pilon_pilon, scaffold00574_pilon_pilon, scaffold00593_pilon_pilon, scaffold00594_pilon_pilon
-  Make sure to always combine/compare objects based on the same reference
-  genome (use suppressWarnings() to suppress this warning).</code></pre>
-<pre><code>&gt;&gt; assigning chromosome lengths          2022-03-22 15:58:20 
-&gt;&gt; done...                   2022-03-22 15:58:20 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-03-22 16:14:53 
+&gt;&gt; preparing features information...         2022-03-22 16:14:54 
+&gt;&gt; identifying nearest features...       2022-03-22 16:14:54 
+&gt;&gt; calculating distance from peak to TSS...  2022-03-22 16:14:54 
+&gt;&gt; assigning genomic annotation...       2022-03-22 16:14:54 
+&gt;&gt; assigning chromosome lengths          2022-03-22 16:14:56 
+&gt;&gt; done...                   2022-03-22 16:14:56 </code></pre>
 </div>
 </div>
 <div id="distance-to-nearest-tss" class="section level2">
@@ -1455,6 +1544,43 @@ p &lt;- ggplot(enhancers, aes(x=log10_abs_dist, color = group)) +
     scale_x_continuous(limits=c(-8, 8))
 p + ggtitle(&quot;enhancer distance to nearest TSS&quot;)</code></pre>
 <p><img src="figure/mouse_dunnart_peak_features.Rmd/unnamed-chunk-8-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
+Past versions of unnamed-chunk-8-1.svg
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/900f96f54d36ed1b72a0b7214a5f664dd7da9f66/docs/figure/mouse_dunnart_peak_features.Rmd/unnamed-chunk-8-1.svg" target="_blank">900f96f</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-22
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>pdf(file = paste0(plot_dir, &quot;mouse_dunnart_enhancer_distTSS.pdf&quot;), width=10, height = 7)
 print(p + font)
 dev.off()</code></pre>
@@ -1465,6 +1591,43 @@ dev.off()</code></pre>
     scale_x_continuous(limits=c(-8, 8))
 p + ggtitle(&quot;promoter distance to nearest TSS&quot;)</code></pre>
 <p><img src="figure/mouse_dunnart_peak_features.Rmd/unnamed-chunk-8-2.svg" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-2">
+Past versions of unnamed-chunk-8-2.svg
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/900f96f54d36ed1b72a0b7214a5f664dd7da9f66/docs/figure/mouse_dunnart_peak_features.Rmd/unnamed-chunk-8-2.svg" target="_blank">900f96f</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-22
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>pdf(file = paste0(plot_dir, &quot;mouse_dunnart_promoter_distTSS.pdf&quot;), width=10, height = 7)
 print(p + font)
 dev.off()</code></pre>
