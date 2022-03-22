@@ -8,6 +8,10 @@ editor_options:
 ---
 
 ## Set-up
+```{r setup, include = FALSE} 
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 ```{r warning=FALSE, message=FALSE}
 # Load in libraries
