@@ -41,7 +41,7 @@ This project involves a number of analysis for the generation of ChIP-seq data f
   + [Mouse and dunnart peak features](mouse_dunnart_peak_features.html)
   
   + [Peak level](peak_level_comparisons.html)
-	
-	+ [Gene level](gene_level_comparisons.html)
-	
-	+ [Incorporating temporal mouse gene expression data](tcseq_expression_analysis.html)
+  
+  + [Gene level](gene_level_comparisons.html)
+  
+  + [Incorporating temporal mouse gene expression data](tcseq_expression_analysis.html)
