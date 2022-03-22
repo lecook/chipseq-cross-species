@@ -13,6 +13,7 @@
 
 <title>Home</title>
 
+<script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -41,6 +42,8 @@ div.section {
   padding-top: 12px;
 }
 </style>
+
+
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -302,7 +305,7 @@ $(document).ready(function () {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-03-15
+<strong>Last updated:</strong> 2022-03-22
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -333,16 +336,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree8ab6d62a490823cbf3072f5793b3a5bac5ec8744targetblank8ab6d62a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/8ab6d62a490823cbf3072f5793b3a5bac5ec8744" target="_blank">8ab6d62</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree5ca4518d29111ad1bf170adaa1ee7ea074f0cf9etargetblank5ca4518a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/5ca4518d29111ad1bf170adaa1ee7ea074f0cf9e" target="_blank">5ca4518</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree8ab6d62a490823cbf3072f5793b3a5bac5ec8744targetblank8ab6d62a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree5ca4518d29111ad1bf170adaa1ee7ea074f0cf9etargetblank5ca4518a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/8ab6d62a490823cbf3072f5793b3a5bac5ec8744" target="_blank">8ab6d62</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/5ca4518d29111ad1bf170adaa1ee7ea074f0cf9e" target="_blank">5ca4518</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -354,6 +357,7 @@ Ignored files:
     Ignored:    analysis/.RData
     Ignored:    analysis/.Rhistory
     Ignored:    data/genomic_data/
+    Ignored:    data/geo_submission/
     Ignored:    output/annotations/
     Ignored:    output/bam_files/
     Ignored:    output/filtered_peaks/
@@ -372,16 +376,16 @@ Ignored files:
     Ignored:    output/qc/A-2_H3K4me3.extrap.txt
     Ignored:    output/qc/A-2_H3K4me3_R1_trimmed.fastq.gz
     Ignored:    output/qc/A-2_H3K4me3_est_lib_complex_metrics.txt
-    Ignored:    output/qc/A-2_H3K4me3_vs_A-1_input.frip_default.txt
-    Ignored:    output/qc/A-2_H3K4me3_vs_B-1_input.frip_default.txt
+    Ignored:    output/qc/A-2_H3K4me3_vs_A-1_input.frip_default_dunnart_downSampled.txt
+    Ignored:    output/qc/A-2_H3K4me3_vs_A-1_input.frip_p0.01_dunnart_downSampled.txt
     Ignored:    output/qc/A-3_H3K27ac.SeqDepthNorm.bw
     Ignored:    output/qc/A-3_H3K27ac.SeqDepthNorm_dunnart_downSampled.bw
     Ignored:    output/qc/A-3_H3K27ac.ccurve.txt
     Ignored:    output/qc/A-3_H3K27ac.extrap.txt
     Ignored:    output/qc/A-3_H3K27ac_R1_trimmed.fastq.gz
     Ignored:    output/qc/A-3_H3K27ac_est_lib_complex_metrics.txt
-    Ignored:    output/qc/A-3_H3K27ac_vs_A-1_input.frip_default.txt
-    Ignored:    output/qc/A-3_H3K27ac_vs_B-1_input.frip_default.txt
+    Ignored:    output/qc/A-3_H3K27ac_vs_A-1_input.frip_default_dunnart_downSampled.txt
+    Ignored:    output/qc/A-3_H3K27ac_vs_A-1_input.frip_p0.01_dunnart_downSampled.txt
     Ignored:    output/qc/B-1_input.SeqDepthNorm.bw
     Ignored:    output/qc/B-1_input.SeqDepthNorm_dunnart_downSampled.bw
     Ignored:    output/qc/B-1_input.ccurve.txt
@@ -394,17 +398,79 @@ Ignored files:
     Ignored:    output/qc/B-2_H3K4me3.extrap.txt
     Ignored:    output/qc/B-2_H3K4me3_R1_trimmed.fastq.gz
     Ignored:    output/qc/B-2_H3K4me3_est_lib_complex_metrics.txt
-    Ignored:    output/qc/B-2_H3K4me3_vs_A-1_input.frip_default.txt
-    Ignored:    output/qc/B-2_H3K4me3_vs_A-1_input.frip_default_dunnart_downSampled.txt
-    Ignored:    output/qc/B-2_H3K4me3_vs_B-1_input.frip_default.txt
+    Ignored:    output/qc/B-2_H3K4me3_vs_B-1_input.frip_default_dunnart_downSampled.txt
+    Ignored:    output/qc/B-2_H3K4me3_vs_B-1_input.frip_p0.01_dunnart_downSampled.txt
     Ignored:    output/qc/B-3_H3K27ac.SeqDepthNorm.bw
     Ignored:    output/qc/B-3_H3K27ac.SeqDepthNorm_dunnart_downSampled.bw
     Ignored:    output/qc/B-3_H3K27ac.ccurve.txt
     Ignored:    output/qc/B-3_H3K27ac.extrap.txt
     Ignored:    output/qc/B-3_H3K27ac_R1_trimmed.fastq.gz
     Ignored:    output/qc/B-3_H3K27ac_est_lib_complex_metrics.txt
-    Ignored:    output/qc/B-3_H3K27ac_vs_A-1_input.frip_default.txt
-    Ignored:    output/qc/B-3_H3K27ac_vs_B-1_input.frip_default.txt
+    Ignored:    output/qc/B-3_H3K27ac_vs_B-1_input.frip_default_dunnart_downSampled.txt
+    Ignored:    output/qc/B-3_H3K27ac_vs_B-1_input.frip_p0.01_dunnart_downSampled.txt
+    Ignored:    output/qc/ENCFF011NFM_E12.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF011NFM_vs_ENCFF058AUT_E12.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF045IPK_E10.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF045IPK_vs_ENCFF825AVI_E10.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF124TAB_E13.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF124TAB_vs_ENCFF248PGK_E13.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF124UYX_E10.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF124UYX_vs_ENCFF157KEH_E10.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF182ZPF_E12.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF182ZPF_vs_ENCFF203JQV_E12.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF194ORC_E13.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF194ORC_vs_ENCFF117QRC_E13.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF213EBC_E10.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF213EBC_vs_ENCFF157KEH_E10.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF258KCR_E15.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF258KCR_vs_ENCFF727QTS_E15.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF290ZNF_E13.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF290ZNF_vs_ENCFF248PGK_E13.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF327VAO_E14.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF327VAO_vs_ENCFF784ORI_E14.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF394TZN_E12.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF394TZN_vs_ENCFF203JQV_E12.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF401BKM_E15.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF401BKM_vs_ENCFF182XFG_E15.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF485UDC_E13.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF485UDC_vs_ENCFF117QRC_E13.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF512SFE_E11.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF512SFE_vs_ENCFF184CUE_E11.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF515PKL_E11.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF515PKL_vs_ENCFF376FGM_E11.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF548BRR_E10.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF548BRR_vs_ENCFF825AVI_E10.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF584JFB_E15.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF584JFB_vs_ENCFF727QTS_E15.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF665QBJ_E14.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF665QBJ_vs_ENCFF002HZV_E14.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF707WKL_E15.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF707WKL_vs_ENCFF182XFG_E15.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF717QDV_E11.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF717QDV_vs_ENCFF376FGM_E11.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF724DMU_E14.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF724DMU_vs_ENCFF784ORI_E14.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF760QYZ_E11.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF760QYZ_vs_ENCFF184CUE_E11.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF902HAR_E14.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF902HAR_vs_ENCFF002HZV_E14.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF941QJZ_E12.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF941QJZ_vs_ENCFF058AUT_E12.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/H3K27ac_multiBAM_fingerprint_metrics.txt
+    Ignored:    output/qc/H3K27ac_multiBAM_fingerprint_metrics_mouse.txt
+    Ignored:    output/qc/H3K27ac_multiBAM_fingerprint_rawcounts.txt
+    Ignored:    output/qc/H3K27ac_multiBAM_fingerprint_rawcounts_mouse.txt
+    Ignored:    output/qc/H3K27ac_multibamsum.npz
+    Ignored:    output/qc/H3K27ac_multibamsum.tab
+    Ignored:    output/qc/H3K27ac_multibamsum_mouse.npz
+    Ignored:    output/qc/H3K27ac_multibamsum_mouse.tab
+    Ignored:    output/qc/H3K27ac_pearsoncor_multibamsum_matrix.txt
+    Ignored:    output/qc/H3K27ac_pearsoncor_multibamsum_matrix_mouse.txt
+    Ignored:    output/qc/H3K27ac_plot_coverage_rawcounts.tab
+    Ignored:    output/qc/H3K27ac_plot_coverage_rawcounts_mouse.tab
+    Ignored:    output/qc/H3K4me3_multiBAM_fingerprint_metrics_mouse.txt
+    Ignored:    output/qc/H3K4me3_multiBAM_fingerprint_rawcounts_mouse.txt
+    Ignored:    output/qc/H3K4me3_pearsoncor_multibamsum_matrix_mouse.txt
     Ignored:    output/qc/bamPEFragmentSize_rawcounts.tab
     Ignored:    output/qc/bamPEFragmentSize_rawcounts_dunnart_downSampled.tab
     Ignored:    output/qc/multiBAM_fingerprint_metrics.txt
@@ -415,63 +481,306 @@ Ignored files:
     Ignored:    output/qc/multibamsum.tab
     Ignored:    output/qc/multibamsum_dunnart_downSampled.npz
     Ignored:    output/qc/multibamsum_dunnart_downSampled.tab
+    Ignored:    output/qc/multibamsum_mouse.npz
+    Ignored:    output/qc/multibamsum_mouse.tab
     Ignored:    output/qc/pearsoncor_multibamsum_matrix.txt
     Ignored:    output/qc/pearsoncor_multibamsum_matrix_dunnart_downSampled.txt
+    Ignored:    output/qc/pearsoncor_multibamsum_matrix_mouse.txt
     Ignored:    output/wga/
-    Ignored:    results/
 
 Untracked files:
     Untracked:  .snakemake/
     Untracked:  Rplots.pdf
+    Untracked:  code/.swp
     Untracked:  data/raw_reads/
-    Untracked:  output/qc/H3K27ac_overlap_default.frip
+    Untracked:  output/qc/A-1_input.downSampled.flagstat.qc
+    Untracked:  output/qc/A-2_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/A-3_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/B-1_input.downSampled.flagstat.qc
+    Untracked:  output/qc/B-2_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/B-3_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/E10.5_H3K27ac.pooled.macs2_downSampled
+    Untracked:  output/qc/E10.5_H3K4me3.pooled.macs2_downSampled
+    Untracked:  output/qc/E10.5_H3K4me3.pooled.macs2_downSampled.log
+    Untracked:  output/qc/E11.5_H3K27ac.pooled.macs2_downSampled
+    Untracked:  output/qc/E11.5_H3K4me3.pooled.macs2_downSampled
+    Untracked:  output/qc/E11.5_H3K4me3.pooled.macs2_downSampled.log
+    Untracked:  output/qc/E12.5_H3K27ac.pooled.macs2_downSampled
+    Untracked:  output/qc/E12.5_H3K4me3.pooled.macs2_downSampled
+    Untracked:  output/qc/E12.5_H3K4me3.pooled.macs2_downSampled.log
+    Untracked:  output/qc/E13.5_H3K27ac.pooled.macs2_downSampled
+    Untracked:  output/qc/E13.5_H3K4me3.pooled.macs2_downSampled
+    Untracked:  output/qc/E13.5_H3K4me3.pooled.macs2_downSampled.log
+    Untracked:  output/qc/E14.5_H3K27ac.pooled.macs2_downSampled
+    Untracked:  output/qc/E14.5_H3K4me3.pooled.macs2_downSampled
+    Untracked:  output/qc/E14.5_H3K4me3.pooled.macs2_downSampled.log
+    Untracked:  output/qc/E15.5_H3K27ac.pooled.macs2_downSampled
+    Untracked:  output/qc/E15.5_H3K4me3.pooled.macs2_downSampled
+    Untracked:  output/qc/E15.5_H3K4me3.pooled.macs2_downSampled.log
+    Untracked:  output/qc/ENCFF002HZV_E14.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF002HZV_E14.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF058AUT_E12.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF058AUT_E12.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF117QRC_E13.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF117QRC_E13.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF157KEH_E10.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF157KEH_E10.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF182XFG_E15.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF182XFG_E15.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF184CUE_E11.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF184CUE_E11.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF203JQV_E12.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF203JQV_E12.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF248PGK_E13.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF248PGK_E13.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF376FGM_E11.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF376FGM_E11.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF727QTS_E15.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF727QTS_E15.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF784ORI_E14.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF784ORI_E14.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF825AVI_E10.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF825AVI_E10.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/H3K27ac_E10.5_overlap.frip
+    Untracked:  output/qc/H3K27ac_E11.5_overlap.frip
+    Untracked:  output/qc/H3K27ac_E12.5_overlap.frip
+    Untracked:  output/qc/H3K27ac_E13.5_overlap.frip
+    Untracked:  output/qc/H3K27ac_E14.5_overlap.frip
+    Untracked:  output/qc/H3K27ac_E15.5_overlap.frip
+    Untracked:  output/qc/H3K27ac_multiBAM_fingerprint.pdf
+    Untracked:  output/qc/H3K27ac_overlap_default_dunnart_downSampled.frip
+    Untracked:  output/qc/H3K27ac_pearsoncor_multibamsum.pdf
+    Untracked:  output/qc/H3K27ac_plot_coverage.pdf
+    Untracked:  output/qc/H3K4me3_E10.5_overlap.frip
+    Untracked:  output/qc/H3K4me3_E11.5_overlap.frip
+    Untracked:  output/qc/H3K4me3_E12.5_overlap.frip
+    Untracked:  output/qc/H3K4me3_E13.5_overlap.frip
+    Untracked:  output/qc/H3K4me3_E14.5_overlap.frip
+    Untracked:  output/qc/H3K4me3_E15.5_overlap.frip
+    Untracked:  output/qc/H3K4me3_overlap_default_dunnart_downSampled.frip
+    Untracked:  output/qc/H3K4me3_overlap_p0.01_dunnart_downSampled.frip
     Untracked:  output/qc/ucsc_alignment/
     Untracked:  output/rnaseq/
-    Untracked:  slurm-33931929.out
-    Untracked:  slurm-33931930.out
-    Untracked:  slurm-33931931.out
-    Untracked:  slurm-33931932.out
-    Untracked:  slurm-33931933.out
-    Untracked:  slurm-33931934.out
-    Untracked:  slurm-33934389.out
-    Untracked:  slurm-33934390.out
-    Untracked:  slurm-33934391.out
-    Untracked:  slurm-33934392.out
-    Untracked:  slurm-33934393.out
-    Untracked:  slurm-33934394.out
-    Untracked:  slurm-33935177.out
-    Untracked:  slurm-33935178.out
-    Untracked:  slurm-33935179.out
-    Untracked:  slurm-33935180.out
-    Untracked:  slurm-33935181.out
-    Untracked:  slurm-33935182.out
-    Untracked:  slurm-33938210.out
-    Untracked:  slurm-33938211.out
-    Untracked:  slurm-33938212.out
-    Untracked:  slurm-33938213.out
-    Untracked:  slurm-33938214.out
-    Untracked:  slurm-33938215.out
-    Untracked:  slurm-33948861.out
-    Untracked:  slurm-33948862.out
-    Untracked:  slurm-33948863.out
-    Untracked:  slurm-33948864.out
-    Untracked:  slurm-33948865.out
-    Untracked:  slurm-33948866.out
-    Untracked:  slurm-33950657.out
-    Untracked:  slurm-33950658.out
-    Untracked:  slurm-33950659.out
-    Untracked:  slurm-33950660.out
-    Untracked:  slurm-33950661.out
-    Untracked:  slurm-33950662.out
-    Untracked:  slurm-33950663.out
-    Untracked:  slurm-33950664.out
-    Untracked:  slurm-33950810.out
-    Untracked:  slurm-33950814.out
-    Untracked:  slurm-33950815.out
-    Untracked:  slurm-33950822.out
 
 Unstaged changes:
-    Modified:   analysis/peak_level_comparisons.Rmd
+    Modified:   code/configs/cluster.json
+    Deleted:    output/qc/H3K4me3_overlap_default.frip
 
 </code></pre>
 <p>
@@ -510,6 +819,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/5ca4518d29111ad1bf170adaa1ee7ea074f0cf9e/analysis/index.Rmd" target="_blank">5ca4518</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-22
+</td>
+<td>
+wflow_publish(“analysis/index.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/be43c257aafcb4287b3194e8f6da73cab02f22ba/docs/index.html" target="_blank">be43c25</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-15
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -937,9 +1280,12 @@ Start workflowr project.
 <li><p><a href="dunnart_peak_characterisation.html">Dunnart peak characterisation</a></p></li>
 <li><p>Cross-species peak comparisons</p>
 <ul>
+<li><p><a href="mouse_dunnart_peak_features.html">Mouse and dunnart peak features</a></p>
+<ul>
 <li><p><a href="peak_level_comparisons.html">Peak level</a></p></li>
 <li><p><a href="gene_level_comparisons.html">Gene level</a></p></li>
 <li><p><a href="tcseq_expression_analysis.html">Incorporating temporal mouse gene expression data</a></p></li>
+</ul></li>
 </ul></li>
 </ul>
 </div>
@@ -957,6 +1303,8 @@ footer is added to webpages before the MathJax javascript. -->
     "HTML-CSS": { availableFonts: ["TeX"] }
   });
 </script>
+
+
 
 
 
