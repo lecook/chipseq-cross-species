@@ -523,7 +523,7 @@ rule call_peaks_macs2:
     run:
         shell("macs2 callpeak -f BAMPE -t {input.case} \
         -c {input.control} --keep-dup all \
-        --outdir output/peaks/ -p 0.01 \
+        --outdir output/peaks/ \
         -n {params.name} \
         -g 2740338543 2> {log}")
 
@@ -553,7 +553,7 @@ rule call_peaks_macs2_pooled_replicates:
         -g 2740338543 2> {log.H3K4me3} ")
         shell("macs2 callpeak -f BAMPE -t {input.H3K27ac} \
         -c {input.input} --keep-dup all \
-        --outdir output/peaks/ -p 0.01 \
+        --outdir output/peaks/ \
         -n {params.H3K27ac} \
         -g 2740338543 2> {log.H3K27ac} ")
 
