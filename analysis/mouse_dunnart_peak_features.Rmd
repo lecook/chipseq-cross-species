@@ -21,6 +21,7 @@ library(ggplot2)
 library(data.table)
 library(dplyr)
 library(TxDb.Mmusculus.UCSC.mm10.ensGene)
+library(scales)
 
 plot_dir <- "output/plots/"
 fullPeak_dir <- "output/peaks/"
@@ -37,9 +38,9 @@ font <- theme(axis.text.x = element_text(size = 25),
 
 
 ## Peak features
-### Peak counts
+### Peak counts reads normalised to 10 million reads
 ```{r}
-files =list.files(fullPeak_dir, pattern= "*5.narrowPeak|*only.narrowPeak|*downSampled.narrowPeak", full.names=T) # create list of files in directory
+files =list.files(fullPeak_dir, pattern= "*downSampled.narrowPeak", full.names=T) # create list of files in directory
 files = as.list(files)
 data = lapply(files, function(x) fread(x, header=FALSE, sep="\t", quote = "", na.strings=c("", "NA")))
 
@@ -102,9 +103,78 @@ p <- ggplot(combined.tbl, aes(factor(sample), Freq, fill=mark)) +
 
 p
 
-
-
 pdf(file=paste0(plot_dir, "number_of_mouse_dunnart_peaks.pdf"), width = 10, height = 7)
+print(p + font)
+dev.off()
+```
+
+### Peak counts ALL reads
+```{r}
+files =list.files(fullPeak_dir, pattern= "*5.narrowPeak|*only.narrowPeak|*ac.narrowPeak", full.names=T) # create list of files in directory
+files = as.list(files)
+data = lapply(files, function(x) fread(x, header=FALSE, sep="\t", quote = "", na.strings=c("", "NA")))
+
+
+data[[1]]$mark = "H3K27ac"
+data[[2]]$mark = "H3K27ac"
+data[[3]]$mark = "H3K27ac"
+data[[4]]$mark = "H3K27ac"
+data[[5]]$mark = "H3K27ac"
+data[[6]]$mark = "H3K27ac"
+data[[7]]$mark = "H3K27ac"
+data[[8]]$mark = "H3K27ac_H3K4me3"
+data[[9]]$mark = "H3K27ac_H3K4me3"
+data[[10]]$mark = "H3K27ac_H3K4me3"
+data[[11]]$mark = "H3K27ac_H3K4me3"
+data[[12]]$mark = "H3K27ac_H3K4me3"
+data[[13]]$mark = "H3K27ac_H3K4me3"
+data[[14]]$mark = "H3K27ac_H3K4me3"
+data[[15]]$mark = "H3K4me3"
+data[[16]]$mark = "H3K4me3"
+data[[17]]$mark = "H3K4me3"
+data[[18]]$mark = "H3K4me3"
+data[[19]]$mark = "H3K4me3"
+data[[20]]$mark = "H3K4me3"
+data[[21]]$mark = "H3K4me3"
+
+
+data[[1]]$sample = "E10.5"
+data[[2]]$sample = "E11.5"
+data[[3]]$sample = "E12.5"
+data[[4]]$sample = "E13.5"
+data[[5]]$sample = "E14.5"
+data[[6]]$sample = "E15.5"
+data[[7]]$sample = "dunnart"
+data[[8]]$sample = "E10.5"
+data[[9]]$sample = "E11.5"
+data[[10]]$sample = "E12.5"
+data[[11]]$sample = "E13.5"
+data[[12]]$sample = "E14.5"
+data[[13]]$sample = "E15.5"
+data[[14]]$sample = "dunnart"
+data[[15]]$sample = "E10.5"
+data[[16]]$sample = "E11.5"
+data[[17]]$sample = "E12.5"
+data[[18]]$sample = "E13.5"
+data[[19]]$sample = "E14.5"
+data[[20]]$sample = "E15.5"
+data[[21]]$sample = "dunnart"
+
+## Plot stacked bar graph with number of peaks for each
+combined.peaks <- rbindlist(data,)
+combined.tbl <- with(combined.peaks, table(sample, mark))
+combined.tbl <- as.data.frame(combined.tbl)
+
+p <- ggplot(combined.tbl, aes(factor(sample), Freq, fill=mark)) + 
+  geom_bar(position=position_stack(reverse = TRUE), stat="identity") +
+  theme_minimal() + ylab("Number of peaks") + scale_y_continuous(labels = comma) +
+  xlab("") + scale_color_manual(values = c("#ffd166", "#299d8f", "#244653")) + scale_fill_manual(values = c("#ffd166", "#299d8f", "#244653")) +
+  theme_bw() 
+
+
+p + ggtitle("Number of peaks with all reads used for peak calling")
+
+pdf(file=paste0(plot_dir, "number_of_mouse_dunnart_peaks_all_reads.pdf"), width = 10, height = 7)
 print(p + font)
 dev.off()
 ```
@@ -563,7 +633,7 @@ module load wget
 annotatePeaks.pl output/filtered_peaks/cluster1_dunnart_downSampled_promoter_peaks.narrowPeak smiCra1 -gff data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr2.gff -CpG -cons > output/annotations/cluster1_dunnart_downSampled_promoter_peaks_homerAnnot.txt
 
 
-TRA=($(for file in output/peaks/E1*_peaks.narrowPeak; do echo $file |cut -d "_" -f 1;done))
+TRA=($(for file in E1*_peaks.narrowPeak; do echo $file |cut -d "_" -f 1;done))
 
 echo ${TRA[@]}
 
@@ -572,9 +642,9 @@ for tr in ${TRA[@]};
 do
 echo ${tr}
 
-annotatePeaks.pl output/peaks/${tr}_promoter_peaks.narrowPeak mm10 -CpG > output/annotations/E10.5_enhancer_peaks_homerAnnot.txt
+annotatePeaks.pl ${tr}_promoter_peaks.narrowPeak mm10 -CpG > ../annotations/E10.5_enhancer_peaks_homerAnnot.txt
 
-annotatePeaks.pl output/peaks/${tr}_enhancer_peaks.narrowPeak mm10 -CpG > output/annotations/E10.5_enhancer_peaks_homerAnnot.txt
+annotatePeaks.pl ${tr}_enhancer_peaks.narrowPeak mm10 -CpG > ../annotations/E10.5_enhancer_peaks_homerAnnot.txt
 
 done
 
@@ -584,7 +654,7 @@ done
 
 ```{r eval = FALSE}
 
-files =list.files(fileList, pattern= "_homerAnnot.txt", full.names=T) # create list of files in directory
+files =list.files(annot_dir, pattern= "_homerAnnot.txt", full.names=T) # create list of files in directory
   files = as.list(files)
   data = lapply(files, function(x) fread(x, header=TRUE, sep="\t", quote = "", na.strings=c("", "NA"))) # read in all files
   names(data) = c("dunnart", "E10","E11","E12","E13","E14", "E15")
