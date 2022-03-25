@@ -571,7 +571,7 @@ rule bamToBed:
     output:
         "output/bam_files/{case}_{stage}_{mark}_q30.sorted.dedup.bed"
     log:
-        "output/logs/{case}_{stage}_{mark}_downSampled.bamToBed"
+        "output/logs/{case}_{stage}_{mark}.bamToBed"
     shell:
         "samtools sort -n {input} | bedtools bamtobed -i - > {output}"
 
