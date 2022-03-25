@@ -15,6 +15,7 @@
 
 <title>Processing mouse and dunnart data for comparison</title>
 
+<script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -46,6 +47,8 @@ div.section {
   padding-top: 12px;
 }
 </style>
+
+
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -382,7 +385,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-03-21
+<strong>Last updated:</strong> 2022-03-25
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -430,7 +433,7 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 </div>
 <div id="strongSeedstrongcodesetseed20220209code" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The command <code>set.seed(20220209)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+<p>The command <code>set.seed(20220209)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
 </div>
 </div>
 </div>
@@ -473,16 +476,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree29730f408c6154171e899d0037f6da61beb57141targetblank29730f4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/29730f408c6154171e899d0037f6da61beb57141" target="_blank">29730f4</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreea7a17993f04a1c9581372e1acc758c6e68d94970targetblanka7a1799a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/a7a17993f04a1c9581372e1acc758c6e68d94970" target="_blank">a7a1799</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree29730f408c6154171e899d0037f6da61beb57141targetblank29730f4a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreea7a17993f04a1c9581372e1acc758c6e68d94970targetblanka7a1799a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/29730f408c6154171e899d0037f6da61beb57141" target="_blank">29730f4</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/a7a17993f04a1c9581372e1acc758c6e68d94970" target="_blank">a7a1799</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -513,6 +516,7 @@ Ignored files:
     Ignored:    output/qc/A-2_H3K4me3.extrap.txt
     Ignored:    output/qc/A-2_H3K4me3_R1_trimmed.fastq.gz
     Ignored:    output/qc/A-2_H3K4me3_est_lib_complex_metrics.txt
+    Ignored:    output/qc/A-2_H3K4me3_vs_A-1_input.frip_default.txt
     Ignored:    output/qc/A-2_H3K4me3_vs_A-1_input.frip_default_dunnart_downSampled.txt
     Ignored:    output/qc/A-2_H3K4me3_vs_A-1_input.frip_p0.01_dunnart_downSampled.txt
     Ignored:    output/qc/A-3_H3K27ac.SeqDepthNorm.bw
@@ -521,6 +525,7 @@ Ignored files:
     Ignored:    output/qc/A-3_H3K27ac.extrap.txt
     Ignored:    output/qc/A-3_H3K27ac_R1_trimmed.fastq.gz
     Ignored:    output/qc/A-3_H3K27ac_est_lib_complex_metrics.txt
+    Ignored:    output/qc/A-3_H3K27ac_vs_A-1_input.frip_default.txt
     Ignored:    output/qc/A-3_H3K27ac_vs_A-1_input.frip_default_dunnart_downSampled.txt
     Ignored:    output/qc/A-3_H3K27ac_vs_A-1_input.frip_p0.01_dunnart_downSampled.txt
     Ignored:    output/qc/B-1_input.SeqDepthNorm.bw
@@ -535,6 +540,7 @@ Ignored files:
     Ignored:    output/qc/B-2_H3K4me3.extrap.txt
     Ignored:    output/qc/B-2_H3K4me3_R1_trimmed.fastq.gz
     Ignored:    output/qc/B-2_H3K4me3_est_lib_complex_metrics.txt
+    Ignored:    output/qc/B-2_H3K4me3_vs_B-1_input.frip_default.txt
     Ignored:    output/qc/B-2_H3K4me3_vs_B-1_input.frip_default_dunnart_downSampled.txt
     Ignored:    output/qc/B-2_H3K4me3_vs_B-1_input.frip_p0.01_dunnart_downSampled.txt
     Ignored:    output/qc/B-3_H3K27ac.SeqDepthNorm.bw
@@ -543,55 +549,80 @@ Ignored files:
     Ignored:    output/qc/B-3_H3K27ac.extrap.txt
     Ignored:    output/qc/B-3_H3K27ac_R1_trimmed.fastq.gz
     Ignored:    output/qc/B-3_H3K27ac_est_lib_complex_metrics.txt
+    Ignored:    output/qc/B-3_H3K27ac_vs_B-1_input.frip_default.txt
     Ignored:    output/qc/B-3_H3K27ac_vs_B-1_input.frip_default_dunnart_downSampled.txt
     Ignored:    output/qc/B-3_H3K27ac_vs_B-1_input.frip_p0.01_dunnart_downSampled.txt
     Ignored:    output/qc/ENCFF011NFM_E12.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF011NFM_vs_ENCFF058AUT_E12.5_H3K27ac.frip.txt
     Ignored:    output/qc/ENCFF011NFM_vs_ENCFF058AUT_E12.5_H3K27ac_downSampled.frip.txt
     Ignored:    output/qc/ENCFF045IPK_E10.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF045IPK_vs_ENCFF825AVI_E10.5_H3K4me3.frip.txt
     Ignored:    output/qc/ENCFF045IPK_vs_ENCFF825AVI_E10.5_H3K4me3_downSampled.frip.txt
     Ignored:    output/qc/ENCFF124TAB_E13.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF124TAB_vs_ENCFF248PGK_E13.5_H3K4me3.frip.txt
     Ignored:    output/qc/ENCFF124TAB_vs_ENCFF248PGK_E13.5_H3K4me3_downSampled.frip.txt
     Ignored:    output/qc/ENCFF124UYX_E10.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF124UYX_vs_ENCFF157KEH_E10.5_H3K4me3.frip.txt
     Ignored:    output/qc/ENCFF124UYX_vs_ENCFF157KEH_E10.5_H3K4me3_downSampled.frip.txt
     Ignored:    output/qc/ENCFF182ZPF_E12.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF182ZPF_vs_ENCFF203JQV_E12.5_H3K4me3.frip.txt
     Ignored:    output/qc/ENCFF182ZPF_vs_ENCFF203JQV_E12.5_H3K4me3_downSampled.frip.txt
     Ignored:    output/qc/ENCFF194ORC_E13.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF194ORC_vs_ENCFF117QRC_E13.5_H3K27ac.frip.txt
     Ignored:    output/qc/ENCFF194ORC_vs_ENCFF117QRC_E13.5_H3K27ac_downSampled.frip.txt
     Ignored:    output/qc/ENCFF213EBC_E10.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF213EBC_vs_ENCFF157KEH_E10.5_H3K27ac.frip.txt
     Ignored:    output/qc/ENCFF213EBC_vs_ENCFF157KEH_E10.5_H3K27ac_downSampled.frip.txt
     Ignored:    output/qc/ENCFF258KCR_E15.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF258KCR_vs_ENCFF727QTS_E15.5_H3K4me3.frip.txt
     Ignored:    output/qc/ENCFF258KCR_vs_ENCFF727QTS_E15.5_H3K4me3_downSampled.frip.txt
     Ignored:    output/qc/ENCFF290ZNF_E13.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF290ZNF_vs_ENCFF248PGK_E13.5_H3K27ac.frip.txt
     Ignored:    output/qc/ENCFF290ZNF_vs_ENCFF248PGK_E13.5_H3K27ac_downSampled.frip.txt
     Ignored:    output/qc/ENCFF327VAO_E14.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF327VAO_vs_ENCFF784ORI_E14.5_H3K27ac.frip.txt
     Ignored:    output/qc/ENCFF327VAO_vs_ENCFF784ORI_E14.5_H3K27ac_downSampled.frip.txt
     Ignored:    output/qc/ENCFF394TZN_E12.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF394TZN_vs_ENCFF203JQV_E12.5_H3K27ac.frip.txt
     Ignored:    output/qc/ENCFF394TZN_vs_ENCFF203JQV_E12.5_H3K27ac_downSampled.frip.txt
     Ignored:    output/qc/ENCFF401BKM_E15.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF401BKM_vs_ENCFF182XFG_E15.5_H3K4me3.frip.txt
     Ignored:    output/qc/ENCFF401BKM_vs_ENCFF182XFG_E15.5_H3K4me3_downSampled.frip.txt
     Ignored:    output/qc/ENCFF485UDC_E13.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF485UDC_vs_ENCFF117QRC_E13.5_H3K4me3.frip.txt
     Ignored:    output/qc/ENCFF485UDC_vs_ENCFF117QRC_E13.5_H3K4me3_downSampled.frip.txt
     Ignored:    output/qc/ENCFF512SFE_E11.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF512SFE_vs_ENCFF184CUE_E11.5_H3K27ac.frip.txt
     Ignored:    output/qc/ENCFF512SFE_vs_ENCFF184CUE_E11.5_H3K27ac_downSampled.frip.txt
     Ignored:    output/qc/ENCFF515PKL_E11.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF515PKL_vs_ENCFF376FGM_E11.5_H3K27ac.frip.txt
     Ignored:    output/qc/ENCFF515PKL_vs_ENCFF376FGM_E11.5_H3K27ac_downSampled.frip.txt
     Ignored:    output/qc/ENCFF548BRR_E10.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF548BRR_vs_ENCFF825AVI_E10.5_H3K27ac.frip.txt
     Ignored:    output/qc/ENCFF548BRR_vs_ENCFF825AVI_E10.5_H3K27ac_downSampled.frip.txt
     Ignored:    output/qc/ENCFF584JFB_E15.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF584JFB_vs_ENCFF727QTS_E15.5_H3K27ac.frip.txt
     Ignored:    output/qc/ENCFF584JFB_vs_ENCFF727QTS_E15.5_H3K27ac_downSampled.frip.txt
     Ignored:    output/qc/ENCFF665QBJ_E14.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF665QBJ_vs_ENCFF002HZV_E14.5_H3K4me3.frip.txt
     Ignored:    output/qc/ENCFF665QBJ_vs_ENCFF002HZV_E14.5_H3K4me3_downSampled.frip.txt
     Ignored:    output/qc/ENCFF707WKL_E15.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF707WKL_vs_ENCFF182XFG_E15.5_H3K27ac.frip.txt
     Ignored:    output/qc/ENCFF707WKL_vs_ENCFF182XFG_E15.5_H3K27ac_downSampled.frip.txt
     Ignored:    output/qc/ENCFF717QDV_E11.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF717QDV_vs_ENCFF376FGM_E11.5_H3K4me3.frip.txt
     Ignored:    output/qc/ENCFF717QDV_vs_ENCFF376FGM_E11.5_H3K4me3_downSampled.frip.txt
     Ignored:    output/qc/ENCFF724DMU_E14.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF724DMU_vs_ENCFF784ORI_E14.5_H3K4me3.frip.txt
     Ignored:    output/qc/ENCFF724DMU_vs_ENCFF784ORI_E14.5_H3K4me3_downSampled.frip.txt
     Ignored:    output/qc/ENCFF760QYZ_E11.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF760QYZ_vs_ENCFF184CUE_E11.5_H3K4me3.frip.txt
     Ignored:    output/qc/ENCFF760QYZ_vs_ENCFF184CUE_E11.5_H3K4me3_downSampled.frip.txt
     Ignored:    output/qc/ENCFF902HAR_E14.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF902HAR_vs_ENCFF002HZV_E14.5_H3K27ac.frip.txt
     Ignored:    output/qc/ENCFF902HAR_vs_ENCFF002HZV_E14.5_H3K27ac_downSampled.frip.txt
     Ignored:    output/qc/ENCFF941QJZ_E12.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF941QJZ_vs_ENCFF058AUT_E12.5_H3K4me3.frip.txt
     Ignored:    output/qc/ENCFF941QJZ_vs_ENCFF058AUT_E12.5_H3K4me3_downSampled.frip.txt
     Ignored:    output/qc/H3K27ac_multiBAM_fingerprint_metrics.txt
     Ignored:    output/qc/H3K27ac_multiBAM_fingerprint_metrics_mouse.txt
@@ -599,8 +630,6 @@ Ignored files:
     Ignored:    output/qc/H3K27ac_multiBAM_fingerprint_rawcounts_mouse.txt
     Ignored:    output/qc/H3K27ac_multibamsum.npz
     Ignored:    output/qc/H3K27ac_multibamsum.tab
-    Ignored:    output/qc/H3K27ac_multibamsum_mouse.npz
-    Ignored:    output/qc/H3K27ac_multibamsum_mouse.tab
     Ignored:    output/qc/H3K27ac_pearsoncor_multibamsum_matrix.txt
     Ignored:    output/qc/H3K27ac_pearsoncor_multibamsum_matrix_mouse.txt
     Ignored:    output/qc/H3K27ac_plot_coverage_rawcounts.tab
@@ -636,22 +665,34 @@ Untracked files:
     Untracked:  output/qc/B-1_input.downSampled.flagstat.qc
     Untracked:  output/qc/B-2_H3K4me3.downSampled.flagstat.qc
     Untracked:  output/qc/B-3_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/E10.5_H3K27ac.pooled.macs2
     Untracked:  output/qc/E10.5_H3K27ac.pooled.macs2_downSampled
+    Untracked:  output/qc/E10.5_H3K4me3.pooled.macs2
     Untracked:  output/qc/E10.5_H3K4me3.pooled.macs2_downSampled
     Untracked:  output/qc/E10.5_H3K4me3.pooled.macs2_downSampled.log
+    Untracked:  output/qc/E11.5_H3K27ac.pooled.macs2
     Untracked:  output/qc/E11.5_H3K27ac.pooled.macs2_downSampled
+    Untracked:  output/qc/E11.5_H3K4me3.pooled.macs2
     Untracked:  output/qc/E11.5_H3K4me3.pooled.macs2_downSampled
     Untracked:  output/qc/E11.5_H3K4me3.pooled.macs2_downSampled.log
+    Untracked:  output/qc/E12.5_H3K27ac.pooled.macs2
     Untracked:  output/qc/E12.5_H3K27ac.pooled.macs2_downSampled
+    Untracked:  output/qc/E12.5_H3K4me3.pooled.macs2
     Untracked:  output/qc/E12.5_H3K4me3.pooled.macs2_downSampled
     Untracked:  output/qc/E12.5_H3K4me3.pooled.macs2_downSampled.log
+    Untracked:  output/qc/E13.5_H3K27ac.pooled.macs2
     Untracked:  output/qc/E13.5_H3K27ac.pooled.macs2_downSampled
+    Untracked:  output/qc/E13.5_H3K4me3.pooled.macs2
     Untracked:  output/qc/E13.5_H3K4me3.pooled.macs2_downSampled
     Untracked:  output/qc/E13.5_H3K4me3.pooled.macs2_downSampled.log
+    Untracked:  output/qc/E14.5_H3K27ac.pooled.macs2
     Untracked:  output/qc/E14.5_H3K27ac.pooled.macs2_downSampled
+    Untracked:  output/qc/E14.5_H3K4me3.pooled.macs2
     Untracked:  output/qc/E14.5_H3K4me3.pooled.macs2_downSampled
     Untracked:  output/qc/E14.5_H3K4me3.pooled.macs2_downSampled.log
+    Untracked:  output/qc/E15.5_H3K27ac.pooled.macs2
     Untracked:  output/qc/E15.5_H3K27ac.pooled.macs2_downSampled
+    Untracked:  output/qc/E15.5_H3K4me3.pooled.macs2
     Untracked:  output/qc/E15.5_H3K4me3.pooled.macs2_downSampled
     Untracked:  output/qc/E15.5_H3K4me3.pooled.macs2_downSampled.log
     Untracked:  output/qc/ENCFF002HZV_E14.5_H3K27ac.dupmark.qc
@@ -895,134 +936,51 @@ Untracked files:
     Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
     Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3_filt_15Mreads.SE.cc.qc
     Untracked:  output/qc/H3K27ac_E10.5_overlap.frip
+    Untracked:  output/qc/H3K27ac_E10.5_overlap_downSampled.frip
     Untracked:  output/qc/H3K27ac_E11.5_overlap.frip
     Untracked:  output/qc/H3K27ac_E12.5_overlap.frip
     Untracked:  output/qc/H3K27ac_E13.5_overlap.frip
     Untracked:  output/qc/H3K27ac_E14.5_overlap.frip
     Untracked:  output/qc/H3K27ac_E15.5_overlap.frip
     Untracked:  output/qc/H3K27ac_multiBAM_fingerprint.pdf
+    Untracked:  output/qc/H3K27ac_overlap_default.frip
     Untracked:  output/qc/H3K27ac_overlap_default_dunnart_downSampled.frip
     Untracked:  output/qc/H3K27ac_pearsoncor_multibamsum.pdf
     Untracked:  output/qc/H3K27ac_plot_coverage.pdf
     Untracked:  output/qc/H3K4me3_E10.5_overlap.frip
+    Untracked:  output/qc/H3K4me3_E10.5_overlap_downSampled.frip
     Untracked:  output/qc/H3K4me3_E11.5_overlap.frip
+    Untracked:  output/qc/H3K4me3_E11.5_overlap_downSampled.frip
     Untracked:  output/qc/H3K4me3_E12.5_overlap.frip
+    Untracked:  output/qc/H3K4me3_E12.5_overlap_downSampled.frip
     Untracked:  output/qc/H3K4me3_E13.5_overlap.frip
+    Untracked:  output/qc/H3K4me3_E13.5_overlap_downSampled.frip
     Untracked:  output/qc/H3K4me3_E14.5_overlap.frip
+    Untracked:  output/qc/H3K4me3_E14.5_overlap_downSampled.frip
     Untracked:  output/qc/H3K4me3_E15.5_overlap.frip
+    Untracked:  output/qc/H3K4me3_E15.5_overlap_downSampled.frip
     Untracked:  output/qc/H3K4me3_overlap_default_dunnart_downSampled.frip
     Untracked:  output/qc/H3K4me3_overlap_p0.01_dunnart_downSampled.frip
     Untracked:  output/qc/ucsc_alignment/
     Untracked:  output/rnaseq/
-    Untracked:  slurm-34229611.out
-    Untracked:  slurm-34229694.out
-    Untracked:  slurm-34229768.out
-    Untracked:  slurm-34230768.out
-    Untracked:  slurm-34230769.out
-    Untracked:  slurm-34230770.out
-    Untracked:  slurm-34230771.out
-    Untracked:  slurm-34230772.out
-    Untracked:  slurm-34230852.out
-    Untracked:  slurm-34230853.out
-    Untracked:  slurm-34230854.out
-    Untracked:  slurm-34230855.out
-    Untracked:  slurm-34231065.out
-    Untracked:  slurm-34231066.out
-    Untracked:  slurm-34231071.out
-    Untracked:  slurm-34231170.out
-    Untracked:  slurm-34231171.out
-    Untracked:  slurm-34231172.out
-    Untracked:  slurm-34231173.out
-    Untracked:  slurm-34231174.out
-    Untracked:  slurm-34231175.out
-    Untracked:  slurm-34231176.out
-    Untracked:  slurm-34231177.out
-    Untracked:  slurm-34231178.out
-    Untracked:  slurm-34231244.out
-    Untracked:  slurm-34231245.out
-    Untracked:  slurm-34231246.out
-    Untracked:  slurm-34231247.out
-    Untracked:  slurm-34231248.out
-    Untracked:  slurm-34231249.out
-    Untracked:  slurm-34231250.out
-    Untracked:  slurm-34231253.out
-    Untracked:  slurm-34231355.out
-    Untracked:  slurm-34231356.out
-    Untracked:  slurm-34231362.out
-    Untracked:  slurm-34233668.out
-    Untracked:  slurm-34233684.out
-    Untracked:  slurm-34233685.out
-    Untracked:  slurm-34233686.out
-    Untracked:  slurm-34233687.out
-    Untracked:  slurm-34233688.out
-    Untracked:  slurm-34233778.out
-    Untracked:  slurm-34233811.out
-    Untracked:  slurm-34233812.out
-    Untracked:  slurm-34233813.out
-    Untracked:  slurm-34233910.out
-    Untracked:  slurm-34233911.out
-    Untracked:  slurm-34233921.out
-    Untracked:  slurm-34235405.out
-    Untracked:  slurm-34235417.out
-    Untracked:  slurm-34235418.out
-    Untracked:  slurm-34235419.out
-    Untracked:  slurm-34235420.out
-    Untracked:  slurm-34235421.out
-    Untracked:  slurm-34235431.out
-    Untracked:  slurm-34235432.out
-    Untracked:  slurm-34235433.out
-    Untracked:  slurm-34235434.out
-    Untracked:  slurm-34235435.out
-    Untracked:  slurm-34235469.out
-    Untracked:  slurm-34235470.out
-    Untracked:  slurm-34235471.out
-    Untracked:  slurm-34235472.out
-    Untracked:  slurm-34235473.out
-    Untracked:  slurm-34235474.out
-    Untracked:  slurm-34235475.out
-    Untracked:  slurm-34235476.out
-    Untracked:  slurm-34235477.out
-    Untracked:  slurm-34235478.out
-    Untracked:  slurm-34235509.out
-    Untracked:  slurm-34235510.out
-    Untracked:  slurm-34235511.out
-    Untracked:  slurm-34235512.out
-    Untracked:  slurm-34235513.out
-    Untracked:  slurm-34235514.out
-    Untracked:  slurm-34235515.out
-    Untracked:  slurm-34235516.out
-    Untracked:  slurm-34235544.out
-    Untracked:  slurm-34235545.out
-    Untracked:  slurm-34235546.out
-    Untracked:  slurm-34235547.out
-    Untracked:  slurm-34235559.out
-    Untracked:  slurm-34235560.out
-    Untracked:  slurm-34235561.out
-    Untracked:  slurm-34235562.out
-    Untracked:  slurm-34235563.out
-    Untracked:  slurm-34235564.out
-    Untracked:  slurm-34235565.out
-    Untracked:  slurm-34235566.out
-    Untracked:  slurm-34235567.out
-    Untracked:  slurm-34235568.out
-    Untracked:  slurm-34235569.out
-    Untracked:  slurm-34235571.out
-    Untracked:  slurm-34235592.out
-    Untracked:  slurm-34235593.out
-    Untracked:  slurm-34235594.out
-    Untracked:  slurm-34235595.out
-    Untracked:  slurm-34235598.out
-    Untracked:  slurm-34235610.out
-    Untracked:  slurm-34235611.out
-    Untracked:  slurm-34235949.out
-    Untracked:  slurm-34235955.out
-    Untracked:  slurm-34235992.out
-    Untracked:  slurm-34236007.out
 
 Unstaged changes:
     Modified:   analysis/mouse_dunnart_peak_features.Rmd
+    Modified:   analysis/peak_level_comparisons.Rmd
     Modified:   code/configs/cluster.json
-    Deleted:    output/qc/H3K4me3_overlap_default.frip
+    Modified:   output/qc/A-1_input.PPq30.flagstat.qc
+    Modified:   output/qc/A-1_input.dedup.flagstat.qc
+    Modified:   output/qc/A-1_input.dupmark.flagstat.qc
+    Modified:   output/qc/A-1_input.unfiltered.flagstat.qc
+    Modified:   output/qc/A-3_H3K27ac.PPq30.flagstat.qc
+    Modified:   output/qc/A-3_H3K27ac.dedup.flagstat.qc
+    Modified:   output/qc/A-3_H3K27ac.dupmark.flagstat.qc
+    Modified:   output/qc/A-3_H3K27ac.unfiltered.flagstat.qc
+    Modified:   output/qc/B-1_input.PPq30.flagstat.qc
+    Modified:   output/qc/B-1_input.dedup.flagstat.qc
+    Modified:   output/qc/B-1_input.dupmark.flagstat.qc
+    Modified:   output/qc/B-1_input.unfiltered.flagstat.qc
+    Modified:   output/qc/H3K4me3_overlap_default.frip
 
 </code></pre>
 <p>
@@ -1061,6 +1019,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/a7a17993f04a1c9581372e1acc758c6e68d94970/analysis/mouse_dunnart_data_processing_for_comparison.Rmd" target="_blank">a7a1799</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-25
+</td>
+<td>
+wflow_publish(“analysis/mouse_dunnart_data_processing_for_comparison.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/1b467c39b62a25c20139c1a8c1424c71565f4cbb/docs/mouse_dunnart_data_processing_for_comparison.html" target="_blank">1b467c3</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-21
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -3893,27 +3885,10 @@ bash subsample.sh</code></pre>
 </div>
 <div id="peak-qc" class="section level2">
 <h2>Peak QC</h2>
-<div id="number-of-peaks" class="section level3">
-<h3>Number of peaks</h3>
+<div id="number-of-peaks-in-read-normalised-data-10-million-reads" class="section level3">
+<h3>Number of peaks in read normalised data (10 million reads)</h3>
 <div id="dunnart" class="section level4">
 <h4>Dunnart</h4>
-<pre class="bash"><code>echo &quot;Number of peaks A3 H3K27ac dunnart default&quot;
-less output/peaks/A-3_H3K27ac_vs_A-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks A2 H3K4me3 dunnart default&quot;
-less output/peaks/A-2_H3K4me3_vs_A-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks B3 H3K27ac dunnart default&quot;
-less output/peaks/B-3_H3K27ac_vs_B-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks B2 H3K4me3 dunnart default&quot;
-less output/peaks/B-2_H3K4me3_vs_B-1_input_macs2_default_dunnart_downSampled_peaks.narrowPeak | wc -l
-
-echo &quot;Number of peaks A3 H3K27ac dunnart P &lt; 0.01&quot;
-less output/peaks/A-3_H3K27ac_vs_A-1_input_macs2_p0.01_dunnart_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks A2 H3K4me3 dunnart P &lt; 0.01&quot;
-less output/peaks/A-2_H3K4me3_vs_A-1_input_macs2_p0.01_dunnart_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks B3 H3K27ac dunnart P &lt; 0.01&quot;
-less output/peaks/B-3_H3K27ac_vs_B-1_input_macs2_p0.01_dunnart_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks B2 H3K4me3 dunnart P &lt; 0.01&quot;
-less output/peaks/B-2_H3K4me3_vs_B-1_input_macs2_p0.01_dunnart_downSampled_peaks.narrowPeak | wc -l</code></pre>
 <pre><code>Number of peaks A3 H3K27ac dunnart default
 74012
 Number of peaks A2 H3K4me3 dunnart default
@@ -3934,30 +3909,6 @@ Number of peaks B2 H3K4me3 dunnart P &lt; 0.01
 <div id="mouse" class="section level4">
 <h4>Mouse</h4>
 <p>H3K4me3</p>
-<pre class="bash"><code>echo &quot;Number of peaks rep 1 E10.5 H3K4me3&quot;
-less output/peaks/ENCFF124UYX_vs_ENCFF157KEH_E10.5_H3K4me3_macs2_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 2 E10.5 H3K4me3&quot;
-less output/peaks/ENCFF045IPK_vs_ENCFF825AVI_E10.5_H3K4me3_macs2_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 1 E11.5 H3K4me3&quot;
-less output/peaks/ENCFF760QYZ_vs_ENCFF184CUE_E11.5_H3K4me3_macs2_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 2 E11.5 H3K4me3&quot;
-less output/peaks/ENCFF717QDV_vs_ENCFF376FGM_E11.5_H3K4me3_macs2_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 1 E12.5 H3K4me3&quot;
-less output/peaks/ENCFF941QJZ_vs_ENCFF058AUT_E12.5_H3K4me3_macs2_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 2 E12.5 H3K4me3&quot;
-less output/peaks/ENCFF182ZPF_vs_ENCFF203JQV_E12.5_H3K4me3_macs2_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 1 E13.5 H3K4me3&quot;
-less output/peaks/ENCFF485UDC_vs_ENCFF117QRC_E13.5_H3K4me3_macs2_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 2 E13.5 H3K4me3&quot;
-less output/peaks/ENCFF124TAB_vs_ENCFF248PGK_E13.5_H3K4me3_macs2_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 1 E14.5 H3K4me3&quot;
-less output/peaks/ENCFF665QBJ_vs_ENCFF002HZV_E14.5_H3K4me3_macs2_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 2 E14.5 H3K4me3&quot;
-less output/peaks/ENCFF724DMU_vs_ENCFF784ORI_E14.5_H3K4me3_macs2_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 1 E15.5 H3K4me3&quot;
-less output/peaks/ENCFF401BKM_vs_ENCFF182XFG_E15.5_H3K4me3_macs2_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 2 E15.5 H3K4me3&quot;
-less output/peaks/ENCFF258KCR_vs_ENCFF727QTS_E15.5_H3K4me3_macs2_downSampled_peaks.narrowPeak | wc -l</code></pre>
 <pre><code>Number of peaks rep 1 E10.5 H3K4me3
 24597
 Number of peaks rep 2 E10.5 H3K4me3
@@ -3983,30 +3934,6 @@ Number of peaks rep 1 E15.5 H3K4me3
 Number of peaks rep 2 E15.5 H3K4me3
 20529</code></pre>
 <p>H3K27ac</p>
-<pre class="bash"><code>echo &quot;Number of peaks rep 1 E10.5 H3K27ac&quot;
-less output/peaks/ENCFF213EBC_vs_ENCFF157KEH_E10.5_H3K27ac_macs2_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 2 E10.5 H3K27ac&quot;
-less output/peaks/ENCFF548BRR_vs_ENCFF825AVI_E10.5_H3K27ac_macs2_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 1 E11.5 H3K27ac&quot;
-less output/peaks/ENCFF512SFE_vs_ENCFF184CUE_E11.5_H3K27ac_macs2_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 2 E11.5 H3K27ac&quot;
-less output/peaks/ENCFF515PKL_vs_ENCFF376FGM_E11.5_H3K27ac_macs2_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 1 E12.5 H3K27ac&quot;
-less output/peaks/ENCFF011NFM_vs_ENCFF058AUT_E12.5_H3K27ac_macs2_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 2 E12.5 H3K27ac&quot;
-less output/peaks/ENCFF394TZN_vs_ENCFF203JQV_E12.5_H3K27ac_macs2_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 1 E13.5 H3K27ac&quot;
-less output/peaks/ENCFF194ORC_vs_ENCFF117QRC_E13.5_H3K27ac_macs2_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 2 E13.5 H3K27ac&quot;
-less output/peaks/ENCFF290ZNF_vs_ENCFF248PGK_E13.5_H3K27ac_macs2_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 1 E14.5 H3K27ac&quot;
-less output/peaks/ENCFF902HAR_vs_ENCFF002HZV_E14.5_H3K27ac_macs2_downSampled_peaks.narrowPeak | wc -l 
-echo &quot;Number of peaks rep 2 E14.5 H3K27ac&quot;
-less output/peaks/ENCFF327VAO_vs_ENCFF784ORI_E14.5_H3K27ac_macs2_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of peaks rep 1 E15.5 H3K27ac&quot;
-less output/peaks/ENCFF707WKL_vs_ENCFF182XFG_E15.5_H3K27ac_macs2_downSampled_peaks.narrowPeak | wc -l 
-echo &quot;Number of peaks rep 2 E15.5 H3K27ac&quot;
-less output/peaks/ENCFF584JFB_vs_ENCFF727QTS_E15.5_H3K27ac_macs2_downSampled_peaks.narrowPeak | wc -l</code></pre>
 <pre><code>Number of peaks rep 1 E10.5 H3K27ac
 22728
 Number of peaks rep 2 E10.5 H3K27ac
@@ -4217,47 +4144,270 @@ Number of peaks rep 2 E15.5 H3K27ac
 </tbody>
 </table>
 </div>
-<div id="consensus-peaksets-for-biological-replicates" class="section level3">
-<h3>Consensus peaksets for biological replicates</h3>
+<div id="number-of-peaks-for-all-reads" class="section level3">
+<h3>Number of peaks for all reads</h3>
+<div id="dunnart-1" class="section level4">
+<h4>Dunnart</h4>
+<pre><code>Number of peaks A3 H3K27ac dunnart default
+171653
+Number of peaks A2 H3K4me3 dunnart default
+118626
+Number of peaks B3 H3K27ac dunnart default
+173791
+Number of peaks B2 H3K4me3 dunnart default
+130443</code></pre>
+</div>
+<div id="mouse-1" class="section level4">
+<h4>Mouse</h4>
+<p>H3K4me3</p>
+<pre><code>Number of peaks rep 1 E10.5 H3K4me3
+38770
+Number of peaks rep 2 E10.5 H3K4me3
+28789
+Number of peaks rep 1 E11.5 H3K4me3
+19917
+Number of peaks rep 2 E11.5 H3K4me3
+19964
+Number of peaks rep 1 E12.5 H3K4me3
+24117
+Number of peaks rep 2 E12.5 H3K4me3
+23466
+Number of peaks rep 1 E13.5 H3K4me3
+24945
+Number of peaks rep 2 E13.5 H3K4me3
+25924
+Number of peaks rep 1 E14.5 H3K4me3
+24766
+Number of peaks rep 2 E14.5 H3K4me3
+23673
+Number of peaks rep 1 E15.5 H3K4me3
+24833
+Number of peaks rep 2 E15.5 H3K4me3
+25324</code></pre>
+<p>H3K27ac</p>
+<pre><code>Number of peaks rep 1 E10.5 H3K27ac
+54039
+Number of peaks rep 2 E10.5 H3K27ac
+74969
+Number of peaks rep 1 E11.5 H3K27ac
+11263
+Number of peaks rep 2 E11.5 H3K27ac
+12377
+Number of peaks rep 1 E12.5 H3K27ac
+40675
+Number of peaks rep 2 E12.5 H3K27ac
+35475
+Number of peaks rep 1 E13.5 H3K27ac
+59402
+Number of peaks rep 2 E13.5 H3K27ac
+51303
+Number of peaks rep 1 E14.5 H3K27ac
+43711
+Number of peaks rep 2 E14.5 H3K27ac
+48238
+Number of peaks rep 1 E15.5 H3K27ac
+55342
+Number of peaks rep 2 E15.5 H3K27ac
+55498</code></pre>
+</div>
+</div>
+<div id="fraction-of-reads-in-peaks-1" class="section level3">
+<h3>Fraction of reads in peaks</h3>
+<table>
+<caption>Table. Fraction of reads in peaks for replicate peak files</caption>
+<thead>
+<tr class="header">
+<th align="left">peak_file</th>
+<th align="left">total_reads</th>
+<th align="left">reads_in_peaks</th>
+<th align="left">fraction_reads_in_peaks</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">A-2_H3K4me3_vs_A-1_input</td>
+<td align="left">17808854</td>
+<td align="left">10471951</td>
+<td align="left">0.58801</td>
+</tr>
+<tr class="even">
+<td align="left">A-3_H3K27ac_vs_A-1_input</td>
+<td align="left">22850265</td>
+<td align="left">14183696</td>
+<td align="left">0.62072</td>
+</tr>
+<tr class="odd">
+<td align="left">B-2_H3K4me3_vs_B-1_input</td>
+<td align="left">21178590</td>
+<td align="left">13916104</td>
+<td align="left">0.65708</td>
+</tr>
+<tr class="even">
+<td align="left">B-3_H3K27ac_vs_B-1_input</td>
+<td align="left">21969730</td>
+<td align="left">13467294</td>
+<td align="left">0.61299</td>
+</tr>
+<tr class="odd">
+<td align="left">ENCFF011NFM_vs_ENCFF058AUT_E12.5_H3K27ac</td>
+<td align="left">28442356</td>
+<td align="left">2675730</td>
+<td align="left">0.09407</td>
+</tr>
+<tr class="even">
+<td align="left">ENCFF045IPK_vs_ENCFF825AVI_E10.5_H3K4me3</td>
+<td align="left">27327155</td>
+<td align="left">13567671</td>
+<td align="left">0.49649</td>
+</tr>
+<tr class="odd">
+<td align="left">ENCFF124TAB_vs_ENCFF248PGK_E13.5_H3K4me3</td>
+<td align="left">33020017</td>
+<td align="left">13569442</td>
+<td align="left">0.41094</td>
+</tr>
+<tr class="even">
+<td align="left">ENCFF124UYX_vs_ENCFF157KEH_E10.5_H3K4me3</td>
+<td align="left">47429840</td>
+<td align="left">21862533</td>
+<td align="left">0.46094</td>
+</tr>
+<tr class="odd">
+<td align="left">ENCFF182ZPF_vs_ENCFF203JQV_E12.5_H3K4me3</td>
+<td align="left">26489691</td>
+<td align="left">8656237</td>
+<td align="left">0.32677</td>
+</tr>
+<tr class="even">
+<td align="left">ENCFF194ORC_vs_ENCFF117QRC_E13.5_H3K27ac</td>
+<td align="left">23235076</td>
+<td align="left">3616341</td>
+<td align="left">0.15564</td>
+</tr>
+<tr class="odd">
+<td align="left">ENCFF213EBC_vs_ENCFF157KEH_E10.5_H3K27ac</td>
+<td align="left">61061524</td>
+<td align="left">7538967</td>
+<td align="left">0.12346</td>
+</tr>
+<tr class="even">
+<td align="left">ENCFF258KCR_vs_ENCFF727QTS_E15.5_H3K4me3</td>
+<td align="left">38278946</td>
+<td align="left">14037314</td>
+<td align="left">0.36671</td>
+</tr>
+<tr class="odd">
+<td align="left">ENCFF290ZNF_vs_ENCFF248PGK_E13.5_H3K27ac</td>
+<td align="left">26624266</td>
+<td align="left">3084867</td>
+<td align="left">0.11586</td>
+</tr>
+<tr class="even">
+<td align="left">ENCFF327VAO_vs_ENCFF784ORI_E14.5_H3K27ac</td>
+<td align="left">19228162</td>
+<td align="left">3063177</td>
+<td align="left">0.15930</td>
+</tr>
+<tr class="odd">
+<td align="left">ENCFF394TZN_vs_ENCFF203JQV_E12.5_H3K27ac</td>
+<td align="left">29223815</td>
+<td align="left">2261050</td>
+<td align="left">0.07737</td>
+</tr>
+<tr class="even">
+<td align="left">ENCFF401BKM_vs_ENCFF182XFG_E15.5_H3K4me3</td>
+<td align="left">29687861</td>
+<td align="left">12512070</td>
+<td align="left">0.42145</td>
+</tr>
+<tr class="odd">
+<td align="left">ENCFF485UDC_vs_ENCFF117QRC_E13.5_H3K4me3</td>
+<td align="left">33094082</td>
+<td align="left">13139082</td>
+<td align="left">0.39702</td>
+</tr>
+<tr class="even">
+<td align="left">ENCFF512SFE_vs_ENCFF184CUE_E11.5_H3K27ac</td>
+<td align="left">11879316</td>
+<td align="left">517673</td>
+<td align="left">0.04357</td>
+</tr>
+<tr class="odd">
+<td align="left">ENCFF515PKL_vs_ENCFF376FGM_E11.5_H3K27ac</td>
+<td align="left">11961286</td>
+<td align="left">521278</td>
+<td align="left">0.04358</td>
+</tr>
+<tr class="even">
+<td align="left">ENCFF548BRR_vs_ENCFF825AVI_E10.5_H3K27ac</td>
+<td align="left">38069875</td>
+<td align="left">7443943</td>
+<td align="left">0.19553</td>
+</tr>
+<tr class="odd">
+<td align="left">ENCFF584JFB_vs_ENCFF727QTS_E15.5_H3K27ac</td>
+<td align="left">35551034</td>
+<td align="left">3934777</td>
+<td align="left">0.11067</td>
+</tr>
+<tr class="even">
+<td align="left">ENCFF665QBJ_vs_ENCFF002HZV_E14.5_H3K4me3</td>
+<td align="left">19804325</td>
+<td align="left">10801460</td>
+<td align="left">0.54540</td>
+</tr>
+<tr class="odd">
+<td align="left">ENCFF707WKL_vs_ENCFF182XFG_E15.5_H3K27ac</td>
+<td align="left">27522173</td>
+<td align="left">3230227</td>
+<td align="left">0.11736</td>
+</tr>
+<tr class="even">
+<td align="left">ENCFF717QDV_vs_ENCFF376FGM_E11.5_H3K4me3</td>
+<td align="left">13504654</td>
+<td align="left">4186688</td>
+<td align="left">0.31001</td>
+</tr>
+<tr class="odd">
+<td align="left">ENCFF724DMU_vs_ENCFF784ORI_E14.5_H3K4me3</td>
+<td align="left">17278836</td>
+<td align="left">8600974</td>
+<td align="left">0.49777</td>
+</tr>
+<tr class="even">
+<td align="left">ENCFF760QYZ_vs_ENCFF184CUE_E11.5_H3K4me3</td>
+<td align="left">16515484</td>
+<td align="left">5188196</td>
+<td align="left">0.31414</td>
+</tr>
+<tr class="odd">
+<td align="left">ENCFF902HAR_vs_ENCFF002HZV_E14.5_H3K27ac</td>
+<td align="left">15203030</td>
+<td align="left">2106872</td>
+<td align="left">0.13858</td>
+</tr>
+<tr class="even">
+<td align="left">ENCFF941QJZ_vs_ENCFF058AUT_E12.5_H3K4me3</td>
+<td align="left">26459778</td>
+<td align="left">8069856</td>
+<td align="left">0.30498</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="consensus-peaksets-for-biological-replicates-normalised-read-count" class="section level3">
+<h3>Consensus peaksets for biological replicates (normalised read count)</h3>
 <div id="number-of-consensus-peaks" class="section level4">
 <h4>Number of consensus peaks</h4>
-<div id="dunnart-1" class="section level5">
+<div id="dunnart-2" class="section level5">
 <h5>Dunnart</h5>
-<pre class="bash"><code>echo &quot;Number of consensus H3K4me3 dunnart peaks&quot;
-less output/peaks/H3K4me3_overlap_default_dunnart_downSampled_peaks.narrowPeak | wc -l
-echo &quot;Number of consensus H3K27ac dunnart peaks&quot;
-less output/peaks/H3K27ac_overlap_default_dunnart_downSampled_peaks.narrowPeak | wc -l</code></pre>
 <pre><code>Number of consensus H3K4me3 dunnart peaks
 27902
 Number of consensus H3K27ac dunnart peaks
 42072</code></pre>
 </div>
-<div id="mouse-1" class="section level5">
+<div id="mouse-2" class="section level5">
 <h5>Mouse</h5>
-<pre class="bash"><code>echo &quot;Number of consensus H3K4me3 mouse E10.5 peaks&quot;
-less output/peaks/H3K4me3_E10.5_overlap.narrowPeak | wc -l
-echo &quot;Number of consensus H3K4me3 mouse E11.5 peaks&quot;
-less output/peaks/H3K4me3_E11.5_overlap.narrowPeak | wc -l
-echo &quot;Number of consensus H3K4me3 mouse E12.5 peaks&quot;
-less output/peaks/H3K4me3_E12.5_overlap.narrowPeak | wc -l
-echo &quot;Number of consensus H3K4me3 mouse E13.5 peaks&quot;
-less output/peaks/H3K4me3_E13.5_overlap.narrowPeak | wc -l
-echo &quot;Number of consensus H3K4me3 mouse E14.5 peaks&quot;
-less output/peaks/H3K4me3_E14.5_overlap.narrowPeak | wc -l
-echo &quot;Number of consensus H3K4me3 mouse E15.5 peaks&quot;
-less output/peaks/H3K4me3_E15.5_overlap.narrowPeak | wc -l
-echo &quot;Number of consensus H3K27ac mouse E10.5 peaks&quot;
-less output/peaks/H3K27ac_E10.5_overlap.narrowPeak | wc -l
-echo &quot;Number of consensus H3K27ac mouse E11.5 peaks&quot;
-less output/peaks/H3K27ac_E11.5_overlap.narrowPeak | wc -l
-echo &quot;Number of consensus H3K27ac mouse E12.5 peaks&quot;
-less output/peaks/H3K27ac_E12.5_overlap.narrowPeak | wc -l
-echo &quot;Number of consensus H3K27ac mouse E13.5 peaks&quot;
-less output/peaks/H3K27ac_E13.5_overlap.narrowPeak | wc -l
-echo &quot;Number of consensus H3K27ac mouse E14.5 peaks&quot;
-less output/peaks/H3K27ac_E14.5_overlap.narrowPeak | wc -l
-echo &quot;Number of consensus H3K27ac mouse E15.5 peaks&quot;
-less output/peaks/H3K27ac_E15.5_overlap.narrowPeak | wc -l</code></pre>
 <pre><code>Number of consensus H3K4me3 mouse E10.5 peaks
 18828
 Number of consensus H3K4me3 mouse E11.5 peaks
@@ -4279,12 +4429,58 @@ Number of consensus H3K27ac mouse E12.5 peaks
 Number of consensus H3K27ac mouse E13.5 peaks
 16038
 Number of consensus H3K27ac mouse E14.5 peaks
-14055
+output/peaks/H3K27ac_E14.5_downSampled_overlap.narrowPeak: No such file or directory
+0
 Number of consensus H3K27ac mouse E15.5 peaks
-9990</code></pre>
+output/peaks/H3K27ac_E15.5_downSampled_overlap.narrowPeak: No such file or directory
+0</code></pre>
 </div>
 </div>
 <div id="fraction-of-reads-in-peaks-for-consensus-peaks" class="section level4">
+<h4>Fraction of reads in peaks for consensus peaks</h4>
+</div>
+</div>
+<div id="consensus-peaksets-for-biological-replicates-all-reads" class="section level3">
+<h3>Consensus peaksets for biological replicates (all reads)</h3>
+<div id="number-of-consensus-peaks-1" class="section level4">
+<h4>Number of consensus peaks</h4>
+<div id="dunnart-3" class="section level5">
+<h5>Dunnart</h5>
+<pre><code>Number of consensus H3K4me3 dunnart peaks
+80989
+Number of consensus H3K27ac dunnart peaks
+121281</code></pre>
+<p>H3K4me3_overlap_default.narrowPeak</p>
+</div>
+<div id="mouse-3" class="section level5">
+<h5>Mouse</h5>
+<pre><code>Number of consensus H3K4me3 mouse E10.5 peaks
+24073
+Number of consensus H3K4me3 mouse E11.5 peaks
+16697
+Number of consensus H3K4me3 mouse E12.5 peaks
+19604
+Number of consensus H3K4me3 mouse E13.5 peaks
+21398
+Number of consensus H3K4me3 mouse E14.5 peaks
+20249
+Number of consensus H3K4me3 mouse E15.5 peaks
+21112
+Number of consensus H3K27ac mouse E10.5 peaks
+34963
+Number of consensus H3K27ac mouse E11.5 peaks
+7510
+Number of consensus H3K27ac mouse E12.5 peaks
+21762
+Number of consensus H3K27ac mouse E13.5 peaks
+30872
+Number of consensus H3K27ac mouse E14.5 peaks
+24974
+Number of consensus H3K27ac mouse E15.5 peaks
+31591</code></pre>
+</div>
+</div>
+<div id="fraction-of-reads-in-peaks-for-consensus-peaks-1" class="section level4">
 <h4>Fraction of reads in peaks for consensus peaks</h4>
 <table>
 <caption>Table. Fraction of reads in peaks for replicate peak files</caption>
@@ -4299,87 +4495,87 @@ Number of consensus H3K27ac mouse E15.5 peaks
 <tbody>
 <tr class="odd">
 <td align="left">H3K27ac_E10.5</td>
-<td align="left">19999195</td>
-<td align="left">2061749</td>
-<td align="left">0.10309</td>
+<td align="left">99131399</td>
+<td align="left">15295234</td>
+<td align="left">0.15429</td>
 </tr>
 <tr class="even">
 <td align="left">H3K27ac_E11.5</td>
-<td align="left">20000327</td>
-<td align="left">838740</td>
-<td align="left">0.04193</td>
+<td align="left">23840602</td>
+<td align="left">1073303</td>
+<td align="left">0.04501</td>
 </tr>
 <tr class="odd">
 <td align="left">H3K27ac_E12.5</td>
-<td align="left">20002478</td>
-<td align="left">983689</td>
-<td align="left">0.04917</td>
+<td align="left">57666171</td>
+<td align="left">4934545</td>
+<td align="left">0.08557</td>
 </tr>
 <tr class="even">
 <td align="left">H3K27ac_E13.5</td>
-<td align="left">19996358</td>
-<td align="left">1878903</td>
-<td align="left">0.09396</td>
+<td align="left">49859342</td>
+<td align="left">6672875</td>
+<td align="left">0.13383</td>
 </tr>
 <tr class="odd">
 <td align="left">H3K27ac_E14.5</td>
-<td align="left">20003094</td>
-<td align="left">2189295</td>
-<td align="left">0.10944</td>
+<td align="left">34431192</td>
+<td align="left">5080479</td>
+<td align="left">0.14755</td>
 </tr>
 <tr class="even">
 <td align="left">H3K27ac_E15.5</td>
-<td align="left">19997538</td>
-<td align="left">1159938</td>
-<td align="left">0.05800</td>
+<td align="left">63073207</td>
+<td align="left">7211372</td>
+<td align="left">0.11433</td>
 </tr>
 <tr class="odd">
 <td align="left">H3K27ac_dunnart</td>
-<td align="left">20003354</td>
-<td align="left">8428014</td>
-<td align="left">0.42133</td>
+<td align="left">89639990</td>
+<td align="left">54018328</td>
+<td align="left">0.60261</td>
 </tr>
 <tr class="even">
 <td align="left">H3K4me3_E10.5</td>
-<td align="left">20006605</td>
-<td align="left">9098919</td>
-<td align="left">0.45479</td>
+<td align="left">74756995</td>
+<td align="left">35466948</td>
+<td align="left">0.47442</td>
 </tr>
 <tr class="odd">
 <td align="left">H3K4me3_E11.5</td>
-<td align="left">19997452</td>
-<td align="left">6391203</td>
-<td align="left">0.31960</td>
+<td align="left">30020138</td>
+<td align="left">9573253</td>
+<td align="left">0.31889</td>
 </tr>
 <tr class="even">
 <td align="left">H3K4me3_E12.5</td>
-<td align="left">19993398</td>
-<td align="left">6119588</td>
-<td align="left">0.30608</td>
+<td align="left">52949469</td>
+<td align="left">16879524</td>
+<td align="left">0.31878</td>
 </tr>
 <tr class="odd">
 <td align="left">H3K4me3_E13.5</td>
-<td align="left">19996596</td>
-<td align="left">7844738</td>
-<td align="left">0.39230</td>
+<td align="left">66114099</td>
+<td align="left">26914663</td>
+<td align="left">0.40709</td>
 </tr>
 <tr class="even">
 <td align="left">H3K4me3_E14.5</td>
-<td align="left">20000169</td>
-<td align="left">10256703</td>
-<td align="left">0.51283</td>
+<td align="left">37083161</td>
+<td align="left">19547416</td>
+<td align="left">0.52712</td>
 </tr>
 <tr class="odd">
 <td align="left">H3K4me3_E15.5</td>
-<td align="left">20004454</td>
-<td align="left">7568867</td>
-<td align="left">0.37835</td>
+<td align="left">67966807</td>
+<td align="left">26760286</td>
+<td align="left">0.39372</td>
 </tr>
 <tr class="even">
 <td align="left">H3K4me3_dunnart</td>
-<td align="left">19998340</td>
-<td align="left">9632469</td>
-<td align="left">0.48166</td>
+<td align="left">77974888</td>
+<td align="left">48150782</td>
+<td align="left">0.61751</td>
 </tr>
 </tbody>
 </table>
@@ -4396,10 +4592,7 @@ bedtools intersect -v -a output/peaks/H3K4me3_E11.5_overlap.narrowPeak -b output
 bedtools intersect -v -a output/peaks/H3K4me3_E12.5_overlap.narrowPeak -b output/peaks/H3K27ac_E12.5_overlap.narrowPeak &gt; output/peaks/H3K4me3_E12.5_only.narrowPeak
 bedtools intersect -v -a output/peaks/H3K4me3_E13.5_overlap.narrowPeak -b output/peaks/H3K27ac_E13.5_overlap.narrowPeak &gt; output/peaks/H3K4me3_E13.5_only.narrowPeak
 bedtools intersect -v -a output/peaks/H3K4me3_E14.5_overlap.narrowPeak -b output/peaks/H3K27ac_E14.5_overlap.narrowPeak &gt; output/peaks/H3K4me3_E14.5_only.narrowPeak
-bedtools intersect -v -a output/peaks/H3K4me3_E15.5_overlap.narrowPeak -b output/peaks/H3K27ac_E15.5_overlap.narrowPeak &gt; output/peaks/H3K4me3_E15.5_only.narrowPeak
-
-
-bedtools intersect -v -a output/peaks/H3K4me3_overlap_default_dunnart_downSampled_peaks.narrowPeak -b output/peaks/H3K27ac_overlap_default_dunnart_downSampled_peaks.narrowPeak &gt; output/peaks/H3K4me3_only_dunnart_downSampled.narrowPeak</code></pre>
+bedtools intersect -v -a output/peaks/H3K4me3_E15.5_overlap.narrowPeak -b output/peaks/H3K27ac_E15.5_overlap.narrowPeak &gt; output/peaks/H3K4me3_E15.5_only.narrowPeak</code></pre>
 <p>Find unique H3K27ac sites (i.e. peaks that don’t overlap with H3K4me3):</p>
 <pre class="bash"><code>bedtools intersect -v -a output/peaks/H3K27ac_E10.5_overlap.narrowPeak -b output/peaks/H3K4me3_E10.5_overlap.narrowPeak &gt; output/peaks/H3K27ac_E10.5_only.narrowPeak
 bedtools intersect -v -a output/peaks/H3K27ac_E11.5_overlap.narrowPeak -b output/peaks/H3K4me3_E11.5_overlap.narrowPeak &gt; output/peaks/H3K27ac_E11.5_only.narrowPeak
@@ -4407,9 +4600,7 @@ bedtools intersect -v -a output/peaks/H3K27ac_E12.5_overlap.narrowPeak -b output
 bedtools intersect -v -a output/peaks/H3K27ac_E13.5_overlap.narrowPeak -b output/peaks/H3K4me3_E13.5_overlap.narrowPeak &gt; output/peaks/H3K27ac_E13.5_only.narrowPeak
 bedtools intersect -v -a output/peaks/H3K27ac_E14.5_overlap.narrowPeak -b output/peaks/H3K4me3_E14.5_overlap.narrowPeak &gt; output/peaks/H3K27ac_E14.5_only.narrowPeak
 bedtools intersect -v -a output/peaks/H3K27ac_E15.5_overlap.narrowPeak -b output/peaks/H3K4me3_E15.5_overlap.narrowPeak &gt; output/peaks/H3K27ac_E15.5_only.narrowPeak
-
-
-bedtools intersect -v -a output/peaks/H3K27ac_overlap_default_dunnart_downSampled_peaks.narrowPeak -b output/peaks/H3K4me3_overlap_default_dunnart_downSampled_peaks.narrowPeak &gt; output/peaks/H3K27ac_only_dunnart_downSampled.narrowPeak</code></pre>
+</code></pre>
 <p>Find peaks common between H3K27ac &amp; H3K4me3 with a reciprocal overlap of at least 50%.</p>
 <pre class="bash"><code>bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_E10.5_overlap.narrowPeak -b output/peaks/H3K27ac_E10.5_overlap.narrowPeak &gt; output/peaks/H3K4me3_and_H3K27ac_E10.5.narrowPeak
 bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_E11.5_overlap.narrowPeak -b output/peaks/H3K27ac_E11.5_overlap.narrowPeak &gt; output/peaks/H3K4me3_and_H3K27ac_E11.5.narrowPeak
@@ -4417,8 +4608,7 @@ bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_E12.5_overlap.narrowPeak -b
 bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_E13.5_overlap.narrowPeak -b output/peaks/H3K27ac_E13.5_overlap.narrowPeak &gt; output/peaks/H3K4me3_and_H3K27ac_E13.5.narrowPeak
 bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_E14.5_overlap.narrowPeak -b output/peaks/H3K27ac_E14.5_overlap.narrowPeak &gt; output/peaks/H3K4me3_and_H3K27ac_E14.5.narrowPeak
 bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_E15.5_overlap.narrowPeak -b output/peaks/H3K27ac_E15.5_overlap.narrowPeak &gt; output/peaks/H3K4me3_and_H3K27ac_E15.5.narrowPeak
-
-bedtools intersect -f 0.5 -r -a output/peaks/H3K4me3_overlap_default_dunnart_downSampled_peaks.narrowPeak -b output/peaks/H3K27ac_overlap_default_dunnart_downSampled_peaks.narrowPeak &gt; output/peaks/H3K4me3_H3K27ac_dunnart_downSampled.narrowPeak</code></pre>
+</code></pre>
 <p>Combine peak files</p>
 <pre class="bash"><code>cat output/peaks/H3K4me3_E10.5_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac_E10.5.narrowPeak | sort -k 4,4 &gt; output/peaks/E10.5_promoter_peaks.narrowPeak
 cat output/peaks/H3K4me3_E11.5_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac_E11.5.narrowPeak | sort -k 4,4 &gt; output/peaks/E11.5_promoter_peaks.narrowPeak
@@ -4427,16 +4617,12 @@ cat output/peaks/H3K4me3_E13.5_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac_
 cat output/peaks/H3K4me3_E14.5_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac_E14.5.narrowPeak | sort -k 4,4 &gt; output/peaks/E14.5_promoter_peaks.narrowPeak
 cat output/peaks/H3K4me3_E15.5_only.narrowPeak output/peaks/H3K4me3_and_H3K27ac_E15.5.narrowPeak | sort -k 4,4 &gt; output/peaks/E15.5_promoter_peaks.narrowPeak
 
-cat output/peaks/H3K4me3_only_dunnart_downSampled.narrowPeak output/peaks/H3K4me3_H3K27ac_dunnart_downSampled.narrowPeak| sort -k 4,4 &gt; output/peaks/dunnart_downSampled_promoter_peaks.narrowPeak
-
-
 cat output/peaks/H3K27ac_E10.5_only.narrowPeak | sort -k 4,4 &gt; output/peaks/E10.5_enhancer_peaks.narrowPeak
 cat output/peaks/H3K27ac_E11.5_only.narrowPeak | sort -k 4,4 &gt; output/peaks/E11.5_enhancer_peaks.narrowPeak
 cat output/peaks/H3K27ac_E12.5_only.narrowPeak | sort -k 4,4 &gt; output/peaks/E12.5_enhancer_peaks.narrowPeak
 cat output/peaks/H3K27ac_E13.5_only.narrowPeak | sort -k 4,4 &gt; output/peaks/E13.5_enhancer_peaks.narrowPeak
 cat output/peaks/H3K27ac_E14.5_only.narrowPeak | sort -k 4,4 &gt; output/peaks/E14.5_enhancer_peaks.narrowPeak
-cat output/peaks/H3K27ac_E15.5_only.narrowPeak | sort -k 4,4 &gt; output/peaks/E15.5_enhancer_peaks.narrowPeak
-cat output/peaks/H3K27ac_only_dunnart_downSampled.narrowPeak | sort -k 4,4 &gt; output/peaks/dunnart_downSampled_enhancer_peaks.narrowPeak</code></pre>
+cat output/peaks/H3K27ac_E15.5_only.narrowPeak | sort -k 4,4 &gt; output/peaks/E15.5_enhancer_peaks.narrowPeak</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -4469,7 +4655,7 @@ other attached packages:
  [9] stringr_1.4.0     dplyr_1.0.8       data.table_1.14.0 workflowr_1.7.0  
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.8        lubridate_1.7.10  getPass_0.2-2     ps_1.6.0         
+ [1] Rcpp_1.0.8.3      lubridate_1.7.10  getPass_0.2-2     ps_1.6.0         
  [5] assertthat_0.2.1  rprojroot_2.0.2   digest_0.6.27     utf8_1.2.1       
  [9] R6_2.5.0          cellranger_1.1.0  backports_1.2.1   reprex_2.0.0     
 [13] evaluate_0.14     highr_0.9         httr_1.4.2        pillar_1.6.1     
@@ -4500,6 +4686,8 @@ footer is added to webpages before the MathJax javascript. -->
     "HTML-CSS": { availableFonts: ["TeX"] }
   });
 </script>
+
+
 
 
 </div>
