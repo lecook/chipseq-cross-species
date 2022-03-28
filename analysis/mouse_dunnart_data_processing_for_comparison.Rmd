@@ -111,12 +111,11 @@ This tool samples indexed BAM files and plots a profile of cumulative read cover
 
 It determines how well the signal in the ChIP-seq sample can be differentiated from the background distribution of reads in the control sample.
 
-An ideal input with perfect uniform distribution of reads along the genome (i.e. without enrichments in open chromatin etc.) and infinite sequencing coverage should generate a straight diagonal line. A very specific and strong ChIP enrichment will be indicated by a prominent and steep rise of the cumulative sum towards the highest rank. This means that a big chunk of reads from the ChIP sample is located in few bins which corresponds to high, narrow enrichments typically seen for transcription factors.
+An ideal input with perfect uniform distribution of reads along the genome (i.e. without enrichment in open chromatin etc.) and infinite sequencing coverage should generate a straight diagonal line. A very specific and strong ChIP enrichment will be indicated by a prominent and steep rise of the cumulative sum towards the highest rank. This means that a big chunk of reads from the ChIP sample is located in few bins which corresponds to high, narrow enrichments typically seen for transcription factors.
 
 ![Fingerprint plot for dunnart downsampled BAM files](multiBAM_fingerprint.pdf){height=500px width=600px}
 ![Fingerprint plot for mouse downsampled BAM files for H3K4me3](H3K4me3_multiBAM_fingerprint_mouse.pdf){height=500px width=600px}
 ![Fingerprint plot for mouse downsampled BAM files for H3K27ac](H3K27ac_multiBAM_fingerprint_mouse.pdf){height=500px width=600px}
-
 
 ## Cross-correlation analysis
 Information from: https://docs.google.com/document/d/1lG_Rd7fnYgRpSIqrIfuVlAz2dW1VaSQThzk836Db99c/edit
