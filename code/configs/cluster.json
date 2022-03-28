@@ -8,7 +8,7 @@
         "email" : "lecook@student.unimelb.edu.au",
         "EmailNotice": "Y",
         "account": "punim0586",
-        "partition": "mig"
+	"partition": "mig"
     },
     "fastqc":
     {
