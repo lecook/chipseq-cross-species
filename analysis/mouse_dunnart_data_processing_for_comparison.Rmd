@@ -95,19 +95,6 @@ setcolorder(stats, c("file", "TotalReadPairs", "DistinctReadPairs",
 kable(stats, caption="Table. Library complexity metrics")
 ```
 
-## Normalise dunnart and mouse BAM files to 10M reads 
-
-This is so we can compare to mouse peaks.
-
-Based on https://davemcg.github.io/post/easy-bam-downsampling/ script for doing this. 
-
-Run script in the directory with the files you want to subsample.
-
-```{bash eval=FALSE}
-cd output/bam_files/
-bash subsample.sh
-```
-
 ## Read QC with deepTools
 
 ### Plot correlation between BAM files
@@ -115,7 +102,7 @@ bash subsample.sh
 
 This helps to determine whether the different sample types can be separated, i.e., samples of different conditions are expected to be more dissimilar to each other than replicates within the same condition.
 
-![Pearson correlation dunnart downsampled BAM files](pearsoncor_multibamsum_dunnart_downSampled.pdf){height=500px width=600px}
+![Pearson correlation dunnart BAM files](pearsoncor_multibamsum.pdf){height=500px width=600px}
 ![Pearson correlation mouse downsampled BAM files for H3K4me3](H3K4me3_pearsoncor_multibamsum_mouse.pdf){height=500px width=600px}
 ![Pearson correlation mouse downsampled BAM files for H3K27ac](H3K27ac_pearsoncor_multibamsum_mouse.pdf){height=500px width=600px}
 
@@ -126,7 +113,7 @@ It determines how well the signal in the ChIP-seq sample can be differentiated f
 
 An ideal input with perfect uniform distribution of reads along the genome (i.e. without enrichments in open chromatin etc.) and infinite sequencing coverage should generate a straight diagonal line. A very specific and strong ChIP enrichment will be indicated by a prominent and steep rise of the cumulative sum towards the highest rank. This means that a big chunk of reads from the ChIP sample is located in few bins which corresponds to high, narrow enrichments typically seen for transcription factors.
 
-![Fingerprint plot for dunnart downsampled BAM files](multiBAM_fingerprint_dunnart_downSampled.pdf){height=500px width=600px}
+![Fingerprint plot for dunnart downsampled BAM files](multiBAM_fingerprint.pdf){height=500px width=600px}
 ![Fingerprint plot for mouse downsampled BAM files for H3K4me3](H3K4me3_multiBAM_fingerprint_mouse.pdf){height=500px width=600px}
 ![Fingerprint plot for mouse downsampled BAM files for H3K27ac](H3K27ac_multiBAM_fingerprint_mouse.pdf){height=500px width=600px}
 
@@ -466,7 +453,6 @@ echo "Number of consensus H3K27ac dunnart peaks"
 less output/peaks/H3K27ac_overlap_default.narrowPeak | wc -l
 ```
 
-H3K4me3_overlap_default.narrowPeak
 
 ##### Mouse
 ```{bash echo = FALSE}
