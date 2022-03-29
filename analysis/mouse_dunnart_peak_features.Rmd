@@ -227,7 +227,7 @@ dev.off()
 ```
 
 
-### Plot peak intensity
+## Plot peak intensity
 ```{r}
 p = ggplot(data, aes(x=factor(group), y=log10(V7), fill = cre)) + geom_violin(aes(fill=factor(cre)),
               position = position_dodge(width=0.8)) + 
