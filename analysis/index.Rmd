@@ -26,9 +26,10 @@ This project involves a number of analysis for the generation of ChIP-seq data f
 
     + Outlines read mapping, filtering, QC and peak calling.
 
-* [Normalised mouse and dunnart read pre-processing](mouse_dunnart_data_processing_for_comparison.html)
+* [Mouse read pre-processing](mouse_dunnart_data_processing_for_comparison.html)
 
-    + Outlines filtering aligned reads from ENCODE, QC and peak calling.
+    + Outlines aligned reads from ENCODE, QC and peak calling.
+    + Also plots and tabulates QC for mouse and dunnart to compare
 
 ## Data analyses
 
