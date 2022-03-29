@@ -677,7 +677,7 @@ done
 
 ## Plot CpG and GC content across groups
 
-```{r eval = FALSE}
+```{r}
 
 files =list.files(annot_dir, pattern= "1_peaks_homerAnnot.txt|dunnart_promoter_peaks_homerAnnot.txt|enhancer_peaks_homerAnnot.txt|enhancers_homerAnnot.txt", full.names=T) # create list of files in directory
 filenames <- sub('\\_homerAnnot.txt$', '', basename(files)) 
@@ -727,7 +727,7 @@ p <- ggplot(data, aes(factor(group), y = `CpG%`)) +
   scale_fill_manual(values = c("#f1daa2", "#7a4078"))
 
 p + ggtitle("CpG content for enhancer-associated and high-confidence promoter-associated peaks")
-    
+
 pdf(paste0(plot_dir, "mouse_dunnart_clustered_peak_CpG_content.pdf"), width=10, height = 6)
 print(p + font)
 dev.off()
