@@ -476,16 +476,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree96fb4c496c8b1e798179bb386c4945fd1404246atargetblank96fb4c4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/96fb4c496c8b1e798179bb386c4945fd1404246a" target="_blank">96fb4c4</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreeaaf8b225e4b23e553e24b1642379124b4f0fc4bftargetblankaaf8b22a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/aaf8b225e4b23e553e24b1642379124b4f0fc4bf" target="_blank">aaf8b22</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree96fb4c496c8b1e798179bb386c4945fd1404246atargetblank96fb4c4a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreeaaf8b225e4b23e553e24b1642379124b4f0fc4bftargetblankaaf8b22a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/96fb4c496c8b1e798179bb386c4945fd1404246a" target="_blank">96fb4c4</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/aaf8b225e4b23e553e24b1642379124b4f0fc4bf" target="_blank">aaf8b22</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -1019,6 +1019,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/aaf8b225e4b23e553e24b1642379124b4f0fc4bf/analysis/peak_level_comparisons.Rmd" target="_blank">aaf8b22</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-30
+</td>
+<td>
+wflow_publish(“analysis/peak_level_comparisons.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/984b4939b7e22676f1ec415855513b79ced885d4/docs/peak_level_comparisons.html" target="_blank">984b493</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-30
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/lecook/chipseq-cross-species/blob/96fb4c496c8b1e798179bb386c4945fd1404246a/analysis/peak_level_comparisons.Rmd" target="_blank">96fb4c4</a>
 </td>
 <td>
@@ -1143,25 +1177,8 @@ first commit
 <div id="summary-tables" class="section level1">
 <h1>Summary tables</h1>
 <p>After the tables is all the code to compare peaks between species using liftOver and bedtools. It is a lot of repetitive code that I could revise but it was easiest to track it all this way for now. The summary tables show the number of peaks for the different overlaps.</p>
-<div id="section" class="section level2">
-<h2></h2>
-</div>
-</div>
-<div id="liftover-of-peak-coordinates-between-species" class="section level1">
-<h1>LiftOver of peak coordinates between species</h1>
-<div id="all-peaks-with-no-peak-width-filtering" class="section level2">
-<h2>All peaks with no peak width filtering</h2>
-<pre class="bash"><code>## Load modules
-conda activate chip
-module load ucsc
-
-## Extract peak coordinates
-less output/peaks/dunnart_enhancer_peaks.narrowPeak | awk &#39;{print $1,$2,$3}&#39; &gt; output/peaks/dunnart_enhancer_peaks_coord.bed
-less output/filtered_peaks/cluster1_dunnart_promoter_peaks.narrowPeak | awk &#39;{print $1,$2,$3}&#39; &gt; output/filtered_peaks/dunnart_promoter_peaks_coord.bed
-
-## LiftOver peak coordinates from dunnart to mouse
-liftOver output/peaks/dunnart_enhancer_peaks_coord.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_smiCraTOmm10.bed output/liftover/dunnart_enhancer_smiCraTOmm10_unmapped.bed
-liftOver output/filtered_peaks/dunnart_promoter_peaks_coord.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_smiCraTOmm10.bed output/liftover/dunnart_promoter_smiCraTOmm10_unmapped.bed</code></pre>
+<div id="number-of-peaks-lifted-over-with-no-width-filtering" class="section level2">
+<h2>Number of peaks lifted over with no width filtering</h2>
 <pre class="r"><code>files &lt;- list.files(liftover_dir, pattern = &quot;dunnart_enhancer_smiCraTOmm10.bed|dunnart_promoter_smiCraTOmm10.bed&quot;, full.names = T)
 files &lt;- as.list(files)
 data &lt;- lapply(files, function(x) data.table::fread(x, header = FALSE, sep = &quot;\t&quot;, quote = &quot;&quot;, na.strings = c(&quot;&quot;, &quot;NA&quot;)))
@@ -1184,6 +1201,23 @@ kable(df, caption=&quot;Table. Number of peaks lifted over from dunnart to mouse
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<div id="liftover-of-peak-coordinates-between-species" class="section level1">
+<h1>LiftOver of peak coordinates between species</h1>
+<div id="all-peaks-with-no-peak-width-filtering" class="section level2">
+<h2>All peaks with no peak width filtering</h2>
+<pre class="bash"><code>## Load modules
+conda activate chip
+module load ucsc
+
+## Extract peak coordinates
+less output/peaks/dunnart_enhancer_peaks.narrowPeak | awk &#39;{print $1,$2,$3}&#39; &gt; output/peaks/dunnart_enhancer_peaks_coord.bed
+less output/filtered_peaks/cluster1_dunnart_promoter_peaks.narrowPeak | awk &#39;{print $1,$2,$3}&#39; &gt; output/filtered_peaks/dunnart_promoter_peaks_coord.bed
+
+## LiftOver peak coordinates from dunnart to mouse
+liftOver output/peaks/dunnart_enhancer_peaks_coord.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_smiCraTOmm10.bed output/liftover/dunnart_enhancer_smiCraTOmm10_unmapped.bed
+liftOver output/filtered_peaks/dunnart_promoter_peaks_coord.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_smiCraTOmm10.bed output/liftover/dunnart_promoter_smiCraTOmm10_unmapped.bed</code></pre>
 <!-- # Import output files in R -->
 <!-- enh = fread("enhancers/dunnart.enhancer_smiCraTOmm10.bed") -->
 <!-- prom = fread("promoters/clustered/dunnart.promoter_smiCraTOmm10.bed") -->
