@@ -1,0 +1,1902 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="lecook" />
+
+<meta name="date" content="2022-02-23" />
+
+<title>Cross-species peak level comparisons</title>
+
+<script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">chipseq_cross_species</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/lecook/chipseq-cross-species">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Cross-species peak level comparisons</h1>
+<h4 class="author">lecook</h4>
+<h4 class="date">2022-02-23</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2022-03-30
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>chipseq-cross-species/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220209code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20220209)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20220209code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20220209)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree6203f8e0193d08cb9a0472cf3813a0a16c5c4af7targetblank6203f8ea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/6203f8e0193d08cb9a0472cf3813a0a16c5c4af7" target="_blank">6203f8e</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree6203f8e0193d08cb9a0472cf3813a0a16c5c4af7targetblank6203f8ea" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/6203f8e0193d08cb9a0472cf3813a0a16c5c4af7" target="_blank">6203f8e</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .RData
+    Ignored:    .Rhistory
+    Ignored:    analysis/.RData
+    Ignored:    analysis/.Rhistory
+    Ignored:    data/genomic_data/
+    Ignored:    data/geo_submission/
+    Ignored:    output/annotations/
+    Ignored:    output/bam_files/
+    Ignored:    output/filtered_peaks/
+    Ignored:    output/logs/
+    Ignored:    output/peaks/
+    Ignored:    output/plots/
+    Ignored:    output/qc/A-1_input.SeqDepthNorm.bw
+    Ignored:    output/qc/A-1_input.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/A-1_input.ccurve.txt
+    Ignored:    output/qc/A-1_input.extrap.txt
+    Ignored:    output/qc/A-1_input_R1_trimmed.fastq.gz
+    Ignored:    output/qc/A-1_input_est_lib_complex_metrics.txt
+    Ignored:    output/qc/A-2_H3K4me3.SeqDepthNorm.bw
+    Ignored:    output/qc/A-2_H3K4me3.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/A-2_H3K4me3.ccurve.txt
+    Ignored:    output/qc/A-2_H3K4me3.extrap.txt
+    Ignored:    output/qc/A-2_H3K4me3_R1_trimmed.fastq.gz
+    Ignored:    output/qc/A-2_H3K4me3_est_lib_complex_metrics.txt
+    Ignored:    output/qc/A-2_H3K4me3_vs_A-1_input.frip_default.txt
+    Ignored:    output/qc/A-2_H3K4me3_vs_A-1_input.frip_default_dunnart_downSampled.txt
+    Ignored:    output/qc/A-2_H3K4me3_vs_A-1_input.frip_p0.01_dunnart_downSampled.txt
+    Ignored:    output/qc/A-3_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/A-3_H3K27ac.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/A-3_H3K27ac.ccurve.txt
+    Ignored:    output/qc/A-3_H3K27ac.extrap.txt
+    Ignored:    output/qc/A-3_H3K27ac_R1_trimmed.fastq.gz
+    Ignored:    output/qc/A-3_H3K27ac_est_lib_complex_metrics.txt
+    Ignored:    output/qc/A-3_H3K27ac_vs_A-1_input.frip_default.txt
+    Ignored:    output/qc/A-3_H3K27ac_vs_A-1_input.frip_default_dunnart_downSampled.txt
+    Ignored:    output/qc/A-3_H3K27ac_vs_A-1_input.frip_p0.01_dunnart_downSampled.txt
+    Ignored:    output/qc/B-1_input.SeqDepthNorm.bw
+    Ignored:    output/qc/B-1_input.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/B-1_input.ccurve.txt
+    Ignored:    output/qc/B-1_input.extrap.txt
+    Ignored:    output/qc/B-1_input_R1_trimmed.fastq.gz
+    Ignored:    output/qc/B-1_input_est_lib_complex_metrics.txt
+    Ignored:    output/qc/B-2_H3K4me3.SeqDepthNorm.bw
+    Ignored:    output/qc/B-2_H3K4me3.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/B-2_H3K4me3.ccurve.txt
+    Ignored:    output/qc/B-2_H3K4me3.extrap.txt
+    Ignored:    output/qc/B-2_H3K4me3_R1_trimmed.fastq.gz
+    Ignored:    output/qc/B-2_H3K4me3_est_lib_complex_metrics.txt
+    Ignored:    output/qc/B-2_H3K4me3_vs_B-1_input.frip_default.txt
+    Ignored:    output/qc/B-2_H3K4me3_vs_B-1_input.frip_default_dunnart_downSampled.txt
+    Ignored:    output/qc/B-2_H3K4me3_vs_B-1_input.frip_p0.01_dunnart_downSampled.txt
+    Ignored:    output/qc/B-3_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/B-3_H3K27ac.SeqDepthNorm_dunnart_downSampled.bw
+    Ignored:    output/qc/B-3_H3K27ac.ccurve.txt
+    Ignored:    output/qc/B-3_H3K27ac.extrap.txt
+    Ignored:    output/qc/B-3_H3K27ac_R1_trimmed.fastq.gz
+    Ignored:    output/qc/B-3_H3K27ac_est_lib_complex_metrics.txt
+    Ignored:    output/qc/B-3_H3K27ac_vs_B-1_input.frip_default.txt
+    Ignored:    output/qc/B-3_H3K27ac_vs_B-1_input.frip_default_dunnart_downSampled.txt
+    Ignored:    output/qc/B-3_H3K27ac_vs_B-1_input.frip_p0.01_dunnart_downSampled.txt
+    Ignored:    output/qc/ENCFF011NFM_E12.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF011NFM_vs_ENCFF058AUT_E12.5_H3K27ac.frip.txt
+    Ignored:    output/qc/ENCFF011NFM_vs_ENCFF058AUT_E12.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF045IPK_E10.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF045IPK_vs_ENCFF825AVI_E10.5_H3K4me3.frip.txt
+    Ignored:    output/qc/ENCFF045IPK_vs_ENCFF825AVI_E10.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF124TAB_E13.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF124TAB_vs_ENCFF248PGK_E13.5_H3K4me3.frip.txt
+    Ignored:    output/qc/ENCFF124TAB_vs_ENCFF248PGK_E13.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF124UYX_E10.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF124UYX_vs_ENCFF157KEH_E10.5_H3K4me3.frip.txt
+    Ignored:    output/qc/ENCFF124UYX_vs_ENCFF157KEH_E10.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF182ZPF_E12.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF182ZPF_vs_ENCFF203JQV_E12.5_H3K4me3.frip.txt
+    Ignored:    output/qc/ENCFF182ZPF_vs_ENCFF203JQV_E12.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF194ORC_E13.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF194ORC_vs_ENCFF117QRC_E13.5_H3K27ac.frip.txt
+    Ignored:    output/qc/ENCFF194ORC_vs_ENCFF117QRC_E13.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF213EBC_E10.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF213EBC_vs_ENCFF157KEH_E10.5_H3K27ac.frip.txt
+    Ignored:    output/qc/ENCFF213EBC_vs_ENCFF157KEH_E10.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF258KCR_E15.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF258KCR_vs_ENCFF727QTS_E15.5_H3K4me3.frip.txt
+    Ignored:    output/qc/ENCFF258KCR_vs_ENCFF727QTS_E15.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF290ZNF_E13.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF290ZNF_vs_ENCFF248PGK_E13.5_H3K27ac.frip.txt
+    Ignored:    output/qc/ENCFF290ZNF_vs_ENCFF248PGK_E13.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF327VAO_E14.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF327VAO_vs_ENCFF784ORI_E14.5_H3K27ac.frip.txt
+    Ignored:    output/qc/ENCFF327VAO_vs_ENCFF784ORI_E14.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF394TZN_E12.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF394TZN_vs_ENCFF203JQV_E12.5_H3K27ac.frip.txt
+    Ignored:    output/qc/ENCFF394TZN_vs_ENCFF203JQV_E12.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF401BKM_E15.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF401BKM_vs_ENCFF182XFG_E15.5_H3K4me3.frip.txt
+    Ignored:    output/qc/ENCFF401BKM_vs_ENCFF182XFG_E15.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF485UDC_E13.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF485UDC_vs_ENCFF117QRC_E13.5_H3K4me3.frip.txt
+    Ignored:    output/qc/ENCFF485UDC_vs_ENCFF117QRC_E13.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF512SFE_E11.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF512SFE_vs_ENCFF184CUE_E11.5_H3K27ac.frip.txt
+    Ignored:    output/qc/ENCFF512SFE_vs_ENCFF184CUE_E11.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF515PKL_E11.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF515PKL_vs_ENCFF376FGM_E11.5_H3K27ac.frip.txt
+    Ignored:    output/qc/ENCFF515PKL_vs_ENCFF376FGM_E11.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF548BRR_E10.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF548BRR_vs_ENCFF825AVI_E10.5_H3K27ac.frip.txt
+    Ignored:    output/qc/ENCFF548BRR_vs_ENCFF825AVI_E10.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF584JFB_E15.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF584JFB_vs_ENCFF727QTS_E15.5_H3K27ac.frip.txt
+    Ignored:    output/qc/ENCFF584JFB_vs_ENCFF727QTS_E15.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF665QBJ_E14.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF665QBJ_vs_ENCFF002HZV_E14.5_H3K4me3.frip.txt
+    Ignored:    output/qc/ENCFF665QBJ_vs_ENCFF002HZV_E14.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF707WKL_E15.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF707WKL_vs_ENCFF182XFG_E15.5_H3K27ac.frip.txt
+    Ignored:    output/qc/ENCFF707WKL_vs_ENCFF182XFG_E15.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF717QDV_E11.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF717QDV_vs_ENCFF376FGM_E11.5_H3K4me3.frip.txt
+    Ignored:    output/qc/ENCFF717QDV_vs_ENCFF376FGM_E11.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF724DMU_E14.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF724DMU_vs_ENCFF784ORI_E14.5_H3K4me3.frip.txt
+    Ignored:    output/qc/ENCFF724DMU_vs_ENCFF784ORI_E14.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF760QYZ_E11.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF760QYZ_vs_ENCFF184CUE_E11.5_H3K4me3.frip.txt
+    Ignored:    output/qc/ENCFF760QYZ_vs_ENCFF184CUE_E11.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF902HAR_E14.5_H3K27ac.SeqDepthNorm.bw
+    Ignored:    output/qc/ENCFF902HAR_vs_ENCFF002HZV_E14.5_H3K27ac.frip.txt
+    Ignored:    output/qc/ENCFF902HAR_vs_ENCFF002HZV_E14.5_H3K27ac_downSampled.frip.txt
+    Ignored:    output/qc/ENCFF941QJZ_E12.5_H3K4me3.SeqDepthNorm_mouse.bw
+    Ignored:    output/qc/ENCFF941QJZ_vs_ENCFF058AUT_E12.5_H3K4me3.frip.txt
+    Ignored:    output/qc/ENCFF941QJZ_vs_ENCFF058AUT_E12.5_H3K4me3_downSampled.frip.txt
+    Ignored:    output/qc/H3K27ac_multibamsum.npz
+    Ignored:    output/qc/H3K27ac_multibamsum.tab
+    Ignored:    output/qc/H3K27ac_multibamsum_mouse.npz
+    Ignored:    output/qc/H3K27ac_multibamsum_mouse.txt
+    Ignored:    output/qc/H3K27ac_pearsoncor_multibamsum_matrix_mouse.txt
+    Ignored:    output/qc/H3K4me3_multibamsum_mouse.npz
+    Ignored:    output/qc/H3K4me3_multibamsum_mouse.txt
+    Ignored:    output/qc/H3K4me3_pearsoncor_multibamsum_matrix_mouse.txt
+    Ignored:    output/qc/bamPEFragmentSize_rawcounts.tab
+    Ignored:    output/qc/bamPEFragmentSize_rawcounts_dunnart_downSampled.tab
+    Ignored:    output/qc/multiBAM_fingerprint_metrics.txt
+    Ignored:    output/qc/multiBAM_fingerprint_metrics_dunnart_downSampled.txt
+    Ignored:    output/qc/multiBAM_fingerprint_rawcounts.txt
+    Ignored:    output/qc/multiBAM_fingerprint_rawcounts_dunnart_downSampled.txt
+    Ignored:    output/qc/multibamsum.npz
+    Ignored:    output/qc/multibamsum.tab
+    Ignored:    output/qc/multibamsum_dunnart_downSampled.npz
+    Ignored:    output/qc/multibamsum_dunnart_downSampled.tab
+    Ignored:    output/qc/multibamsum_mouse.npz
+    Ignored:    output/qc/multibamsum_mouse.tab
+    Ignored:    output/qc/pearsoncor_multibamsum_matrix.txt
+    Ignored:    output/qc/pearsoncor_multibamsum_matrix_dunnart_downSampled.txt
+    Ignored:    output/qc/pearsoncor_multibamsum_matrix_mouse.txt
+    Ignored:    output/wga/
+
+Untracked files:
+    Untracked:  .snakemake/
+    Untracked:  Rplots.pdf
+    Untracked:  data/raw_reads/
+    Untracked:  dunnart_promoter_50bpsummits_annotation_smiCraTOmm10.bed
+    Untracked:  dunnart_promoter_50bpsummits_annotation_smiCraTOmm10_unmapped.bed
+    Untracked:  output/liftover/
+    Untracked:  output/qc/A-1_input.downSampled.flagstat.qc
+    Untracked:  output/qc/A-2_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/A-3_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/B-1_input.downSampled.flagstat.qc
+    Untracked:  output/qc/B-2_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/B-3_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/E10.5_H3K27ac.pooled.macs2
+    Untracked:  output/qc/E10.5_H3K27ac.pooled.macs2_downSampled
+    Untracked:  output/qc/E10.5_H3K4me3.pooled.macs2
+    Untracked:  output/qc/E10.5_H3K4me3.pooled.macs2_downSampled
+    Untracked:  output/qc/E10.5_H3K4me3.pooled.macs2_downSampled.log
+    Untracked:  output/qc/E11.5_H3K27ac.pooled.macs2
+    Untracked:  output/qc/E11.5_H3K27ac.pooled.macs2_downSampled
+    Untracked:  output/qc/E11.5_H3K4me3.pooled.macs2
+    Untracked:  output/qc/E11.5_H3K4me3.pooled.macs2_downSampled
+    Untracked:  output/qc/E11.5_H3K4me3.pooled.macs2_downSampled.log
+    Untracked:  output/qc/E12.5_H3K27ac.pooled.macs2
+    Untracked:  output/qc/E12.5_H3K27ac.pooled.macs2_downSampled
+    Untracked:  output/qc/E12.5_H3K4me3.pooled.macs2
+    Untracked:  output/qc/E12.5_H3K4me3.pooled.macs2_downSampled
+    Untracked:  output/qc/E12.5_H3K4me3.pooled.macs2_downSampled.log
+    Untracked:  output/qc/E13.5_H3K27ac.pooled.macs2
+    Untracked:  output/qc/E13.5_H3K27ac.pooled.macs2_downSampled
+    Untracked:  output/qc/E13.5_H3K4me3.pooled.macs2
+    Untracked:  output/qc/E13.5_H3K4me3.pooled.macs2_downSampled
+    Untracked:  output/qc/E13.5_H3K4me3.pooled.macs2_downSampled.log
+    Untracked:  output/qc/E14.5_H3K27ac.pooled.macs2
+    Untracked:  output/qc/E14.5_H3K27ac.pooled.macs2_downSampled
+    Untracked:  output/qc/E14.5_H3K4me3.pooled.macs2
+    Untracked:  output/qc/E14.5_H3K4me3.pooled.macs2_downSampled
+    Untracked:  output/qc/E14.5_H3K4me3.pooled.macs2_downSampled.log
+    Untracked:  output/qc/E15.5_H3K27ac.pooled.macs2
+    Untracked:  output/qc/E15.5_H3K27ac.pooled.macs2_downSampled
+    Untracked:  output/qc/E15.5_H3K4me3.pooled.macs2
+    Untracked:  output/qc/E15.5_H3K4me3.pooled.macs2_downSampled
+    Untracked:  output/qc/E15.5_H3K4me3.pooled.macs2_downSampled.log
+    Untracked:  output/qc/ENCFF002HZV_E14.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF002HZV_E14.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF011NFM_E12.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF045IPK_E10.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF058AUT_E12.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF058AUT_E12.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF117QRC_E13.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF117QRC_E13.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF124TAB_E13.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF124UYX_E10.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF157KEH_E10.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF157KEH_E10.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF182XFG_E15.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF182XFG_E15.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF182ZPF_E12.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF184CUE_E11.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF184CUE_E11.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF194ORC_E13.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF203JQV_E12.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF203JQV_E12.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF213EBC_E10.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF248PGK_E13.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF248PGK_E13.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF258KCR_E15.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF290ZNF_E13.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF327VAO_E14.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF376FGM_E11.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF376FGM_E11.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF394TZN_E12.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF401BKM_E15.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF485UDC_E13.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF512SFE_E11.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF515PKL_E11.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF548BRR_E10.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF584JFB_E15.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF665QBJ_E14.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF707WKL_E15.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF717QDV_E11.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF724DMU_E14.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF727QTS_E15.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF727QTS_E15.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF760QYZ_E11.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF784ORI_E14.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF784ORI_E14.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF825AVI_E10.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF825AVI_E10.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.dupmark.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.pbc.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF902HAR_E14.5_H3K27ac_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.dedup.flagstat.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.downSampled.flagstat.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.dupmark.flagstat.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.dupmark.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.pbc.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.q30.flagstat.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3.unfiltered.flagstat.qc
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3_filt_15Mreads.SE.cc.plot.pdf
+    Untracked:  output/qc/ENCFF941QJZ_E12.5_H3K4me3_filt_15Mreads.SE.cc.qc
+    Untracked:  output/qc/H3K27ac_E10.5_overlap.frip
+    Untracked:  output/qc/H3K27ac_E10.5_overlap_downSampled.frip
+    Untracked:  output/qc/H3K27ac_E11.5_overlap.frip
+    Untracked:  output/qc/H3K27ac_E12.5_overlap.frip
+    Untracked:  output/qc/H3K27ac_E13.5_overlap.frip
+    Untracked:  output/qc/H3K27ac_E14.5_overlap.frip
+    Untracked:  output/qc/H3K27ac_E15.5_overlap.frip
+    Untracked:  output/qc/H3K27ac_overlap_default.frip
+    Untracked:  output/qc/H3K27ac_overlap_default_dunnart_downSampled.frip
+    Untracked:  output/qc/H3K4me3_E10.5_overlap.frip
+    Untracked:  output/qc/H3K4me3_E10.5_overlap_downSampled.frip
+    Untracked:  output/qc/H3K4me3_E11.5_overlap.frip
+    Untracked:  output/qc/H3K4me3_E11.5_overlap_downSampled.frip
+    Untracked:  output/qc/H3K4me3_E12.5_overlap.frip
+    Untracked:  output/qc/H3K4me3_E12.5_overlap_downSampled.frip
+    Untracked:  output/qc/H3K4me3_E13.5_overlap.frip
+    Untracked:  output/qc/H3K4me3_E13.5_overlap_downSampled.frip
+    Untracked:  output/qc/H3K4me3_E14.5_overlap.frip
+    Untracked:  output/qc/H3K4me3_E14.5_overlap_downSampled.frip
+    Untracked:  output/qc/H3K4me3_E15.5_overlap.frip
+    Untracked:  output/qc/H3K4me3_E15.5_overlap_downSampled.frip
+    Untracked:  output/qc/H3K4me3_overlap_default_dunnart_downSampled.frip
+    Untracked:  output/qc/H3K4me3_overlap_p0.01_dunnart_downSampled.frip
+    Untracked:  output/qc/slurmjob.stderr
+    Untracked:  output/qc/slurmjob.stdout
+    Untracked:  output/qc/ucsc_alignment/
+    Untracked:  output/rnaseq/
+
+Unstaged changes:
+    Modified:   analysis/mouse_dunnart_peak_features.Rmd
+    Modified:   code/basic_wrapper.slurm
+    Modified:   output/qc/A-1_input.PPq30.flagstat.qc
+    Modified:   output/qc/A-1_input.dedup.flagstat.qc
+    Modified:   output/qc/A-1_input.dupmark.flagstat.qc
+    Modified:   output/qc/A-1_input.unfiltered.flagstat.qc
+    Modified:   output/qc/A-3_H3K27ac.PPq30.flagstat.qc
+    Modified:   output/qc/A-3_H3K27ac.dedup.flagstat.qc
+    Modified:   output/qc/A-3_H3K27ac.dupmark.flagstat.qc
+    Modified:   output/qc/A-3_H3K27ac.unfiltered.flagstat.qc
+    Modified:   output/qc/B-1_input.PPq30.flagstat.qc
+    Modified:   output/qc/B-1_input.dedup.flagstat.qc
+    Modified:   output/qc/B-1_input.dupmark.flagstat.qc
+    Modified:   output/qc/B-1_input.unfiltered.flagstat.qc
+    Modified:   output/qc/H3K4me3_overlap_default.frip
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/peak_level_comparisons.Rmd</code>) and HTML (<code>docs/peak_level_comparisons.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/6203f8e0193d08cb9a0472cf3813a0a16c5c4af7/analysis/peak_level_comparisons.Rmd" target="_blank">6203f8e</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-30
+</td>
+<td>
+wflow_publish(“analysis/peak_level_comparisons.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/f5adfabc10085408b409c95874ad63dffddab321/analysis/peak_level_comparisons.Rmd" target="_blank">f5adfab</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-30
+</td>
+<td>
+wflow_publish(“analysis/peak_level_comparisons.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/a605c331c57243ceba6ce5d9a36b385844da5bff/analysis/peak_level_comparisons.Rmd" target="_blank">a605c33</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-16
+</td>
+<td>
+updated
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/757db1e90fcbbf6e222ddfefbefdae0c1c92258c/analysis/peak_level_comparisons.Rmd" target="_blank">757db1e</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-15
+</td>
+<td>
+updated
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/a97d3c57c638c074a308452653233ad3bfc59f48/analysis/peak_level_comparisons.Rmd" target="_blank">a97d3c5</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-01
+</td>
+<td>
+first commit
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="summary-tables" class="section level1">
+<h1>Summary tables</h1>
+<p>After the tables is all the code to compare peaks between species using liftOver and bedtools. It is a lot of repetitive code that I could revise but it was easiest to track it all this way for now. The summary tables show the number of peaks for the different overlaps.</p>
+</div>
+<div id="liftover-of-peak-coordinates-between-species" class="section level1">
+<h1>LiftOver of peak coordinates between species</h1>
+<div id="all-peaks-with-no-peak-width-filtering" class="section level2">
+<h2>All peaks with no peak width filtering</h2>
+<pre class="bash"><code>## Load modules
+conda activate chip
+module load ucsc
+
+## Extract peak coordinates
+less output/peaks/dunnart_enhancer_peaks.narrowPeak | awk &#39;{print $1,$2,$3}&#39; &gt; output/peaks/dunnart_enhancer_peaks_coord.bed
+less output/filtered_peaks/cluster1_dunnart_promoter_peaks.narrowPeak | awk &#39;{print $1,$2,$3}&#39; &gt; output/filtered_peaks/dunnart_promoter_peaks_coord.bed
+
+## LiftOver peak coordinates from dunnart to mouse
+liftOver output/peaks/dunnart_enhancer_peaks_coord.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_smiCraTOmm10.bed output/liftover/dunnart_enhancer_smiCraTOmm10_unmapped.bed
+liftOver output/filtered_peaks/dunnart_promoter_peaks_coord.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_smiCraTOmm10.bed output/liftover/dunnart_promoter_smiCraTOmm10_unmapped.bed</code></pre>
+<pre class="r"><code>files &lt;- list.files(&quot;output/liftover&quot;, pattern = &quot;*_smiCraTOmm10.bed&quot;, full.names = T)
+files &lt;- as.list(files)
+data &lt;- lapply(files, function(x) data.table::fread(x, header = FALSE, sep = &quot;\t&quot;, quote = &quot;&quot;, na.strings = c(&quot;&quot;, &quot;NA&quot;)))
+
+df &lt;- data.table(enhancer_peaks_smiCraTOmm10 = dim(data[[1]])[1], promoter_peak_smiCraTOmm10 = dim(data[[2]])[1])
+
+kable(df, caption=&quot;Table. Number of peaks lifted over from dunnart to mouse&quot;)</code></pre>
+<table>
+<caption>Table. Number of peaks lifted over from dunnart to mouse</caption>
+<thead>
+<tr class="header">
+<th align="right">enhancer_peaks_smiCraTOmm10</th>
+<th align="right">promoter_peak_smiCraTOmm10</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">7664</td>
+</tr>
+</tbody>
+</table>
+<!-- # Import output files in R -->
+<!-- enh = fread("enhancers/dunnart.enhancer_smiCraTOmm10.bed") -->
+<!-- prom = fread("promoters/clustered/dunnart.promoter_smiCraTOmm10.bed") -->
+<!-- data = list(enh, prom) -->
+<!-- names(data) = c("enhancers", "promoters") -->
+<!-- data = Map(mutate, data, cre = names(data)) -->
+<!-- data = lapply(data, function(x) x[order(V4),]) -->
+<!-- data = lapply(data, function(x) x=x[,width:=V3-V2]) -->
+<!-- data = rbindlist(data,) -->
+</div>
+<div id="liftover-peak-summits" class="section level2">
+<h2>LiftOver peak summits</h2>
+<div id="prepare-peak-summits-and-extract-peak-ids" class="section level3">
+<h3>Prepare peak summits and extract peak IDs</h3>
+<pre class="bash"><code>
+## Extract peak IDs
+less output/peaks/dunnart_enhancer_peaks.narrowPeak | awk -F &#39;\t&#39; &#39;{print $4}&#39; | sort &gt; output/peaks/dunnart_enhancer_peaks_IDs.txt
+less output/filtered_peaks/cluster1_dunnart_promoter_peaks.narrowPeak | awk -F &#39;\t&#39; &#39;{print $4}&#39; | sort &gt; output/filtered_peaks/dunnart_promoter_peaks_IDs.txt
+
+less output/peaks/E10.5_enhancer_peaks.narrowPeak | awk -F &#39;\t&#39; &#39;{print $4}&#39;  &gt;  output/peaks/E10.5_enhancer_peaks_IDs.txt
+less  output/peaks/E11.5_enhancer_peaks.narrowPeak | awk -F &#39;\t&#39; &#39;{print $4}&#39;  &gt;  output/peaks/E11.5_enhancer_peaks_IDs.txt
+less  output/peaks/E12.5_enhancer_peaks.narrowPeak | awk -F &#39;\t&#39; &#39;{print $4}&#39;  &gt;  output/peaks/E12.5_enhancer_peaks_IDs.txt
+less  output/peaks/E13.5_enhancer_peaks.narrowPeak | awk -F &#39;\t&#39; &#39;{print $4}&#39;  &gt;  output/peaks/E13.5_enhancer_peaks_IDs.txt
+less  output/peaks/E14.5_enhancer_peaks.narrowPeak | awk -F &#39;\t&#39; &#39;{print $4}&#39;  &gt;  output/peaks/E14.5_enhancer_peaks_IDs.txt
+less  output/peaks/E15.5_enhancer_peaks.narrowPeak | awk -F &#39;\t&#39; &#39;{print $4}&#39;  &gt;  output/peaks/E15.5_enhancer_peaks_IDs.txt
+
+less  output/filtered_peaks/E10_cluster1_peaks.narrowPeak | awk -F &#39;\t&#39; &#39;{print $4}&#39; &gt; output/filtered_peaks/E10.5_promoter_peaks_IDs.txt
+less  output/filtered_peaks/E11_cluster1_peaks.narrowPeak | awk -F &#39;\t&#39; &#39;{print $4}&#39;  &gt; output/filtered_peaks/E11.5_promoter_peaks_IDs.txt
+less  output/filtered_peaks/E12_cluster1_peaks.narrowPeak | awk -F &#39;\t&#39; &#39;{print $4}&#39;  &gt; output/filtered_peaks/E12.5_promoter_peaks_IDs.txt
+less  output/filtered_peaks/E13_cluster1_peaks.narrowPeak | awk -F &#39;\t&#39; &#39;{print $4}&#39;  &gt; output/filtered_peaks/E13.5_promoter_peaks_IDs.txt
+less  output/filtered_peaks/E14_cluster1_peaks.narrowPeak | awk -F &#39;\t&#39; &#39;{print $4}&#39;  &gt; output/filtered_peaks/E14.5_promoter_peaks_IDs.txt
+less  output/filtered_peaks/E15_cluster1_peaks.narrowPeak | awk -F &#39;\t&#39; &#39;{print $4}&#39;  &gt; output/filtered_peaks/E15.5_promoter_peaks_IDs.txt
+
+## Concatenate pooled summit peak files 
+
+cat output/peaks/H3K4me3_pooled_macs2_default_summits.bed output/peaks/H3K27ac_pooled_macs2_default_summits.bed &gt; output/peaks/H3K4me3_H3K27ac_dunnart_pooled_default_combinedSummits.bed
+
+cat output/peaks/E10.5_H3K27ac.pooled.macs2_summits.bed output/peaks/E10.5_H3K4me3.pooled.macs2_summits.bed &gt; output/peaks/E10.5_H3K27ac_H3K4me3.pooled.macs2_combinedSummits.bed
+cat output/peaks/E11.5_H3K27ac.pooled.macs2_summits.bed output/peaks/E11.5_H3K4me3.pooled.macs2_summits.bed &gt; output/peaks/E11.5_H3K27ac_H3K4me3.pooled.macs2_combinedSummits.bed
+cat output/peaks/E12.5_H3K27ac.pooled.macs2_summits.bed output/peaks/E12.5_H3K4me3.pooled.macs2_summits.bed &gt; output/peaks/E12.5_H3K27ac_H3K4me3.pooled.macs2_combinedSummits.bed
+cat output/peaks/E13.5_H3K27ac.pooled.macs2_summits.bed output/peaks/E13.5_H3K4me3.pooled.macs2_summits.bed &gt; output/peaks/E13.5_H3K27ac_H3K4me3.pooled.macs2_combinedSummits.bed
+cat output/peaks/E14.5_H3K27ac.pooled.macs2_summits.bed output/peaks/E14.5_H3K4me3.pooled.macs2_summits.bed &gt; output/peaks/E14.5_H3K27ac_H3K4me3.pooled.macs2_combinedSummits.bed
+cat output/peaks/E15.5_H3K27ac.pooled.macs2_summits.bed output/peaks/E15.5_H3K4me3.pooled.macs2_summits.bed &gt; output/peaks/E15.5_H3K27ac_H3K4me3.pooled.macs2_combinedSummits.bed
+</code></pre>
+</div>
+<div id="extract-rows-from-summits-file-based-on-enhancer-and-promoter-peak-ids" class="section level3">
+<h3>Extract rows from summits file based on enhancer and promoter peak IDs</h3>
+<pre class="r"><code>files =list.files(fullPeak_dir, pattern= &quot;macs2_combinedSummits.bed|default_combinedSummits.bed&quot;, full.names=T) # create list of files in directory
+files = as.list(files)
+summits = lapply(files, function(x) fread(x, header=FALSE, sep=&quot;\t&quot;, quote = &quot;&quot;, na.strings=c(&quot;&quot;, &quot;NA&quot;)))
+names(summits) &lt;- c(&quot;E10&quot;, &quot;E11&quot;, &quot;E12&quot;, &quot;E13&quot;, &quot;E14&quot;, &quot;E15&quot;, &quot;dunnart&quot;)
+
+files2 =list.files(fullPeak_dir, pattern= &quot;peaks_IDs.txt&quot;, full.names=T) # create list of files in directory
+files3 = list.files(filterPeaks_dir, pattern = &quot;peaks_IDs.txt&quot;, full.names=T)
+files = append(files2, files3)
+filenames &lt;- sub(&#39;\\_peaks_IDs.txt$&#39;, &#39;&#39;, basename(files)) 
+
+files = as.list(files)
+
+peak_IDs = lapply(files, function(x) fread(x, header=FALSE, sep=&quot;\t&quot;, quote = &quot;&quot;, na.strings=c(&quot;&quot;, &quot;NA&quot;)))
+names(peak_IDs) &lt;- filenames
+
+filtered &lt;- lapply(summits, function(x) x[x$V4 %in% unlist(as.vector(peak_IDs)),])
+filtered &lt;- lapply(filtered, function(x) substr(x$V4, 1, 13))
+
+filtered_bind &lt;- rbindlist(filtered,)
+filtered_bind$V4 &lt;- substr(filtered_bind$V4, 1,13)
+filtered_split &lt;- split(filtered_bind, by = &quot;V4&quot;)
+
+names(filtered_split) &lt;- c(&quot;E10.5_enhancer&quot;, &quot;E10.5_promoter&quot;, 
+                           &quot;E11.5_enhancer&quot;, &quot;E11.5_promoter&quot;,
+                           &quot;E12.5_enhancer&quot;, &quot;E12.5_promoter&quot;,
+                           &quot;E13.5_enhancer&quot;, &quot;E13.5_promoter&quot;,
+                           &quot;E14.5_enhancer&quot;, &quot;E14.5_promoter&quot;,
+                           &quot;E15.5_enhancer&quot;, &quot;E15.5_promoter&quot;,
+                           &quot;dunnart_promoter&quot;, &quot;dunnart_enhancer&quot;)
+
+lapply(names(filtered_split), function(x) write.table(filtered_split[[x]], file=paste0(&quot;output/liftover/&quot;,x,&quot;_summits&quot;, &quot;.bed&quot;), sep=&quot;\t&quot;, quote=FALSE, col.names=FALSE, row.names=FALSE))</code></pre>
+</div>
+<div id="extend-the-summits-25bp-in-both-directions" class="section level3">
+<h3>Extend the summits 25bp in both directions</h3>
+<pre class="bash"><code>bedtools slop -i output/liftover/dunnart_promoter_summits.bed -b 25 -g data/genomic_data/smiCra1.chrom.sizes &gt; output/liftover/dunnart_promoter_50bpsummits.bed
+
+bedtools slop -i output/liftover/dunnart_enhancer_summits.bed -b 25 -g data/genomic_data/smiCra1.chrom.sizes &gt; output/liftover/dunnart_enhancer_50bpsummits.bed
+
+bedtools slop -i output/liftover/E10.5_enhancer_summits.bed -b 25 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E10.5_enhancer_50bpsummits.bed
+bedtools slop -i output/liftover/E11.5_enhancer_summits.bed -b 25 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E11.5_enhancer_50bpsummits.bed
+bedtools slop -i output/liftover/E12.5_enhancer_summits.bed -b 25 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E12.5_enhancer_50bpsummits.bed
+bedtools slop -i output/liftover/E13.5_enhancer_summits.bed -b 25 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E13.5_enhancer_50bpsummits.bed
+bedtools slop -i output/liftover/E14.5_enhancer_summits.bed -b 25 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E14.5_enhancer_50bpsummits.bed
+bedtools slop -i output/liftover/E15.5_enhancer_summits.bed -b 25 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E15.5_enhancer_50bpsummits.bed
+
+bedtools slop -i output/liftover/E10.5_promoter_summits.bed -b 25 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E10.5_promoter_50bpsummits.bed
+bedtools slop -i output/liftover/E11.5_promoter_summits.bed -b 25 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E11.5_promoter_50bpsummits.bed
+bedtools slop -i output/liftover/E12.5_promoter_summits.bed -b 25 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E12.5_promoter_50bpsummits.bed
+bedtools slop -i output/liftover/E13.5_promoter_summits.bed -b 25 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E13.5_promoter_50bpsummits.bed
+bedtools slop -i output/liftover/E14.5_promoter_summits.bed -b 25 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E14.5_promoter_50bpsummits.bed
+bedtools slop -i output/liftover/E15.5_promoter_summits.bed -b 25 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E15.5_promoter_50bpsummits.bed</code></pre>
+</div>
+<div id="extend-the-summits-50bp-in-both-directions" class="section level3">
+<h3>Extend the summits 50bp in both directions</h3>
+<pre class="bash"><code>bedtools slop -i output/liftover/dunnart_promoter_summits.bed -b 50 -g data/genomic_data/smiCra1.chrom.sizes &gt; output/liftover/dunnart_promoter_100bpsummits.bed
+
+bedtools slop -i output/liftover/dunnart_enhancer_summits.bed -b 50 -g data/genomic_data/smiCra1.chrom.sizes &gt; output/liftover/dunnart_enhancer_100bpsummits.bed
+
+bedtools slop -i output/liftover/E10.5_enhancer_summits.bed -b 50 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E10.5_enhancer_100bpsummits.bed
+bedtools slop -i output/liftover/E11.5_enhancer_summits.bed -b 50 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E11.5_enhancer_100bpsummits.bed
+bedtools slop -i output/liftover/E12.5_enhancer_summits.bed -b 50 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E12.5_enhancer_100bpsummits.bed
+bedtools slop -i output/liftover/E13.5_enhancer_summits.bed -b 50 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E13.5_enhancer_100bpsummits.bed
+bedtools slop -i output/liftover/E14.5_enhancer_summits.bed -b 50 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E14.5_enhancer_100bpsummits.bed
+bedtools slop -i output/liftover/E15.5_enhancer_summits.bed -b 50 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E15.5_enhancer_100bpsummits.bed
+
+bedtools slop -i output/liftover/E10.5_promoter_summits.bed -b 50 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E10.5_promoter_100bpsummits.bed
+bedtools slop -i output/liftover/E11.5_promoter_summits.bed -b 50 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E11.5_promoter_100bpsummits.bed
+bedtools slop -i output/liftover/E12.5_promoter_summits.bed -b 50 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E12.5_promoter_100bpsummits.bed
+bedtools slop -i output/liftover/E13.5_promoter_summits.bed -b 50 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E13.5_promoter_100bpsummits.bed
+bedtools slop -i output/liftover/E14.5_promoter_summits.bed -b 50 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E14.5_promoter_100bpsummits.bed
+bedtools slop -i output/liftover/E15.5_promoter_summits.bed -b 50 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E15.5_promoter_100bpsummits.bed</code></pre>
+</div>
+<div id="extend-the-summits-100bp-in-both-directions" class="section level3">
+<h3>Extend the summits 100bp in both directions</h3>
+<pre class="bash"><code>bedtools slop -i output/liftover/dunnart_promoter_summits.bed -b 100 -g data/genomic_data/smiCra1.chrom.sizes &gt; output/liftover/dunnart_promoter_200bpsummits.bed
+
+bedtools slop -i output/liftover/dunnart_enhancer_summits.bed -b 100 -g data/genomic_data/smiCra1.chrom.sizes &gt; output/liftover/dunnart_enhancer_200bpsummits.bed
+
+bedtools slop -i output/liftover/E10.5_enhancer_summits.bed -b 100 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E10.5_enhancer_200bpsummits.bed
+bedtools slop -i output/liftover/E11.5_enhancer_summits.bed -b 100 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E11.5_enhancer_200bpsummits.bed
+bedtools slop -i output/liftover/E12.5_enhancer_summits.bed -b 100 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E12.5_enhancer_200bpsummits.bed
+bedtools slop -i output/liftover/E13.5_enhancer_summits.bed -b 100 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E13.5_enhancer_200bpsummits.bed
+bedtools slop -i output/liftover/E14.5_enhancer_summits.bed -b 100 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E14.5_enhancer_200bpsummits.bed
+bedtools slop -i output/liftover/E15.5_enhancer_summits.bed -b 100 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E15.5_enhancer_200bpsummits.bed
+
+bedtools slop -i output/liftover/E10.5_promoter_summits.bed -b 100 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E10.5_promoter_200bpsummits.bed
+bedtools slop -i output/liftover/E11.5_promoter_summits.bed -b 100 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E11.5_promoter_200bpsummits.bed
+bedtools slop -i output/liftover/E12.5_promoter_summits.bed -b 100 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E12.5_promoter_200bpsummits.bed
+bedtools slop -i output/liftover/E13.5_promoter_summits.bed -b 100 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E13.5_promoter_200bpsummits.bed
+bedtools slop -i output/liftover/E14.5_promoter_summits.bed -b 100 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E14.5_promoter_200bpsummits.bed
+bedtools slop -i output/liftover/E15.5_promoter_summits.bed -b 100 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E15.5_promoter_200bpsummits.bed</code></pre>
+</div>
+<div id="extend-the-summits-150bp-in-both-directions" class="section level3">
+<h3>Extend the summits 150bp in both directions</h3>
+<pre class="bash"><code>bedtools slop -i output/liftover/dunnart_promoter_summits.bed -b 150 -g data/genomic_data/smiCra1.chrom.sizes &gt; output/liftover/dunnart_promoter_300bpsummits.bed
+
+bedtools slop -i output/liftover/dunnart_enhancer_summits.bed -b 150 -g data/genomic_data/smiCra1.chrom.sizes &gt; output/liftover/dunnart_enhancer_300bpsummits.bed
+
+bedtools slop -i output/liftover/E10.5_enhancer_summits.bed -b 150 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E10.5_enhancer_300bpsummits.bed
+bedtools slop -i output/liftover/E11.5_enhancer_summits.bed -b 150 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E11.5_enhancer_300bpsummits.bed
+bedtools slop -i output/liftover/E12.5_enhancer_summits.bed -b 150 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E12.5_enhancer_300bpsummits.bed
+bedtools slop -i output/liftover/E13.5_enhancer_summits.bed -b 150 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E13.5_enhancer_300bpsummits.bed
+bedtools slop -i output/liftover/E14.5_enhancer_summits.bed -b 150 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E14.5_enhancer_300bpsummits.bed
+bedtools slop -i output/liftover/E15.5_enhancer_summits.bed -b 150 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E15.5_enhancer_300bpsummits.bed
+
+bedtools slop -i output/liftover/E10.5_promoter_summits.bed -b 150 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E10.5_promoter_300bpsummits.bed
+bedtools slop -i output/liftover/E11.5_promoter_summits.bed -b 150 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E11.5_promoter_300bpsummits.bed
+bedtools slop -i output/liftover/E12.5_promoter_summits.bed -b 150 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E12.5_promoter_300bpsummits.bed
+bedtools slop -i output/liftover/E13.5_promoter_summits.bed -b 150 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E13.5_promoter_300bpsummits.bed
+bedtools slop -i output/liftover/E14.5_promoter_summits.bed -b 150 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E14.5_promoter_300bpsummits.bed
+bedtools slop -i output/liftover/E15.5_promoter_summits.bed -b 150 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E15.5_promoter_300bpsummits.bed</code></pre>
+</div>
+<div id="extend-the-summits-200bp-in-both-directions" class="section level3">
+<h3>Extend the summits 200bp in both directions</h3>
+<pre class="bash"><code>bedtools slop -i output/liftover/dunnart_promoter_summits.bed -b 200 -g data/genomic_data/smiCra1.chrom.sizes &gt; output/liftover/dunnart_promoter_400bpsummits.bed
+
+bedtools slop -i output/liftover/dunnart_enhancer_summits.bed -b 200 -g data/genomic_data/smiCra1.chrom.sizes &gt; output/liftover/dunnart_enhancer_400bpsummits.bed
+
+bedtools slop -i output/liftover/E10.5_enhancer_summits.bed -b 200 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E10.5_enhancer_400bpsummits.bed
+bedtools slop -i output/liftover/E11.5_enhancer_summits.bed -b 200 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E11.5_enhancer_400bpsummits.bed
+bedtools slop -i output/liftover/E12.5_enhancer_summits.bed -b 200 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E12.5_enhancer_400bpsummits.bed
+bedtools slop -i output/liftover/E13.5_enhancer_summits.bed -b 200 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E13.5_enhancer_400bpsummits.bed
+bedtools slop -i output/liftover/E14.5_enhancer_summits.bed -b 200 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E14.5_enhancer_400bpsummits.bed
+bedtools slop -i output/liftover/E15.5_enhancer_summits.bed -b 200 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E15.5_enhancer_400bpsummits.bed
+
+bedtools slop -i output/liftover/E10.5_promoter_summits.bed -b 200 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E10.5_promoter_400bpsummits.bed
+bedtools slop -i output/liftover/E11.5_promoter_summits.bed -b 200 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E11.5_promoter_400bpsummits.bed
+bedtools slop -i output/liftover/E12.5_promoter_summits.bed -b 200 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E12.5_promoter_400bpsummits.bed
+bedtools slop -i output/liftover/E13.5_promoter_summits.bed -b 200 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E13.5_promoter_400bpsummits.bed
+bedtools slop -i output/liftover/E14.5_promoter_summits.bed -b 200 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E14.5_promoter_400bpsummits.bed
+bedtools slop -i output/liftover/E15.5_promoter_summits.bed -b 200 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E15.5_promoter_400bpsummits.bed</code></pre>
+</div>
+<div id="extend-the-summits-250bp-in-both-directions" class="section level3">
+<h3>Extend the summits 250bp in both directions</h3>
+<pre class="bash"><code>bedtools slop -i output/liftover/dunnart_promoter_summits.bed -b 250 -g data/genomic_data/smiCra1.chrom.sizes &gt; output/liftover/dunnart_promoter_500bpsummits.bed
+
+bedtools slop -i output/liftover/dunnart_enhancer_summits.bed -b 250 -g data/genomic_data/smiCra1.chrom.sizes &gt; output/liftover/dunnart_enhancer_500bpsummits.bed
+
+bedtools slop -i output/liftover/E10.5_enhancer_summits.bed -b 250 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E10.5_enhancer_500bpsummits.bed
+bedtools slop -i output/liftover/E11.5_enhancer_summits.bed -b 250 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E11.5_enhancer_500bpsummits.bed
+bedtools slop -i output/liftover/E12.5_enhancer_summits.bed -b 250 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E12.5_enhancer_500bpsummits.bed
+bedtools slop -i output/liftover/E13.5_enhancer_summits.bed -b 250 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E13.5_enhancer_500bpsummits.bed
+bedtools slop -i output/liftover/E14.5_enhancer_summits.bed -b 250 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E14.5_enhancer_500bpsummits.bed
+bedtools slop -i output/liftover/E15.5_enhancer_summits.bed -b 250 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E15.5_enhancer_500bpsummits.bed
+
+bedtools slop -i output/liftover/E10.5_promoter_summits.bed -b 250 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E10.5_promoter_500bpsummits.bed
+bedtools slop -i output/liftover/E11.5_promoter_summits.bed -b 250 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E11.5_promoter_500bpsummits.bed
+bedtools slop -i output/liftover/E12.5_promoter_summits.bed -b 250 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E12.5_promoter_500bpsummits.bed
+bedtools slop -i output/liftover/E13.5_promoter_summits.bed -b 250 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E13.5_promoter_500bpsummits.bed
+bedtools slop -i output/liftover/E14.5_promoter_summits.bed -b 250 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E14.5_promoter_500bpsummits.bed
+bedtools slop -i output/liftover/E15.5_promoter_summits.bed -b 250 -g data/genomic_data/mm10.chrom.sizes &gt; output/liftover/E15.5_promoter_500bpsummits.bed</code></pre>
+</div>
+<div id="liftover-extended-peak-summits" class="section level3">
+<h3>LiftOver extended peak summits</h3>
+<div id="liftover-dunnart-peaks-to-mouse-genome" class="section level4">
+<h4>LiftOver dunnart peaks to mouse genome</h4>
+<pre class="bash"><code>
+## Enhancer-associated peaks
+liftOver output/liftover/dunnart_enhancer_50bpsummits.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_50bpsummits_smiCraTOmm10.bed output/liftover/dunnart_enhancer_50bpsummits_smiCraTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_100bpsummits.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_100bpsummits_smiCraTOmm10.bed output/liftover/dunnart_enhancer_100bpsummits_smiCraTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_200bpsummits.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_200bpsummits_smiCraTOmm10.bed output/liftover/dunnart_enhancer_200bpsummits_smiCraTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_300bpsummits.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_300bpsummits_smiCraTOmm10.bed output/liftover/dunnart_enhancer_300bpsummits_smiCraTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_400bpsummits.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_400bpsummits_smiCraTOmm10.bed output/liftover/dunnart_enhancer_400bpsummits_smiCraTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_500bpsummits.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_500bpsummits_smiCraTOmm10.bed output/liftover/dunnart_enhancer_500bpsummits_smiCraTOmm10_unmapped.bed
+
+## Promoter-associated peaks
+liftOver output/liftover/dunnart_promoter_50bpsummits.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_50bpsummits_smiCraTOmm10.bed output/liftover/dunnart_promoter_50bpsummits_smiCraTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_100bpsummits.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_100bpsummits_smiCraTOmm10.bed output/liftover/dunnart_promoter_100bpsummits_smiCraTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_200bpsummits.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_200bpsummits_smiCraTOmm10.bed output/liftover/dunnart_promoter_200bpsummits_smiCraTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_300bpsummits.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_300bpsummits_smiCraTOmm10.bed output/liftover/dunnart_promoter_300bpsummits_smiCraTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_400bpsummits.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_400bpsummits_smiCraTOmm10.bed output/liftover/dunnart_promoter_400bpsummits_smiCraTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_500bpsummits.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_500bpsummits_smiCraTOmm10.bed output/liftover/dunnart_promoter_500bpsummits_smiCraTOmm10_unmapped.bed</code></pre>
+</div>
+<div id="lift-back-to-the-dunnart-genome" class="section level4">
+<h4>Lift back to the dunnart genome</h4>
+<pre class="bash"><code>## Enhancer-associated peaks
+liftOver output/liftover/dunnart_enhancer_50bpsummits_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_100bpsummits_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_enhancer_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_200bpsummits_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_enhancer_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_300bpsummits_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_enhancer_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_400bpsummits_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_enhancer_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_500bpsummits_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_enhancer_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+## Promoter-associated peaks
+liftOver output/liftover/dunnart_promoter_50bpsummits_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_100bpsummits_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_promoter_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_200bpsummits_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_promoter_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_300bpsummits_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_promoter_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_400bpsummits_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_promoter_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_500bpsummits_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_promoter_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_unmapped.bed</code></pre>
+</div>
+<div id="lift-back-to-mouse-genome-so-that-everything-is-in-mouse-coordinates" class="section level4">
+<h4>Lift back to mouse genome so that everything is in mouse coordinates</h4>
+<pre class="bash"><code>## Enhancer-assocaited peaks
+liftOver output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed output/liftover/dunnart_enhancer_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed output/liftover/dunnart_enhancer_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed output/liftover/dunnart_enhancer_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed output/liftover/dunnart_enhancer_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed output/liftover/dunnart_enhancer_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
+
+## Promoter-associated peaks 
+liftOver output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed output/liftover/dunnart_promoter_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed output/liftover/dunnart_promoter_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed output/liftover/dunnart_promoter_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed output/liftover/dunnart_promoter_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed output/liftover/dunnart_promoter_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
+</code></pre>
+</div>
+</div>
+<div id="intersect-dunnart-cres-with-mouse-cres" class="section level3">
+<h3>Intersect dunnart CREs with mouse CREs</h3>
+<pre class="bash"><code>## Promoter-associated peaks
+bedtools intersect -a output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E10_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E10.5_mm10intersect_dunnart_promoter_50bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E11_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E11.5_mm10intersect_dunnart_promoter_50bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E12_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E12.5_mm10intersect_dunnart_promoter_50bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E13_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E13.5_mm10intersect_dunnart_promoter_50bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E14_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E14.5_mm10intersect_dunnart_promoter_50bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E15_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E15.5_mm10intersect_dunnart_promoter_50bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E10_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E10.5_mm10intersect_dunnart_promoter_100bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E11_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E11.5_mm10intersect_dunnart_promoter_100bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E12_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E12.5_mm10intersect_dunnart_promoter_100bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E13_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E13.5_mm10intersect_dunnart_promoter_100bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E14_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E14.5_mm10intersect_dunnart_promoter_100bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E15_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E15.5_mm10intersect_dunnart_promoter_100bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E10_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E10.5_mm10intersect_dunnart_promoter_200bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E11_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E11.5_mm10intersect_dunnart_promoter_200bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E12_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E12.5_mm10intersect_dunnart_promoter_200bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E13_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E13.5_mm10intersect_dunnart_promoter_200bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E14_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E14.5_mm10intersect_dunnart_promoter_200bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E15_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E15.5_mm10intersect_dunnart_promoter_200bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E10_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E10.5_mm10intersect_dunnart_promoter_300bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E11_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E11.5_mm10intersect_dunnart_promoter_300bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E12_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E12.5_mm10intersect_dunnart_promoter_300bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E13_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E13.5_mm10intersect_dunnart_promoter_300bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E14_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E14.5_mm10intersect_dunnart_promoter_300bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E15_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E15.5_mm10intersect_dunnart_promoter_300bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E10_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E10.5_mm10intersect_dunnart_promoter_400bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E11_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E11.5_mm10intersect_dunnart_promoter_400bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E12_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E12.5_mm10intersect_dunnart_promoter_400bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E13_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E13.5_mm10intersect_dunnart_promoter_400bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E14_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E14.5_mm10intersect_dunnart_promoter_400bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E15_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E15.5_mm10intersect_dunnart_promoter_400bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E10_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E10.5_mm10intersect_dunnart_promoter_500bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E11_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E11.5_mm10intersect_dunnart_promoter_500bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E12_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E12.5_mm10intersect_dunnart_promoter_500bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E13_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E13.5_mm10intersect_dunnart_promoter_500bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E14_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E14.5_mm10intersect_dunnart_promoter_500bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E15_cluster1_peaks.narrowPeak -wo &gt; output/liftover/E15.5_mm10intersect_dunnart_promoter_500bpsummits.bed
+
+## Enhancer-associated peaks
+bedtools intersect -a output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E10.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E10.5_mm10intersect_dunnart_enhancer_50bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E11.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E11.5_mm10intersect_dunnart_enhancer_50bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E12.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E12.5_mm10intersect_dunnart_enhancer_50bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E13.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E13.5_mm10intersect_dunnart_enhancer_50bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E14.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E14.5_mm10intersect_dunnart_enhancer_50bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E15.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E15.5_mm10intersect_dunnart_enhancer_50bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E10.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E10.5_mm10intersect_dunnart_enhancer_100bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E11.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E11.5_mm10intersect_dunnart_enhancer_100bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E12.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E12.5_mm10intersect_dunnart_enhancer_100bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E13.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E13.5_mm10intersect_dunnart_enhancer_100bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E14.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E14.5_mm10intersect_dunnart_enhancer_100bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E15.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E15.5_mm10intersect_dunnart_enhancer_100bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E10.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E10.5_mm10intersect_dunnart_enhancer_200bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E11.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E11.5_mm10intersect_dunnart_enhancer_200bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E12.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E12.5_mm10intersect_dunnart_enhancer_200bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E13.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E13.5_mm10intersect_dunnart_enhancer_200bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E14.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E14.5_mm10intersect_dunnart_enhancer_200bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E15.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E15.5_mm10intersect_dunnart_enhancer_200bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E10.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E10.5_mm10intersect_dunnart_enhancer_300bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E11.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E11.5_mm10intersect_dunnart_enhancer_300bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E12.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E12.5_mm10intersect_dunnart_enhancer_300bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E13.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E13.5_mm10intersect_dunnart_enhancer_300bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E14.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E14.5_mm10intersect_dunnart_enhancer_300bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E15.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E15.5_mm10intersect_dunnart_enhancer_300bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E10.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E10.5_mm10intersect_dunnart_enhancer_400bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E11.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E11.5_mm10intersect_dunnart_enhancer_400bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E12.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E12.5_mm10intersect_dunnart_enhancer_400bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E13.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E13.5_mm10intersect_dunnart_enhancer_400bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E14.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E14.5_mm10intersect_dunnart_enhancer_400bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E15.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E15.5_mm10intersect_dunnart_enhancer_400bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E10.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E10.5_mm10intersect_dunnart_enhancer_500bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E11.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E11.5_mm10intersect_dunnart_enhancer_500bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E12.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E12.5_mm10intersect_dunnart_enhancer_500bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E13.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E13.5_mm10intersect_dunnart_enhancer_500bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E14.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E14.5_mm10intersect_dunnart_enhancer_500bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E15.5_enhancer_peaks.narrowPeak -wo &gt; output/liftover/E15.5_mm10intersect_dunnart_enhancer_500bpsummits.bed</code></pre>
+</div>
+<div id="use-window-to-allow-intersections-within-50-bps" class="section level3">
+<h3>Use window to allow intersections within 50 bps</h3>
+<pre class="bash"><code>bedtools window -w 50 -u -a output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E10_cluster1_peaks.narrowPeak  &gt; output/liftover/E10.5_mm10intersect_dunnart_promoter_50bpsummits_window.bed
+bedtools window -w 50 -u -a output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E11_cluster1_peaks.narrowPeak  &gt; output/liftover/E11.5_mm10intersect_dunnart_promoter_50bpsummits_window.bed
+bedtools window -w 50 -u -a output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E12_cluster1_peaks.narrowPeak  &gt; output/liftover/E12.5_mm10intersect_dunnart_promoter_50bpsummits_window.bed
+bedtools window -w 50 -u -a output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E13_cluster1_peaks.narrowPeak  &gt; output/liftover/E13.5_mm10intersect_dunnart_promoter_50bpsummits_window.bed
+bedtools window -w 50 -u -a output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E14_cluster1_peaks.narrowPeak  &gt; output/liftover/E14.5_mm10intersect_dunnart_promoter_50bpsummits_window.bed
+bedtools window -w 50 -u -a output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E15_cluster1_peaks.narrowPeak  &gt; output/liftover/E15.5_mm10intersect_dunnart_promoter_50bpsummits_window.bed
+
+bedtools window -w 50 -u -a output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E10.5_enhancer_peaks.narrowPeak  &gt; output/liftover/E10.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed
+bedtools window -w 50 -u -a output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E11.5_enhancer_peaks.narrowPeak  &gt; output/liftover/E11.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed
+bedtools window -w 50 -u -a output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E12.5_enhancer_peaks.narrowPeak  &gt; output/liftover/E12.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed
+bedtools window -w 50 -u -a output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E13.5_enhancer_peaks.narrowPeak  &gt; output/liftover/E13.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed
+bedtools window -w 50 -u -a output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E14.5_enhancer_peaks.narrowPeak  &gt; output/liftover/E14.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed
+bedtools window -w 50 -u -a output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E15.5_enhancer_peaks.narrowPeak  &gt; output/liftover/E15.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed</code></pre>
+<div id="lift-dunnart-peaks-back-over-to-the-dunnart-genome" class="section level4">
+<h4>Lift dunnart peaks back over to the dunnart genome</h4>
+<pre class="bash"><code>liftOver -bedPlus=4 output/liftover/E10.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/E10.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra.bed output/liftover/E10.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/E11.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/E11.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra.bed output/liftover/E11.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/E12.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/E12.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra.bed output/liftover/E12.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/E13.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/E13.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra.bed output/liftover/E13.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/E14.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/E14.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra.bed output/liftover/E14.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/E15.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/E15.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra.bed output/liftover/E15.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/E10.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/E10.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra.bed output/liftover/E10.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/E11.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/E11.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra.bed output/liftover/E11.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/E12.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/E12.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra.bed output/liftover/E12.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/E13.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/E13.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra.bed output/liftover/E13.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/E14.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/E14.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra.bed output/liftover/E14.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/E15.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/E15.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra.bed output/liftover/E15.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra_unmapped.bed
+</code></pre>
+</div>
+</div>
+</div>
+<div id="when-you-lift-over-a-peak-from-one-species-to-another-does-it-always-land-next-to-the-same-gene-in-both-species" class="section level2">
+<h2>When you lift over a peak from one species to another, does it always land next to the same gene in both species?</h2>
+<p>Use annotated peak files for all peaks and compare nearest gene call</p>
+<div id="intersect-annotation-file-with-peak-summits" class="section level3">
+<h3>Intersect annotation file with peak summits</h3>
+<pre class="bash"><code>bedtools intersect -a output/liftover/dunnart_promoter_50bpsummits.bed -b output/annotations/dunnart_promoter_cluster1_annotationConvertedIDs.bed -wb &gt; output/liftover/dunnart_promoter_50bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_50bpsummits.bed -b output/annotations/dunnart_enhancer_annotationConvertedIDs.bed -wb &gt; output/liftover/dunnart_enhancer_50bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/E10.5_promoter_50bpsummits.bed -b output/annotations/E10_cluster1_annotation.bed -wb &gt; output/liftover/E10_promoter_50bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E11.5_promoter_50bpsummits.bed -b output/annotations/E11_cluster1_annotation.bed -wb &gt; output/liftover/E11_promoter_50bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E12.5_promoter_50bpsummits.bed -b output/annotations/E12_cluster1_annotation.bed -wb &gt; output/liftover/E12_promoter_50bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E13.5_promoter_50bpsummits.bed -b output/annotations/E13_cluster1_annotation.bed -wb &gt; output/liftover/E13_promoter_50bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E14.5_promoter_50bpsummits.bed -b output/annotations/E14_cluster1_annotation.bed -wb &gt; output/liftover/E14_promoter_50bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E15.5_promoter_50bpsummits.bed -b output/annotations/E15_cluster1_annotation.bed -wb &gt; output/liftover/E15_promoter_50bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/E10.5_enhancer_50bpsummits.bed -b output/annotations/E10.5_enhancer_annotation.bed -wb &gt; output/liftover/E10_enhancer_50bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E11.5_enhancer_50bpsummits.bed -b output/annotations/E11.5_enhancer_annotation.bed -wb &gt; output/liftover/E11_enhancer_50bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E12.5_enhancer_50bpsummits.bed -b output/annotations/E12.5_enhancer_annotation.bed -wb &gt; output/liftover/E12_enhancer_50bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E13.5_enhancer_50bpsummits.bed -b output/annotations/E13.5_enhancer_annotation.bed -wb &gt; output/liftover/E13_enhancer_50bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E14.5_enhancer_50bpsummits.bed -b output/annotations/E14.5_enhancer_annotation.bed -wb &gt; output/liftover/E14_enhancer_50bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E15.5_enhancer_50bpsummits.bed -b output/annotations/E15.5_enhancer_annotation.bed -wb &gt; output/liftover/E15_enhancer_50bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_100bpsummits.bed -b output/annotations/dunnart_promoter_cluster1_annotationConvertedIDs.bed -wb &gt; output/liftover/dunnart_promoter_100bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_100bpsummits.bed -b output/annotations/dunnart_enhancer_annotationConvertedIDs.bed -wb &gt; output/liftover/dunnart_enhancer_100bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/E10.5_promoter_100bpsummits.bed -b output/annotations/E10_cluster1_annotation.bed -wb &gt; output/liftover/E10_promoter_100bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E11.5_promoter_100bpsummits.bed -b output/annotations/E11_cluster1_annotation.bed -wb &gt; output/liftover/E11_promoter_100bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E12.5_promoter_100bpsummits.bed -b output/annotations/E12_cluster1_annotation.bed -wb &gt; output/liftover/E12_promoter_100bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E13.5_promoter_100bpsummits.bed -b output/annotations/E13_cluster1_annotation.bed -wb &gt; output/liftover/E13_promoter_100bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E14.5_promoter_100bpsummits.bed -b output/annotations/E14_cluster1_annotation.bed -wb &gt; output/liftover/E14_promoter_100bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E15.5_promoter_100bpsummits.bed -b output/annotations/E15_cluster1_annotation.bed -wb &gt; output/liftover/E15_promoter_100bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/E10.5_enhancer_100bpsummits.bed -b output/annotations/E10.5_enhancer_annotation.bed -wb &gt; output/liftover/E10_enhancer_100bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E11.5_enhancer_100bpsummits.bed -b output/annotations/E11.5_enhancer_annotation.bed -wb &gt; output/liftover/E11_enhancer_100bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E12.5_enhancer_100bpsummits.bed -b output/annotations/E12.5_enhancer_annotation.bed -wb &gt; output/liftover/E12_enhancer_100bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E13.5_enhancer_100bpsummits.bed -b output/annotations/E13.5_enhancer_annotation.bed -wb &gt; output/liftover/E13_enhancer_100bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E14.5_enhancer_100bpsummits.bed -b output/annotations/E14.5_enhancer_annotation.bed -wb &gt; output/liftover/E14_enhancer_100bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E15.5_enhancer_100bpsummits.bed -b output/annotations/E15.5_enhancer_annotation.bed -wb &gt; output/liftover/E15_enhancer_100bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_200bpsummits.bed -b output/annotations/dunnart_promoter_cluster1_annotationConvertedIDs.bed -wb &gt; output/liftover/dunnart_promoter_200bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_200bpsummits.bed -b output/annotations/dunnart_enhancer_annotationConvertedIDs.bed -wb &gt; output/liftover/dunnart_enhancer_200bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/E10.5_promoter_200bpsummits.bed -b output/annotations/E10_cluster1_annotation.bed -wb &gt; output/liftover/E10_promoter_200bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E11.5_promoter_200bpsummits.bed -b output/annotations/E11_cluster1_annotation.bed -wb &gt; output/liftover/E11_promoter_200bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E12.5_promoter_200bpsummits.bed -b output/annotations/E12_cluster1_annotation.bed -wb &gt; output/liftover/E12_promoter_200bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E13.5_promoter_200bpsummits.bed -b output/annotations/E13_cluster1_annotation.bed -wb &gt; output/liftover/E13_promoter_200bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E14.5_promoter_200bpsummits.bed -b output/annotations/E14_cluster1_annotation.bed -wb &gt; output/liftover/E14_promoter_200bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E15.5_promoter_200bpsummits.bed -b output/annotations/E15_cluster1_annotation.bed -wb &gt; output/liftover/E15_promoter_200bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/E10.5_enhancer_200bpsummits.bed -b output/annotations/E10.5_enhancer_annotation.bed -wb &gt; output/liftover/E10_enhancer_200bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E11.5_enhancer_200bpsummits.bed -b output/annotations/E11.5_enhancer_annotation.bed -wb &gt; output/liftover/E11_enhancer_200bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E12.5_enhancer_200bpsummits.bed -b output/annotations/E12.5_enhancer_annotation.bed -wb &gt; output/liftover/E12_enhancer_200bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E13.5_enhancer_200bpsummits.bed -b output/annotations/E13.5_enhancer_annotation.bed -wb &gt; output/liftover/E13_enhancer_200bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E14.5_enhancer_200bpsummits.bed -b output/annotations/E14.5_enhancer_annotation.bed -wb &gt; output/liftover/E14_enhancer_200bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E15.5_enhancer_200bpsummits.bed -b output/annotations/E15.5_enhancer_annotation.bed -wb &gt; output/liftover/E15_enhancer_200bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_300bpsummits.bed -b output/annotations/dunnart_promoter_cluster1_annotationConvertedIDs.bed -wb &gt; output/liftover/dunnart_promoter_300bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_300bpsummits.bed -b output/annotations/dunnart_enhancer_annotationConvertedIDs.bed -wb &gt; output/liftover/dunnart_enhancer_300bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/E10.5_promoter_300bpsummits.bed -b output/annotations/E10_cluster1_annotation.bed -wb &gt; output/liftover/E10_promoter_300bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E11.5_promoter_300bpsummits.bed -b output/annotations/E11_cluster1_annotation.bed -wb &gt; output/liftover/E11_promoter_300bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E12.5_promoter_300bpsummits.bed -b output/annotations/E12_cluster1_annotation.bed -wb &gt; output/liftover/E12_promoter_300bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E13.5_promoter_300bpsummits.bed -b output/annotations/E13_cluster1_annotation.bed -wb &gt; output/liftover/E13_promoter_300bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E14.5_promoter_300bpsummits.bed -b output/annotations/E14_cluster1_annotation.bed -wb &gt; output/liftover/E14_promoter_300bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E15.5_promoter_300bpsummits.bed -b output/annotations/E15_cluster1_annotation.bed -wb &gt; output/liftover/E15_promoter_300bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/E10.5_enhancer_300bpsummits.bed -b output/annotations/E10.5_enhancer_annotation.bed -wb &gt; output/liftover/E10_enhancer_300bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E11.5_enhancer_300bpsummits.bed -b output/annotations/E11.5_enhancer_annotation.bed -wb &gt; output/liftover/E11_enhancer_300bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E12.5_enhancer_300bpsummits.bed -b output/annotations/E12.5_enhancer_annotation.bed -wb &gt; output/liftover/E12_enhancer_300bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E13.5_enhancer_300bpsummits.bed -b output/annotations/E13.5_enhancer_annotation.bed -wb &gt; output/liftover/E13_enhancer_300bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E14.5_enhancer_300bpsummits.bed -b output/annotations/E14.5_enhancer_annotation.bed -wb &gt; output/liftover/E14_enhancer_300bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E15.5_enhancer_300bpsummits.bed -b output/annotations/E15.5_enhancer_annotation.bed -wb &gt; output/liftover/E15_enhancer_300bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_400bpsummits.bed -b output/annotations/dunnart_promoter_cluster1_annotationConvertedIDs.bed -wb &gt; output/liftover/dunnart_promoter_400bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_400bpsummits.bed -b output/annotations/dunnart_enhancer_annotationConvertedIDs.bed -wb &gt; output/liftover/dunnart_enhancer_400bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/E10.5_promoter_400bpsummits.bed -b output/annotations/E10_cluster1_annotation.bed -wb &gt; output/liftover/E10_promoter_400bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E11.5_promoter_400bpsummits.bed -b output/annotations/E11_cluster1_annotation.bed -wb &gt; output/liftover/E11_promoter_400bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E12.5_promoter_400bpsummits.bed -b output/annotations/E12_cluster1_annotation.bed -wb &gt; output/liftover/E12_promoter_400bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E13.5_promoter_400bpsummits.bed -b output/annotations/E13_cluster1_annotation.bed -wb &gt; output/liftover/E13_promoter_400bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E14.5_promoter_400bpsummits.bed -b output/annotations/E14_cluster1_annotation.bed -wb &gt; output/liftover/E14_promoter_400bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E15.5_promoter_400bpsummits.bed -b output/annotations/E15_cluster1_annotation.bed -wb &gt; output/liftover/E15_promoter_400bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/E10.5_enhancer_400bpsummits.bed -b output/annotations/E10.5_enhancer_annotation.bed -wb &gt; output/liftover/E10_enhancer_400bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E11.5_enhancer_400bpsummits.bed -b output/annotations/E11.5_enhancer_annotation.bed -wb &gt; output/liftover/E11_enhancer_400bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E12.5_enhancer_400bpsummits.bed -b output/annotations/E12.5_enhancer_annotation.bed -wb &gt; output/liftover/E12_enhancer_400bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E13.5_enhancer_400bpsummits.bed -b output/annotations/E13.5_enhancer_annotation.bed -wb &gt; output/liftover/E13_enhancer_400bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E14.5_enhancer_400bpsummits.bed -b output/annotations/E14.5_enhancer_annotation.bed -wb &gt; output/liftover/E14_enhancer_400bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E15.5_enhancer_400bpsummits.bed -b output/annotations/E15.5_enhancer_annotation.bed -wb &gt; output/liftover/E15_enhancer_400bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_500bpsummits.bed -b output/annotations/dunnart_promoter_cluster1_annotationConvertedIDs.bed -wb &gt; output/liftover/dunnart_promoter_500bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_500bpsummits.bed -b output/annotations/dunnart_enhancer_annotationConvertedIDs.bed -wb &gt; output/liftover/dunnart_enhancer_500bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/E10.5_promoter_500bpsummits.bed -b output/annotations/E10_cluster1_annotation.bed -wb &gt; output/liftover/E10_promoter_500bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E11.5_promoter_500bpsummits.bed -b output/annotations/E11_cluster1_annotation.bed -wb &gt; output/liftover/E11_promoter_500bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E12.5_promoter_500bpsummits.bed -b output/annotations/E12_cluster1_annotation.bed -wb &gt; output/liftover/E12_promoter_500bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E13.5_promoter_500bpsummits.bed -b output/annotations/E13_cluster1_annotation.bed -wb &gt; output/liftover/E13_promoter_500bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E14.5_promoter_500bpsummits.bed -b output/annotations/E14_cluster1_annotation.bed -wb &gt; output/liftover/E14_promoter_500bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E15.5_promoter_500bpsummits.bed -b output/annotations/E15_cluster1_annotation.bed -wb &gt; output/liftover/E15_promoter_500bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/E10.5_enhancer_500bpsummits.bed -b output/annotations/E10.5_enhancer_annotation.bed -wb &gt; output/liftover/E10_enhancer_500bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E11.5_enhancer_500bpsummits.bed -b output/annotations/E11.5_enhancer_annotation.bed -wb &gt; output/liftover/E11_enhancer_500bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E12.5_enhancer_500bpsummits.bed -b output/annotations/E12.5_enhancer_annotation.bed -wb &gt; output/liftover/E12_enhancer_500bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E13.5_enhancer_500bpsummits.bed -b output/annotations/E13.5_enhancer_annotation.bed -wb &gt; output/liftover/E13_enhancer_500bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E14.5_enhancer_500bpsummits.bed -b output/annotations/E14.5_enhancer_annotation.bed -wb &gt; output/liftover/E14_enhancer_500bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E15.5_enhancer_500bpsummits.bed -b output/annotations/E15.5_enhancer_annotation.bed -wb &gt; output/liftover/E15_enhancer_500bpsummits_annotation.bed</code></pre>
+</div>
+<div id="liftover-dunnart-peaks-with-annotation-to-mouse" class="section level3">
+<h3>Liftover dunnart peaks with annotation to mouse</h3>
+<pre class="bash"><code>liftOver -bedPlus=4 output/liftover/dunnart_promoter_50bpsummits_annotation.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_50bpsummits_annotation_smiCraTOmm10.bed output/liftover/dunnart_promoter_50bpsummits_annotation_smiCraTOmm10_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_promoter_100bpsummits_annotation.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_100bpsummits_annotation_smiCraTOmm10.bed output/liftover/dunnart_promoter_100bpsummits_annotation_smiCraTOmm10_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_promoter_200bpsummits_annotation.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_200bpsummits_annotation_smiCraTOmm10.bed output/liftover/dunnart_promoter_200bpsummits_annotation_smiCraTOmm10_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_promoter_300bpsummits_annotation.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_300bpsummits_annotation_smiCraTOmm10.bed output/liftover/dunnart_promoter_300bpsummits_annotation_smiCraTOmm10_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_promoter_400bpsummits_annotation.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_400bpsummits_annotation_smiCraTOmm10.bed output/liftover/dunnart_promoter_400bpsummits_annotation_smiCraTOmm10_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_promoter_500bpsummits_annotation.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_500bpsummits_annotation_smiCraTOmm10.bed output/liftover/dunnart_promoter_500bpsummits_annotation_smiCraTOmm10_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_enhancer_50bpsummits_annotation.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_50bpsummits_annotation_smiCraTOmm10.bed output/liftover/dunnart_enhancer_50bpsummits_annotation_smiCraTOmm10_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_enhancer_100bpsummits_annotation.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_100bpsummits_annotation_smiCraTOmm10.bed output/liftover/dunnart_enhancer_100bpsummits_annotation_smiCraTOmm10_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_enhancer_200bpsummits_annotation.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_200bpsummits_annotation_smiCraTOmm10.bed output/liftover/dunnart_enhancer_200bpsummits_annotation_smiCraTOmm10_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_enhancer_300bpsummits_annotation.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_300bpsummits_annotation_smiCraTOmm10.bed output/liftover/dunnart_enhancer_300bpsummits_annotation_smiCraTOmm10_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_enhancer_400bpsummits_annotation.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_400bpsummits_annotation_smiCraTOmm10.bed output/liftover/dunnart_enhancer_400bpsummits_annotation_smiCraTOmm10_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_enhancer_500bpsummits_annotation.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_500bpsummits_annotation_smiCraTOmm10.bed output/liftover/dunnart_enhancer_500bpsummits_annotation_smiCraTOmm10_unmapped.bed</code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.1.0 (2021-05-18)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Red Hat Enterprise Linux
+
+Matrix products: default
+BLAS/LAPACK: /usr/local/easybuild-2019/easybuild/software/compiler/gcc/10.2.0/openblas/0.3.12/lib/libopenblas_haswellp-r0.3.12.so
+
+locale:
+ [1] LC_CTYPE=en_AU.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_AU.UTF-8        LC_COLLATE=en_AU.UTF-8    
+ [5] LC_MONETARY=en_AU.UTF-8    LC_MESSAGES=en_AU.UTF-8   
+ [7] LC_PAPER=en_AU.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_AU.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] knitr_1.33        data.table_1.14.0 workflowr_1.7.0  
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.8.3      highr_0.9         jquerylib_0.1.4   pillar_1.6.1     
+ [5] compiler_4.1.0    bslib_0.2.5.1     later_1.2.0       git2r_0.28.0     
+ [9] tools_4.1.0       getPass_0.2-2     digest_0.6.27     jsonlite_1.7.2   
+[13] evaluate_0.14     lifecycle_1.0.1   tibble_3.1.2      pkgconfig_2.0.3  
+[17] rlang_1.0.2       cli_2.5.0         rstudioapi_0.13   yaml_2.2.1       
+[21] xfun_0.23         httr_1.4.2        stringr_1.4.0     sass_0.4.0       
+[25] fs_1.5.0          vctrs_0.3.8       rprojroot_2.0.2   glue_1.4.2       
+[29] R6_2.5.0          processx_3.5.2    fansi_0.5.0       rmarkdown_2.8    
+[33] callr_3.7.0       magrittr_2.0.1    whisker_0.4       ps_1.6.0         
+[37] promises_1.2.0.1  ellipsis_0.3.2    htmltools_0.5.1.1 httpuv_1.6.1     
+[41] utf8_1.2.1        stringi_1.6.2     crayon_1.4.1     </code></pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
