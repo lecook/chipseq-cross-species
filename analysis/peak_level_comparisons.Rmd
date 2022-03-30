@@ -24,6 +24,7 @@ liftover_dir <- "output/liftover/"
 # Summary tables
 After the tables is all the code to compare peaks between species using liftOver and bedtools. It is a lot of repetitive code that I could revise but it was easiest to track it all this way for now. The summary tables show the number of peaks for the different overlaps.
 
+## 
 ```{r}
 
 
@@ -49,7 +50,7 @@ liftOver output/filtered_peaks/dunnart_promoter_peaks_coord.bed output/wga/liftO
 ```
 
 ```{r}
-files <- list.files("output/liftover", pattern = "*_smiCraTOmm10.bed", full.names = T)
+files <- list.files(liftover_dir, pattern = "dunnart_enhancer_smiCraTOmm10.bed|dunnart_promoter_smiCraTOmm10.bed", full.names = T)
 files <- as.list(files)
 data <- lapply(files, function(x) data.table::fread(x, header = FALSE, sep = "\t", quote = "", na.strings = c("", "NA")))
 
