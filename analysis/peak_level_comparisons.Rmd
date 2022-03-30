@@ -24,7 +24,17 @@ liftover_dir <- "output/liftover/"
 # Summary tables
 After the tables is all the code to compare peaks between species using liftOver and bedtools. It is a lot of repetitive code that I could revise but it was easiest to track it all this way for now. The summary tables show the number of peaks for the different overlaps.
 
-## 
+## Number of peaks lifted over with no width filtering
+```{r}
+files <- list.files(liftover_dir, pattern = "dunnart_enhancer_smiCraTOmm10.bed|dunnart_promoter_smiCraTOmm10.bed", full.names = T)
+files <- as.list(files)
+data <- lapply(files, function(x) data.table::fread(x, header = FALSE, sep = "\t", quote = "", na.strings = c("", "NA")))
+
+df <- data.table(enhancer_peaks_smiCraTOmm10 = dim(data[[1]])[1], promoter_peak_smiCraTOmm10 = dim(data[[2]])[1])
+
+kable(df, caption="Table. Number of peaks lifted over from dunnart to mouse")
+```
+
 ```{r}
 
 
@@ -48,17 +58,6 @@ less output/filtered_peaks/cluster1_dunnart_promoter_peaks.narrowPeak | awk '{pr
 liftOver output/peaks/dunnart_enhancer_peaks_coord.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_smiCraTOmm10.bed output/liftover/dunnart_enhancer_smiCraTOmm10_unmapped.bed
 liftOver output/filtered_peaks/dunnart_promoter_peaks_coord.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_smiCraTOmm10.bed output/liftover/dunnart_promoter_smiCraTOmm10_unmapped.bed
 ```
-
-```{r}
-files <- list.files(liftover_dir, pattern = "dunnart_enhancer_smiCraTOmm10.bed|dunnart_promoter_smiCraTOmm10.bed", full.names = T)
-files <- as.list(files)
-data <- lapply(files, function(x) data.table::fread(x, header = FALSE, sep = "\t", quote = "", na.strings = c("", "NA")))
-
-df <- data.table(enhancer_peaks_smiCraTOmm10 = dim(data[[1]])[1], promoter_peak_smiCraTOmm10 = dim(data[[2]])[1])
-
-kable(df, caption="Table. Number of peaks lifted over from dunnart to mouse")
-```
-
 
 <!-- # Import output files in R -->
 <!-- enh = fread("enhancers/dunnart.enhancer_smiCraTOmm10.bed") -->
