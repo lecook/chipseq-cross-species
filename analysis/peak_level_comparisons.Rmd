@@ -173,7 +173,7 @@ kable(enhancer_peaks, caption="Summary of alignable enhancer-associated peaks in
 ## Alignable peaks with conserved peak activity 
 Summary of mouse-dunnart conserved a. high-confidence promoter-associated peaks,
 and b. enhancer-associated peaks.
-```{r eval=FALSE}
+```{r echo=FALSE}
 
 conserved_peaks_enhancer = rbindlist(summarise_liftover(file_pattern= "*_mm10intersect_dunnart_enhancer_50bpsummits.bed",
                                      files = 1:6, column_name = "conserved peaks"), )
