@@ -170,13 +170,50 @@ kable(enhancer_peaks, caption="Summary of alignable enhancer-associated peaks in
 
 ```
 
-## Summary of mouse-dunnart conserved a. high-confidence promoter-associated peaks,
+## Alignable peaks with conserved peak activity 
+Summary of mouse-dunnart conserved a. high-confidence promoter-associated peaks,
 and b. enhancer-associated peaks.
 ```{r eval=FALSE}
-# filter to peaks that lift Over back to the same nearest gene
-promoters.filtered = lapply(promoters, function(x) x[x$ensembl_score == 1])
-enhancers.filtered = lapply(enhancers, function(x) x[x$ensembl_score == 1])
 
+conserved_peaks_enhancer = rbindlist(summarise_liftover(file_pattern= "*_mm10intersect_dunnart_enhancer_50bpsummits.bed",
+                                     files = 1:6, column_name = "conserved peaks"), )
+
+conserved_peaks_enhancer <- conserved_peaks_enhancer[
+  ,`total dunnart peaks`:= rep(35676, 6)
+  ][
+    ,`total dunnart to mouse alignable peaks with annotation`:= rep(4313, 6)
+    ]
+
+conserved_peaks_promoter = rbindlist(summarise_liftover(file_pattern= "*_mm10intersect_dunnart_promoter_50bpsummits.bed",
+                                     files = 1:6, column_name = "conserved peaks"), )
+
+conserved_peaks_promoter <- conserved_peaks_promoter[
+  ,`total dunnart peaks`:= rep(8510, 6)
+  ][
+    ,`total dunnart to mouse alignable peaks with annotation`:= rep(1442, 6)
+    ]
+
+conserved_peaks <- list(conserved_peaks_enhancer, conserved_peaks_promoter)
+
+conserved_peaks <- lapply(conserved_peaks, function(x){
+  x <- x[
+    ,stage:=c("E10.5", "E11.5", "E12.5", "E13.5", "E14.5", "E15.5")
+  ][
+    ,`% conserved peaks of alignable peaks`:=(as.numeric(`conserved peaks`) / 
+                                                as.numeric(`total dunnart to mouse alignable peaks with annotation`))*100
+    ][
+      ,`% conserved peaks of total dunnart peaks`:=(as.numeric(`conserved peaks`) / 
+                                                as.numeric(`total dunnart peaks`))*100
+      ][
+        ,c(2,3,1,4,5,6)
+        ]
+})                              
+
+kable(conserved_peaks[[1]], caption="Summary of mouse-dunnart conserved enhancer-associated peaks")
+kable(conserved_peaks[[2]], caption="Summary of mouse-dunnart conserved high-confidence promoter-associated peaks")
+```
+
+```{r eval=FALSE}
 # Convert devil ensembl to mouse ensembl
 promoters.filtered = lapply(promoters.filtered, function(x) x[,mouseensembl:=df2$Mouse.gene.stable.ID[match(unlist(x$combined), df2$Gene.stable.ID)]])
 promoters.filtered = lapply(promoters.filtered, function(x) x %>% dplyr::select(seqnames, start, end, width, geneId, transcriptId, distanceToTSS, refseq_score, ensembl_score, mouseensembl))
@@ -206,16 +243,6 @@ less output/filtered_peaks/cluster1_dunnart_promoter_peaks.narrowPeak | awk '{pr
 liftOver output/peaks/dunnart_enhancer_peaks_coord.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_smiCraTOmm10.bed output/liftover/dunnart_enhancer_smiCraTOmm10_unmapped.bed
 liftOver output/filtered_peaks/dunnart_promoter_peaks_coord.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_smiCraTOmm10.bed output/liftover/dunnart_promoter_smiCraTOmm10_unmapped.bed
 ```
-
-<!-- # Import output files in R -->
-<!-- enh = fread("enhancers/dunnart.enhancer_smiCraTOmm10.bed") -->
-<!-- prom = fread("promoters/clustered/dunnart.promoter_smiCraTOmm10.bed") -->
-<!-- data = list(enh, prom) -->
-<!-- names(data) = c("enhancers", "promoters") -->
-<!-- data = Map(mutate, data, cre = names(data)) -->
-<!-- data = lapply(data, function(x) x[order(V4),]) -->
-<!-- data = lapply(data, function(x) x=x[,width:=V3-V2]) -->
-<!-- data = rbindlist(data,) -->
 
 ## LiftOver peak summits
 ### Prepare peak summits and extract peak IDs
@@ -872,3 +899,4 @@ liftOver -bedPlus=4 output/liftover/dunnart_enhancer_400bpsummits_annotation_smi
 
 liftOver -bedPlus=4 output/liftover/dunnart_enhancer_500bpsummits_annotation_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_500bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_enhancer_500bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
 ```
+
