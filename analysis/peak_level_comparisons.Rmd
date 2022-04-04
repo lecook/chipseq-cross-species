@@ -205,7 +205,7 @@ conserved_peaks <- lapply(conserved_peaks, function(x){
       ,`% conserved peaks of total dunnart peaks`:=(as.numeric(`conserved peaks`) / 
                                                 as.numeric(`total dunnart peaks`))*100
       ][
-        ,c(2,3,1,4,5,6)
+        ,c(4,2,3,1,5,6)
         ]
 })                              
 
