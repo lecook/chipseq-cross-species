@@ -213,20 +213,6 @@ kable(conserved_peaks[[1]], caption="Summary of mouse-dunnart conserved enhancer
 kable(conserved_peaks[[2]], caption="Summary of mouse-dunnart conserved high-confidence promoter-associated peaks")
 ```
 
-```{r eval=FALSE}
-# Convert devil ensembl to mouse ensembl
-promoters.filtered = lapply(promoters.filtered, function(x) x[,mouseensembl:=df2$Mouse.gene.stable.ID[match(unlist(x$combined), df2$Gene.stable.ID)]])
-promoters.filtered = lapply(promoters.filtered, function(x) x %>% dplyr::select(seqnames, start, end, width, geneId, transcriptId, distanceToTSS, refseq_score, ensembl_score, mouseensembl))
-promoters.filtered[[6]][promoters.filtered[[6]] == ""] <- NA
-write.table(promoters.filtered[[6]], file = "promoters.filtered.liftOver.50bpsummits.annotations.bed", sep="\t", quote=F, row.names=F, col.names = F)
-enhancers.filtered = lapply(enhancers.filtered, function(x) x[,mouseensembl:=df2$Mouse.gene.stable.ID[match(unlist(x$combined), df2$Gene.stable.ID)]])
-enhancers.filtered = lapply(enhancers.filtered, function(x) x %>% dplyr::select(seqnames, start, end, width, geneId, transcriptId, distanceToTSS, refseq_score, ensembl_score, mouseensembl))
-enhancers.filtered[[6]][enhancers.filtered[[6]] == ""] <- NA
-write.table(enhancers.filtered[[6]], file = "enhancers.filtered.liftOver.50bpsummits.annotations.bed", sep="\t", quote=F, row.names=F, col.names = F)
-
-
-```
-
 # LiftOver of peak coordinates between species
 ## All peaks with no peak width filtering
 
