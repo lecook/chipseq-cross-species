@@ -23,6 +23,8 @@ library(dplyr)
 library(TxDb.Mmusculus.UCSC.mm10.ensGene)
 library(scales)
 library(purrr)
+library(clusterProfiler)
+library(org.Mm.eg.db)
 
 plot_dir <- "output/plots/"
 fullPeak_dir <- "output/peaks/"
@@ -285,27 +287,54 @@ bg = unlist(bg, use.names = FALSE)
 
 ```{r}
 ## Anotate peak files
-annotatePeaksmm10 <- function(peak, outFile){
+annotatePeaksmm10 <- function(peak, outFile, backg, GOenrich){
   
   # Annotate peak file based on mouse ENSEMBL annotation
   peakAnno <- annotatePeak(peak, tssRegion = c(-3000, 3000), TxDb = mm10_txdb)
   
   # Write annotation to file
   write.table(peakAnno, outFile, sep="\t", quote=F, row.names=F)
+  
+  peakAnnoDF <- as.data.frame(peakAnno)
+  
+  # # GO enrichment analysis
+  GO <- enrichGO(
+    gene = unlist(peakAnnoDF$transcriptId),
+                  keyType = "ENSEMBL",
+                  OrgDb = org.Mm.eg.db,
+                  ont = "BP",
+                  universe = backg,
+                  pAdjustMethod = "fdr",
+                  qvalueCutoff = 0.01,
+                  readable = TRUE)
+  write.table(GO, 
+              paste0(annot_dir, 
+                     GOenrich), sep="\t", quote=F, row.names=F)
 }
 
-annotatePeaksmm10(peak = paste0(fullPeak_dir, "E10.5_enhancer_peaks.narrowPeak"), outFile = paste0(annot_dir, "E10.5_enhancer_annotation.txt"))
-annotatePeaksmm10(peak = paste0(fullPeak_dir, "E11.5_enhancer_peaks.narrowPeak"), outFile = paste0(annot_dir, "E11.5_enhancer_annotation.txt"))
-annotatePeaksmm10(peak = paste0(fullPeak_dir, "E12.5_enhancer_peaks.narrowPeak"), outFile = paste0(annot_dir, "E12.5_enhancer_annotation.txt"))
-annotatePeaksmm10(peak = paste0(fullPeak_dir, "E13.5_enhancer_peaks.narrowPeak"), outFile = paste0(annot_dir, "E13.5_enhancer_annotation.txt"))
-annotatePeaksmm10(peak = paste0(fullPeak_dir, "E14.5_enhancer_peaks.narrowPeak"), outFile = paste0(annot_dir, "E14.5_enhancer_annotation.txt"))
-annotatePeaksmm10(peak = paste0(fullPeak_dir, "E15.5_enhancer_peaks.narrowPeak"), outFile = paste0(annot_dir,"E15.5_enhancer_annotation.txt"))
-annotatePeaksmm10(peak = paste0(fullPeak_dir, "E10.5_promoter_peaks.narrowPeak"), outFile = paste0(annot_dir,"E10.5_promoter_annotation.txt"))
-annotatePeaksmm10(peak = paste0(fullPeak_dir, "E11.5_promoter_peaks.narrowPeak"), outFile = paste0(annot_dir,"E11.5_promoter_annotation.txt"))
-annotatePeaksmm10(peak = paste0(fullPeak_dir, "E12.5_promoter_peaks.narrowPeak"), outFile = paste0(annot_dir,"E12.5_promoter_annotation.txt"))
-annotatePeaksmm10(peak = paste0(fullPeak_dir, "E13.5_promoter_peaks.narrowPeak"), outFile = paste0(annot_dir,"E13.5_promoter_annotation.txt"))
-annotatePeaksmm10(peak = paste0(fullPeak_dir, "E14.5_promoter_peaks.narrowPeak"), outFile = paste0(annot_dir,"E14.5_promoter_annotation.txt"))
-annotatePeaksmm10(peak = paste0(fullPeak_dir, "E15.5_promoter_peaks.narrowPeak"), outFile = paste0(annot_dir,"E15.5_promoter_annotation.txt"))
+annotatePeaksmm10(peak = paste0(fullPeak_dir, "E10.5_enhancer_peaks.narrowPeak"), outFile = paste0(annot_dir, "E10.5_enhancer_annotation.txt"), backg = unlist(fread("output/annotations/go_background_orthologousENSEMBL_biomart.txt", header = FALSE), use.names = FALSE), GOenrich = "E10.5_enhancer_mm10GOenrich")
+
+annotatePeaksmm10(peak = paste0(fullPeak_dir, "E11.5_enhancer_peaks.narrowPeak"), outFile = paste0(annot_dir, "E11.5_enhancer_annotation.txt"), backg = unlist(fread("output/annotations/go_background_orthologousENSEMBL_biomart.txt", header = FALSE), use.names = FALSE), GOenrich = "E11.5_enhancer_mm10GOenrich")
+
+annotatePeaksmm10(peak = paste0(fullPeak_dir, "E12.5_enhancer_peaks.narrowPeak"), outFile = paste0(annot_dir, "E12.5_enhancer_annotation.txt"), backg = unlist(fread("output/annotations/go_background_orthologousENSEMBL_biomart.txt", header = FALSE), use.names = FALSE), GOenrich = "E12.5_enhancer_mm10GOenrich")
+
+annotatePeaksmm10(peak = paste0(fullPeak_dir, "E13.5_enhancer_peaks.narrowPeak"), outFile = paste0(annot_dir, "E13.5_enhancer_annotation.txt"), backg = unlist(fread("output/annotations/go_background_orthologousENSEMBL_biomart.txt", header = FALSE), use.names = FALSE), GOenrich = "E13.5_enhancer_mm10GOenrich")
+
+annotatePeaksmm10(peak = paste0(fullPeak_dir, "E14.5_enhancer_peaks.narrowPeak"), outFile = paste0(annot_dir, "E14.5_enhancer_annotation.txt"), backg = unlist(fread("output/annotations/go_background_orthologousENSEMBL_biomart.txt", header = FALSE), use.names = FALSE), GOenrich = "E14.5_enhancer_mm10GOenrich")
+
+annotatePeaksmm10(peak = paste0(fullPeak_dir, "E15.5_enhancer_peaks.narrowPeak"), outFile = paste0(annot_dir,"E15.5_enhancer_annotation.txt"), backg = unlist(fread("output/annotations/go_background_orthologousENSEMBL_biomart.txt", header = FALSE), use.names = FALSE), GOenrich = "E15.5_enhancer_mm10GOenrich")
+
+annotatePeaksmm10(peak = paste0(fullPeak_dir, "E10.5_promoter_peaks.narrowPeak"), outFile = paste0(annot_dir,"E10.5_promoter_annotation.txt"), backg = unlist(fread("output/annotations/go_background_orthologousENSEMBL_biomart.txt", header = FALSE), use.names = FALSE), GOenrich = "E10.5_promoter_mm10GOenrich")
+
+annotatePeaksmm10(peak = paste0(fullPeak_dir, "E11.5_promoter_peaks.narrowPeak"), outFile = paste0(annot_dir,"E11.5_promoter_annotation.txt"), backg = unlist(fread("output/annotations/go_background_orthologousENSEMBL_biomart.txt", header = FALSE), use.names = FALSE), GOenrich = "E11.5_promoter_mm10GOenrich")
+
+annotatePeaksmm10(peak = paste0(fullPeak_dir, "E12.5_promoter_peaks.narrowPeak"), outFile = paste0(annot_dir,"E12.5_promoter_annotation.txt"), backg = unlist(fread("output/annotations/go_background_orthologousENSEMBL_biomart.txt", header = FALSE), use.names = FALSE), GOenrich = "E12.5_promoter_mm10GOenrich")
+
+annotatePeaksmm10(peak = paste0(fullPeak_dir, "E13.5_promoter_peaks.narrowPeak"), outFile = paste0(annot_dir,"E13.5_promoter_annotation.txt"), backg = unlist(fread("output/annotations/go_background_orthologousENSEMBL_biomart.txt", header = FALSE), use.names = FALSE), GOenrich = "E13.5_promoter_mm10GOenrich")
+
+annotatePeaksmm10(peak = paste0(fullPeak_dir, "E14.5_promoter_peaks.narrowPeak"), outFile = paste0(annot_dir,"E14.5_promoter_annotation.txt"), backg = unlist(fread("output/annotations/go_background_orthologousENSEMBL_biomart.txt", header = FALSE), use.names = FALSE), GOenrich = "E14.5_promoter_mm10GOenrich")
+
+annotatePeaksmm10(peak = paste0(fullPeak_dir, "E15.5_promoter_peaks.narrowPeak"), outFile = paste0(annot_dir,"E15.5_promoter_annotation.txt"), backg = unlist(fread("output/annotations/go_background_orthologousENSEMBL_biomart.txt", header = FALSE), use.names = FALSE), GOenrich = "E15.5_promoter_mm10GOenrich")
 ```
 
 ### Dunnart
@@ -339,16 +368,28 @@ annotatePeaks <- function(peak, outFile, outFile1, outFile2, GOenrich, kegg, bac
   peakAnnoDF$mouseensembl[peakAnnoDF$mouseensembl == as.character("")] <- NA
   peakAnnoDF <- peakAnnoDF[!is.na(peakAnnoDF$mouseensembl),]
   write.table(peakAnnoDF, paste0(annot_dir, outFile1), sep = "\t", quote = F, row.names = F)
+  
+  # # GO enrichment analysis
+  GO <- enrichGO(gene = peakAnnoDF$mouseensembl,
+                  keyType = "ENSEMBL",
+                  OrgDb = org.Mm.eg.db,
+                  ont = "BP",
+                  universe = backg,
+                  pAdjustMethod = "fdr",
+                  qvalueCutoff = 0.01,
+                  readable = TRUE)
+  write.table(GO, paste0(annot_dir, GOenrich), 
+              sep="\t", quote=F, row.names=F)
 }
 
 
 ### Enhancer-associated peaks annotation
 annotatePeaks(peak = paste0(fullPeak_dir, "dunnart_enhancer_peaks.narrowPeak"), outFile = "dunnart_enhancer_annotation.txt", backg = unlist(fread("output/annotations/go_background_orthologousENSEMBL_biomart.txt", header = FALSE), use.names = FALSE),
-  outFile1 = "dunnart_enhancer_annotationConvertedIDs.txt", outFile2 = "dunnart_enhancer_annotationConvertedIDs_t.devil.txt")
+  outFile1 = "dunnart_enhancer_annotationConvertedIDs.txt", outFile2 = "dunnart_enhancer_annotationConvertedIDs_t.devil.txt", GOenrich = "dunnart_enhancer_mm10GOenrich")
 
 ### Promoter-associated peaks annotation
 annotatePeaks(peak = paste0(fullPeak_dir, "dunnart_promoter_peaks.narrowPeak"), outFile = "dunnart_promoter_annotation.txt", backg = unlist(fread("output/annotations/go_background_orthologousENSEMBL_biomart.txt", header = FALSE), use.names = FALSE),
-  outFile1 = "dunnart_promoter_annotationConvertedIDs.txt", outFile2 = "dunnart_promoter_annotationConvertedIDs_t.devil.txt")
+  outFile1 = "dunnart_promoter_annotationConvertedIDs.txt", outFile2 = "dunnart_promoter_annotationConvertedIDs_t.devil.txt", GOenrich = "dunnart_promoter_mm10GOenrich")
 
 ```
 
