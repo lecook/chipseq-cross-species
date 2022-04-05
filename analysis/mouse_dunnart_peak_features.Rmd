@@ -824,7 +824,7 @@ plot_genomic_features <- function(x, y){
 p = plot_genomic_features(promoters_tbl, c('#4d004b','#4d004b','#4d004b','#4d004b','#4d004b','#4d004b','#4d004b'))
 
 pdf(paste0(plot_dir, "mouse_dunnart_promoter_genomic_features.pdf"))
-print(p)
+print(p + font)
 dev.off()
 
 print(p + ggtitle("Genomic features for promoter-associated peaks"))
@@ -832,7 +832,7 @@ print(p + ggtitle("Genomic features for promoter-associated peaks"))
 p = plot_genomic_features(enhancers_tbl, c('#fff7ec','#fee8c8','#fdd49e','#fdbb84','#fc8d59','#ef6548','#4d004b'))
 
 pdf(paste0(plot_dir, "mouse_dunnart_enhancer_genomic_features.pdf"))
-print(p)
+print(p + font)
 dev.off()
 
 print(p + ggtitle("Genomic features for enhancer-associated peaks"))
