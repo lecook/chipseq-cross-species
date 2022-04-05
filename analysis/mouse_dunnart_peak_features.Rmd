@@ -22,6 +22,7 @@ library(data.table)
 library(dplyr)
 library(TxDb.Mmusculus.UCSC.mm10.ensGene)
 library(scales)
+library(purrr)
 
 plot_dir <- "output/plots/"
 fullPeak_dir <- "output/peaks/"
@@ -532,7 +533,6 @@ df3 = lapply(df3, function(x) as.vector(x$V4))
 
 filtered <- lapply(df2, function(x) x[x$V4 %in% unlist(df3),])
 
-
 lapply(names(filtered), function(x) write.table(filtered[[x]], file=paste0(filterPeaks_dir,x,"_cluster1_peaks", ".narrowPeak"), sep="\t", quote=FALSE, col.names=FALSE, row.names=FALSE))
 
 ```
@@ -754,4 +754,86 @@ pdf(paste0(plot_dir, "mouse_dunnart_clustered_peak_GC_content.pdf"), width=10, h
 print(p + font)
 dev.off()
 
+```
+
+## Plot genomic annotation features
+
+```{r}
+files =list.files(annot_dir, 
+                  pattern= "dunnart_enhancer_annotationConvertedIDs.txt|cluster1_promoter_annotationConvertedIDs.txt|*.5_enhancer_annotation.txt|*_cluster1_annotation.txt",
+                  full.names=T) # create list of files in directory
+    
+files = as.list(files)
+data = lapply(files, 
+              function(x) fread(x, 
+                                header=TRUE, 
+                                sep="\t", 
+                                quote = "", 
+                                na.strings=c("", "NA"))) 
+
+data = lapply(data, function(x) x %>% 
+                dplyr::select(annotation) %>% 
+                as.data.table())
+
+df1 = Map(mutate, data[c(1,3,5,7,9,11,13)], cre = "promoter")
+df2 = Map(mutate, data[c(2,4,6,8,10,12,14)], cre = "enhancer")
+data = append(df1, df2)
+
+df1 = Map(mutate, data[c(1,8)], group = "dunnart")
+df2 = Map(mutate, data[c(2,9)], group = "E10.5")
+df3 = Map(mutate, data[c(3,10)], group = "E11.5")
+df4 = Map(mutate, data[c(4,11)], group = "E12.5")
+df5 = Map(mutate, data[c(5,12)], group = "E13.5")
+df6 = Map(mutate, data[c(6,13)], group = "E14.5")
+df7 = Map(mutate, data[c(7,14)], group = "E15.5")
+
+data <- append(df1, df2)
+data <- append(data, df3)
+data = append(data, df4)
+data = append(data, df5)
+data = append(data, df6)
+data = append(data, df7)
+    
+df1 = rbindlist(data,) ## bind rows back together
+df1 = map_df(df1, ~ gsub(" .*", "", .x))# remove everything after the first space
+df1 = df1[complete.cases(df1), ]
+promoters <- filter(df1, cre == "promoter")
+enhancers <- filter(df1, cre == "enhancer")
+
+promoters_tbl = with(promoters,
+                     table(annotation, group)) %>% as.data.frame()
+enhancers_tbl = with(enhancers, 
+                         table(annotation, group)) %>%
+  as.data.frame()
+
+
+# Plot proportion of peaks in each genomic region
+plot_genomic_features <- function(x, y){
+  ggplot(x, 
+         aes(factor(group), 
+                  Freq, 
+                  fill=annotation)) +
+    geom_bar(position=position_stack(reverse = FALSE),
+             stat="identity") +
+    scale_fill_manual(values = y)  + 
+    theme_minimal() + 
+    ylab("Number of peaks") +
+    xlab("")
+}
+
+p = plot_genomic_features(promoters_tbl, c('#4d004b','#4d004b','#4d004b','#4d004b','#4d004b','#4d004b','#4d004b'))
+
+pdf(paste0(plot_dir, "mouse_dunnart_promoter_genomic_features.pdf"))
+print(p)
+dev.off()
+
+print(p + ggtitle("Genomic features for promoter-associated peaks"))
+
+p = plot_genomic_features(enhancers_tbl, c('#fff7ec','#fee8c8','#fdd49e','#fdbb84','#fc8d59','#ef6548','#4d004b'))
+
+pdf(paste0(plot_dir, "mouse_dunnart_enhancer_genomic_features.pdf"))
+print(p)
+dev.off()
+
+print(p + ggtitle("Genomic features for enhancer-associated peaks"))
 ```
