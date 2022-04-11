@@ -476,16 +476,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree1b05cdaadcfc3a0dee3ec5a4749b477edaaf36e3targetblank1b05cdaa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/1b05cdaadcfc3a0dee3ec5a4749b477edaaf36e3" target="_blank">1b05cda</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree106f0f3a3ad57867dbb425fafdf0ade92ee0fa71targetblank106f0f3a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/106f0f3a3ad57867dbb425fafdf0ade92ee0fa71" target="_blank">106f0f3</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree1b05cdaadcfc3a0dee3ec5a4749b477edaaf36e3targetblank1b05cdaa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree106f0f3a3ad57867dbb425fafdf0ade92ee0fa71targetblank106f0f3a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/1b05cdaadcfc3a0dee3ec5a4749b477edaaf36e3" target="_blank">1b05cda</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/106f0f3a3ad57867dbb425fafdf0ade92ee0fa71" target="_blank">106f0f3</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -496,7 +496,6 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    analysis/.RData
     Ignored:    analysis/.Rhistory
-    Ignored:    analysis/figure/
     Ignored:    data/genomic_data/
     Ignored:    data/geo_submission/
     Ignored:    output/annotations/
@@ -1020,6 +1019,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/106f0f3a3ad57867dbb425fafdf0ade92ee0fa71/analysis/gene_level_comparisons.Rmd" target="_blank">106f0f3</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-04-11
+</td>
+<td>
+wflow_publish(“analysis/gene_level_comparisons.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/d60fe4738fed90bfdfa9b3723ee62a41a43b4111/docs/gene_level_comparisons.html" target="_blank">d60fe47</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-04-11
+</td>
+<td>
+wflow_publish(“docs/gene_level_comparisons.html”)
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/lecook/chipseq-cross-species/blob/1b05cdaadcfc3a0dee3ec5a4749b477edaaf36e3/analysis/gene_level_comparisons.Rmd" target="_blank">1b05cda</a>
 </td>
 <td>
@@ -1371,15 +1404,15 @@ vector_of_scores &lt;- c(
 
 )
 
-my_matrix &lt;- matrix(0,7,7) ## creates a n x n square 0 matrix
+my_matrix_1 &lt;- matrix(0,7,7) ## creates a n x n square 0 matrix
 
-rownames(my_matrix) = c(&#39;dunnart&#39;,&#39;E10&#39;,&#39;E11&#39;,&#39;E12&#39;,&#39;E13&#39;,&#39;E14&#39;,&#39;E15&#39;)
-colnames(my_matrix) = c(&#39;dunnart&#39;,&#39;E10&#39;,&#39;E11&#39;,&#39;E12&#39;,&#39;E13&#39;,&#39;E14&#39;,&#39;E15&#39;)
+rownames(my_matrix_1) = c(&#39;dunnart&#39;,&#39;E10&#39;,&#39;E11&#39;,&#39;E12&#39;,&#39;E13&#39;,&#39;E14&#39;,&#39;E15&#39;)
+colnames(my_matrix_1) = c(&#39;dunnart&#39;,&#39;E10&#39;,&#39;E11&#39;,&#39;E12&#39;,&#39;E13&#39;,&#39;E14&#39;,&#39;E15&#39;)
 
-my_matrix[ col(my_matrix) &lt; row(my_matrix) ] &lt;- vector_of_scores
-my_matrix &lt;- my_matrix + t(my_matrix)
-diag(my_matrix) &lt;- 1
-my_matrix</code></pre>
+my_matrix_1[ col(my_matrix_1) &lt; row(my_matrix_1) ] &lt;- vector_of_scores
+my_matrix_1 &lt;- my_matrix_1 + t(my_matrix_1)
+diag(my_matrix_1) &lt;- 1
+my_matrix_1</code></pre>
 <pre><code>        dunnart   E10   E11   E12   E13   E14   E15
 dunnart   1.000 0.399 0.203 0.482 0.449 0.416 0.449
 E10       0.399 1.000 0.254 0.459 0.410 0.388 0.479
@@ -1388,8 +1421,8 @@ E12       0.482 0.459 0.348 1.000 0.896 0.832 0.891
 E13       0.449 0.410 0.321 0.896 1.000 0.839 0.895
 E14       0.416 0.388 0.366 0.832 0.839 1.000 0.782
 E15       0.449 0.479 0.367 0.891 0.895 0.782 1.000</code></pre>
-<pre class="r"><code>p &lt;- Heatmap(my_matrix, name = &quot;score&quot;, col=c(&#39;#a8ddb5&#39;,&#39;#7bccc4&#39;,&#39;#4eb3d3&#39;,&#39;#2b8cbe&#39;,&#39;#08589e&#39;), heatmap_legend_param = list(
-        title = &quot;GO similarity score&quot;, at = c(0,0.2,0.4,0.6,0.8,1)))
+<pre class="r"><code>p &lt;- Heatmap(my_matrix_1, name = &quot;score&quot;, col=c(&#39;#a8ddb5&#39;,&#39;#7bccc4&#39;,&#39;#4eb3d3&#39;,&#39;#2b8cbe&#39;,&#39;#08589e&#39;), heatmap_legend_param = list(
+        title = &quot;GO similarity score&quot;))
 p</code></pre>
 <p><img src="figure/gene_level_comparisons.Rmd/unnamed-chunk-3-1.svg" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>pdf(paste(plot_dir,&#39;promoter_GO_semantic_scores.pdf&#39;,sep=&#39;&#39;),width=10,height = 7)
@@ -1432,15 +1465,15 @@ vector_of_scores &lt;- c(
 
 )
 
-my_matrix &lt;- matrix(0,7,7) ## creates a n x n square 0 matrix
+my_matrix_2 &lt;- matrix(0,7,7) ## creates a n x n square 0 matrix
 
-rownames(my_matrix) = c(&#39;dunnart&#39;,&#39;E10&#39;,&#39;E11&#39;,&#39;E12&#39;,&#39;E13&#39;,&#39;E14&#39;,&#39;E15&#39;)
-colnames(my_matrix) = c(&#39;dunnart&#39;,&#39;E10&#39;,&#39;E11&#39;,&#39;E12&#39;,&#39;E13&#39;,&#39;E14&#39;,&#39;E15&#39;)
+rownames(my_matrix_2) = c(&#39;dunnart&#39;,&#39;E10&#39;,&#39;E11&#39;,&#39;E12&#39;,&#39;E13&#39;,&#39;E14&#39;,&#39;E15&#39;)
+colnames(my_matrix_2) = c(&#39;dunnart&#39;,&#39;E10&#39;,&#39;E11&#39;,&#39;E12&#39;,&#39;E13&#39;,&#39;E14&#39;,&#39;E15&#39;)
 
-my_matrix[ col(my_matrix) &lt; row(my_matrix) ] &lt;- vector_of_scores
-my_matrix &lt;- my_matrix + t(my_matrix)
-diag(my_matrix) &lt;- 1
-my_matrix</code></pre>
+my_matrix_2[ col(my_matrix_2) &lt; row(my_matrix_2) ] &lt;- vector_of_scores
+my_matrix_2 &lt;- my_matrix_2 + t(my_matrix_2)
+diag(my_matrix_2) &lt;- 1
+my_matrix_2</code></pre>
 <pre><code>        dunnart   E10   E11   E12   E13   E14   E15
 dunnart   1.000 0.740 0.652 0.789 0.771 0.784 0.797
 E10       0.740 1.000 0.833 0.899 0.902 0.906 0.897
@@ -1449,8 +1482,8 @@ E12       0.789 0.899 0.814 1.000 0.920 0.930 0.925
 E13       0.771 0.902 0.811 0.920 1.000 0.933 0.926
 E14       0.784 0.906 0.805 0.930 0.933 1.000 0.943
 E15       0.797 0.897 0.792 0.925 0.926 0.943 1.000</code></pre>
-<pre class="r"><code>p &lt;- Heatmap(my_matrix, name = &quot;score&quot;, col=c(&#39;#a8ddb5&#39;,&#39;#7bccc4&#39;,&#39;#4eb3d3&#39;,&#39;#2b8cbe&#39;,&#39;#08589e&#39;), heatmap_legend_param = list(
-        title = &quot;GO similarity score&quot;, at = c(0,0.2,0.4,0.6,0.8,1)))
+<pre class="r"><code>p &lt;- Heatmap(my_matrix_2, name = &quot;score&quot;, col=c(&#39;#a8ddb5&#39;,&#39;#7bccc4&#39;,&#39;#4eb3d3&#39;,&#39;#2b8cbe&#39;,&#39;#08589e&#39;), heatmap_legend_param = list(
+        title = &quot;GO similarity score&quot;))
 p</code></pre>
 <p><img src="figure/gene_level_comparisons.Rmd/unnamed-chunk-3-2.svg" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>pdf(paste(plot_dir,&#39;enhancer_GO_semantic_scores.pdf&#39;,sep=&#39;&#39;),width=10,height = 7)
@@ -1557,7 +1590,7 @@ promoters = lapply(files, function(x) fread(x,
 names(go_data_filtered) = c( &quot;dunnart&quot;,&quot;E10.5&quot;, &quot;E11.5&quot;, &quot;E12.5&quot;, &quot;E13.5&quot;, &quot;E14.5&quot;, &quot;E15.5&quot;)
 simplifyGOFromMultipleLists(go_data_filtered, db = org.Mm.eg.db,  measure = &quot;Wang&quot;, method = &quot;binary_cut&quot;)</code></pre>
 <pre><code>476/476 GO IDs left for clustering.
-Cluster 476 terms by &#39;binary_cut&#39;... 18 clusters, used 0.1873841 secs.</code></pre>
+Cluster 476 terms by &#39;binary_cut&#39;... 18 clusters, used 0.1978443 secs.</code></pre>
 <p><img src="figure/gene_level_comparisons.Rmd/unnamed-chunk-8-1.svg" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="promoter-associated-peaks-1" class="section level3">
@@ -1566,7 +1599,7 @@ Cluster 476 terms by &#39;binary_cut&#39;... 18 clusters, used 0.1873841 secs.</
 names(go_data_filtered) = c( &quot;dunnart&quot;,&quot;E10.5&quot;, &quot;E11.5&quot;, &quot;E12.5&quot;, &quot;E13.5&quot;, &quot;E14.5&quot;, &quot;E15.5&quot;)
 simplifyGOFromMultipleLists(go_data_filtered, db = org.Mm.eg.db,  measure = &quot;Wang&quot;, method = &quot;binary_cut&quot;)</code></pre>
 <pre><code>324/324 GO IDs left for clustering.
-Cluster 324 terms by &#39;binary_cut&#39;... 5 clusters, used 0.07666135 secs.</code></pre>
+Cluster 324 terms by &#39;binary_cut&#39;... 5 clusters, used 0.08128238 secs.</code></pre>
 <p><img src="figure/gene_level_comparisons.Rmd/unnamed-chunk-9-1.svg" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
