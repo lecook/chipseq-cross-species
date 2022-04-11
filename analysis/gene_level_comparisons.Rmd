@@ -292,18 +292,18 @@ vector_of_scores <- c(
 
 )
 
-my_matrix <- matrix(0,7,7) ## creates a n x n square 0 matrix
+my_matrix_1 <- matrix(0,7,7) ## creates a n x n square 0 matrix
 
-rownames(my_matrix) = c('dunnart','E10','E11','E12','E13','E14','E15')
-colnames(my_matrix) = c('dunnart','E10','E11','E12','E13','E14','E15')
+rownames(my_matrix_1) = c('dunnart','E10','E11','E12','E13','E14','E15')
+colnames(my_matrix_1) = c('dunnart','E10','E11','E12','E13','E14','E15')
 
-my_matrix[ col(my_matrix) < row(my_matrix) ] <- vector_of_scores
-my_matrix <- my_matrix + t(my_matrix)
-diag(my_matrix) <- 1
-my_matrix
+my_matrix_1[ col(my_matrix_1) < row(my_matrix_1) ] <- vector_of_scores
+my_matrix_1 <- my_matrix_1 + t(my_matrix_1)
+diag(my_matrix_1) <- 1
+my_matrix_1
 
-p <- Heatmap(my_matrix, name = "score", col=c('#a8ddb5','#7bccc4','#4eb3d3','#2b8cbe','#08589e'), heatmap_legend_param = list(
-        title = "GO similarity score", at = c(0,0.2,0.4,0.6,0.8,1)))
+p <- Heatmap(my_matrix_1, name = "score", col=c('#a8ddb5','#7bccc4','#4eb3d3','#2b8cbe','#08589e'), heatmap_legend_param = list(
+        title = "GO similarity score"))
 p
 pdf(paste(plot_dir,'promoter_GO_semantic_scores.pdf',sep=''),width=10,height = 7)
 print(p)
@@ -344,26 +344,24 @@ vector_of_scores <- c(
 
 )
 
-my_matrix <- matrix(0,7,7) ## creates a n x n square 0 matrix
+my_matrix_2 <- matrix(0,7,7) ## creates a n x n square 0 matrix
 
-rownames(my_matrix) = c('dunnart','E10','E11','E12','E13','E14','E15')
-colnames(my_matrix) = c('dunnart','E10','E11','E12','E13','E14','E15')
+rownames(my_matrix_2) = c('dunnart','E10','E11','E12','E13','E14','E15')
+colnames(my_matrix_2) = c('dunnart','E10','E11','E12','E13','E14','E15')
 
-my_matrix[ col(my_matrix) < row(my_matrix) ] <- vector_of_scores
-my_matrix <- my_matrix + t(my_matrix)
-diag(my_matrix) <- 1
-my_matrix
+my_matrix_2[ col(my_matrix_2) < row(my_matrix_2) ] <- vector_of_scores
+my_matrix_2 <- my_matrix_2 + t(my_matrix_2)
+diag(my_matrix_2) <- 1
+my_matrix_2
 
-p <- Heatmap(my_matrix, name = "score", col=c('#a8ddb5','#7bccc4','#4eb3d3','#2b8cbe','#08589e'), heatmap_legend_param = list(
-        title = "GO similarity score", at = c(0,0.2,0.4,0.6,0.8,1)))
+p <- Heatmap(my_matrix_2, name = "score", col=c('#a8ddb5','#7bccc4','#4eb3d3','#2b8cbe','#08589e'), heatmap_legend_param = list(
+        title = "GO similarity score"))
 p
 
 
 pdf(paste(plot_dir,'enhancer_GO_semantic_scores.pdf',sep=''),width=10,height = 7)
 print(p)
 dev.off()
-
-
 ```
 
 ## GO cluster comparisons
