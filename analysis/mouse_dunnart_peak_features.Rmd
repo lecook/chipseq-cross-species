@@ -503,18 +503,27 @@ cluster3 <- cre.kmeans_df$V4[cre.kmeans_df$Cluster==3]
 
 promoter = paste0(fullPeak_dir, "dunnart_promoter_peaks.narrowPeak")
 promoter_annot = paste0(annot_dir, "dunnart_promoter_annotationConvertedIDs.txt")
+promoter_annot2 = paste0(annot_dir, "dunnart_promoter_annotation.txt")
+promoter_annot3 = paste0(annot_dir, "dunnart_promoter_annotationConvertedIDs_t.devil.txt")
+
 
 out1 = paste0(filterPeaks_dir, "cluster1_dunnart_promoter_peaks.narrowPeak")
 out2 = paste0(filterPeaks_dir, "cluster2_dunnart_promoter_peaks.narrowPeak")
 out3 =  paste0(filterPeaks_dir, "cluster3_dunnart_promoter_peaks.narrowPeak")
 out4 = paste0(annot_dir, "dunnart_promoter_cluster1_annotationConvertedIDs.txt")
+out5 = paste0(annot_dir, "dunnart_promoter_cluster1_annotation.txt")
+out6 = paste0(annot_dir, "dunnart_promoter_cluster1_annotationConvertedIDs_t.devil.txt")
 
 file= fread(promoter, header=FALSE, sep="\t", quote = "") 
 file2 = fread(promoter_annot, header=TRUE, sep = "\t", quote="")
+file3 = fread(promoter_annot2, header=TRUE, sep = "\t", quote="")
+file4 = fread(promoter_annot3, header=TRUE, sep = "\t", quote="")
 write.table(subset(file, V4 %in% cluster1), out1, quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
 write.table(subset(file, V4 %in% cluster2), out2, quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
 write.table(subset(file, V4 %in% cluster3), out3, quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
 write.table(subset(file2, V4 %in% cluster1), out4, quote=FALSE, col.names=TRUE, row.names=FALSE, sep="\t")
+write.table(subset(file3, V4 %in% cluster1), out5, quote=FALSE, col.names=TRUE, row.names=FALSE, sep="\t")
+write.table(subset(file4, V4 %in% cluster1), out6, quote=FALSE, col.names=TRUE, row.names=FALSE, sep="\t")
 
 ```
 
@@ -531,7 +540,7 @@ message("cluster 3 promoter peaks: ", dim(fread(paste0(filterPeaks_dir, "cluster
 files =list.files(annot_dir, pattern= ".5_promoter_annotation.txt", full.names=T) # create list of files in directory
 files = as.list(files)
 data_annot = lapply(files, function(x) fread(x, header=TRUE, sep="\t", quote = "", na.strings=c("", "NA"))) # read in all files
-names(data_annot) = c("E10","E11","E12","E13","E14", "E15")
+names(data_annot) = c("E10.5","E11.5","E12.5","E13.5","E14.5", "E15.5")
 df1 = Map(mutate, data_annot, group = names(data_annot))
 
 ## add thresholds from kmeans clustering for cluster 1 in the dunnart
@@ -865,3 +874,6 @@ dev.off()
 
 print(p + ggtitle("Genomic features for enhancer-associated peaks"))
 ```
+
+
+
