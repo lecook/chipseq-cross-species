@@ -7,534 +7,882 @@ editor_options:
   chunk_output_type: console
 ---
 
+```{r setup, include = FALSE} 
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+knitr::opts_chunk$set(echo = TRUE)
+
+library(data.table)
+library(knitr)
+library(dplyr)
+library(stringr)
+library(purrr)
+library(tidyverse)
+library(GenomicFeatures)
+library(ChIPseeker)
+
+
+plot_dir <- "output/plots/"
+fullPeak_dir <- "output/peaks/"
+annot_dir <- "output/annotations/"
+filterPeaks_dir <- "output/filtered_peaks/"
+liftover_dir <- "output/liftover/"
+
+smiCra_txdb <- makeTxDbFromGFF("data/genomic_data/Scras_dunnart_assem1.0_pb-ont-illsr_flyeassem_red-rd-scfitr2_pil2xwgs2_60chr2.gff")
+## geneID conversion tables
+df2 <- read.table("output/annotations/devil_to_mouse_ensembl.txt", header=TRUE, sep="\t") ## conversion table for devil ENSEMBL to mouse ENSEMBL
+df3 <- read.table("output/annotations/refseq_to_ensembl.txt", header=TRUE, sep="\t") ## convertsion table for devil refseq to devil ENSEMBL
+bg = fread("output/annotations/go_background_orthologousENSEMBL_biomart.txt", header = FALSE)
+
+```
+
+# Summary tables
+After the tables is all the code to compare peaks between species using liftOver and bedtools. It is a lot of repetitive code that I could revise but it was easiest to track it all this way for now. The summary tables show the number of peaks for the different overlaps.
+
+## Number of peaks lifted over with no width filtering
+```{r echo=FALSE}
+files <- list.files(liftover_dir, pattern = "dunnart_enhancer_smiCraTOmm10.bed|dunnart_promoter_smiCraTOmm10.bed", full.names = T)
+files <- as.list(files)
+data <- lapply(files, function(x) data.table::fread(x, header = FALSE, sep = "\t", quote = "", na.strings = c("", "NA")))
+
+df <- data.table(enhancer_peaks_smiCraTOmm10 = dim(data[[1]])[1], promoter_peak_smiCraTOmm10 = dim(data[[2]])[1])
+
+kable(df, caption="Table. Number of peaks lifted over from dunnart to mouse")
+```
+
+## Liftover peak summits from dunnart to mouse
+```{r echo=FALSE, warning = FALSE, message = FALSE}
+
+summarise_liftover <- function(file_pattern, column_name, files){
+fl <- list.files(liftover_dir, pattern = file_pattern, full.names = T) # create list of files in directory
+fl <- fl[{files}]
+fl <- as.list(fl)
+data <- lapply(fl, function(x) data.table::fread(x, header = FALSE, sep = "\t", quote = "", na.strings = c("", "NA"), fill=TRUE))
+df <- lapply(data, function(x) data.table(dim(x)[1]))
+df <- lapply(df, function(x) {x=setnames(x,column_name)})
+return(df)
+}
+
+compare_nearest_genes_after_liftover <- function(files, i, j){
+reciprocal.to.dunnart = list.files(liftover_dir, pattern= "*annotation_smiCraTOmm10_mm10TOsmiCra.bed", full.names=T)
+reciprocal.to.dunnart <- reciprocal.to.dunnart[{files}]
+reciprocal.to.dunnart <- as.list(reciprocal.to.dunnart)
+
+# annotate lifted over coordinates
+reciprocal.to.dunnart.anno <- lapply(reciprocal.to.dunnart, annotatePeak, tssRegion = c(-3000, 3000), TxDb = smiCra_txdb, verbose=FALSE)
+
+## create list of dataframe annotations
+reciprocal.to.dunnart.annoList = list(reciprocal.to.dunnart.anno[[1]]@anno, reciprocal.to.dunnart.anno[[2]]@anno,
+                        reciprocal.to.dunnart.anno[[3]]@anno, reciprocal.to.dunnart.anno[[4]]@anno,
+                        reciprocal.to.dunnart.anno[[5]]@anno, reciprocal.to.dunnart.anno[[6]]@anno)
+peakAnnoDF <- lapply(reciprocal.to.dunnart.annoList, function(x) as.data.table(x))
+        
+        
+# Convert new annotations (after liftOver) to ensembl IDs in the mouse
+peakAnnoDF = lapply(peakAnnoDF, function(x){
+  x <- x[
+    ,ensemblgeneID:=df2$Gene.stable.ID[match(unlist(x$geneId), df2$Gene.name)]
+    ][
+      ,ensemblgeneID:=replace(x$ensemblgeneID,is.na(x$ensemblgeneID),"-")
+      ][
+        ,transcriptIdAltered:=gsub("\\..*","", x$transcriptId)
+        ][
+          ,refseqID:=df3$Ensembl.Gene.ID[match(unlist(x$transcriptIdAltered), df3$RefSeq.mRNA.Accession)]
+          ][
+            ,refseqID:=replace(x$refseqID,is.na(x$refseqID),"-")
+            ][
+              ,combined:=ifelse(x$refseqID == "-", x$ensemblgeneID, x$refseqID)
+              ]
+})
+
+length.ensembl = lapply(peakAnnoDF, function(x) length(which(x$ensemblgeneID %like% "ENS" == TRUE)))
+length.refseq = lapply(peakAnnoDF, function(x) length(x$transcriptId))
+
+peakAnnoDF = lapply(peakAnnoDF, function(x) x[,refseq_score:=ifelse(x[[i]] ==transcriptId & transcriptId %like% "XM_", "1", "0")])
+peakAnnoDF = lapply(peakAnnoDF, function(x) x[,ensembl_score:=ifelse(combined == x[[j]] & x[[j]] %like% "ENS", "1", "0")])
+
+gene.comparison.refseq.counts = lapply(peakAnnoDF, function(x) data.table(length(which(x$refseq_score ==1))))   
+
+gene.comparison.ensembl.counts = lapply(peakAnnoDF, function(x) data.table("number of alignable peaks with the same nearest gene call before and after liftOver" = length(which(x$ensembl_score ==1))))
+
+return(gene.comparison.ensembl.counts)
+}
+
+
+## Promoter-associated peaks
+dunnart_to_mouse_promoters = rbindlist(summarise_liftover(file_pattern = "*bpsummits_smiCraTOmm10.bed", column_name = "liftOver dunnart to mouse", files = 7:12),)
+
+mouse_to_dunnart_promoters = rbindlist(summarise_liftover(file_pattern = "*.bed_smiCraTOmm10_mm10TOsmiCra.bed", column_name = "liftOver mouse to dunnart (reciprocal)", files = 7:12), )
+
+ensembl_alignable_promoters = rbindlist(summarise_liftover(file_pattern = "*bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed", column_name = "alignable peaks with ENSEMBL annotations", files = 7:12), )
+
+compare_nearest_genes_promoters = rbindlist(compare_nearest_genes_after_liftover(7:12, i = "V26", j = "V31"),)
+
+promoter_peaks = cbind(dunnart_to_mouse_promoters, mouse_to_dunnart_promoters, ensembl_alignable_promoters, compare_nearest_genes_promoters)
+
+promoter_peaks <- promoter_peaks[
+    ,summit_width:=c("100bp", "200bp", "300bp", "400bp", "500bp", "50bp")
+    ][
+      ,`number of dunnart peaks`:= rep("8510", 6)
+      ][
+        ,`% alignable peaks of total peaks`:=(as.numeric(`liftOver dunnart to mouse`) 
+                                              / as.numeric(`number of dunnart peaks`))*100
+        ][
+          ,`% of alignable peaks with the same gene call before and after liftOver`:= 
+            (as.numeric(`number of alignable peaks with the same nearest gene call before and after liftOver`/
+                          as.numeric(`alignable peaks with ENSEMBL annotations`)))*100
+          ][
+            c(6,1,2,3,4,5),
+            ][
+              ,c(5,6,1,2,7,3,4,8)
+              ]
+
+## Enhancer-associated peaks 
+dunnart_to_mouse_enhancers = rbindlist(summarise_liftover(file_pattern = "*bpsummits_smiCraTOmm10.bed", column_name = "liftOver dunnart to mouse", files = 1:6),)
+
+mouse_to_dunnart_enhancers = rbindlist(summarise_liftover(file_pattern = "*.bed_smiCraTOmm10_mm10TOsmiCra.bed", column_name = "liftOver mouse to dunnart (reciprocal)", files = 1:6),)
+
+ensembl_alignable_enhancers = rbindlist(summarise_liftover(file_pattern = "*bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed", column_name = "alignable peaks with ENSEMBL annotations", files = 1:6), )
+
+compare_nearest_genes_enhancers = rbindlist(compare_nearest_genes_after_liftover(1:6, i = "V24", j = "V29"),)
+
+enhancer_peaks <- cbind(dunnart_to_mouse_enhancers, mouse_to_dunnart_enhancers, ensembl_alignable_enhancers, compare_nearest_genes_enhancers)
+
+enhancer_peaks <- enhancer_peaks[
+    ,summit_width:=c("100bp", "200bp", "300bp", "400bp", "500bp", "50bp")
+    ][
+      ,`number of dunnart peaks`:= rep("35676", 6)
+      ][
+        ,`% alignable peaks of total peaks`:=(as.numeric(`liftOver dunnart to mouse`) 
+                                              / as.numeric(`number of dunnart peaks`))*100
+        ][
+          ,`% of alignable peaks with the same gene call before and after liftOver`:= 
+            (as.numeric(`number of alignable peaks with the same nearest gene call before and after liftOver`/
+                          as.numeric(`alignable peaks with ENSEMBL annotations`)))*100
+          ][
+            c(6,1,2,3,4,5),
+            ][
+              ,c(5,6,1,2,7,3,4,8)
+              ]
+
+
+kable(promoter_peaks, caption="Summary of alignable promoter-associated peaks in the mouse and dunnart")
+kable(enhancer_peaks, caption="Summary of alignable enhancer-associated peaks in the mouse and dunnart")
+
+```
+
+## Alignable peaks with conserved peak activity 
+Summary of mouse-dunnart conserved a. high-confidence promoter-associated peaks,
+and b. enhancer-associated peaks.
+```{r echo=FALSE}
+
+conserved_peaks_enhancer = rbindlist(summarise_liftover(file_pattern= "*_mm10intersect_dunnart_enhancer_50bpsummits.bed",
+                                     files = 1:6, column_name = "conserved peaks"), )
+
+conserved_peaks_enhancer <- conserved_peaks_enhancer[
+  ,`total dunnart peaks`:= rep(35676, 6)
+  ][
+    ,`total dunnart to mouse alignable peaks with annotation`:= rep(4313, 6)
+    ]
+
+conserved_peaks_promoter = rbindlist(summarise_liftover(file_pattern= "*_mm10intersect_dunnart_promoter_50bpsummits.bed",
+                                     files = 1:6, column_name = "conserved peaks"), )
+
+conserved_peaks_promoter <- conserved_peaks_promoter[
+  ,`total dunnart peaks`:= rep(8510, 6)
+  ][
+    ,`total dunnart to mouse alignable peaks with annotation`:= rep(1442, 6)
+    ]
+
+conserved_peaks <- list(conserved_peaks_enhancer, conserved_peaks_promoter)
+
+conserved_peaks <- lapply(conserved_peaks, function(x){
+  x <- x[
+    ,stage:=c("E10.5", "E11.5", "E12.5", "E13.5", "E14.5", "E15.5")
+  ][
+    ,`% conserved peaks of alignable peaks`:=(as.numeric(`conserved peaks`) / 
+                                                as.numeric(`total dunnart to mouse alignable peaks with annotation`))*100
+    ][
+      ,`% conserved peaks of total dunnart peaks`:=(as.numeric(`conserved peaks`) / 
+                                                as.numeric(`total dunnart peaks`))*100
+      ][
+        ,c(4,2,3,1,5,6)
+        ]
+})                              
+
+kable(conserved_peaks[[1]], caption="Summary of mouse-dunnart conserved enhancer-associated peaks")
+kable(conserved_peaks[[2]], caption="Summary of mouse-dunnart conserved high-confidence promoter-associated peaks")
+```
+
 # LiftOver of peak coordinates between species
 ## All peaks with no peak width filtering
 
 ```{bash eval=FALSE}
 ## Load modules
-module load bedtools/2.30.0
+conda activate chip
 module load ucsc
 
 ## Extract peak coordinates
-less output/peaks/dunnart_downSampled_enhancer_peaks.narrowPeak | awk '{print $1,$2,$3}' > output/peaks/dunnart_downSampled_enhancer_peaks_coord.bed
-less promoters/clustered/dunnart.clustered.narrowPeak | awk '{print $1,$2,$3}' > promoters/clustered/dunnart.promoter_peaks_coord.bed
+less output/peaks/dunnart_enhancer_peaks.narrowPeak | awk '{print $1,$2,$3}' > output/peaks/dunnart_enhancer_peaks_coord.bed
+less output/filtered_peaks/cluster1_dunnart_promoter_peaks.narrowPeak | awk '{print $1,$2,$3}' > output/filtered_peaks/dunnart_promoter_peaks_coord.bed
 
 ## LiftOver peak coordinates from dunnart to mouse
-liftOver enhancers/dunnart.enhancer_peaks_coord.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain dunnart.enhancer_smiCraTOmm10.bed enhancer_smiCraTOmm10_unmapped.bed
-liftOver promoters/clustered/dunnart.promoter_peaks_coord.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain dunnart.promoter_smiCraTOmm10.bed promoter_smiCraTOmm10_unmapped.bed
-# enhancer = 437 peaks
-# promoter = 48 peaks
-
-# Import output files in R
-enh = fread("enhancers/dunnart.enhancer_smiCraTOmm10.bed")
-prom = fread("promoters/clustered/dunnart.promoter_smiCraTOmm10.bed")
-data = list(enh, prom)
-names(data) = c("enhancers", "promoters")
-data = Map(mutate, data, cre = names(data))
-data = lapply(data, function(x) x[order(V4),])
-data = lapply(data, function(x) x=x[,width:=V3-V2])
-data = rbindlist(data,)
-
-
-###################################################################################################
-################################### EXTRACT PEAK SUMMITS ########################################
-###################################################################################################
-
-# make list of peaks enhancer and promoter groups
-less enhancers/dunnart_enhancer_peaks.narrowPeak | awk -F '\t' '{print $4}' | sort > enhancers/enhancer_peak_IDs.txt
-less promoters/clustered/dunnart.clustered.narrowPeak | awk -F '\t' '{print $4}' | sort > promoters/clustered/promoter_peak_IDs.txt
-
-cat /data/projects/punim0586/lecook/chipseq-pipeline/dunnart/results_10M/macs2/H3K4me3_pooled_macs2_summits.bed /data/projects/punim0586/lecook/chipseq-pipeline/dunnart/results_10M/macs2/H3K27ac_pooled_macs2_summits.bed > H3K4me3_H3K27ac_combinedSummits.bed
-
-less E10.5_enhancer_peaks.narrowPeak | awk -F '\t' '{print $4}'  > E10.5_enhancer_peaks_IDs.txt
-less E11.5_enhancer_peaks.narrowPeak | awk -F '\t' '{print $4}'  > E11.5_enhancer_peaks_IDs.txt
-less E12.5_enhancer_peaks.narrowPeak | awk -F '\t' '{print $4}'  > E12.5_enhancer_peaks_IDs.txt
-less E13.5_enhancer_peaks.narrowPeak | awk -F '\t' '{print $4}'  > E13.5_enhancer_peaks_IDs.txt
-less E14.5_enhancer_peaks.narrowPeak | awk -F '\t' '{print $4}'  > E14.5_enhancer_peaks_IDs.txt
-less E15.5_enhancer_peaks.narrowPeak | awk -F '\t' '{print $4}'  > E15.5_enhancer_peaks_IDs.txt
-
-less  E10.5.clustered.narrowPeak | awk -F '\t' '{print $4}' > promoters/clustered/E10.5_promoter_peaks_IDs.txt
-less  E11.5.clustered.narrowPeak | awk -F '\t' '{print $4}'  > promoters/clustered/E11.5_promoter_peaks_IDs.txt
-less  E12.5.clustered.narrowPeak | awk -F '\t' '{print $4}'  > promoters/clustered/E12.5_promoter_peaks_IDs.txt
-less  E13.5.clustered.narrowPeak | awk -F '\t' '{print $4}'  > promoters/clustered/E13.5_promoter_peaks_IDs.txt
-less  E14.5.clustered.narrowPeak | awk -F '\t' '{print $4}'  > promoters/clustered/E14.5_promoter_peaks_IDs.txt
-less  E15.5.clustered.narrowPeak | awk -F '\t' '{print $4}'  > promoters/clustered/E15.5_promoter_peaks_IDs.txt
-
-setwd("/data/projects/punim0586/lecook/chipseq-pipeline/mouse/results_10M/macs2")
-cat E10.5_H3K27ac.pooled.macs2_summits.bed E10.5_H3K4me3.pooled.macs2_summits.bed > ../../../cross_species/peakAnnotation/consensus/E10.5_H3K27ac_H3K4me3.pooled.macs2_summits.bed
-cat E11.5_H3K27ac.pooled.macs2_summits.bed E11.5_H3K4me3.pooled.macs2_summits.bed > ../../../cross_species/peakAnnotation/consensus/E11.5_H3K27ac_H3K4me3.pooled.macs2_summits.bed
-cat E12.5_H3K27ac.pooled.macs2_summits.bed E12.5_H3K4me3.pooled.macs2_summits.bed > ../../../cross_species/peakAnnotation/consensus/E12.5_H3K27ac_H3K4me3.pooled.macs2_summits.bed
-cat E13.5_H3K27ac.pooled.macs2_summits.bed E13.5_H3K4me3.pooled.macs2_summits.bed > ../../../cross_species/peakAnnotation/consensus/E13.5_H3K27ac_H3K4me3.pooled.macs2_summits.bed
-cat E14.5_H3K27ac.pooled.macs2_summits.bed E14.5_H3K4me3.pooled.macs2_summits.bed > ../../../cross_species/peakAnnotation/consensus/E14.5_H3K27ac_H3K4me3.pooled.macs2_summits.bed
-cat E15.5_H3K27ac.pooled.macs2_summits.bed E15.5_H3K4me3.pooled.macs2_summits.bed > ../../../cross_species/peakAnnotation/consensus/E15.5_H3K27ac_H3K4me3.pooled.macs2_summits.bed
-
-# in R extract rows from summits file based on the list of peaks in overlap file for both enhancers and promoters
-## Dunnart
-summits <- read.table("H3K4me3_H3K27ac_combinedSummits.bed")
-reps1 <- scan("enhancers/enhancer_peak_IDs.txt", what="", sep="\n")
-reps2 <- scan("promoters/clustered/promoter_peak_IDs.txt", what="", sep="\n")
-enh_summits <- subset(summits, V4 %in% reps1)
-pro_summits <- subset(summits, V4 %in% reps2)
-write.table(enh_summits, "dunnart.enhancer_overlap_summits.bed", quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
-write.table(pro_summits, "dunnart.promoter_overlap_summits.bed", quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
-
-## Mouse
-setwd("/data/projects/punim0586/lecook/chipseq-pipeline/cross_species/peakAnnotation/consensus")
-E10 <- read.table("E10.5_H3K27ac_H3K4me3.pooled.macs2_summits.bed")
-E11<- read.table("E11.5_H3K27ac_H3K4me3.pooled.macs2_summits.bed")
-E12<- read.table("E12.5_H3K27ac_H3K4me3.pooled.macs2_summits.bed")
-E13<- read.table("E13.5_H3K27ac_H3K4me3.pooled.macs2_summits.bed")
-E14<- read.table("E14.5_H3K27ac_H3K4me3.pooled.macs2_summits.bed")
-E15<- read.table("E15.5_H3K27ac_H3K4me3.pooled.macs2_summits.bed")
-
-p10 <- scan("promoters/clustered/E10.5_promoter_peaks_IDs.txt", what="", sep="\n")
-p11 <- scan("promoters/clustered/E11.5_promoter_peaks_IDs.txt", what="", sep="\n")
-p12 <- scan("promoters/clustered/E12.5_promoter_peaks_IDs.txt", what="", sep="\n")
-p13 <- scan("promoters/clustered/E13.5_promoter_peaks_IDs.txt", what="", sep="\n")
-p14 <- scan("promoters/clustered/E14.5_promoter_peaks_IDs.txt", what="", sep="\n")
-p15 <- scan("promoters/clustered/E15.5_promoter_peaks_IDs.txt", what="", sep="\n")
-
-e10 <- scan("enhancers/E10.5_enhancer_peaks_IDs.txt", what="", sep="\n")
-e11 <- scan("enhancers/E11.5_enhancer_peaks_IDs.txt", what="", sep="\n")
-e12 <- scan("enhancers/E12.5_enhancer_peaks_IDs.txt", what="", sep="\n")
-e13 <- scan("enhancers/E13.5_enhancer_peaks_IDs.txt", what="", sep="\n")
-e14 <- scan("enhancers/E14.5_enhancer_peaks_IDs.txt", what="", sep="\n")
-e15 <- scan("enhancers/E15.5_enhancer_peaks_IDs.txt", what="", sep="\n")
-
-write.table(subset(E10, V4 %in% p10), "promoters/clustered/E10_promoter_overlap_summits.bed", quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
-write.table(subset(E11, V4 %in% p11), "promoters/clustered/E11_promoter_overlap_summits.bed", quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
-write.table(subset(E12, V4 %in% p12), "promoters/clustered/E12_promoter_overlap_summits.bed", quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
-write.table(subset(E13, V4 %in% p13), "promoters/clustered/E13_promoter_overlap_summits.bed", quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
-write.table(subset(E14, V4 %in% p14), "promoters/clustered/E14_promoter_overlap_summits.bed", quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
-write.table(subset(E15, V4 %in% p15), "promoters/clustered/E15_promoter_overlap_summits.bed", quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
-
-write.table(subset(E10, V4 %in% e10), "enhancers/E10_enhancer_overlap_summits.bed", quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
-write.table(subset(E11, V4 %in% e11), "enhancers/E11_enhancer_overlap_summits.bed", quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
-write.table(subset(E12, V4 %in% e12), "enhancers/E12_enhancer_overlap_summits.bed", quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
-write.table(subset(E13, V4 %in% e13), "enhancers/E13_enhancer_overlap_summits.bed", quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
-write.table(subset(E14, V4 %in% e14), "enhancers/E14_enhancer_overlap_summits.bed", quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
-write.table(subset(E15, V4 %in% e15), "enhancers/E15_enhancer_overlap_summits.bed", quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
-
-
-# in bash use bedtools to extend the summits 25bp in both directions to have 50bp 
-bedtools slop -i enhancers/dunnart.enhancer_overlap_summits.bed -b 25 -g smiCra1.chrom.sizes > enhancers/enhancer_overlap_50bpsummits.bed
-bedtools slop -i promoters/clustered/dunnart.promoter_overlap_summits.bed -b 25 -g smiCra1.chrom.sizes > promoters/clustered/promoter_overlap_50bpsummits.bed
-
-bedtools slop -i enhancers/E10_enhancer_overlap_summits.bed -b 25 -g mm10.chrom.sizes > enhancers/E10_enhancer_overlap_50bpsummits.bed
-bedtools slop -i enhancers/E11_enhancer_overlap_summits.bed -b 25 -g mm10.chrom.sizes > enhancers/E11_enhancer_overlap_50bpsummits.bed
-bedtools slop -i enhancers/E12_enhancer_overlap_summits.bed -b 25 -g mm10.chrom.sizes > enhancers/E12_enhancer_overlap_50bpsummits.bed
-bedtools slop -i enhancers/E13_enhancer_overlap_summits.bed -b 25 -g mm10.chrom.sizes > enhancers/E13_enhancer_overlap_50bpsummits.bed
-bedtools slop -i enhancers/E14_enhancer_overlap_summits.bed -b 25 -g mm10.chrom.sizes > enhancers/E14_enhancer_overlap_50bpsummits.bed
-bedtools slop -i enhancers/E15_enhancer_overlap_summits.bed -b 25 -g mm10.chrom.sizes > enhancers/E15_enhancer_overlap_50bpsummits.bed
-
-bedtools slop -i promoters/clustered/E10_promoter_overlap_summits.bed -b 25 -g mm10.chrom.sizes > promoters/clustered/E10_promoter_overlap_50bpsummits.bed
-bedtools slop -i promoters/clustered/E11_promoter_overlap_summits.bed -b 25 -g mm10.chrom.sizes > promoters/clustered/E11_promoter_overlap_50bpsummits.bed
-bedtools slop -i promoters/clustered/E12_promoter_overlap_summits.bed -b 25 -g mm10.chrom.sizes > promoters/clustered/E12_promoter_overlap_50bpsummits.bed
-bedtools slop -i promoters/clustered/E13_promoter_overlap_summits.bed -b 25 -g mm10.chrom.sizes > promoters/clustered/E13_promoter_overlap_50bpsummits.bed
-bedtools slop -i promoters/clustered/E14_promoter_overlap_summits.bed -b 25 -g mm10.chrom.sizes > promoters/clustered/E14_promoter_overlap_50bpsummits.bed
-bedtools slop -i promoters/clustered/E15_promoter_overlap_summits.bed -b 25 -g mm10.chrom.sizes > promoters/clustered/E15_promoter_overlap_50bpsummits.bed
-
-# in bash use bedtools to extend the summits 50bp in both directions to have 100bp 
-bedtools slop -i enhancers/dunnart.enhancer_overlap_summits.bed -b 50 -g smiCra1.chrom.sizes > enhancers/enhancer_overlap_100bpsummits.bed
-bedtools slop -i promoters/dunnart.promoter_overlap_summits.bed -b 50 -g smiCra1.chrom.sizes > promoters/promoter_overlap_100bpsummits.bed
-
-bedtools slop -i enhancers/E10_enhancer_overlap_summits.bed -b 50 -g mm10.chrom.sizes > enhancers/E10_enhancer_overlap_100bpsummits.bed
-bedtools slop -i enhancers/E11_enhancer_overlap_summits.bed -b 50 -g mm10.chrom.sizes > enhancers/E11_enhancer_overlap_100bpsummits.bed
-bedtools slop -i enhancers/E12_enhancer_overlap_summits.bed -b 50 -g mm10.chrom.sizes > enhancers/E12_enhancer_overlap_100bpsummits.bed
-bedtools slop -i enhancers/E13_enhancer_overlap_summits.bed -b 50 -g mm10.chrom.sizes > enhancers/E13_enhancer_overlap_100bpsummits.bed
-bedtools slop -i enhancers/E14_enhancer_overlap_summits.bed -b 50 -g mm10.chrom.sizes > enhancers/E14_enhancer_overlap_100bpsummits.bed
-bedtools slop -i enhancers/E15_enhancer_overlap_summits.bed -b 50 -g mm10.chrom.sizes > enhancers/E15_enhancer_overlap_100bpsummits.bed
-
-bedtools slop -i promoters/E10_promoter_overlap_summits.bed -b 50 -g mm10.chrom.sizes > promoters/E10_promoter_overlap_100bpsummits.bed
-bedtools slop -i promoters/E11_promoter_overlap_summits.bed -b 50 -g mm10.chrom.sizes > promoters/E11_promoter_overlap_100bpsummits.bed
-bedtools slop -i promoters/E12_promoter_overlap_summits.bed -b 50 -g mm10.chrom.sizes > promoters/E12_promoter_overlap_100bpsummits.bed
-bedtools slop -i promoters/E13_promoter_overlap_summits.bed -b 50 -g mm10.chrom.sizes > promoters/E13_promoter_overlap_100bpsummits.bed
-bedtools slop -i promoters/E14_promoter_overlap_summits.bed -b 50 -g mm10.chrom.sizes > promoters/E14_promoter_overlap_100bpsummits.bed
-bedtools slop -i promoters/E15_promoter_overlap_summits.bed -b 50 -g mm10.chrom.sizes > promoters/E15_promoter_overlap_100bpsummits.bed
-
-# in bash use bedtools to extend the summits 100bp in both directions to have 200bp 
-bedtools slop -i enhancers/dunnart.enhancer_overlap_summits.bed -b 100 -g smiCra1.chrom.sizes > enhancers/enhancer_overlap_200bpsummits.bed
-bedtools slop -i promoters/dunnart.promoter_overlap_summits.bed -b 100 -g smiCra1.chrom.sizes > promoters/promoter_overlap_200bpsummits.bed
-
-bedtools slop -i enhancers/E10_enhancer_overlap_summits.bed -b 100 -g mm10.chrom.sizes > enhancers/E10_enhancer_overlap_200bpsummits.bed
-bedtools slop -i enhancers/E11_enhancer_overlap_summits.bed -b 100 -g mm10.chrom.sizes > enhancers/E11_enhancer_overlap_200bpsummits.bed
-bedtools slop -i enhancers/E12_enhancer_overlap_summits.bed -b 100 -g mm10.chrom.sizes > enhancers/E12_enhancer_overlap_200bpsummits.bed
-bedtools slop -i enhancers/E13_enhancer_overlap_summits.bed -b 100 -g mm10.chrom.sizes > enhancers/E13_enhancer_overlap_200bpsummits.bed
-bedtools slop -i enhancers/E14_enhancer_overlap_summits.bed -b 100 -g mm10.chrom.sizes > enhancers/E14_enhancer_overlap_200bpsummits.bed
-bedtools slop -i enhancers/E15_enhancer_overlap_summits.bed -b 100 -g mm10.chrom.sizes > enhancers/E15_enhancer_overlap_200bpsummits.bed
-
-bedtools slop -i promoters/E10_promoter_overlap_summits.bed -b 100 -g mm10.chrom.sizes > promoters/E10_promoter_overlap_200bpsummits.bed
-bedtools slop -i promoters/E11_promoter_overlap_summits.bed -b 100 -g mm10.chrom.sizes > promoters/E11_promoter_overlap_200bpsummits.bed
-bedtools slop -i promoters/E12_promoter_overlap_summits.bed -b 100 -g mm10.chrom.sizes > promoters/E12_promoter_overlap_200bpsummits.bed
-bedtools slop -i promoters/E13_promoter_overlap_summits.bed -b 100 -g mm10.chrom.sizes > promoters/E13_promoter_overlap_200bpsummits.bed
-bedtools slop -i promoters/E14_promoter_overlap_summits.bed -b 100 -g mm10.chrom.sizes > promoters/E14_promoter_overlap_200bpsummits.bed
-bedtools slop -i promoters/E15_promoter_overlap_summits.bed -b 100 -g mm10.chrom.sizes > promoters/E15_promoter_overlap_200bpsummits.bed
-
-bedtools slop -i enhancers/dunnart.enhancer_overlap_summits.bed -b 150 -g smiCra1.chrom.sizes > enhancers/enhancer_overlap_300bpsummits.bed
-bedtools slop -i promoters/dunnart.promoter_overlap_summits.bed -b 150 -g smiCra1.chrom.sizes > promoters/promoter_overlap_300bpsummits.bed
-
-bedtools slop -i enhancers/E10_enhancer_overlap_summits.bed -b 150 -g mm10.chrom.sizes > enhancers/E10_enhancer_overlap_300bpsummits.bed
-bedtools slop -i enhancers/E11_enhancer_overlap_summits.bed -b 150 -g mm10.chrom.sizes > enhancers/E11_enhancer_overlap_300bpsummits.bed
-bedtools slop -i enhancers/E12_enhancer_overlap_summits.bed -b 150 -g mm10.chrom.sizes > enhancers/E12_enhancer_overlap_300bpsummits.bed
-bedtools slop -i enhancers/E13_enhancer_overlap_summits.bed -b 150 -g mm10.chrom.sizes > enhancers/E13_enhancer_overlap_300bpsummits.bed
-bedtools slop -i enhancers/E14_enhancer_overlap_summits.bed -b 150 -g mm10.chrom.sizes > enhancers/E14_enhancer_overlap_300bpsummits.bed
-bedtools slop -i enhancers/E15_enhancer_overlap_summits.bed -b 150 -g mm10.chrom.sizes > enhancers/E15_enhancer_overlap_300bpsummits.bed
-
-bedtools slop -i promoters/E10_promoter_overlap_summits.bed -b 150 -g mm10.chrom.sizes > promoters/E10_promoter_overlap_300bpsummits.bed
-bedtools slop -i promoters/E11_promoter_overlap_summits.bed -b 150 -g mm10.chrom.sizes > promoters/E11_promoter_overlap_300bpsummits.bed
-bedtools slop -i promoters/E12_promoter_overlap_summits.bed -b 150 -g mm10.chrom.sizes > promoters/E12_promoter_overlap_300bpsummits.bed
-bedtools slop -i promoters/E13_promoter_overlap_summits.bed -b 150 -g mm10.chrom.sizes > promoters/E13_promoter_overlap_300bpsummits.bed
-bedtools slop -i promoters/E14_promoter_overlap_summits.bed -b 150 -g mm10.chrom.sizes > promoters/E14_promoter_overlap_300bpsummits.bed
-bedtools slop -i promoters/E15_promoter_overlap_summits.bed -b 150 -g mm10.chrom.sizes > promoters/E15_promoter_overlap_300bpsummits.bed
-
-bedtools slop -i enhancers/dunnart.enhancer_overlap_summits.bed -b 200 -g smiCra1.chrom.sizes > enhancers/enhancer_overlap_400bpsummits.bed
-bedtools slop -i promoters/dunnart.promoter_overlap_summits.bed -b 200 -g smiCra1.chrom.sizes > promoters/promoter_overlap_400bpsummits.bed
-
-bedtools slop -i enhancers/E10_enhancer_overlap_summits.bed -b 200 -g mm10.chrom.sizes > enhancers/E10_enhancer_overlap_400bpsummits.bed
-bedtools slop -i enhancers/E11_enhancer_overlap_summits.bed -b 200 -g mm10.chrom.sizes > enhancers/E11_enhancer_overlap_400bpsummits.bed
-bedtools slop -i enhancers/E12_enhancer_overlap_summits.bed -b 200 -g mm10.chrom.sizes > enhancers/E12_enhancer_overlap_400bpsummits.bed
-bedtools slop -i enhancers/E13_enhancer_overlap_summits.bed -b 200 -g mm10.chrom.sizes > enhancers/E13_enhancer_overlap_400bpsummits.bed
-bedtools slop -i enhancers/E14_enhancer_overlap_summits.bed -b 200 -g mm10.chrom.sizes > enhancers/E14_enhancer_overlap_400bpsummits.bed
-bedtools slop -i enhancers/E15_enhancer_overlap_summits.bed -b 200 -g mm10.chrom.sizes > enhancers/E15_enhancer_overlap_400bpsummits.bed
-
-bedtools slop -i promoters/E10_promoter_overlap_summits.bed -b 200 -g mm10.chrom.sizes > promoters/E10_promoter_overlap_400bpsummits.bed
-bedtools slop -i promoters/E11_promoter_overlap_summits.bed -b 200 -g mm10.chrom.sizes > promoters/E11_promoter_overlap_400bpsummits.bed
-bedtools slop -i promoters/E12_promoter_overlap_summits.bed -b 200 -g mm10.chrom.sizes > promoters/E12_promoter_overlap_400bpsummits.bed
-bedtools slop -i promoters/E13_promoter_overlap_summits.bed -b 200 -g mm10.chrom.sizes > promoters/E13_promoter_overlap_400bpsummits.bed
-bedtools slop -i promoters/E14_promoter_overlap_summits.bed -b 200 -g mm10.chrom.sizes > promoters/E14_promoter_overlap_400bpsummits.bed
-bedtools slop -i promoters/E15_promoter_overlap_summits.bed -b 200 -g mm10.chrom.sizes > promoters/E15_promoter_overlap_400bpsummits.bed
-
-bedtools slop -i enhancers/dunnart.enhancer_overlap_summits.bed -b 250 -g smiCra1.chrom.sizes > enhancers/enhancer_overlap_500bpsummits.bed
-bedtools slop -i promoters/dunnart.promoter_overlap_summits.bed -b 250 -g smiCra1.chrom.sizes > promoters/promoter_overlap_500bpsummits.bed
-
-bedtools slop -i enhancers/E10_enhancer_overlap_summits.bed -b 250 -g mm10.chrom.sizes > enhancers/E10_enhancer_overlap_500bpsummits.bed
-bedtools slop -i enhancers/E11_enhancer_overlap_summits.bed -b 250 -g mm10.chrom.sizes > enhancers/E11_enhancer_overlap_500bpsummits.bed
-bedtools slop -i enhancers/E12_enhancer_overlap_summits.bed -b 250 -g mm10.chrom.sizes > enhancers/E12_enhancer_overlap_500bpsummits.bed
-bedtools slop -i enhancers/E13_enhancer_overlap_summits.bed -b 250 -g mm10.chrom.sizes > enhancers/E13_enhancer_overlap_500bpsummits.bed
-bedtools slop -i enhancers/E14_enhancer_overlap_summits.bed -b 250 -g mm10.chrom.sizes > enhancers/E14_enhancer_overlap_500bpsummits.bed
-bedtools slop -i enhancers/E15_enhancer_overlap_summits.bed -b 250 -g mm10.chrom.sizes > enhancers/E15_enhancer_overlap_500bpsummits.bed
-
-bedtools slop -i promoters/E10_promoter_overlap_summits.bed -b 250 -g mm10.chrom.sizes > promoters/E10_promoter_overlap_500bpsummits.bed
-bedtools slop -i promoters/E11_promoter_overlap_summits.bed -b 250 -g mm10.chrom.sizes > promoters/E11_promoter_overlap_500bpsummits.bed
-bedtools slop -i promoters/E12_promoter_overlap_summits.bed -b 250 -g mm10.chrom.sizes > promoters/E12_promoter_overlap_500bpsummits.bed
-bedtools slop -i promoters/E13_promoter_overlap_summits.bed -b 250 -g mm10.chrom.sizes > promoters/E13_promoter_overlap_500bpsummits.bed
-bedtools slop -i promoters/E14_promoter_overlap_summits.bed -b 250 -g mm10.chrom.sizes > promoters/E14_promoter_overlap_500bpsummits.bed
-bedtools slop -i promoters/E15_promoter_overlap_summits.bed -b 250 -g mm10.chrom.sizes > promoters/E15_promoter_overlap_500bpsummits.bed
-
-
-###################################################################################################
-################################### LIFTOVER PEAK SUMMITS ########################################
-###################################################################################################
-
-#### COMBINED PEAKS - ACTIVE IN BOTH DUNNART AND MOUSE ####
-
-# LiftOver dunnart peaks to mouse genome
-liftOver enhancers/enhancer_overlap_50bpsummits.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancers/enhancer_summit50bp_smiCraTOmm10.bed enhancers/enhancer_summit50bp_smiCraTOmm10_unmapped.bed
-liftOver enhancers/enhancer_overlap_100bpsummits.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancers/enhancer_summit100bp_smiCraTOmm10.bed enhancers/enhancer_summit100bp_smiCraTOmm10_unmapped.bed
-liftOver enhancers/enhancer_overlap_200bpsummits.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancers/enhancer_summit200bp_smiCraTOmm10.bed enhancers/enhancer_summit200bp_smiCraTOmm10_unmapped.bed
-liftOver enhancers/enhancer_overlap_300bpsummits.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancers/enhancer_summit300bp_smiCraTOmm10.bed enhancers/enhancer_summit300bp_smiCraTOmm10_unmapped.bed
-liftOver enhancers/enhancer_overlap_400bpsummits.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancers/enhancer_summit400bp_smiCraTOmm10.bed enhancers/enhancer_summit400bp_smiCraTOmm10_unmapped.bed
-liftOver enhancers/enhancer_overlap_500bpsummits.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancers/enhancer_summit500bp_smiCraTOmm10.bed enhancers/enhancer_summit500bp_smiCraTOmm10_unmapped.bed
-
-liftOver promoters/clustered/promoter_overlap_50bpsummits.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoters/clustered/promoter_summit50bp_smiCraTOmm10.bed promoters/clustered/promoter_summit50bp_smiCraTOmm10_unmapped.bed
-liftOver promoters/promoter_overlap_100bpsummits.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoters/promoter_summit100bp_smiCraTOmm10.bed promoters/promoter_summit100bp_smiCraTOmm10_unmapped.bed
-liftOver promoters/promoter_overlap_200bpsummits.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoters/promoter_summit200bp_smiCraTOmm10.bed promoters/promoter_summit200bp_smiCraTOmm10_unmapped.bed
-liftOver promoters/promoter_overlap_300bpsummits.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoters/promoter_summit300bp_smiCraTOmm10.bed promoters/promoter_summit300bp_smiCraTOmm10_unmapped.bed
-liftOver promoters/promoter_overlap_400bpsummits.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoters/promoter_summit400bp_smiCraTOmm10.bed promoters/promoter_summit400bp_smiCraTOmm10_unmapped.bed
-liftOver promoters/promoter_overlap_500bpsummits.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoters/promoter_summit500bp_smiCraTOmm10.bed promoters/promoter_summit500bp_smiCraTOmm10_unmapped.bed
-
-## Lift back to the dunnart genome
-liftOver enhancers/enhancer_summit50bp_smiCraTOmm10.bed ../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancers/enhancer_summit50bp_smiCraTOmm10_mm10TOsmiCra.bed enhancers/enhancer_summit50bp_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
-liftOver enhancers/enhancer_summit100bp_smiCraTOmm10.bed ../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancers/enhancer_summit100bp_smiCraTOmm10_mm10TOsmiCra.bed enhancers/enhancer_summit100bp_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
-liftOver enhancers/enhancer_summit200bp_smiCraTOmm10.bed ../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancers/enhancer_summit200bp_smiCraTOmm10_mm10TOsmiCra.bed enhancers/enhancer_summit200bp_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
-liftOver enhancers/enhancer_summit300bp_smiCraTOmm10.bed ../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancers/enhancer_summit300bp_smiCraTOmm10_mm10TOsmiCra.bed enhancers/enhancer_summit300bp_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
-liftOver enhancers/enhancer_summit400bp_smiCraTOmm10.bed ../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancers/enhancer_summit400bp_smiCraTOmm10_mm10TOsmiCra.bed enhancers/enhancer_summit400bp_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
-liftOver enhancers/enhancer_summit500bp_smiCraTOmm10.bed ../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancers/enhancer_summit500bp_smiCraTOmm10_mm10TOsmiCra.bed enhancers/enhancer_summit500bp_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
-# 3820
-liftOver promoters/promoter_summit50bp_smiCraTOmm10.bed ../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoters/promoter_summit50bp_smiCraTOmm10_mm10TOsmiCra.bed promoters/promoter_summit50bp_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
-liftOver promoters/promoter_summit100bp_smiCraTOmm10.bed ../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoters/promoter_summit100bp_smiCraTOmm10_mm10TOsmiCra.bed promoters/promoter_summit100bp_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
-liftOver promoters/promoter_summit200bp_smiCraTOmm10.bed ../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoters/promoter_summit200bp_smiCraTOmm10_mm10TOsmiCra.bed promoters/promoter_summit200bp_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
-liftOver promoters/promoter_summit300bp_smiCraTOmm10.bed ../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoters/promoter_summit300bp_smiCraTOmm10_mm10TOsmiCra.bed promoters/promoter_summit300bp_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
-liftOver promoters/promoter_summit400bp_smiCraTOmm10.bed ../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoters/promoter_summit400bp_smiCraTOmm10_mm10TOsmiCra.bed promoters/promoter_summit400bp_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
-liftOver promoters/promoter_summit500bp_smiCraTOmm10.bed ../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoters/promoter_summit500bp_smiCraTOmm10_mm10TOsmiCra.bed promoters/promoter_summit500bp_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
-
-# Lift back to mouse genome so that everything is in mouse coordinates
-liftOver enhancers/enhancer_summit50bp_smiCraTOmm10_mm10TOsmiCra.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancers/enhancer_summit50bp_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed enhancers/enhancer_summit50bp_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
-liftOver enhancers/enhancer_summit100bp_smiCraTOmm10_mm10TOsmiCra.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancers/enhancer_summit100bp_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed enhancers/enhancer_summit100bp_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
-liftOver enhancers/enhancer_summit200bp_smiCraTOmm10_mm10TOsmiCra.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancers/enhancer_summit200bp_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed enhancers/enhancer_summit200bp_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
-liftOver enhancers/enhancer_summit300bp_smiCraTOmm10_mm10TOsmiCra.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancers/enhancer_summit300bp_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed enhancers/enhancer_summit300bp_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
-liftOver enhancers/enhancer_summit400bp_smiCraTOmm10_mm10TOsmiCra.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancers/enhancer_summit400bp_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed enhancers/enhancer_summit400bp_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
-liftOver enhancers/enhancer_summit500bp_smiCraTOmm10_mm10TOsmiCra.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancers/enhancer_summit500bp_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed enhancers/enhancer_summit500bp_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
-
-# 3820
-liftOver promoters/promoter_summit50bp_smiCraTOmm10_mm10TOsmiCra.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoters/promoter_summit50bp_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed promoters/promoter_summit50bp_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
-liftOver promoters/promoter_summit100bp_smiCraTOmm10_mm10TOsmiCra.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoters/promoter_summit100bp_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed promoters/promoter_summit100bp_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
-liftOver promoters/promoter_summit200bp_smiCraTOmm10_mm10TOsmiCra.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoters/promoter_summit200bp_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed promoters/promoter_summit200bp_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
-liftOver promoters/promoter_summit300bp_smiCraTOmm10_mm10TOsmiCra.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoters/promoter_summit300bp_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed promoters/promoter_summit300bp_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
-liftOver promoters/promoter_summit400bp_smiCraTOmm10_mm10TOsmiCra.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoters/promoter_summit400bp_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed promoters/promoter_summit400bp_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
-liftOver promoters/promoter_summit500bp_smiCraTOmm10_mm10TOsmiCra.bed ../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoters/promoter_summit500bp_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed promoters/promoter_summit500bp_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
-
-# 1881
-## Intersect dunnart CREs with mouse CREs.
-bedtools intersect -a promoters/promoter_summit50bp_smiCraTOmm10.bed -b promoters/E10.5.clustered.narrowPeak -wo > promoters/E10.5_promoterOverlapmm10_50bpsummits.bed
-bedtools intersect -a promoters/promoter_summit50bp_smiCraTOmm10.bed -b promoters/E11.5.clustered.narrowPeak -wo > promoters/E11.5_promoterOverlapmm10_50bpsummits.bed
-bedtools intersect -a promoters/promoter_summit50bp_smiCraTOmm10.bed -b promoters/E12.5.clustered.narrowPeak -wo > promoters/E12.5_promoterOverlapmm10_50bpsummits.bed
-bedtools intersect -a promoters/promoter_summit50bp_smiCraTOmm10.bed -b promoters/E13.5.clustered.narrowPeak -wo > promoters/E13.5_promoterOverlapmm10_50bpsummits.bed
-bedtools intersect -a promoters/promoter_summit50bp_smiCraTOmm10.bed -b promoters/E14.5.clustered.narrowPeak -wo > promoters/E14.5_promoterOverlapmm10_50bpsummits.bed
-bedtools intersect -a promoters/promoter_summit50bp_smiCraTOmm10.bed -b promoters/E15.5.clustered.narrowPeak -wo > promoters/E15.5_promoterOverlapmm10_50bpsummits.bed
-
-bedtools intersect -a enhancers/enhancer_summit50bp_smiCraTOmm10.bed -b enhancers/E10.5_enhancer_peaks.narrowPeak -wo > enhancers/E10.5_enhancerOverlapmm10_50bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit50bp_smiCraTOmm10.bed -b enhancers/E11.5_enhancer_peaks.narrowPeak -wo > enhancers/E11.5_enhancerOverlapmm10_50bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit50bp_smiCraTOmm10.bed -b enhancers/E12.5_enhancer_peaks.narrowPeak -wo > enhancers/E12.5_enhancerOverlapmm10_50bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit50bp_smiCraTOmm10.bed -b enhancers/E13.5_enhancer_peaks.narrowPeak -wo > enhancers/E13.5_enhancerOverlapmm10_50bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit50bp_smiCraTOmm10.bed -b enhancers/E14.5_enhancer_peaks.narrowPeak -wo > enhancers/E14.5_enhancerOverlapmm10_50bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit50bp_smiCraTOmm10.bed -b enhancers/E15.5_enhancer_peaks.narrowPeak -wo > enhancers/E15.5_enhancerOverlapmm10_50bpsummits.bed
-
-bedtools intersect -a promoters/promoter_summit100bp_smiCraTOmm10.bed -b promoters/E10.5.clustered.narrowPeak -wo > promoters/E10.5_promoterOverlapmm10_100bpsummits.bed
-bedtools intersect -a promoters/promoter_summit100bp_smiCraTOmm10.bed -b promoters/E11.5.clustered.narrowPeak -wo > promoters/E11.5_promoterOverlapmm10_100bpsummits.bed
-bedtools intersect -a promoters/promoter_summit100bp_smiCraTOmm10.bed -b promoters/E12.5.clustered.narrowPeak -wo > promoters/E12.5_promoterOverlapmm10_100bpsummits.bed
-bedtools intersect -a promoters/promoter_summit100bp_smiCraTOmm10.bed -b promoters/E13.5.clustered.narrowPeak -wo > promoters/E13.5_promoterOverlapmm10_100bpsummits.bed
-bedtools intersect -a promoters/promoter_summit100bp_smiCraTOmm10.bed -b promoters/E14.5.clustered.narrowPeak -wo > promoters/E14.5_promoterOverlapmm10_100bpsummits.bed
-bedtools intersect -a promoters/promoter_summit100bp_smiCraTOmm10.bed -b promoters/E15.5.clustered.narrowPeak -wo > promoters/E15.5_promoterOverlapmm10_100bpsummits.bed
-
-bedtools intersect -a enhancers/enhancer_summit100bp_smiCraTOmm10.bed -b enhancers/E10.5_enhancer_peaks.narrowPeak -wo > enhancers/E10.5_enhancerOverlapmm10_100bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit100bp_smiCraTOmm10.bed -b enhancers/E11.5_enhancer_peaks.narrowPeak -wo > enhancers/E11.5_enhancerOverlapmm10_100bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit100bp_smiCraTOmm10.bed -b enhancers/E12.5_enhancer_peaks.narrowPeak -wo > enhancers/E12.5_enhancerOverlapmm10_100bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit100bp_smiCraTOmm10.bed -b enhancers/E13.5_enhancer_peaks.narrowPeak -wo > enhancers/E13.5_enhancerOverlapmm10_100bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit100bp_smiCraTOmm10.bed -b enhancers/E14.5_enhancer_peaks.narrowPeak -wo > enhancers/E14.5_enhancerOverlapmm10_100bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit100bp_smiCraTOmm10.bed -b enhancers/E15.5_enhancer_peaks.narrowPeak -wo > enhancers/E15.5_enhancerOverlapmm10_100bpsummits.bed
-
-bedtools intersect -a promoters/promoter_summit200bp_smiCraTOmm10.bed -b promoters/E10.5.clustered.narrowPeak -wo > promoters/E10.5_promoterOverlapmm10_200bpsummits.bed
-bedtools intersect -a promoters/promoter_summit200bp_smiCraTOmm10.bed -b promoters/E11.5.clustered.narrowPeak -wo > promoters/E11.5_promoterOverlapmm10_200bpsummits.bed
-bedtools intersect -a promoters/promoter_summit200bp_smiCraTOmm10.bed -b promoters/E12.5.clustered.narrowPeak -wo > promoters/E12.5_promoterOverlapmm10_200bpsummits.bed
-bedtools intersect -a promoters/promoter_summit200bp_smiCraTOmm10.bed -b promoters/E13.5.clustered.narrowPeak -wo > promoters/E13.5_promoterOverlapmm10_200bpsummits.bed
-bedtools intersect -a promoters/promoter_summit200bp_smiCraTOmm10.bed -b promoters/E14.5.clustered.narrowPeak -wo > promoters/E14.5_promoterOverlapmm10_200bpsummits.bed
-bedtools intersect -a promoters/promoter_summit200bp_smiCraTOmm10.bed -b promoters/E15.5.clustered.narrowPeak -wo > promoters/E15.5_promoterOverlapmm10_200bpsummits.bed
-
-bedtools intersect -a enhancers/enhancer_summit200bp_smiCraTOmm10.bed -b enhancers/E10.5_enhancer_peaks.narrowPeak -wo > enhancers/E10.5_enhancerOverlapmm10_200bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit200bp_smiCraTOmm10.bed -b enhancers/E11.5_enhancer_peaks.narrowPeak -wo > enhancers/E11.5_enhancerOverlapmm10_200bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit200bp_smiCraTOmm10.bed -b enhancers/E12.5_enhancer_peaks.narrowPeak -wo > enhancers/E12.5_enhancerOverlapmm10_200bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit200bp_smiCraTOmm10.bed -b enhancers/E13.5_enhancer_peaks.narrowPeak -wo > enhancers/E13.5_enhancerOverlapmm10_200bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit200bp_smiCraTOmm10.bed -b enhancers/E14.5_enhancer_peaks.narrowPeak -wo > enhancers/E14.5_enhancerOverlapmm10_200bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit200bp_smiCraTOmm10.bed -b enhancers/E15.5_enhancer_peaks.narrowPeak -wo > enhancers/E15.5_enhancerOverlapmm10_200bpsummits.bed
-
-bedtools intersect -a promoters/promoter_summit300bp_smiCraTOmm10.bed -b promoters/E10.5.clustered.narrowPeak -wo > promoters/E10.5_promoterOverlapmm10_300bpsummits.bed
-bedtools intersect -a promoters/promoter_summit300bp_smiCraTOmm10.bed -b promoters/E11.5.clustered.narrowPeak -wo > promoters/E11.5_promoterOverlapmm10_300bpsummits.bed
-bedtools intersect -a promoters/promoter_summit300bp_smiCraTOmm10.bed -b promoters/E12.5.clustered.narrowPeak -wo > promoters/E12.5_promoterOverlapmm10_300bpsummits.bed
-bedtools intersect -a promoters/promoter_summit300bp_smiCraTOmm10.bed -b promoters/E13.5.clustered.narrowPeak -wo > promoters/E13.5_promoterOverlapmm10_300bpsummits.bed
-bedtools intersect -a promoters/promoter_summit300bp_smiCraTOmm10.bed -b promoters/E14.5.clustered.narrowPeak -wo > promoters/E14.5_promoterOverlapmm10_300bpsummits.bed
-bedtools intersect -a promoters/promoter_summit300bp_smiCraTOmm10.bed -b promoters/E15.5.clustered.narrowPeak -wo > promoters/E15.5_promoterOverlapmm10_300bpsummits.bed
-
-bedtools intersect -a enhancers/enhancer_summit300bp_smiCraTOmm10.bed -b enhancers/E10.5_enhancer_peaks.narrowPeak -wo > enhancers/E10.5_enhancerOverlapmm10_300bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit300bp_smiCraTOmm10.bed -b enhancers/E11.5_enhancer_peaks.narrowPeak -wo > enhancers/E11.5_enhancerOverlapmm10_300bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit300bp_smiCraTOmm10.bed -b enhancers/E12.5_enhancer_peaks.narrowPeak -wo > enhancers/E12.5_enhancerOverlapmm10_300bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit300bp_smiCraTOmm10.bed -b enhancers/E13.5_enhancer_peaks.narrowPeak -wo > enhancers/E13.5_enhancerOverlapmm10_300bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit300bp_smiCraTOmm10.bed -b enhancers/E14.5_enhancer_peaks.narrowPeak -wo > enhancers/E14.5_enhancerOverlapmm10_300bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit300bp_smiCraTOmm10.bed -b enhancers/E15.5_enhancer_peaks.narrowPeak -wo > enhancers/E15.5_enhancerOverlapmm10_300bpsummits.bed
-
-bedtools intersect -a promoters/promoter_summit400bp_smiCraTOmm10.bed -b promoters/E10.5.clustered.narrowPeak -wo > promoters/E10.5_promoterOverlapmm10_400bpsummits.bed
-bedtools intersect -a promoters/promoter_summit400bp_smiCraTOmm10.bed -b promoters/E11.5.clustered.narrowPeak -wo > promoters/E11.5_promoterOverlapmm10_400bpsummits.bed
-bedtools intersect -a promoters/promoter_summit400bp_smiCraTOmm10.bed -b promoters/E12.5.clustered.narrowPeak -wo > promoters/E12.5_promoterOverlapmm10_400bpsummits.bed
-bedtools intersect -a promoters/promoter_summit400bp_smiCraTOmm10.bed -b promoters/E13.5.clustered.narrowPeak -wo > promoters/E13.5_promoterOverlapmm10_400bpsummits.bed
-bedtools intersect -a promoters/promoter_summit400bp_smiCraTOmm10.bed -b promoters/E14.5.clustered.narrowPeak -wo > promoters/E14.5_promoterOverlapmm10_400bpsummits.bed
-bedtools intersect -a promoters/promoter_summit400bp_smiCraTOmm10.bed -b promoters/E15.5.clustered.narrowPeak -wo > promoters/E15.5_promoterOverlapmm10_400bpsummits.bed
-
-bedtools intersect -a enhancers/enhancer_summit400bp_smiCraTOmm10.bed -b enhancers/E10.5_enhancer_peaks.narrowPeak -wo > enhancers/E10.5_enhancerOverlapmm10_400bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit400bp_smiCraTOmm10.bed -b enhancers/E11.5_enhancer_peaks.narrowPeak -wo > enhancers/E11.5_enhancerOverlapmm10_400bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit400bp_smiCraTOmm10.bed -b enhancers/E12.5_enhancer_peaks.narrowPeak -wo > enhancers/E12.5_enhancerOverlapmm10_400bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit400bp_smiCraTOmm10.bed -b enhancers/E13.5_enhancer_peaks.narrowPeak -wo > enhancers/E13.5_enhancerOverlapmm10_400bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit400bp_smiCraTOmm10.bed -b enhancers/E14.5_enhancer_peaks.narrowPeak -wo > enhancers/E14.5_enhancerOverlapmm10_400bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit400bp_smiCraTOmm10.bed -b enhancers/E15.5_enhancer_peaks.narrowPeak -wo > enhancers/E15.5_enhancerOverlapmm10_400bpsummits.bed
-
-bedtools intersect -a promoters/promoter_summit500bp_smiCraTOmm10.bed -b promoters/E10.5.clustered.narrowPeak -wo > promoters/E10.5_promoterOverlapmm10_500bpsummits.bed
-bedtools intersect -a promoters/promoter_summit500bp_smiCraTOmm10.bed -b promoters/E11.5.clustered.narrowPeak -wo > promoters/E11.5_promoterOverlapmm10_500bpsummits.bed
-bedtools intersect -a promoters/promoter_summit500bp_smiCraTOmm10.bed -b promoters/E12.5.clustered.narrowPeak -wo > promoters/E12.5_promoterOverlapmm10_500bpsummits.bed
-bedtools intersect -a promoters/promoter_summit500bp_smiCraTOmm10.bed -b promoters/E13.5.clustered.narrowPeak -wo > promoters/E13.5_promoterOverlapmm10_500bpsummits.bed
-bedtools intersect -a promoters/promoter_summit500bp_smiCraTOmm10.bed -b promoters/E14.5.clustered.narrowPeak -wo > promoters/E14.5_promoterOverlapmm10_500bpsummits.bed
-bedtools intersect -a promoters/promoter_summit500bp_smiCraTOmm10.bed -b promoters/E15.5.clustered.narrowPeak -wo > promoters/E15.5_promoterOverlapmm10_500bpsummits.bed
-
-bedtools intersect -a enhancers/enhancer_summit500bp_smiCraTOmm10.bed -b enhancers/E10.5_enhancer_peaks.narrowPeak -wo > enhancers/E10.5_enhancerOverlapmm10_500bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit500bp_smiCraTOmm10.bed -b enhancers/E11.5_enhancer_peaks.narrowPeak -wo > enhancers/E11.5_enhancerOverlapmm10_500bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit500bp_smiCraTOmm10.bed -b enhancers/E12.5_enhancer_peaks.narrowPeak -wo > enhancers/E12.5_enhancerOverlapmm10_500bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit500bp_smiCraTOmm10.bed -b enhancers/E13.5_enhancer_peaks.narrowPeak -wo > enhancers/E13.5_enhancerOverlapmm10_500bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit500bp_smiCraTOmm10.bed -b enhancers/E14.5_enhancer_peaks.narrowPeak -wo > enhancers/E14.5_enhancerOverlapmm10_500bpsummits.bed
-bedtools intersect -a enhancers/enhancer_summit500bp_smiCraTOmm10.bed -b enhancers/E15.5_enhancer_peaks.narrowPeak -wo > enhancers/E15.5_enhancerOverlapmm10_500bpsummits.bed
-
-## Window allows intersections within 50 bps. 
-bedtools window -w 50 -u -a promoters/clustered/promoter_summit50bp_smiCraTOmm10.bed -b promoters/clustered/E10.5.clustered.narrowPeak  > promoters/clustered/E10.5_promoterOverlapmm10_50bpsummits_window.bed
-bedtools window -w 50 -u -a promoters/clustered/promoter_summit50bp_smiCraTOmm10.bed -b promoters/clustered/E11.5.clustered.narrowPeak  > promoters/clustered/E11.5_promoterOverlapmm10_50bpsummits_window.bed
-bedtools window -w 50 -u -a promoters/clustered/promoter_summit50bp_smiCraTOmm10.bed -b promoters/clustered/E12.5.clustered.narrowPeak  > promoters/clustered/E12.5_promoterOverlapmm10_50bpsummits_window.bed
-bedtools window -w 50 -u -a promoters/clustered/promoter_summit50bp_smiCraTOmm10.bed -b promoters/clustered/E13.5.clustered.narrowPeak  > promoters/clustered/E13.5_promoterOverlapmm10_50bpsummits_window.bed
-bedtools window -w 50 -u -a promoters/clustered/promoter_summit50bp_smiCraTOmm10.bed -b promoters/clustered/E14.5.clustered.narrowPeak  > promoters/clustered/E14.5_promoterOverlapmm10_50bpsummits_window.bed
-bedtools window -w 50 -u -a promoters/clustered/promoter_summit50bp_smiCraTOmm10.bed -b promoters/clustered/E15.5.clustered.narrowPeak  > promoters/clustered/E15.5_promoterOverlapmm10_50bpsummits_window.bed
-
-bedtools window -w 50 -u -a enhancers/enhancer_summit50bp_smiCraTOmm10.bed -b enhancers/E10.5_enhancer_peaks.narrowPeak  > enhancers/E10.5_enhancerOverlapmm10_50bpsummits_window.bed
-bedtools window -w 50 -u -a enhancers/enhancer_summit50bp_smiCraTOmm10.bed -b enhancers/E11.5_enhancer_peaks.narrowPeak  > enhancers/E11.5_enhancerOverlapmm10_50bpsummits_window.bed
-bedtools window -w 50 -u -a enhancers/enhancer_summit50bp_smiCraTOmm10.bed -b enhancers/E12.5_enhancer_peaks.narrowPeak  > enhancers/E12.5_enhancerOverlapmm10_50bpsummits_window.bed
-bedtools window -w 50 -u -a enhancers/enhancer_summit50bp_smiCraTOmm10.bed -b enhancers/E13.5_enhancer_peaks.narrowPeak  > enhancers/E13.5_enhancerOverlapmm10_50bpsummits_window.bed
-bedtools window -w 50 -u -a enhancers/enhancer_summit50bp_smiCraTOmm10.bed -b enhancers/E14.5_enhancer_peaks.narrowPeak  > enhancers/E14.5_enhancerOverlapmm10_50bpsummits_window.bed
-bedtools window -w 50 -u -a enhancers/enhancer_summit50bp_smiCraTOmm10.bed -b enhancers/E15.5_enhancer_peaks.narrowPeak  > enhancers/E15.5_enhancerOverlapmm10_50bpsummits_window.bed
-
-## Lift dunnart peaks back over to the dunnart genome
-liftOver -bedPlus=4 promoters/clustered/E10.5_promoterOverlapmm10_50bpsummits_window.bed ../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoters/clustered/E10.5_promoterOverlapmm10_50bpsummits_backTOsmiCra.bed promoters/clustered/E10.5_promoterOverlapmm10_50bpsummits_backTOsmiCra_unmapped.bed
-liftOver -bedPlus=4 promoters/clustered/E11.5_promoterOverlapmm10_50bpsummits_window.bed ../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoters/clustered/E11.5_promoterOverlapmm10_50bpsummits_backTOsmiCra.bed promoters/clustered/E11.5_promoterOverlapmm10_50bpsummits_backTOsmiCra_unmapped.bed
-liftOver -bedPlus=4 promoters/clustered/E12.5_promoterOverlapmm10_50bpsummits_window.bed ../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoters/clustered/E12.5_promoterOverlapmm10_50bpsummits_backTOsmiCra.bed promoters/clustered/E12.5_promoterOverlapmm10_50bpsummits_backTOsmiCra_unmapped.bed
-liftOver -bedPlus=4 promoters/clustered/E13.5_promoterOverlapmm10_50bpsummits_window.bed ../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoters/clustered/E13.5_promoterOverlapmm10_50bpsummits_backTOsmiCra.bed promoters/clustered/E13.5_promoterOverlapmm10_50bpsummits_backTOsmiCra_unmapped.bed
-liftOver -bedPlus=4 promoters/clustered/E14.5_promoterOverlapmm10_50bpsummits_window.bed ../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoters/clustered/E14.5_promoterOverlapmm10_50bpsummits_backTOsmiCra.bed promoters/clustered/E14.5_promoterOverlapmm10_50bpsummits_backTOsmiCra_unmapped.bed
-liftOver -bedPlus=4 promoters/clustered/E15.5_promoterOverlapmm10_50bpsummits_window.bed ../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoters/clustered/E15.5_promoterOverlapmm10_50bpsummits_backTOsmiCra.bed promoters/clustered/E15.5_promoterOverlapmm10_50bpsummits_backTOsmiCra_unmapped.bed
-
-liftOver -bedPlus=4 enhancers/E10.5_enhancerOverlapmm10_50bpsummits_window.bed ../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancers/E10.5_enhancerOverlapmm10_50bpsummits_backTOsmiCra.bed enhancers/E10.5_enhancerOverlapmm10_50bpsummits_backTOsmiCra_unmapped.bed
-liftOver -bedPlus=4 enhancers/E11.5_enhancerOverlapmm10_50bpsummits_window.bed ../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancers/E11.5_enhancerOverlapmm10_50bpsummits_backTOsmiCra.bed enhancers/E11.5_enhancerOverlapmm10_50bpsummits_backTOsmiCra_unmapped.bed
-liftOver -bedPlus=4 enhancers/E12.5_enhancerOverlapmm10_50bpsummits_window.bed ../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancers/E12.5_enhancerOverlapmm10_50bpsummits_backTOsmiCra.bed enhancers/E12.5_enhancerOverlapmm10_50bpsummits_backTOsmiCra_unmapped.bed
-liftOver -bedPlus=4 enhancers/E13.5_enhancerOverlapmm10_50bpsummits_window.bed ../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancers/E13.5_enhancerOverlapmm10_50bpsummits_backTOsmiCra.bed enhancers/E13.5_enhancerOverlapmm10_50bpsummits_backTOsmiCra_unmapped.bed
-liftOver -bedPlus=4 enhancers/E14.5_enhancerOverlapmm10_50bpsummits_window.bed ../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancers/E14.5_enhancerOverlapmm10_50bpsummits_backTOsmiCra.bed enhancers/E14.5_enhancerOverlapmm10_50bpsummits_backTOsmiCra_unmapped.bed
-liftOver -bedPlus=4 enhancers/E15.5_enhancerOverlapmm10_50bpsummits_window.bed ../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancers/E15.5_enhancerOverlapmm10_50bpsummits_backTOsmiCra.bed enhancers/E15.5_enhancerOverlapmm10_50bpsummits_backTOsmiCra_unmapped.bed
-
-awk 'x[$4]++ == 1 { print $4 " is duplicated"}' E10.5_enhancerOverlapmm10_50bpsummits_backTOsmiCra.bed
-awk 'x[$4]++ == 1 { print $4 " is duplicated"}' E11.5_enhancerOverlapmm10_50bpsummits_backTOsmiCra.bed
-awk 'x[$4]++ == 1 { print $4 " is duplicated"}' E12.5_enhancerOverlapmm10_50bpsummits_backTOsmiCra.bed
-awk 'x[$4]++ == 1 { print $4 " is duplicated"}' E13.5_enhancerOverlapmm10_50bpsummits_backTOsmiCra.bed
-awk 'x[$4]++ == 1 { print $4 " is duplicated"}' E15.5_enhancerOverlapmm10_50bpsummits_backTOsmiCra.bed
-awk 'x[$4]++ == 1 { print $4 " is duplicated"}' E14.5_enhancerOverlapmm10_50bpsummits_backTOsmiCra.bed
-
-awk 'x[$4]++ == 1 { print $4 " is duplicated"}' E10.5_promoterOverlapmm10_50bpsummits_backTOsmiCra.bed
-awk 'x[$4]++ == 1 { print $4 " is duplicated"}' E11.5_promoterOverlapmm10_50bpsummits_backTOsmiCra.bed
-awk 'x[$4]++ == 1 { print $4 " is duplicated"}' E12.5_promoterOverlapmm10_50bpsummits_backTOsmiCra.bed
-awk 'x[$4]++ == 1 { print $4 " is duplicated"}' E13.5_promoterOverlapmm10_50bpsummits_backTOsmiCra.bed
-awk 'x[$4]++ == 1 { print $4 " is duplicated"}' E15.5_promoterOverlapmm10_50bpsummits_backTOsmiCra.bed
-awk 'x[$4]++ == 1 { print $4 " is duplicated"}' E14.5_promoterOverlapmm10_50bpsummits_backTOsmiCra.bed
-
-
-### When you lift over a peak from one species to another, does it always land next to the same gene in both species?
-## Use annotated peak files for all peaks and compare nearest gene call
-## Intersect annotation file with peak summits
-
-## Promoters
-bedtools intersect -a promoter_overlap_50bpsummits.bed -b cluster1_promoters_annotation.bed -wb > dunnart_promoter_50bpsummits_annotation.bed
-bedtools intersect -a E10_promoter_overlap_50bpsummits.bed -b clustered.E10.filtered_annotation.bed -wo > E10_promoter_50bpsummits_annotation.bed
-bedtools intersect -a E11_promoter_overlap_50bpsummits.bed -b clustered.E11.filtered_annotation.bed -wo > E11_promoter_50bpsummits_annotation.bed
-bedtools intersect -a E12_promoter_overlap_50bpsummits.bed -b clustered.E12.filtered_annotation.bed -wo > E12_promoter_50bpsummits_annotation.bed
-bedtools intersect -a E13_promoter_overlap_50bpsummits.bed -b clustered.E13.filtered_annotation.bed -wo > E13_promoter_50bpsummits_annotation.bed
-bedtools intersect -a E14_promoter_overlap_50bpsummits.bed -b clustered.E14.filtered_annotation.bed -wo > E14_promoter_50bpsummits_annotation.bed
-bedtools intersect -a E15_promoter_overlap_50bpsummits.bed -b clustered.E15.filtered_annotation.bed -wo > E15_promoter_50bpsummits_annotation.bed
-
-bedtools intersect -a promoter_overlap_100bpsummits.bed -b cluster1_promoters_annotation.bed -wb > dunnart_promoter_100bpsummits_annotation.bed
-bedtools intersect -a E10_promoter_overlap_100bpsummits.bed -b clustered.E10.filtered_annotation.bed -wo > E10_promoter_100bpsummits_annotation.bed
-bedtools intersect -a E11_promoter_overlap_100bpsummits.bed -b clustered.E11.filtered_annotation.bed -wo > E11_promoter_100bpsummits_annotation.bed
-bedtools intersect -a E12_promoter_overlap_100bpsummits.bed -b clustered.E12.filtered_annotation.bed -wo > E12_promoter_100bpsummits_annotation.bed
-bedtools intersect -a E13_promoter_overlap_100bpsummits.bed -b clustered.E13.filtered_annotation.bed -wo > E13_promoter_100bpsummits_annotation.bed
-bedtools intersect -a E14_promoter_overlap_100bpsummits.bed -b clustered.E14.filtered_annotation.bed -wo > E14_promoter_100bpsummits_annotation.bed
-bedtools intersect -a E15_promoter_overlap_100bpsummits.bed -b clustered.E15.filtered_annotation.bed -wo > E15_promoter_100bpsummits_annotation.bed
-
-bedtools intersect -a promoter_overlap_200bpsummits.bed -b cluster1_promoters_annotation.bed -wb > dunnart_promoter_200bpsummits_annotation.bed
-bedtools intersect -a E10_promoter_overlap_200bpsummits.bed -b clustered.E10.filtered_annotation.bed -wo > E10_promoter_200bpsummits_annotation.bed
-bedtools intersect -a E11_promoter_overlap_200bpsummits.bed -b clustered.E11.filtered_annotation.bed -wo > E11_promoter_200bpsummits_annotation.bed
-bedtools intersect -a E12_promoter_overlap_200bpsummits.bed -b clustered.E12.filtered_annotation.bed -wo > E12_promoter_200bpsummits_annotation.bed
-bedtools intersect -a E13_promoter_overlap_200bpsummits.bed -b clustered.E13.filtered_annotation.bed -wo > E13_promoter_200bpsummits_annotation.bed
-bedtools intersect -a E14_promoter_overlap_200bpsummits.bed -b clustered.E14.filtered_annotation.bed -wo > E14_promoter_200bpsummits_annotation.bed
-bedtools intersect -a E15_promoter_overlap_200bpsummits.bed -b clustered.E15.filtered_annotation.bed -wo > E15_promoter_200bpsummits_annotation.bed
-
-bedtools intersect -a promoter_overlap_300bpsummits.bed -b cluster1_promoters_annotation.bed -wb > dunnart_promoter_300bpsummits_annotation.bed
-bedtools intersect -a E10_promoter_overlap_300bpsummits.bed -b clustered.E10.filtered_annotation.bed -wo > E10_promoter_300bpsummits_annotation.bed
-bedtools intersect -a E11_promoter_overlap_300bpsummits.bed -b clustered.E11.filtered_annotation.bed -wo > E11_promoter_300bpsummits_annotation.bed
-bedtools intersect -a E12_promoter_overlap_300bpsummits.bed -b clustered.E12.filtered_annotation.bed -wo > E12_promoter_300bpsummits_annotation.bed
-bedtools intersect -a E13_promoter_overlap_300bpsummits.bed -b clustered.E13.filtered_annotation.bed -wo > E13_promoter_300bpsummits_annotation.bed
-bedtools intersect -a E14_promoter_overlap_300bpsummits.bed -b clustered.E14.filtered_annotation.bed -wo > E14_promoter_300bpsummits_annotation.bed
-bedtools intersect -a E15_promoter_overlap_300bpsummits.bed -b clustered.E15.filtered_annotation.bed -wo > E15_promoter_300bpsummits_annotation.bed
-
-bedtools intersect -a promoter_overlap_400bpsummits.bed -b cluster1_promoters_annotation.bed -wb > dunnart_promoter_400bpsummits_annotation.bed
-bedtools intersect -a E10_promoter_overlap_400bpsummits.bed -b clustered.E10.filtered_annotation.bed -wo > E10_promoter_400bpsummits_annotation.bed
-bedtools intersect -a E11_promoter_overlap_400bpsummits.bed -b clustered.E11.filtered_annotation.bed -wo > E11_promoter_400bpsummits_annotation.bed
-bedtools intersect -a E12_promoter_overlap_400bpsummits.bed -b clustered.E12.filtered_annotation.bed -wo > E12_promoter_400bpsummits_annotation.bed
-bedtools intersect -a E13_promoter_overlap_400bpsummits.bed -b clustered.E13.filtered_annotation.bed -wo > E13_promoter_400bpsummits_annotation.bed
-bedtools intersect -a E14_promoter_overlap_400bpsummits.bed -b clustered.E14.filtered_annotation.bed -wo > E14_promoter_400bpsummits_annotation.bed
-bedtools intersect -a E15_promoter_overlap_400bpsummits.bed -b clustered.E15.filtered_annotation.bed -wo > E15_promoter_400bpsummits_annotation.bed
-
-
-bedtools intersect -a promoter_overlap_500bpsummits.bed -b cluster1_promoters_annotation.bed -wb > dunnart_promoter_500bpsummits_annotation.bed
-bedtools intersect -a E10_promoter_overlap_500bpsummits.bed -b clustered.E10.filtered_annotation.bed -wo > E10_promoter_500bpsummits_annotation.bed
-bedtools intersect -a E11_promoter_overlap_500bpsummits.bed -b clustered.E11.filtered_annotation.bed -wo > E11_promoter_500bpsummits_annotation.bed
-bedtools intersect -a E12_promoter_overlap_500bpsummits.bed -b clustered.E12.filtered_annotation.bed -wo > E12_promoter_500bpsummits_annotation.bed
-bedtools intersect -a E13_promoter_overlap_500bpsummits.bed -b clustered.E13.filtered_annotation.bed -wo > E13_promoter_500bpsummits_annotation.bed
-bedtools intersect -a E14_promoter_overlap_500bpsummits.bed -b clustered.E14.filtered_annotation.bed -wo > E14_promoter_500bpsummits_annotation.bed
-bedtools intersect -a E15_promoter_overlap_500bpsummits.bed -b clustered.E15.filtered_annotation.bed -wo > E15_promoter_500bpsummits_annotation.bed
-
-
-liftOver -bedPlus=4 dunnart_promoter_50bpsummits_annotation.bed ../../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoter_overlap_50bpsummits_annotation_smiCraTOmm10.bed promoter_overlap_50bpsummits_annotation_smiCraTOmm10_unmapped.bed
-liftOver -bedPlus=4 dunnart_promoter_100bpsummits_annotation.bed ../../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoter_overlap_100bpsummits_annotation_smiCraTOmm10.bed promoter_overlap_100bpsummits_annotation_smiCraTOmm10_unmapped.bed
-liftOver -bedPlus=4 dunnart_promoter_200bpsummits_annotation.bed ../../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoter_overlap_200bpsummits_annotation_smiCraTOmm10.bed promoter_overlap_200bpsummits_annotation_smiCraTOmm10_unmapped.bed
-liftOver -bedPlus=4 dunnart_promoter_300bpsummits_annotation.bed ../../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoter_overlap_300bpsummits_annotation_smiCraTOmm10.bed promoter_overlap_300bpsummits_annotation_smiCraTOmm10_unmapped.bed
-liftOver -bedPlus=4 dunnart_promoter_400bpsummits_annotation.bed ../../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoter_overlap_400bpsummits_annotation_smiCraTOmm10.bed promoter_overlap_400bpsummits_annotation_smiCraTOmm10_unmapped.bed
-liftOver -bedPlus=4 dunnart_promoter_500bpsummits_annotation.bed ../../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoter_overlap_500bpsummits_annotation_smiCraTOmm10.bed promoter_overlap_500bpsummits_annotation_smiCraTOmm10_unmapped.bed
-
-liftOver -bedPlus=4 promoter_overlap_50bpsummits_annotation_smiCraTOmm10.bed ../../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoter_overlap_50bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed promoter_overlap_50bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
-liftOver -bedPlus=4 promoter_overlap_100bpsummits_annotation_smiCraTOmm10.bed ../../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoter_overlap_100bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed promoter_overlap_100bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
-liftOver -bedPlus=4 promoter_overlap_200bpsummits_annotation_smiCraTOmm10.bed ../../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoter_overlap_200bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed promoter_overlap_200bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
-liftOver -bedPlus=4 promoter_overlap_300bpsummits_annotation_smiCraTOmm10.bed ../../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoter_overlap_300bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed promoter_overlap_300bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
-liftOver -bedPlus=4 promoter_overlap_400bpsummits_annotation_smiCraTOmm10.bed ../../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoter_overlap_400bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed promoter_overlap_400bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
-liftOver -bedPlus=4 promoter_overlap_500bpsummits_annotation_smiCraTOmm10.bed ../../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain promoter_overlap_500bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed promoter_overlap_500bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
-
-## Enhancers
-bedtools intersect -a enhancer_overlap_50bpsummits.bed -b dunnart_enhancer_annotation.bed -wb > dunnart_enhancer_50bpsummits_annotation.bed
-bedtools intersect -a E10_enhancer_overlap_50bpsummits.bed -b E10.5_enhancer_annotation.bed -wo > E10_enhancer_50bpsummits_annotation.bed
-bedtools intersect -a E11_enhancer_overlap_50bpsummits.bed -b E11.5_enhancer_annotation.bed -wo > E11_enhancer_50bpsummits_annotation.bed
-bedtools intersect -a E12_enhancer_overlap_50bpsummits.bed -b E12.5_enhancer_annotation.bed -wo > E12_enhancer_50bpsummits_annotation.bed
-bedtools intersect -a E13_enhancer_overlap_50bpsummits.bed -b E13.5_enhancer_annotation.bed -wo > E13_enhancer_50bpsummits_annotation.bed
-bedtools intersect -a E14_enhancer_overlap_50bpsummits.bed -b E14.5_enhancer_annotation.bed -wo > E14_enhancer_50bpsummits_annotation.bed
-bedtools intersect -a E15_enhancer_overlap_50bpsummits.bed -b E15.5_enhancer_annotation.bed -wo > E15_enhancer_50bpsummits_annotation.bed
-
-bedtools intersect -a enhancer_overlap_100bpsummits.bed -b dunnart_enhancer_annotation.bed -wb > dunnart_enhancer_100bpsummits_annotation.bed
-bedtools intersect -a E10_enhancer_overlap_100bpsummits.bed -b E10.5_enhancer_annotation.bed -wo > E10_enhancer_100bpsummits_annotation.bed
-bedtools intersect -a E11_enhancer_overlap_100bpsummits.bed -b E11.5_enhancer_annotation.bed -wo > E11_enhancer_100bpsummits_annotation.bed
-bedtools intersect -a E12_enhancer_overlap_100bpsummits.bed -b E12.5_enhancer_annotation.bed -wo > E12_enhancer_100bpsummits_annotation.bed
-bedtools intersect -a E13_enhancer_overlap_100bpsummits.bed -b E13.5_enhancer_annotation.bed -wo > E13_enhancer_100bpsummits_annotation.bed
-bedtools intersect -a E14_enhancer_overlap_100bpsummits.bed -b E14.5_enhancer_annotation.bed -wo > E14_enhancer_100bpsummits_annotation.bed
-bedtools intersect -a E15_enhancer_overlap_100bpsummits.bed -b E15.5_enhancer_annotation.bed -wo > E15_enhancer_100bpsummits_annotation.bed
-
-bedtools intersect -a enhancer_overlap_200bpsummits.bed -b dunnart_enhancer_annotation.bed -wb > dunnart_enhancer_200bpsummits_annotation.bed
-bedtools intersect -a E10_enhancer_overlap_200bpsummits.bed -b E10.5_enhancer_annotation.bed -wo > E10_enhancer_200bpsummits_annotation.bed
-bedtools intersect -a E11_enhancer_overlap_200bpsummits.bed -b E11.5_enhancer_annotation.bed -wo > E11_enhancer_200bpsummits_annotation.bed
-bedtools intersect -a E12_enhancer_overlap_200bpsummits.bed -b E12.5_enhancer_annotation.bed -wo > E12_enhancer_200bpsummits_annotation.bed
-bedtools intersect -a E13_enhancer_overlap_200bpsummits.bed -b E13.5_enhancer_annotation.bed -wo > E13_enhancer_200bpsummits_annotation.bed
-bedtools intersect -a E14_enhancer_overlap_200bpsummits.bed -b E14.5_enhancer_annotation.bed -wo > E14_enhancer_200bpsummits_annotation.bed
-bedtools intersect -a E15_enhancer_overlap_200bpsummits.bed -b E15.5_enhancer_annotation.bed -wo > E15_enhancer_200bpsummits_annotation.bed
-
-bedtools intersect -a enhancer_overlap_300bpsummits.bed -b dunnart_enhancer_annotation.bed -wb > dunnart_enhancer_300bpsummits_annotation.bed
-bedtools intersect -a E10_enhancer_overlap_300bpsummits.bed -b E10.5_enhancer_annotation.bed -wo > E10_enhancer_300bpsummits_annotation.bed
-bedtools intersect -a E11_enhancer_overlap_300bpsummits.bed -b E11.5_enhancer_annotation.bed -wo > E11_enhancer_300bpsummits_annotation.bed
-bedtools intersect -a E12_enhancer_overlap_300bpsummits.bed -b E12.5_enhancer_annotation.bed -wo > E12_enhancer_300bpsummits_annotation.bed
-bedtools intersect -a E13_enhancer_overlap_300bpsummits.bed -b E13.5_enhancer_annotation.bed -wo > E13_enhancer_300bpsummits_annotation.bed
-bedtools intersect -a E14_enhancer_overlap_300bpsummits.bed -b E14.5_enhancer_annotation.bed -wo > E14_enhancer_300bpsummits_annotation.bed
-bedtools intersect -a E15_enhancer_overlap_300bpsummits.bed -b E15.5_enhancer_annotation.bed -wo > E15_enhancer_300bpsummits_annotation.bed
-
-bedtools intersect -a enhancer_overlap_400bpsummits.bed -b dunnart_enhancer_annotation.bed -wb > dunnart_enhancer_400bpsummits_annotation.bed
-bedtools intersect -a E10_enhancer_overlap_400bpsummits.bed -b E10.5_enhancer_annotation.bed -wo > E10_enhancer_400bpsummits_annotation.bed
-bedtools intersect -a E11_enhancer_overlap_400bpsummits.bed -b E11.5_enhancer_annotation.bed -wo > E11_enhancer_400bpsummits_annotation.bed
-bedtools intersect -a E12_enhancer_overlap_400bpsummits.bed -b E12.5_enhancer_annotation.bed -wo > E12_enhancer_400bpsummits_annotation.bed
-bedtools intersect -a E13_enhancer_overlap_400bpsummits.bed -b E13.5_enhancer_annotation.bed -wo > E13_enhancer_400bpsummits_annotation.bed
-bedtools intersect -a E14_enhancer_overlap_400bpsummits.bed -b E14.5_enhancer_annotation.bed -wo > E14_enhancer_400bpsummits_annotation.bed
-bedtools intersect -a E15_enhancer_overlap_400bpsummits.bed -b E15.5_enhancer_annotation.bed -wo > E15_enhancer_400bpsummits_annotation.bed
-
-
-bedtools intersect -a enhancer_overlap_500bpsummits.bed -b dunnart_enhancer_annotation.bed -wb > dunnart_enhancer_500bpsummits_annotation.bed
-bedtools intersect -a E10_enhancer_overlap_500bpsummits.bed -b E10.5_enhancer_annotation.bed -wo > E10_enhancer_500bpsummits_annotation.bed
-bedtools intersect -a E11_enhancer_overlap_500bpsummits.bed -b E11.5_enhancer_annotation.bed -wo > E11_enhancer_500bpsummits_annotation.bed
-bedtools intersect -a E12_enhancer_overlap_500bpsummits.bed -b E12.5_enhancer_annotation.bed -wo > E12_enhancer_500bpsummits_annotation.bed
-bedtools intersect -a E13_enhancer_overlap_500bpsummits.bed -b E13.5_enhancer_annotation.bed -wo > E13_enhancer_500bpsummits_annotation.bed
-bedtools intersect -a E14_enhancer_overlap_500bpsummits.bed -b E14.5_enhancer_annotation.bed -wo > E14_enhancer_500bpsummits_annotation.bed
-bedtools intersect -a E15_enhancer_overlap_500bpsummits.bed -b E15.5_enhancer_annotation.bed -wo > E15_enhancer_500bpsummits_annotation.bed
-
-liftOver -bedPlus=4 dunnart_enhancer_50bpsummits_annotation.bed ../../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancer_overlap_50bpsummits_annotation_smiCraTOmm10.bed enhancer_overlap_50bpsummits_annotation_smiCraTOmm10_unmapped.bed
-liftOver -bedPlus=4 dunnart_enhancer_100bpsummits_annotation.bed ../../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancer_overlap_100bpsummits_annotation_smiCraTOmm10.bed enhancer_overlap_100bpsummits_annotation_smiCraTOmm10_unmapped.bed
-liftOver -bedPlus=4 dunnart_enhancer_200bpsummits_annotation.bed ../../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancer_overlap_200bpsummits_annotation_smiCraTOmm10.bed enhancer_overlap_200bpsummits_annotation_smiCraTOmm10_unmapped.bed
-liftOver -bedPlus=4 dunnart_enhancer_300bpsummits_annotation.bed ../../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancer_overlap_300bpsummits_annotation_smiCraTOmm10.bed enhancer_overlap_300bpsummits_annotation_smiCraTOmm10_unmapped.bed
-liftOver -bedPlus=4 dunnart_enhancer_400bpsummits_annotation.bed ../../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancer_overlap_400bpsummits_annotation_smiCraTOmm10.bed enhancer_overlap_400bpsummits_annotation_smiCraTOmm10_unmapped.bed
-liftOver -bedPlus=4 dunnart_enhancer_500bpsummits_annotation.bed ../../smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancer_overlap_500bpsummits_annotation_smiCraTOmm10.bed enhancer_overlap_500bpsummits_annotation_smiCraTOmm10_unmapped.bed
-
-liftOver -bedPlus=4 enhancer_overlap_50bpsummits_annotation_smiCraTOmm10.bed ../../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancer_overlap_50bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed enhancer_overlap_50bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
-liftOver -bedPlus=4 enhancer_overlap_100bpsummits_annotation_smiCraTOmm10.bed ../../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancer_overlap_100bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed enhancer_overlap_100bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
-liftOver -bedPlus=4 enhancer_overlap_200bpsummits_annotation_smiCraTOmm10.bed ../../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancer_overlap_200bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed enhancer_overlap_200bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
-liftOver -bedPlus=4 enhancer_overlap_300bpsummits_annotation_smiCraTOmm10.bed ../../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancer_overlap_300bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed enhancer_overlap_300bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
-liftOver -bedPlus=4 enhancer_overlap_400bpsummits_annotation_smiCraTOmm10.bed ../../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancer_overlap_400bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed enhancer_overlap_400bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
-liftOver -bedPlus=4 enhancer_overlap_500bpsummits_annotation_smiCraTOmm10.bed ../../mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain enhancer_overlap_500bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed enhancer_overlap_500bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+liftOver output/peaks/dunnart_enhancer_peaks_coord.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_smiCraTOmm10.bed output/liftover/dunnart_enhancer_smiCraTOmm10_unmapped.bed
+liftOver output/filtered_peaks/dunnart_promoter_peaks_coord.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_smiCraTOmm10.bed output/liftover/dunnart_promoter_smiCraTOmm10_unmapped.bed
 ```
+
+## LiftOver peak summits
+### Prepare peak summits and extract peak IDs
+```{bash eval=FALSE}
+
+## Extract peak IDs
+less output/peaks/dunnart_enhancer_peaks.narrowPeak | awk -F '\t' '{print $4}' | sort > output/peaks/dunnart_enhancer_peaks_IDs.txt
+less output/filtered_peaks/cluster1_dunnart_promoter_peaks.narrowPeak | awk -F '\t' '{print $4}' | sort > output/filtered_peaks/dunnart_promoter_peaks_IDs.txt
+
+less output/peaks/E10.5_enhancer_peaks.narrowPeak | awk -F '\t' '{print $4}'  >  output/peaks/E10.5_enhancer_peaks_IDs.txt
+less  output/peaks/E11.5_enhancer_peaks.narrowPeak | awk -F '\t' '{print $4}'  >  output/peaks/E11.5_enhancer_peaks_IDs.txt
+less  output/peaks/E12.5_enhancer_peaks.narrowPeak | awk -F '\t' '{print $4}'  >  output/peaks/E12.5_enhancer_peaks_IDs.txt
+less  output/peaks/E13.5_enhancer_peaks.narrowPeak | awk -F '\t' '{print $4}'  >  output/peaks/E13.5_enhancer_peaks_IDs.txt
+less  output/peaks/E14.5_enhancer_peaks.narrowPeak | awk -F '\t' '{print $4}'  >  output/peaks/E14.5_enhancer_peaks_IDs.txt
+less  output/peaks/E15.5_enhancer_peaks.narrowPeak | awk -F '\t' '{print $4}'  >  output/peaks/E15.5_enhancer_peaks_IDs.txt
+
+less  output/filtered_peaks/E10_cluster1_peaks.narrowPeak | awk -F '\t' '{print $4}' > output/filtered_peaks/E10.5_promoter_peaks_IDs.txt
+less  output/filtered_peaks/E11_cluster1_peaks.narrowPeak | awk -F '\t' '{print $4}'  > output/filtered_peaks/E11.5_promoter_peaks_IDs.txt
+less  output/filtered_peaks/E12_cluster1_peaks.narrowPeak | awk -F '\t' '{print $4}'  > output/filtered_peaks/E12.5_promoter_peaks_IDs.txt
+less  output/filtered_peaks/E13_cluster1_peaks.narrowPeak | awk -F '\t' '{print $4}'  > output/filtered_peaks/E13.5_promoter_peaks_IDs.txt
+less  output/filtered_peaks/E14_cluster1_peaks.narrowPeak | awk -F '\t' '{print $4}'  > output/filtered_peaks/E14.5_promoter_peaks_IDs.txt
+less  output/filtered_peaks/E15_cluster1_peaks.narrowPeak | awk -F '\t' '{print $4}'  > output/filtered_peaks/E15.5_promoter_peaks_IDs.txt
+
+## Concatenate pooled summit peak files 
+
+cat output/peaks/H3K4me3_pooled_macs2_default_summits.bed output/peaks/H3K27ac_pooled_macs2_default_summits.bed > output/peaks/H3K4me3_H3K27ac_dunnart_pooled_default_combinedSummits.bed
+
+cat output/peaks/E10.5_H3K27ac.pooled.macs2_summits.bed output/peaks/E10.5_H3K4me3.pooled.macs2_summits.bed > output/peaks/E10.5_H3K27ac_H3K4me3.pooled.macs2_combinedSummits.bed
+cat output/peaks/E11.5_H3K27ac.pooled.macs2_summits.bed output/peaks/E11.5_H3K4me3.pooled.macs2_summits.bed > output/peaks/E11.5_H3K27ac_H3K4me3.pooled.macs2_combinedSummits.bed
+cat output/peaks/E12.5_H3K27ac.pooled.macs2_summits.bed output/peaks/E12.5_H3K4me3.pooled.macs2_summits.bed > output/peaks/E12.5_H3K27ac_H3K4me3.pooled.macs2_combinedSummits.bed
+cat output/peaks/E13.5_H3K27ac.pooled.macs2_summits.bed output/peaks/E13.5_H3K4me3.pooled.macs2_summits.bed > output/peaks/E13.5_H3K27ac_H3K4me3.pooled.macs2_combinedSummits.bed
+cat output/peaks/E14.5_H3K27ac.pooled.macs2_summits.bed output/peaks/E14.5_H3K4me3.pooled.macs2_summits.bed > output/peaks/E14.5_H3K27ac_H3K4me3.pooled.macs2_combinedSummits.bed
+cat output/peaks/E15.5_H3K27ac.pooled.macs2_summits.bed output/peaks/E15.5_H3K4me3.pooled.macs2_summits.bed > output/peaks/E15.5_H3K27ac_H3K4me3.pooled.macs2_combinedSummits.bed
+
+```
+
+### Extract rows from summits file based on enhancer and promoter peak IDs
+```{r eval=FALSE}
+
+files =list.files(fullPeak_dir, pattern= "macs2_combinedSummits.bed|default_combinedSummits.bed", full.names=T) # create list of files in directory
+files = as.list(files)
+summits = lapply(files, function(x) fread(x, header=FALSE, sep="\t", quote = "", na.strings=c("", "NA")))
+names(summits) <- c("E10", "E11", "E12", "E13", "E14", "E15", "dunnart")
+
+files2 =list.files(fullPeak_dir, pattern= "peaks_IDs.txt", full.names=T) # create list of files in directory
+files3 = list.files(filterPeaks_dir, pattern = "peaks_IDs.txt", full.names=T)
+files = append(files2, files3)
+filenames <- sub('\\_peaks_IDs.txt$', '', basename(files)) 
+
+files = as.list(files)
+
+peak_IDs = lapply(files, function(x) fread(x, header=FALSE, sep="\t", quote = "", na.strings=c("", "NA")))
+names(peak_IDs) <- filenames
+
+filtered <- lapply(summits, function(x) x[x$V4 %in% unlist(as.vector(peak_IDs)),])
+filtered <- lapply(filtered, function(x) substr(x$V4, 1, 13))
+
+filtered_bind <- rbindlist(filtered,)
+filtered_bind$V4 <- substr(filtered_bind$V4, 1,13)
+filtered_split <- split(filtered_bind, by = "V4")
+
+names(filtered_split) <- c("E10.5_enhancer", "E10.5_promoter", 
+                           "E11.5_enhancer", "E11.5_promoter",
+                           "E12.5_enhancer", "E12.5_promoter",
+                           "E13.5_enhancer", "E13.5_promoter",
+                           "E14.5_enhancer", "E14.5_promoter",
+                           "E15.5_enhancer", "E15.5_promoter",
+                           "dunnart_promoter", "dunnart_enhancer")
+
+lapply(names(filtered_split), function(x) write.table(filtered_split[[x]], file=paste0("output/liftover/",x,"_summits", ".bed"), sep="\t", quote=FALSE, col.names=FALSE, row.names=FALSE))
+```
+
+### Extend the summits 25bp in both directions
+
+```{bash eval=FALSE}
+bedtools slop -i output/liftover/dunnart_promoter_summits.bed -b 25 -g data/genomic_data/smiCra1.chrom.sizes > output/liftover/dunnart_promoter_50bpsummits.bed
+
+bedtools slop -i output/liftover/dunnart_enhancer_summits.bed -b 25 -g data/genomic_data/smiCra1.chrom.sizes > output/liftover/dunnart_enhancer_50bpsummits.bed
+
+bedtools slop -i output/liftover/E10.5_enhancer_summits.bed -b 25 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E10.5_enhancer_50bpsummits.bed
+bedtools slop -i output/liftover/E11.5_enhancer_summits.bed -b 25 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E11.5_enhancer_50bpsummits.bed
+bedtools slop -i output/liftover/E12.5_enhancer_summits.bed -b 25 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E12.5_enhancer_50bpsummits.bed
+bedtools slop -i output/liftover/E13.5_enhancer_summits.bed -b 25 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E13.5_enhancer_50bpsummits.bed
+bedtools slop -i output/liftover/E14.5_enhancer_summits.bed -b 25 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E14.5_enhancer_50bpsummits.bed
+bedtools slop -i output/liftover/E15.5_enhancer_summits.bed -b 25 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E15.5_enhancer_50bpsummits.bed
+
+bedtools slop -i output/liftover/E10.5_promoter_summits.bed -b 25 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E10.5_promoter_50bpsummits.bed
+bedtools slop -i output/liftover/E11.5_promoter_summits.bed -b 25 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E11.5_promoter_50bpsummits.bed
+bedtools slop -i output/liftover/E12.5_promoter_summits.bed -b 25 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E12.5_promoter_50bpsummits.bed
+bedtools slop -i output/liftover/E13.5_promoter_summits.bed -b 25 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E13.5_promoter_50bpsummits.bed
+bedtools slop -i output/liftover/E14.5_promoter_summits.bed -b 25 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E14.5_promoter_50bpsummits.bed
+bedtools slop -i output/liftover/E15.5_promoter_summits.bed -b 25 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E15.5_promoter_50bpsummits.bed
+```
+
+### Extend the summits 50bp in both directions
+```{bash eval=FALSE}
+bedtools slop -i output/liftover/dunnart_promoter_summits.bed -b 50 -g data/genomic_data/smiCra1.chrom.sizes > output/liftover/dunnart_promoter_100bpsummits.bed
+
+bedtools slop -i output/liftover/dunnart_enhancer_summits.bed -b 50 -g data/genomic_data/smiCra1.chrom.sizes > output/liftover/dunnart_enhancer_100bpsummits.bed
+
+bedtools slop -i output/liftover/E10.5_enhancer_summits.bed -b 50 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E10.5_enhancer_100bpsummits.bed
+bedtools slop -i output/liftover/E11.5_enhancer_summits.bed -b 50 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E11.5_enhancer_100bpsummits.bed
+bedtools slop -i output/liftover/E12.5_enhancer_summits.bed -b 50 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E12.5_enhancer_100bpsummits.bed
+bedtools slop -i output/liftover/E13.5_enhancer_summits.bed -b 50 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E13.5_enhancer_100bpsummits.bed
+bedtools slop -i output/liftover/E14.5_enhancer_summits.bed -b 50 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E14.5_enhancer_100bpsummits.bed
+bedtools slop -i output/liftover/E15.5_enhancer_summits.bed -b 50 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E15.5_enhancer_100bpsummits.bed
+
+bedtools slop -i output/liftover/E10.5_promoter_summits.bed -b 50 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E10.5_promoter_100bpsummits.bed
+bedtools slop -i output/liftover/E11.5_promoter_summits.bed -b 50 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E11.5_promoter_100bpsummits.bed
+bedtools slop -i output/liftover/E12.5_promoter_summits.bed -b 50 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E12.5_promoter_100bpsummits.bed
+bedtools slop -i output/liftover/E13.5_promoter_summits.bed -b 50 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E13.5_promoter_100bpsummits.bed
+bedtools slop -i output/liftover/E14.5_promoter_summits.bed -b 50 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E14.5_promoter_100bpsummits.bed
+bedtools slop -i output/liftover/E15.5_promoter_summits.bed -b 50 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E15.5_promoter_100bpsummits.bed
+```
+
+### Extend the summits 100bp in both directions
+```{bash eval=FALSE}
+bedtools slop -i output/liftover/dunnart_promoter_summits.bed -b 100 -g data/genomic_data/smiCra1.chrom.sizes > output/liftover/dunnart_promoter_200bpsummits.bed
+
+bedtools slop -i output/liftover/dunnart_enhancer_summits.bed -b 100 -g data/genomic_data/smiCra1.chrom.sizes > output/liftover/dunnart_enhancer_200bpsummits.bed
+
+bedtools slop -i output/liftover/E10.5_enhancer_summits.bed -b 100 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E10.5_enhancer_200bpsummits.bed
+bedtools slop -i output/liftover/E11.5_enhancer_summits.bed -b 100 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E11.5_enhancer_200bpsummits.bed
+bedtools slop -i output/liftover/E12.5_enhancer_summits.bed -b 100 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E12.5_enhancer_200bpsummits.bed
+bedtools slop -i output/liftover/E13.5_enhancer_summits.bed -b 100 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E13.5_enhancer_200bpsummits.bed
+bedtools slop -i output/liftover/E14.5_enhancer_summits.bed -b 100 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E14.5_enhancer_200bpsummits.bed
+bedtools slop -i output/liftover/E15.5_enhancer_summits.bed -b 100 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E15.5_enhancer_200bpsummits.bed
+
+bedtools slop -i output/liftover/E10.5_promoter_summits.bed -b 100 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E10.5_promoter_200bpsummits.bed
+bedtools slop -i output/liftover/E11.5_promoter_summits.bed -b 100 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E11.5_promoter_200bpsummits.bed
+bedtools slop -i output/liftover/E12.5_promoter_summits.bed -b 100 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E12.5_promoter_200bpsummits.bed
+bedtools slop -i output/liftover/E13.5_promoter_summits.bed -b 100 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E13.5_promoter_200bpsummits.bed
+bedtools slop -i output/liftover/E14.5_promoter_summits.bed -b 100 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E14.5_promoter_200bpsummits.bed
+bedtools slop -i output/liftover/E15.5_promoter_summits.bed -b 100 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E15.5_promoter_200bpsummits.bed
+```
+
+### Extend the summits 150bp in both directions
+```{bash eval=FALSE}
+bedtools slop -i output/liftover/dunnart_promoter_summits.bed -b 150 -g data/genomic_data/smiCra1.chrom.sizes > output/liftover/dunnart_promoter_300bpsummits.bed
+
+bedtools slop -i output/liftover/dunnart_enhancer_summits.bed -b 150 -g data/genomic_data/smiCra1.chrom.sizes > output/liftover/dunnart_enhancer_300bpsummits.bed
+
+bedtools slop -i output/liftover/E10.5_enhancer_summits.bed -b 150 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E10.5_enhancer_300bpsummits.bed
+bedtools slop -i output/liftover/E11.5_enhancer_summits.bed -b 150 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E11.5_enhancer_300bpsummits.bed
+bedtools slop -i output/liftover/E12.5_enhancer_summits.bed -b 150 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E12.5_enhancer_300bpsummits.bed
+bedtools slop -i output/liftover/E13.5_enhancer_summits.bed -b 150 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E13.5_enhancer_300bpsummits.bed
+bedtools slop -i output/liftover/E14.5_enhancer_summits.bed -b 150 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E14.5_enhancer_300bpsummits.bed
+bedtools slop -i output/liftover/E15.5_enhancer_summits.bed -b 150 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E15.5_enhancer_300bpsummits.bed
+
+bedtools slop -i output/liftover/E10.5_promoter_summits.bed -b 150 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E10.5_promoter_300bpsummits.bed
+bedtools slop -i output/liftover/E11.5_promoter_summits.bed -b 150 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E11.5_promoter_300bpsummits.bed
+bedtools slop -i output/liftover/E12.5_promoter_summits.bed -b 150 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E12.5_promoter_300bpsummits.bed
+bedtools slop -i output/liftover/E13.5_promoter_summits.bed -b 150 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E13.5_promoter_300bpsummits.bed
+bedtools slop -i output/liftover/E14.5_promoter_summits.bed -b 150 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E14.5_promoter_300bpsummits.bed
+bedtools slop -i output/liftover/E15.5_promoter_summits.bed -b 150 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E15.5_promoter_300bpsummits.bed
+```
+
+### Extend the summits 200bp in both directions
+```{bash eval=FALSE}
+bedtools slop -i output/liftover/dunnart_promoter_summits.bed -b 200 -g data/genomic_data/smiCra1.chrom.sizes > output/liftover/dunnart_promoter_400bpsummits.bed
+
+bedtools slop -i output/liftover/dunnart_enhancer_summits.bed -b 200 -g data/genomic_data/smiCra1.chrom.sizes > output/liftover/dunnart_enhancer_400bpsummits.bed
+
+bedtools slop -i output/liftover/E10.5_enhancer_summits.bed -b 200 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E10.5_enhancer_400bpsummits.bed
+bedtools slop -i output/liftover/E11.5_enhancer_summits.bed -b 200 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E11.5_enhancer_400bpsummits.bed
+bedtools slop -i output/liftover/E12.5_enhancer_summits.bed -b 200 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E12.5_enhancer_400bpsummits.bed
+bedtools slop -i output/liftover/E13.5_enhancer_summits.bed -b 200 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E13.5_enhancer_400bpsummits.bed
+bedtools slop -i output/liftover/E14.5_enhancer_summits.bed -b 200 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E14.5_enhancer_400bpsummits.bed
+bedtools slop -i output/liftover/E15.5_enhancer_summits.bed -b 200 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E15.5_enhancer_400bpsummits.bed
+
+bedtools slop -i output/liftover/E10.5_promoter_summits.bed -b 200 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E10.5_promoter_400bpsummits.bed
+bedtools slop -i output/liftover/E11.5_promoter_summits.bed -b 200 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E11.5_promoter_400bpsummits.bed
+bedtools slop -i output/liftover/E12.5_promoter_summits.bed -b 200 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E12.5_promoter_400bpsummits.bed
+bedtools slop -i output/liftover/E13.5_promoter_summits.bed -b 200 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E13.5_promoter_400bpsummits.bed
+bedtools slop -i output/liftover/E14.5_promoter_summits.bed -b 200 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E14.5_promoter_400bpsummits.bed
+bedtools slop -i output/liftover/E15.5_promoter_summits.bed -b 200 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E15.5_promoter_400bpsummits.bed
+```
+
+### Extend the summits 250bp in both directions
+```{bash eval=FALSE}
+bedtools slop -i output/liftover/dunnart_promoter_summits.bed -b 250 -g data/genomic_data/smiCra1.chrom.sizes > output/liftover/dunnart_promoter_500bpsummits.bed
+
+bedtools slop -i output/liftover/dunnart_enhancer_summits.bed -b 250 -g data/genomic_data/smiCra1.chrom.sizes > output/liftover/dunnart_enhancer_500bpsummits.bed
+
+bedtools slop -i output/liftover/E10.5_enhancer_summits.bed -b 250 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E10.5_enhancer_500bpsummits.bed
+bedtools slop -i output/liftover/E11.5_enhancer_summits.bed -b 250 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E11.5_enhancer_500bpsummits.bed
+bedtools slop -i output/liftover/E12.5_enhancer_summits.bed -b 250 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E12.5_enhancer_500bpsummits.bed
+bedtools slop -i output/liftover/E13.5_enhancer_summits.bed -b 250 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E13.5_enhancer_500bpsummits.bed
+bedtools slop -i output/liftover/E14.5_enhancer_summits.bed -b 250 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E14.5_enhancer_500bpsummits.bed
+bedtools slop -i output/liftover/E15.5_enhancer_summits.bed -b 250 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E15.5_enhancer_500bpsummits.bed
+
+bedtools slop -i output/liftover/E10.5_promoter_summits.bed -b 250 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E10.5_promoter_500bpsummits.bed
+bedtools slop -i output/liftover/E11.5_promoter_summits.bed -b 250 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E11.5_promoter_500bpsummits.bed
+bedtools slop -i output/liftover/E12.5_promoter_summits.bed -b 250 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E12.5_promoter_500bpsummits.bed
+bedtools slop -i output/liftover/E13.5_promoter_summits.bed -b 250 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E13.5_promoter_500bpsummits.bed
+bedtools slop -i output/liftover/E14.5_promoter_summits.bed -b 250 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E14.5_promoter_500bpsummits.bed
+bedtools slop -i output/liftover/E15.5_promoter_summits.bed -b 250 -g data/genomic_data/mm10.chrom.sizes > output/liftover/E15.5_promoter_500bpsummits.bed
+```
+
+### LiftOver extended peak summits
+#### LiftOver dunnart peaks to mouse genome
+```{bash eval=FALSE}
+
+## Enhancer-associated peaks
+liftOver output/liftover/dunnart_enhancer_50bpsummits.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_50bpsummits_smiCraTOmm10.bed output/liftover/dunnart_enhancer_50bpsummits_smiCraTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_100bpsummits.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_100bpsummits_smiCraTOmm10.bed output/liftover/dunnart_enhancer_100bpsummits_smiCraTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_200bpsummits.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_200bpsummits_smiCraTOmm10.bed output/liftover/dunnart_enhancer_200bpsummits_smiCraTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_300bpsummits.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_300bpsummits_smiCraTOmm10.bed output/liftover/dunnart_enhancer_300bpsummits_smiCraTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_400bpsummits.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_400bpsummits_smiCraTOmm10.bed output/liftover/dunnart_enhancer_400bpsummits_smiCraTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_500bpsummits.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_500bpsummits_smiCraTOmm10.bed output/liftover/dunnart_enhancer_500bpsummits_smiCraTOmm10_unmapped.bed
+
+## Promoter-associated peaks
+liftOver output/liftover/dunnart_promoter_50bpsummits.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_50bpsummits_smiCraTOmm10.bed output/liftover/dunnart_promoter_50bpsummits_smiCraTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_100bpsummits.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_100bpsummits_smiCraTOmm10.bed output/liftover/dunnart_promoter_100bpsummits_smiCraTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_200bpsummits.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_200bpsummits_smiCraTOmm10.bed output/liftover/dunnart_promoter_200bpsummits_smiCraTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_300bpsummits.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_300bpsummits_smiCraTOmm10.bed output/liftover/dunnart_promoter_300bpsummits_smiCraTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_400bpsummits.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_400bpsummits_smiCraTOmm10.bed output/liftover/dunnart_promoter_400bpsummits_smiCraTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_500bpsummits.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_500bpsummits_smiCraTOmm10.bed output/liftover/dunnart_promoter_500bpsummits_smiCraTOmm10_unmapped.bed
+```
+
+#### Lift back to the dunnart genome
+```{bash eval=FALSE}
+## Enhancer-associated peaks
+liftOver output/liftover/dunnart_enhancer_50bpsummits_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_100bpsummits_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_enhancer_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_200bpsummits_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_enhancer_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_300bpsummits_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_enhancer_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_400bpsummits_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_enhancer_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_500bpsummits_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_enhancer_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+## Promoter-associated peaks
+liftOver output/liftover/dunnart_promoter_50bpsummits_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_100bpsummits_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_promoter_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_200bpsummits_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_promoter_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_300bpsummits_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_promoter_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_400bpsummits_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_promoter_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_500bpsummits_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_promoter_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+```
+
+
+#### Lift back to mouse genome so that everything is in mouse coordinates
+```{bash eval=FALSE}
+## Enhancer-assocaited peaks
+liftOver output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed output/liftover/dunnart_enhancer_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed output/liftover/dunnart_enhancer_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed output/liftover/dunnart_enhancer_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed output/liftover/dunnart_enhancer_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_enhancer_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed output/liftover/dunnart_enhancer_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
+
+## Promoter-associated peaks 
+liftOver output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed output/liftover/dunnart_promoter_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed output/liftover/dunnart_promoter_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed output/liftover/dunnart_promoter_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed output/liftover/dunnart_promoter_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
+
+liftOver output/liftover/dunnart_promoter_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed output/liftover/dunnart_promoter_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10_unmapped.bed
+
+```
+
+### Intersect dunnart CREs with mouse CREs
+```{bash eval=FALSE}
+## Promoter-associated peaks
+bedtools intersect -a output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E10_cluster1_peaks.narrowPeak -wo > output/liftover/E10.5_mm10intersect_dunnart_promoter_50bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E11_cluster1_peaks.narrowPeak -wo > output/liftover/E11.5_mm10intersect_dunnart_promoter_50bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E12_cluster1_peaks.narrowPeak -wo > output/liftover/E12.5_mm10intersect_dunnart_promoter_50bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E13_cluster1_peaks.narrowPeak -wo > output/liftover/E13.5_mm10intersect_dunnart_promoter_50bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E14_cluster1_peaks.narrowPeak -wo > output/liftover/E14.5_mm10intersect_dunnart_promoter_50bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E15_cluster1_peaks.narrowPeak -wo > output/liftover/E15.5_mm10intersect_dunnart_promoter_50bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E10_cluster1_peaks.narrowPeak -wo > output/liftover/E10.5_mm10intersect_dunnart_promoter_100bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E11_cluster1_peaks.narrowPeak -wo > output/liftover/E11.5_mm10intersect_dunnart_promoter_100bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E12_cluster1_peaks.narrowPeak -wo > output/liftover/E12.5_mm10intersect_dunnart_promoter_100bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E13_cluster1_peaks.narrowPeak -wo > output/liftover/E13.5_mm10intersect_dunnart_promoter_100bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E14_cluster1_peaks.narrowPeak -wo > output/liftover/E14.5_mm10intersect_dunnart_promoter_100bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E15_cluster1_peaks.narrowPeak -wo > output/liftover/E15.5_mm10intersect_dunnart_promoter_100bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E10_cluster1_peaks.narrowPeak -wo > output/liftover/E10.5_mm10intersect_dunnart_promoter_200bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E11_cluster1_peaks.narrowPeak -wo > output/liftover/E11.5_mm10intersect_dunnart_promoter_200bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E12_cluster1_peaks.narrowPeak -wo > output/liftover/E12.5_mm10intersect_dunnart_promoter_200bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E13_cluster1_peaks.narrowPeak -wo > output/liftover/E13.5_mm10intersect_dunnart_promoter_200bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E14_cluster1_peaks.narrowPeak -wo > output/liftover/E14.5_mm10intersect_dunnart_promoter_200bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E15_cluster1_peaks.narrowPeak -wo > output/liftover/E15.5_mm10intersect_dunnart_promoter_200bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E10_cluster1_peaks.narrowPeak -wo > output/liftover/E10.5_mm10intersect_dunnart_promoter_300bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E11_cluster1_peaks.narrowPeak -wo > output/liftover/E11.5_mm10intersect_dunnart_promoter_300bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E12_cluster1_peaks.narrowPeak -wo > output/liftover/E12.5_mm10intersect_dunnart_promoter_300bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E13_cluster1_peaks.narrowPeak -wo > output/liftover/E13.5_mm10intersect_dunnart_promoter_300bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E14_cluster1_peaks.narrowPeak -wo > output/liftover/E14.5_mm10intersect_dunnart_promoter_300bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E15_cluster1_peaks.narrowPeak -wo > output/liftover/E15.5_mm10intersect_dunnart_promoter_300bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E10_cluster1_peaks.narrowPeak -wo > output/liftover/E10.5_mm10intersect_dunnart_promoter_400bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E11_cluster1_peaks.narrowPeak -wo > output/liftover/E11.5_mm10intersect_dunnart_promoter_400bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E12_cluster1_peaks.narrowPeak -wo > output/liftover/E12.5_mm10intersect_dunnart_promoter_400bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E13_cluster1_peaks.narrowPeak -wo > output/liftover/E13.5_mm10intersect_dunnart_promoter_400bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E14_cluster1_peaks.narrowPeak -wo > output/liftover/E14.5_mm10intersect_dunnart_promoter_400bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E15_cluster1_peaks.narrowPeak -wo > output/liftover/E15.5_mm10intersect_dunnart_promoter_400bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E10_cluster1_peaks.narrowPeak -wo > output/liftover/E10.5_mm10intersect_dunnart_promoter_500bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E11_cluster1_peaks.narrowPeak -wo > output/liftover/E11.5_mm10intersect_dunnart_promoter_500bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E12_cluster1_peaks.narrowPeak -wo > output/liftover/E12.5_mm10intersect_dunnart_promoter_500bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E13_cluster1_peaks.narrowPeak -wo > output/liftover/E13.5_mm10intersect_dunnart_promoter_500bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E14_cluster1_peaks.narrowPeak -wo > output/liftover/E14.5_mm10intersect_dunnart_promoter_500bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E15_cluster1_peaks.narrowPeak -wo > output/liftover/E15.5_mm10intersect_dunnart_promoter_500bpsummits.bed
+
+## Enhancer-associated peaks
+bedtools intersect -a output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E10.5_enhancer_peaks.narrowPeak -wo > output/liftover/E10.5_mm10intersect_dunnart_enhancer_50bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E11.5_enhancer_peaks.narrowPeak -wo > output/liftover/E11.5_mm10intersect_dunnart_enhancer_50bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E12.5_enhancer_peaks.narrowPeak -wo > output/liftover/E12.5_mm10intersect_dunnart_enhancer_50bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E13.5_enhancer_peaks.narrowPeak -wo > output/liftover/E13.5_mm10intersect_dunnart_enhancer_50bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E14.5_enhancer_peaks.narrowPeak -wo > output/liftover/E14.5_mm10intersect_dunnart_enhancer_50bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E15.5_enhancer_peaks.narrowPeak -wo > output/liftover/E15.5_mm10intersect_dunnart_enhancer_50bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E10.5_enhancer_peaks.narrowPeak -wo > output/liftover/E10.5_mm10intersect_dunnart_enhancer_100bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E11.5_enhancer_peaks.narrowPeak -wo > output/liftover/E11.5_mm10intersect_dunnart_enhancer_100bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E12.5_enhancer_peaks.narrowPeak -wo > output/liftover/E12.5_mm10intersect_dunnart_enhancer_100bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E13.5_enhancer_peaks.narrowPeak -wo > output/liftover/E13.5_mm10intersect_dunnart_enhancer_100bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E14.5_enhancer_peaks.narrowPeak -wo > output/liftover/E14.5_mm10intersect_dunnart_enhancer_100bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_100bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E15.5_enhancer_peaks.narrowPeak -wo > output/liftover/E15.5_mm10intersect_dunnart_enhancer_100bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E10.5_enhancer_peaks.narrowPeak -wo > output/liftover/E10.5_mm10intersect_dunnart_enhancer_200bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E11.5_enhancer_peaks.narrowPeak -wo > output/liftover/E11.5_mm10intersect_dunnart_enhancer_200bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E12.5_enhancer_peaks.narrowPeak -wo > output/liftover/E12.5_mm10intersect_dunnart_enhancer_200bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E13.5_enhancer_peaks.narrowPeak -wo > output/liftover/E13.5_mm10intersect_dunnart_enhancer_200bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E14.5_enhancer_peaks.narrowPeak -wo > output/liftover/E14.5_mm10intersect_dunnart_enhancer_200bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_200bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E15.5_enhancer_peaks.narrowPeak -wo > output/liftover/E15.5_mm10intersect_dunnart_enhancer_200bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E10.5_enhancer_peaks.narrowPeak -wo > output/liftover/E10.5_mm10intersect_dunnart_enhancer_300bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E11.5_enhancer_peaks.narrowPeak -wo > output/liftover/E11.5_mm10intersect_dunnart_enhancer_300bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E12.5_enhancer_peaks.narrowPeak -wo > output/liftover/E12.5_mm10intersect_dunnart_enhancer_300bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E13.5_enhancer_peaks.narrowPeak -wo > output/liftover/E13.5_mm10intersect_dunnart_enhancer_300bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E14.5_enhancer_peaks.narrowPeak -wo > output/liftover/E14.5_mm10intersect_dunnart_enhancer_300bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_300bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E15.5_enhancer_peaks.narrowPeak -wo > output/liftover/E15.5_mm10intersect_dunnart_enhancer_300bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E10.5_enhancer_peaks.narrowPeak -wo > output/liftover/E10.5_mm10intersect_dunnart_enhancer_400bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E11.5_enhancer_peaks.narrowPeak -wo > output/liftover/E11.5_mm10intersect_dunnart_enhancer_400bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E12.5_enhancer_peaks.narrowPeak -wo > output/liftover/E12.5_mm10intersect_dunnart_enhancer_400bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E13.5_enhancer_peaks.narrowPeak -wo > output/liftover/E13.5_mm10intersect_dunnart_enhancer_400bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E14.5_enhancer_peaks.narrowPeak -wo > output/liftover/E14.5_mm10intersect_dunnart_enhancer_400bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_400bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E15.5_enhancer_peaks.narrowPeak -wo > output/liftover/E15.5_mm10intersect_dunnart_enhancer_400bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E10.5_enhancer_peaks.narrowPeak -wo > output/liftover/E10.5_mm10intersect_dunnart_enhancer_500bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E11.5_enhancer_peaks.narrowPeak -wo > output/liftover/E11.5_mm10intersect_dunnart_enhancer_500bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E12.5_enhancer_peaks.narrowPeak -wo > output/liftover/E12.5_mm10intersect_dunnart_enhancer_500bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E13.5_enhancer_peaks.narrowPeak -wo > output/liftover/E13.5_mm10intersect_dunnart_enhancer_500bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E14.5_enhancer_peaks.narrowPeak -wo > output/liftover/E14.5_mm10intersect_dunnart_enhancer_500bpsummits.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_500bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E15.5_enhancer_peaks.narrowPeak -wo > output/liftover/E15.5_mm10intersect_dunnart_enhancer_500bpsummits.bed
+```
+
+
+
+### Use window to allow intersections within 50 bps 
+```{bash eval=FALSE}
+bedtools window -w 50 -u -a output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E10_cluster1_peaks.narrowPeak  > output/liftover/E10.5_mm10intersect_dunnart_promoter_50bpsummits_window.bed
+bedtools window -w 50 -u -a output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E11_cluster1_peaks.narrowPeak  > output/liftover/E11.5_mm10intersect_dunnart_promoter_50bpsummits_window.bed
+bedtools window -w 50 -u -a output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E12_cluster1_peaks.narrowPeak  > output/liftover/E12.5_mm10intersect_dunnart_promoter_50bpsummits_window.bed
+bedtools window -w 50 -u -a output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E13_cluster1_peaks.narrowPeak  > output/liftover/E13.5_mm10intersect_dunnart_promoter_50bpsummits_window.bed
+bedtools window -w 50 -u -a output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E14_cluster1_peaks.narrowPeak  > output/liftover/E14.5_mm10intersect_dunnart_promoter_50bpsummits_window.bed
+bedtools window -w 50 -u -a output/liftover/dunnart_promoter_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/filtered_peaks/E15_cluster1_peaks.narrowPeak  > output/liftover/E15.5_mm10intersect_dunnart_promoter_50bpsummits_window.bed
+
+bedtools window -w 50 -u -a output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E10.5_enhancer_peaks.narrowPeak  > output/liftover/E10.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed
+bedtools window -w 50 -u -a output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E11.5_enhancer_peaks.narrowPeak  > output/liftover/E11.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed
+bedtools window -w 50 -u -a output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E12.5_enhancer_peaks.narrowPeak  > output/liftover/E12.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed
+bedtools window -w 50 -u -a output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E13.5_enhancer_peaks.narrowPeak  > output/liftover/E13.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed
+bedtools window -w 50 -u -a output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E14.5_enhancer_peaks.narrowPeak  > output/liftover/E14.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed
+bedtools window -w 50 -u -a output/liftover/dunnart_enhancer_50bpsummits.bed_smiCraTOmm10_mm10TOsmiCra_backTOmm10.bed -b output/peaks/E15.5_enhancer_peaks.narrowPeak  > output/liftover/E15.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed
+```
+
+#### Lift dunnart peaks back over to the dunnart genome
+
+```{bash eval=FALSE}
+liftOver -bedPlus=4 output/liftover/E10.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/E10.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra.bed output/liftover/E10.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/E11.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/E11.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra.bed output/liftover/E11.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/E12.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/E12.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra.bed output/liftover/E12.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/E13.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/E13.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra.bed output/liftover/E13.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/E14.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/E14.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra.bed output/liftover/E14.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/E15.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/E15.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra.bed output/liftover/E15.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/E10.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/E10.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra.bed output/liftover/E10.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/E11.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/E11.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra.bed output/liftover/E11.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/E12.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/E12.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra.bed output/liftover/E12.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/E13.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/E13.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra.bed output/liftover/E13.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/E14.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/E14.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra.bed output/liftover/E14.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/E15.5_mm10intersect_dunnart_enhancer_50bpsummits_window.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/E15.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra.bed output/liftover/E15.5_mm10intersect_dunnart_enhancer_50bpsummits_window_backTOsmiCra_unmapped.bed
+
+```
+
+## When you lift over a peak from one species to another, does it always land next to the same gene in both species?
+Use annotated peak files for all peaks and compare nearest gene call
+
+### Intersect annotation file with peak summits
+
+```{bash eval=FALSE}
+bedtools intersect -a output/liftover/dunnart_promoter_50bpsummits.bed -b output/annotations/dunnart_promoter_cluster1_annotationConvertedIDs.bed -wb > output/liftover/dunnart_promoter_50bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_50bpsummits.bed -b output/annotations/dunnart_enhancer_annotationConvertedIDs.bed -wb > output/liftover/dunnart_enhancer_50bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/E10.5_promoter_50bpsummits.bed -b output/annotations/E10_cluster1_annotation.bed -wb > output/liftover/E10_promoter_50bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E11.5_promoter_50bpsummits.bed -b output/annotations/E11_cluster1_annotation.bed -wb > output/liftover/E11_promoter_50bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E12.5_promoter_50bpsummits.bed -b output/annotations/E12_cluster1_annotation.bed -wb > output/liftover/E12_promoter_50bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E13.5_promoter_50bpsummits.bed -b output/annotations/E13_cluster1_annotation.bed -wb > output/liftover/E13_promoter_50bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E14.5_promoter_50bpsummits.bed -b output/annotations/E14_cluster1_annotation.bed -wb > output/liftover/E14_promoter_50bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E15.5_promoter_50bpsummits.bed -b output/annotations/E15_cluster1_annotation.bed -wb > output/liftover/E15_promoter_50bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/E10.5_enhancer_50bpsummits.bed -b output/annotations/E10.5_enhancer_annotation.bed -wb > output/liftover/E10_enhancer_50bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E11.5_enhancer_50bpsummits.bed -b output/annotations/E11.5_enhancer_annotation.bed -wb > output/liftover/E11_enhancer_50bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E12.5_enhancer_50bpsummits.bed -b output/annotations/E12.5_enhancer_annotation.bed -wb > output/liftover/E12_enhancer_50bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E13.5_enhancer_50bpsummits.bed -b output/annotations/E13.5_enhancer_annotation.bed -wb > output/liftover/E13_enhancer_50bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E14.5_enhancer_50bpsummits.bed -b output/annotations/E14.5_enhancer_annotation.bed -wb > output/liftover/E14_enhancer_50bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E15.5_enhancer_50bpsummits.bed -b output/annotations/E15.5_enhancer_annotation.bed -wb > output/liftover/E15_enhancer_50bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_100bpsummits.bed -b output/annotations/dunnart_promoter_cluster1_annotationConvertedIDs.bed -wb > output/liftover/dunnart_promoter_100bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_100bpsummits.bed -b output/annotations/dunnart_enhancer_annotationConvertedIDs.bed -wb > output/liftover/dunnart_enhancer_100bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/E10.5_promoter_100bpsummits.bed -b output/annotations/E10_cluster1_annotation.bed -wb > output/liftover/E10_promoter_100bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E11.5_promoter_100bpsummits.bed -b output/annotations/E11_cluster1_annotation.bed -wb > output/liftover/E11_promoter_100bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E12.5_promoter_100bpsummits.bed -b output/annotations/E12_cluster1_annotation.bed -wb > output/liftover/E12_promoter_100bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E13.5_promoter_100bpsummits.bed -b output/annotations/E13_cluster1_annotation.bed -wb > output/liftover/E13_promoter_100bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E14.5_promoter_100bpsummits.bed -b output/annotations/E14_cluster1_annotation.bed -wb > output/liftover/E14_promoter_100bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E15.5_promoter_100bpsummits.bed -b output/annotations/E15_cluster1_annotation.bed -wb > output/liftover/E15_promoter_100bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/E10.5_enhancer_100bpsummits.bed -b output/annotations/E10.5_enhancer_annotation.bed -wb > output/liftover/E10_enhancer_100bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E11.5_enhancer_100bpsummits.bed -b output/annotations/E11.5_enhancer_annotation.bed -wb > output/liftover/E11_enhancer_100bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E12.5_enhancer_100bpsummits.bed -b output/annotations/E12.5_enhancer_annotation.bed -wb > output/liftover/E12_enhancer_100bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E13.5_enhancer_100bpsummits.bed -b output/annotations/E13.5_enhancer_annotation.bed -wb > output/liftover/E13_enhancer_100bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E14.5_enhancer_100bpsummits.bed -b output/annotations/E14.5_enhancer_annotation.bed -wb > output/liftover/E14_enhancer_100bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E15.5_enhancer_100bpsummits.bed -b output/annotations/E15.5_enhancer_annotation.bed -wb > output/liftover/E15_enhancer_100bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_200bpsummits.bed -b output/annotations/dunnart_promoter_cluster1_annotationConvertedIDs.bed -wb > output/liftover/dunnart_promoter_200bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_200bpsummits.bed -b output/annotations/dunnart_enhancer_annotationConvertedIDs.bed -wb > output/liftover/dunnart_enhancer_200bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/E10.5_promoter_200bpsummits.bed -b output/annotations/E10_cluster1_annotation.bed -wb > output/liftover/E10_promoter_200bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E11.5_promoter_200bpsummits.bed -b output/annotations/E11_cluster1_annotation.bed -wb > output/liftover/E11_promoter_200bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E12.5_promoter_200bpsummits.bed -b output/annotations/E12_cluster1_annotation.bed -wb > output/liftover/E12_promoter_200bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E13.5_promoter_200bpsummits.bed -b output/annotations/E13_cluster1_annotation.bed -wb > output/liftover/E13_promoter_200bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E14.5_promoter_200bpsummits.bed -b output/annotations/E14_cluster1_annotation.bed -wb > output/liftover/E14_promoter_200bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E15.5_promoter_200bpsummits.bed -b output/annotations/E15_cluster1_annotation.bed -wb > output/liftover/E15_promoter_200bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/E10.5_enhancer_200bpsummits.bed -b output/annotations/E10.5_enhancer_annotation.bed -wb > output/liftover/E10_enhancer_200bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E11.5_enhancer_200bpsummits.bed -b output/annotations/E11.5_enhancer_annotation.bed -wb > output/liftover/E11_enhancer_200bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E12.5_enhancer_200bpsummits.bed -b output/annotations/E12.5_enhancer_annotation.bed -wb > output/liftover/E12_enhancer_200bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E13.5_enhancer_200bpsummits.bed -b output/annotations/E13.5_enhancer_annotation.bed -wb > output/liftover/E13_enhancer_200bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E14.5_enhancer_200bpsummits.bed -b output/annotations/E14.5_enhancer_annotation.bed -wb > output/liftover/E14_enhancer_200bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E15.5_enhancer_200bpsummits.bed -b output/annotations/E15.5_enhancer_annotation.bed -wb > output/liftover/E15_enhancer_200bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_300bpsummits.bed -b output/annotations/dunnart_promoter_cluster1_annotationConvertedIDs.bed -wb > output/liftover/dunnart_promoter_300bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_300bpsummits.bed -b output/annotations/dunnart_enhancer_annotationConvertedIDs.bed -wb > output/liftover/dunnart_enhancer_300bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/E10.5_promoter_300bpsummits.bed -b output/annotations/E10_cluster1_annotation.bed -wb > output/liftover/E10_promoter_300bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E11.5_promoter_300bpsummits.bed -b output/annotations/E11_cluster1_annotation.bed -wb > output/liftover/E11_promoter_300bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E12.5_promoter_300bpsummits.bed -b output/annotations/E12_cluster1_annotation.bed -wb > output/liftover/E12_promoter_300bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E13.5_promoter_300bpsummits.bed -b output/annotations/E13_cluster1_annotation.bed -wb > output/liftover/E13_promoter_300bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E14.5_promoter_300bpsummits.bed -b output/annotations/E14_cluster1_annotation.bed -wb > output/liftover/E14_promoter_300bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E15.5_promoter_300bpsummits.bed -b output/annotations/E15_cluster1_annotation.bed -wb > output/liftover/E15_promoter_300bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/E10.5_enhancer_300bpsummits.bed -b output/annotations/E10.5_enhancer_annotation.bed -wb > output/liftover/E10_enhancer_300bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E11.5_enhancer_300bpsummits.bed -b output/annotations/E11.5_enhancer_annotation.bed -wb > output/liftover/E11_enhancer_300bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E12.5_enhancer_300bpsummits.bed -b output/annotations/E12.5_enhancer_annotation.bed -wb > output/liftover/E12_enhancer_300bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E13.5_enhancer_300bpsummits.bed -b output/annotations/E13.5_enhancer_annotation.bed -wb > output/liftover/E13_enhancer_300bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E14.5_enhancer_300bpsummits.bed -b output/annotations/E14.5_enhancer_annotation.bed -wb > output/liftover/E14_enhancer_300bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E15.5_enhancer_300bpsummits.bed -b output/annotations/E15.5_enhancer_annotation.bed -wb > output/liftover/E15_enhancer_300bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_400bpsummits.bed -b output/annotations/dunnart_promoter_cluster1_annotationConvertedIDs.bed -wb > output/liftover/dunnart_promoter_400bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_400bpsummits.bed -b output/annotations/dunnart_enhancer_annotationConvertedIDs.bed -wb > output/liftover/dunnart_enhancer_400bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/E10.5_promoter_400bpsummits.bed -b output/annotations/E10_cluster1_annotation.bed -wb > output/liftover/E10_promoter_400bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E11.5_promoter_400bpsummits.bed -b output/annotations/E11_cluster1_annotation.bed -wb > output/liftover/E11_promoter_400bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E12.5_promoter_400bpsummits.bed -b output/annotations/E12_cluster1_annotation.bed -wb > output/liftover/E12_promoter_400bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E13.5_promoter_400bpsummits.bed -b output/annotations/E13_cluster1_annotation.bed -wb > output/liftover/E13_promoter_400bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E14.5_promoter_400bpsummits.bed -b output/annotations/E14_cluster1_annotation.bed -wb > output/liftover/E14_promoter_400bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E15.5_promoter_400bpsummits.bed -b output/annotations/E15_cluster1_annotation.bed -wb > output/liftover/E15_promoter_400bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/E10.5_enhancer_400bpsummits.bed -b output/annotations/E10.5_enhancer_annotation.bed -wb > output/liftover/E10_enhancer_400bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E11.5_enhancer_400bpsummits.bed -b output/annotations/E11.5_enhancer_annotation.bed -wb > output/liftover/E11_enhancer_400bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E12.5_enhancer_400bpsummits.bed -b output/annotations/E12.5_enhancer_annotation.bed -wb > output/liftover/E12_enhancer_400bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E13.5_enhancer_400bpsummits.bed -b output/annotations/E13.5_enhancer_annotation.bed -wb > output/liftover/E13_enhancer_400bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E14.5_enhancer_400bpsummits.bed -b output/annotations/E14.5_enhancer_annotation.bed -wb > output/liftover/E14_enhancer_400bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E15.5_enhancer_400bpsummits.bed -b output/annotations/E15.5_enhancer_annotation.bed -wb > output/liftover/E15_enhancer_400bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/dunnart_promoter_500bpsummits.bed -b output/annotations/dunnart_promoter_cluster1_annotationConvertedIDs.bed -wb > output/liftover/dunnart_promoter_500bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/dunnart_enhancer_500bpsummits.bed -b output/annotations/dunnart_enhancer_annotationConvertedIDs.bed -wb > output/liftover/dunnart_enhancer_500bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/E10.5_promoter_500bpsummits.bed -b output/annotations/E10_cluster1_annotation.bed -wb > output/liftover/E10_promoter_500bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E11.5_promoter_500bpsummits.bed -b output/annotations/E11_cluster1_annotation.bed -wb > output/liftover/E11_promoter_500bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E12.5_promoter_500bpsummits.bed -b output/annotations/E12_cluster1_annotation.bed -wb > output/liftover/E12_promoter_500bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E13.5_promoter_500bpsummits.bed -b output/annotations/E13_cluster1_annotation.bed -wb > output/liftover/E13_promoter_500bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E14.5_promoter_500bpsummits.bed -b output/annotations/E14_cluster1_annotation.bed -wb > output/liftover/E14_promoter_500bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E15.5_promoter_500bpsummits.bed -b output/annotations/E15_cluster1_annotation.bed -wb > output/liftover/E15_promoter_500bpsummits_annotation.bed
+
+bedtools intersect -a output/liftover/E10.5_enhancer_500bpsummits.bed -b output/annotations/E10.5_enhancer_annotation.bed -wb > output/liftover/E10_enhancer_500bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E11.5_enhancer_500bpsummits.bed -b output/annotations/E11.5_enhancer_annotation.bed -wb > output/liftover/E11_enhancer_500bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E12.5_enhancer_500bpsummits.bed -b output/annotations/E12.5_enhancer_annotation.bed -wb > output/liftover/E12_enhancer_500bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E13.5_enhancer_500bpsummits.bed -b output/annotations/E13.5_enhancer_annotation.bed -wb > output/liftover/E13_enhancer_500bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E14.5_enhancer_500bpsummits.bed -b output/annotations/E14.5_enhancer_annotation.bed -wb > output/liftover/E14_enhancer_500bpsummits_annotation.bed
+bedtools intersect -a output/liftover/E15.5_enhancer_500bpsummits.bed -b output/annotations/E15.5_enhancer_annotation.bed -wb > output/liftover/E15_enhancer_500bpsummits_annotation.bed
+```
+
+
+### Liftover dunnart peaks with annotation to mouse
+```{bash eval=FALSE}
+liftOver -bedPlus=4 output/liftover/dunnart_promoter_50bpsummits_annotation.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_50bpsummits_annotation_smiCraTOmm10.bed output/liftover/dunnart_promoter_50bpsummits_annotation_smiCraTOmm10_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_promoter_100bpsummits_annotation.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_100bpsummits_annotation_smiCraTOmm10.bed output/liftover/dunnart_promoter_100bpsummits_annotation_smiCraTOmm10_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_promoter_200bpsummits_annotation.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_200bpsummits_annotation_smiCraTOmm10.bed output/liftover/dunnart_promoter_200bpsummits_annotation_smiCraTOmm10_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_promoter_300bpsummits_annotation.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_300bpsummits_annotation_smiCraTOmm10.bed output/liftover/dunnart_promoter_300bpsummits_annotation_smiCraTOmm10_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_promoter_400bpsummits_annotation.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_400bpsummits_annotation_smiCraTOmm10.bed output/liftover/dunnart_promoter_400bpsummits_annotation_smiCraTOmm10_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_promoter_500bpsummits_annotation.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_500bpsummits_annotation_smiCraTOmm10.bed output/liftover/dunnart_promoter_500bpsummits_annotation_smiCraTOmm10_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_enhancer_50bpsummits_annotation_edited.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_50bpsummits_annotation_smiCraTOmm10.bed output/liftover/dunnart_enhancer_50bpsummits_annotation_smiCraTOmm10_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_enhancer_100bpsummits_annotation_edited.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_100bpsummits_annotation_smiCraTOmm10.bed output/liftover/dunnart_enhancer_100bpsummits_annotation_smiCraTOmm10_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_enhancer_200bpsummits_annotation_edited.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_200bpsummits_annotation_smiCraTOmm10.bed output/liftover/dunnart_enhancer_200bpsummits_annotation_smiCraTOmm10_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_enhancer_300bpsummits_annotation_edited.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_300bpsummits_annotation_smiCraTOmm10.bed output/liftover/dunnart_enhancer_300bpsummits_annotation_smiCraTOmm10_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_enhancer_400bpsummits_annotation_edited.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_400bpsummits_annotation_smiCraTOmm10.bed output/liftover/dunnart_enhancer_400bpsummits_annotation_smiCraTOmm10_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_enhancer_500bpsummits_annotation_edited.bed output/wga/liftOver_chains/smiCra1TOmm10_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_500bpsummits_annotation_smiCraTOmm10.bed output/liftover/dunnart_enhancer_500bpsummits_annotation_smiCraTOmm10_unmapped.bed
+```
+
+### Liftover peaks with annotation back to dunnart
+```{bash eval=FALSE}
+liftOver -bedPlus=4 output/liftover/dunnart_promoter_50bpsummits_annotation_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_50bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_promoter_50bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_promoter_100bpsummits_annotation_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_100bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_promoter_100bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_promoter_200bpsummits_annotation_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_200bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_promoter_200bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_promoter_300bpsummits_annotation_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_300bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_promoter_300bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_promoter_400bpsummits_annotation_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_400bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_promoter_400bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_promoter_500bpsummits_annotation_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_promoter_500bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_promoter_500bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_enhancer_50bpsummits_annotation_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_50bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_enhancer_50bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_enhancer_100bpsummits_annotation_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_100bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_enhancer_100bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_enhancer_200bpsummits_annotation_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_200bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_enhancer_200bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_enhancer_300bpsummits_annotation_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_300bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_enhancer_300bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_enhancer_400bpsummits_annotation_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_400bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_enhancer_400bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+
+liftOver -bedPlus=4 output/liftover/dunnart_enhancer_500bpsummits_annotation_smiCraTOmm10.bed output/wga/liftOver_chains/mm10TOsmiCra1_patched_sorted_repFil_chainCl_preNet_chainNet_stitched.chain output/liftover/dunnart_enhancer_500bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra.bed output/liftover/dunnart_enhancer_500bpsummits_annotation_smiCraTOmm10_mm10TOsmiCra_unmapped.bed
+```
+

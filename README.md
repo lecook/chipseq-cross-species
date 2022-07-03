@@ -1,6 +1,6 @@
 # chipseq_cross_species
 
-Link to project [website] - WORK IN PROGRESS
+Link to project [website]
 
 [website]: https://lecook.github.io/chipseq-cross-species/
 

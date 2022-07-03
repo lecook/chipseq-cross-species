@@ -242,7 +242,6 @@ annotatePeaks <- function(peak, outFile, outFile1, outFile2, GOenrich, kegg, bac
                   readable = TRUE)
   write.table(GO, paste0(annot_dir, GOenrich), 
               sep="\t", quote=F, row.names=F)
-  write.table(GO, paste0(annot_dir, GOenrich), sep = "\t", quote = F, row.names = F)
 
   # convert mouse ensembl to entrezID
   suppressWarnings(gene.df <- bitr(geneID = peakAnnoDF$mouseensembl, fromType = "ENSEMBL", toType = "ENTREZID", OrgDb = "org.Mm.eg.db" ))

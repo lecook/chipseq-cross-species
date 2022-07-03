@@ -6,3 +6,469 @@ output: workflowr::wflow_html
 editor_options:
   chunk_output_type: console
 ---
+
+# Set-up
+```{r setup, include = FALSE} 
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# Load in libraries
+library(data.table) 
+library(tidyverse)
+library(ggridges)
+library(ggpubr)
+library(reshape2)
+library(RColorBrewer)
+library(ggplot2)
+library(VennDiagram)
+library(viridis)
+library(hrbrthemes)
+library(gghalves)
+library(dplyr)
+library(UpSetR)
+library(GOSemSim)
+library(circlize)
+library(simplifyEnrichment)
+library(clusterProfiler)
+library(enrichplot)
+library(org.Mm.eg.db)
+library(tools)
+library(ComplexHeatmap)
+library('BiocParallel')  
+library(stringi)
+library(gridtext)
+library(tools)
+library(devtools)
+library(clusterProfiler)
+library(ChIPseeker)
+
+plot_dir <- "output/plots/"
+fullPeak_dir <- "output/peaks/"
+annot_dir <- "output/annotations/"
+filterPeaks_dir <- "output/filtered_peaks/"
+
+## Set the fonts up so that each plot is the saved the same way.
+font <- theme(axis.text.x = element_text(size = 25),
+        axis.text.y = element_text(size = 25),
+        axis.title.x = element_text(size = 25),
+        axis.title.y = element_text(size = 25), 
+        legend.title = element_text(size = 25), legend.text = element_text(size = 25))
+```
+
+# Compare genes with peaks between species
+## Gene intersections
+
+```{r}
+files =list.files(annot_dir, pattern= "dunnart_enhancer_annotationConvertedIDs.txt|cluster1_promoter_annotationConvertedIDs.txt|*_cluster1_annotation.txt|*.5_enhancer_annotation.txt", full.names=T) 
+
+files = as.list(files)
+data = lapply(files, function(x) fread(x, header=TRUE, sep="\t", quote = "", na.strings=c("", "NA")))
+
+df1 = Map(mutate, data[c(1,3,5,7,9,11,13)], cre = "promoter")
+df2 = Map(mutate, data[c(2,4,6,8,10,12,14)], cre = "enhancer")
+data = append(df1, df2)
+
+df1 = Map(mutate, data[c(1,8)], group = "dunnart")
+df2 = Map(mutate, data[c(2,9)], group = "E10.5")
+df3 = Map(mutate, data[c(3,10)], group = "E11.5")
+df4 = Map(mutate, data[c(4,11)], group = "E12.5")
+df5 = Map(mutate, data[c(5,12)], group = "E13.5")
+df6 = Map(mutate, data[c(6,13)], group = "E14.5")
+df7 = Map(mutate, data[c(7,14)], group = "E15.5")
+
+data <- append(df1, df2)
+data <- append(data, df3)
+data = append(data, df4)
+data = append(data, df5)
+data = append(data, df6)
+data = append(data, df7)
+    
+colnames(data[[1]])[19] <- "geneName"
+colnames(data[[2]])[19] <- "geneName"
+
+data = lapply(data, function(x) x=setnames(x, old="geneId", new="mouseensembl", skip_absent=TRUE) %>% as.data.table())
+
+subset = rbindlist(
+  lapply(
+    data, 
+    function(x) 
+      x %>% dplyr::select(mouseensembl,
+                          cre,
+                          group) 
+    %>% as.data.table()
+    %>% unique()
+    ),
+  )
+
+promoters <- split(
+  dplyr::select(
+    filter(subset
+           ,cre == "promoter")
+    ,mouseensembl
+    ,group)
+  ,by = "group"
+  )
+
+enhancers <- split(
+  dplyr::select(
+    filter(subset
+           ,cre == "enhancer")
+    ,mouseensembl
+    ,group)
+  ,by = "group"
+  )
+
+merged_promoters <- promoters %>%
+  purrr::reduce(full_join
+                ,by = "mouseensembl"
+    )
+merged_enhancers <- enhancers %>%
+  purrr::reduce(full_join
+                ,by = "mouseensembl"
+    )
+
+merged_promoters[is.na(merged_promoters)] <- 0
+merged_enhancers[is.na(merged_enhancers)] <- 0
+
+merged_promoters = as.data.frame(
+  merged_promoters)
+merged_enhancers = as.data.frame(
+  merged_enhancers)
+
+
+colnames(merged_promoters) = c("geneId",
+                               "dunnart",
+                               "E10.5",
+                               "E11.5",
+                               "E12.5",
+                               "E13.5",
+                               "E14.5",
+                               "E15.5")
+
+colnames(merged_enhancers) = c("geneId",
+                               "dunnart",
+                               "E10.5",
+                               "E11.5",
+                               "E12.5",
+                               "E13.5",
+                               "E14.5",
+                               "E15.5")
+x = merged_promoters
+
+create_upset_df <- function(x, y){
+  geneId = x$geneId
+
+  upset.df = data.frame(
+    lapply(
+      x[,2:8],
+      function(x) 
+        as.numeric(x!="0")
+      )
+    )
+  
+  rownames(upset.df) = geneId
+  write.table(upset.df,
+              paste0(annot_dir,
+                     y, 
+                     sep=''),
+              sep="\t", quote=F,
+              row.names=T,
+              col.names = T)
+  return(upset.df)
+  }
+
+promoter_upset = create_upset_df(
+  x = merged_promoters,
+  y = "mouse_dunnart_promoters_upsetData.txt"
+)
+
+enhancer_upset = create_upset_df(
+  x = merged_enhancers,
+  y = "mouse_dunnart_enhancers_upsetData.txt"
+)  
+    
+
+plot_upset <- function(x){
+  upset(x,
+        set_size.angles = 45,
+        order.by="freq",
+        text.scale = 2,
+        sets = c("dunnart",
+                 "E10.5","E11.5",
+                 "E12.5","E13.5",
+                 "E14.5", "E15.5"), 
+        nsets=7, 
+        keep.order = T, 
+        mainbar.y.label = "number of genes")
+}
+p <- plot_upset(promoter_upset)
+
+pdf(paste0(plot_dir,"mouse_dunnart_promoters_upsetPlot.pdf", sep=''))
+print(p)
+dev.off()
+
+p <- plot_upset(enhancer_upset)
+
+pdf(paste0(plot_dir,"mouse_dunnart_enhancers_upsetPlot.pdf", sep=''))
+print(p)
+dev.off()
+
+```
+
+
+## GO semantic similarity between stages and species
+
+```{r}
+mmGO = godata('org.Mm.eg.db', ont="BP") 
+backg = fread("output/annotations/mart_export.txt", header = FALSE)
+backg = unlist(backg$V1)
+
+files =list.files(annot_dir, pattern= "dunnart_promoter_cluster1_annotationConvertedIDs.txt|*_cluster1_annotation.txt|*.5_enhancer_annotation.txt", 
+                    full.names=T) 
+files <- as.list(files)
+data = lapply(files, function(x) fread(x, 
+                                       header=TRUE, sep="\t", 
+                                         quote = "", na.strings=c("",
+                                                              "NA")))
+
+colnames(data[[1]])[19] <- "gene"
+colnames(data[[1]])[26] <- "geneId"
+go <- lapply(data, 
+              function(x)
+                enrichGO(gene = unlist(x$geneId),
+                         keyType = "ENSEMBL",
+                         OrgDb = org.Mm.eg.db,
+                         ont = "BP",
+                         universe = backg,
+                         pAdjustMethod = "fdr",
+                         readable = TRUE))
+  
+ names(go) <- c("dunnart_cluster1", 
+                "E10.5_cluster1", "E10.5_enhancer", 
+                 "E11.5_cluster1", "E11.5_enhancer", 
+                 "E12.5_cluster1", "E12.5_enhancer", 
+                 "E13.5_cluster1", "E13.5_enhancer", 
+                 "E14.5_cluster1", "E14.5_enhancer", 
+                 "E15.5_cluster1", "E15.5_enhancer")
+  
+lapply(names(go), function(x) write.table(go[[x]], file=paste0(annot_dir,x,"_mm10GOenrich"), sep="\t", quote=FALSE, col.names=TRUE, row.names=FALSE))
+
+source("code/go_semantic_similarity.R")
+
+#dunnart versus all mouse stages
+dunnartvsmouse <- go_semantic_similarity(fileList = annot_dir,
+                       file_to_compare_to = paste0(annot_dir, "dunnart_cluster1_mm10GOenrich"),
+                       file_pattern = "*.5_cluster1_mm10GOenrich")
+
+e10vs <- go_semantic_similarity(fileList = annot_dir,
+                       file_to_compare_to = paste0(annot_dir, "E10.5_cluster1_mm10GOenrich"),
+                       file_pattern = "*.5_cluster1_mm10GOenrich")
+
+e11vs <- go_semantic_similarity(fileList = annot_dir,
+                       file_to_compare_to = paste0(annot_dir, "E11.5_cluster1_mm10GOenrich"),
+                       file_pattern = "*.5_cluster1_mm10GOenrich")
+
+e12vs <- go_semantic_similarity(fileList = annot_dir,
+                       file_to_compare_to = paste0(annot_dir, "E12.5_cluster1_mm10GOenrich"),
+                       file_pattern = "*.5_cluster1_mm10GOenrich")
+
+e13vs <- go_semantic_similarity(fileList = annot_dir,
+                       file_to_compare_to = paste0(annot_dir, "E13.5_cluster1_mm10GOenrich"),
+                       file_pattern = "*.5_cluster1_mm10GOenrich")
+
+e14vs <- go_semantic_similarity(fileList = annot_dir,
+                       file_to_compare_to = paste0(annot_dir, "E14.5_cluster1_mm10GOenrich"),
+                       file_pattern = "*.5_cluster1_mm10GOenrich")
+
+vector_of_scores <- c(
+    dunnartvsmouse$'10', dunnartvsmouse$'11', dunnartvsmouse$'12', dunnartvsmouse$'13', dunnartvsmouse$'14',dunnartvsmouse$'15',
+    e10vs$'11',e10vs$'12',e10vs$'13',e10vs$'14',e10vs$'15',
+    e11vs$'12',e11vs$'13',e11vs$'14',e11vs$'15',
+    e12vs$'13',e12vs$'14',e12vs$'15',
+    e13vs$'14',e13vs$'15',
+    e14vs$'15'
+
+)
+
+my_matrix_1 <- matrix(0,7,7) ## creates a n x n square 0 matrix
+
+rownames(my_matrix_1) = c('dunnart','E10','E11','E12','E13','E14','E15')
+colnames(my_matrix_1) = c('dunnart','E10','E11','E12','E13','E14','E15')
+
+my_matrix_1[ col(my_matrix_1) < row(my_matrix_1) ] <- vector_of_scores
+my_matrix_1 <- my_matrix_1 + t(my_matrix_1)
+diag(my_matrix_1) <- 1
+my_matrix_1
+
+p <- Heatmap(my_matrix_1, name = "score", col=c('#a8ddb5','#7bccc4','#4eb3d3','#2b8cbe','#08589e'), heatmap_legend_param = list(
+        title = "GO similarity score"))
+p
+pdf(paste(plot_dir,'promoter_GO_semantic_scores.pdf',sep=''),width=10,height = 7)
+print(p)
+dev.off()
+
+dunnartvsmouse <- go_semantic_similarity(fileList = annot_dir,
+                       file_to_compare_to = paste0(annot_dir,
+                                            "dunnart_enhancer_mm10GOenrich"),
+                       file_pattern = "*.5_enhancer_mm10GOenrich")
+
+e10vs <- go_semantic_similarity(fileList = annot_dir,
+                       file_to_compare_to = paste0(annot_dir, "E10.5_enhancer_mm10GOenrich"),
+                       file_pattern = "*.5_enhancer_mm10GOenrich")
+
+e11vs <- go_semantic_similarity(fileList = annot_dir,
+                       file_to_compare_to = paste0(annot_dir, "E11.5_enhancer_mm10GOenrich"),
+                       file_pattern = "*.5_enhancer_mm10GOenrich")
+
+e12vs <- go_semantic_similarity(fileList = annot_dir,
+                       file_to_compare_to = paste0(annot_dir, "E12.5_enhancer_mm10GOenrich"),
+                       file_pattern = "*.5_enhancer_mm10GOenrich")
+
+e13vs <- go_semantic_similarity(fileList = annot_dir,
+                       file_to_compare_to = paste0(annot_dir, "E13.5_enhancer_mm10GOenrich"),
+                       file_pattern = "*.5_enhancer_mm10GOenrich")
+
+e14vs <- go_semantic_similarity(fileList = annot_dir,
+                       file_to_compare_to = paste0(annot_dir, "E14.5_enhancer_mm10GOenrich"),
+                       file_pattern = "*.5_enhancer_mm10GOenrich")
+
+vector_of_scores <- c(
+    dunnartvsmouse$'10', dunnartvsmouse$'11', dunnartvsmouse$'12', dunnartvsmouse$'13', dunnartvsmouse$'14',dunnartvsmouse$'15',
+    e10vs$'11',e10vs$'12',e10vs$'13',e10vs$'14',e10vs$'15',
+    e11vs$'12',e11vs$'13',e11vs$'14',e11vs$'15',
+    e12vs$'13',e12vs$'14',e12vs$'15',
+    e13vs$'14',e13vs$'15',
+    e14vs$'15'
+
+)
+
+my_matrix_2 <- matrix(0,7,7) ## creates a n x n square 0 matrix
+
+rownames(my_matrix_2) = c('dunnart','E10','E11','E12','E13','E14','E15')
+colnames(my_matrix_2) = c('dunnart','E10','E11','E12','E13','E14','E15')
+
+my_matrix_2[ col(my_matrix_2) < row(my_matrix_2) ] <- vector_of_scores
+my_matrix_2 <- my_matrix_2 + t(my_matrix_2)
+diag(my_matrix_2) <- 1
+my_matrix_2
+
+p <- Heatmap(my_matrix_2, name = "score", col=c('#a8ddb5','#7bccc4','#4eb3d3','#2b8cbe','#08589e'), heatmap_legend_param = list(
+        title = "GO similarity score"))
+p
+
+
+pdf(paste(plot_dir,'enhancer_GO_semantic_scores.pdf',sep=''),width=10,height = 7)
+print(p)
+dev.off()
+```
+
+## GO cluster comparisons
+
+```{r}
+files =list.files(annot_dir, pattern= "dunnart_enhancer_annotationConvertedIDs.txt|dunnart_promoter_cluster1_annotationConvertedIDs.txt|*_cluster1_annotation.txt|*.5_enhancer_annotation.txt", 
+                    full.names=T) 
+files <- as.list(files)
+data = lapply(files, function(x) fread(x, 
+                                       header=TRUE, sep="\t", 
+                                         quote = "", na.strings=c("",
+                                                              "NA")))
+colnames(data[[1]])[19] <- "geneID"
+colnames(data[[2]])[19] <- "geneID"
+
+data = lapply(data, function(x) x=setnames(x, old="geneId", new="mouseensembl", skip_absent=TRUE) %>% as.data.table())
+
+promoter = list(data[[2]]$mouseensembl, data[[3]]$mouseensembl,
+                                   data[[5]]$mouseensembl,
+                                         data[[7]]$mouseensembl,
+                                               data[[9]]$mouseensembl,
+                                                     data[[11]]$mouseensembl,
+                                                           data[[13]]$mouseensembl)
+
+enhancer = list(data[[1]]$mouseensembl, data[[4]]$mouseensembl,
+                                   data[[6]]$mouseensembl,
+                                         data[[8]]$mouseensembl,
+                                               data[[10]]$mouseensembl,
+                                                     data[[12]]$mouseensembl,
+                                                           data[[14]]$mouseensembl)
+
+names(enhancer) = c("dunnart","E10.5","E11.5","E12.5", "E13.5","E14.5", "E15.5")
+names(promoter) = c("dunnart","E10.5","E11.5","E12.5", "E13.5","E14.5", "E15.5")
+
+compare_go_cluster <- function(x, dotplot){
+  df <- lapply(x, function(i) unique(i))
+  
+  go_cluster = simplify(setReadable(
+      compareCluster(
+        geneCluster = df, 
+        fun = enrichGO, 
+        ont="BP",
+        universe = backg, 
+        keyType="ENSEMBL", 
+        pvalueCutoff = 0.001, 
+        OrgDb = org.Mm.eg.db),
+      OrgDb = org.Mm.eg.db, 
+      keyType="ENSEMBL"))
+
+  ck = pairwise_termsim(go_cluster, method = "Wang", semData=mmGO)
+
+  p <- dotplot(ck, showCategory = 5) + 
+  scale_color_viridis() +
+  theme(axis.text.x = element_text(angle = 45, hjust=1))
+  
+  ## Dotplot
+  pdf(paste0(plot_dir, dotplot, sep=''), width = 9, height = 9)
+  print(p)
+  dev.off()
+  
+  return(list(p,go_cluster))
+}
+
+enhancer_plot = compare_go_cluster(enhancer, "enhancer_simplifyGO_heatmap.pdf")
+promoter_plot = compare_go_cluster(promoter, "promoter_simplifyGO_heatmap.pdf")
+```
+
+### enhancer-associated peaks
+```{r}
+enhancer_plot[[1]]
+```
+
+### promoter-associated peaks
+```{r}
+promoter_plot[[1]]
+```
+
+## 
+```{r}
+files =list.files(annot_dir, pattern= "dunnart_enhancer_mm10GOenrich|*.5_enhancer_mm10GOenrich", 
+                    full.names=T) 
+files <- as.list(files)
+enhancers = lapply(files, function(x) fread(x, 
+                                       header=TRUE, sep="\t", 
+                                         quote = "", na.strings=c("",
+                                                              "NA")))
+
+files =list.files(annot_dir, pattern= "dunnart_cluster1_mm10GOenrich|*5_cluster1_mm10GOenrich", 
+                    full.names=T) 
+files <- as.list(files)
+promoters = lapply(files, function(x) fread(x, 
+                                       header=TRUE, sep="\t", 
+                                         quote = "", na.strings=c("",
+                                                              "NA")))
+
+```
+
+### Enhancer-associated peaks
+```{r}
+go_data_filtered = lapply(enhancers, function(x) x$ID[x$p.adjust < 0.001])
+names(go_data_filtered) = c( "dunnart","E10.5", "E11.5", "E12.5", "E13.5", "E14.5", "E15.5")
+simplifyGOFromMultipleLists(go_data_filtered, db = org.Mm.eg.db,  measure = "Wang", method = "binary_cut")
+```
+
+### Promoter-associated peaks
+```{r}
+go_data_filtered = lapply(promoters, function(x) x$ID[x$p.adjust < 0.001])
+names(go_data_filtered) = c( "dunnart","E10.5", "E11.5", "E12.5", "E13.5", "E14.5", "E15.5")
+simplifyGOFromMultipleLists(go_data_filtered, db = org.Mm.eg.db,  measure = "Wang", method = "binary_cut")
+```

@@ -385,7 +385,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-03-29
+<strong>Last updated:</strong> 2022-04-11
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -476,16 +476,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree36b2e49d236d58c1f589e8628cfb07c7d5977be6targetblank36b2e49a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/36b2e49d236d58c1f589e8628cfb07c7d5977be6" target="_blank">36b2e49</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreebbb00b2e1cf4437b60ef15972feee930c7699720targetblankbbb00b2a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/lecook/chipseq-cross-species/tree/bbb00b2e1cf4437b60ef15972feee930c7699720" target="_blank">bbb00b2</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestree36b2e49d236d58c1f589e8628cfb07c7d5977be6targetblank36b2e49a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomlecookchipseqcrossspeciestreebbb00b2e1cf4437b60ef15972feee930c7699720targetblankbbb00b2a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/36b2e49d236d58c1f589e8628cfb07c7d5977be6" target="_blank">36b2e49</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/lecook/chipseq-cross-species/tree/bbb00b2e1cf4437b60ef15972feee930c7699720" target="_blank">bbb00b2</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -651,15 +651,10 @@ Ignored files:
 
 Untracked files:
     Untracked:  .snakemake/
-    Untracked:  0.264065342796133.clean.pos
-    Untracked:  0.264065342796133.gtf.tss
-    Untracked:  0.264065342796133.pos
-    Untracked:  0.264065342796133.seq
-    Untracked:  0.264065342796133.tmp
     Untracked:  Rplots.pdf
+    Untracked:  code/go_semantic_similarity.R
     Untracked:  data/raw_reads/
-    Untracked:  df2.Robj
-    Untracked:  df3.Robj
+    Untracked:  output/liftover/
     Untracked:  output/qc/A-1_input.downSampled.flagstat.qc
     Untracked:  output/qc/A-2_H3K4me3.downSampled.flagstat.qc
     Untracked:  output/qc/A-3_H3K27ac.downSampled.flagstat.qc
@@ -963,11 +958,10 @@ Untracked files:
     Untracked:  output/qc/slurmjob.stdout
     Untracked:  output/qc/ucsc_alignment/
     Untracked:  output/rnaseq/
-    Untracked:  slurmjob.stderr
-    Untracked:  slurmjob.stdout
 
 Unstaged changes:
-    Modified:   analysis/peak_level_comparisons.Rmd
+    Modified:   analysis/dunnart_peak_characterisation.Rmd
+    Modified:   analysis/gene_level_comparisons.Rmd
     Modified:   code/basic_wrapper.slurm
     Modified:   output/qc/A-1_input.PPq30.flagstat.qc
     Modified:   output/qc/A-1_input.dedup.flagstat.qc
@@ -1020,6 +1014,142 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/bbb00b2e1cf4437b60ef15972feee930c7699720/analysis/mouse_dunnart_peak_features.Rmd" target="_blank">bbb00b2</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-04-11
+</td>
+<td>
+wflow_publish(“analysis/mouse_dunnart_peak_features.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/57dfe7f8504d9fc9b244e28659bde69a64f9f677/docs/mouse_dunnart_peak_features.html" target="_blank">57dfe7f</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-04-05
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/1c5c2ce630934979b70169da449e91a11df76e75/analysis/mouse_dunnart_peak_features.Rmd" target="_blank">1c5c2ce</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-04-05
+</td>
+<td>
+wflow_publish(“analysis/mouse_dunnart_peak_features.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/70ef8ae524fca99a9f783d37b25023e61d27d16d/docs/mouse_dunnart_peak_features.html" target="_blank">70ef8ae</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-04-05
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/a61d78d12b93b6fa5aba6dd70407cb68d839b835/analysis/mouse_dunnart_peak_features.Rmd" target="_blank">a61d78d</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-04-05
+</td>
+<td>
+wflow_publish(“analysis/mouse_dunnart_peak_features.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/5361a8a63d23746774a7caaf0213d6b1aa1fba90/docs/mouse_dunnart_peak_features.html" target="_blank">5361a8a</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-04-05
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/20dfee448c3e78c6b942a85cd2b2fb9c94b59e0b/analysis/mouse_dunnart_peak_features.Rmd" target="_blank">20dfee4</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-04-05
+</td>
+<td>
+wflow_publish(“analysis/mouse_dunnart_peak_features.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/lecook/chipseq-cross-species/bf8ca118a28ecf175c486ebe1341389cdec8d4d1/docs/mouse_dunnart_peak_features.html" target="_blank">bf8ca11</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-03-29
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1275,6 +1405,9 @@ library(data.table)
 library(dplyr)
 library(TxDb.Mmusculus.UCSC.mm10.ensGene)
 library(scales)
+library(purrr)
+library(clusterProfiler)
+library(org.Mm.eg.db)
 
 plot_dir &lt;- &quot;output/plots/&quot;
 fullPeak_dir &lt;- &quot;output/peaks/&quot;
@@ -1534,7 +1667,7 @@ lecook
 </table>
 </div>
 </div>
-<pre class="r"><code>pdf(file=paste0(plot_dir, &quot;number_of_mouse_dunnart_peaks_all_reads.pdf&quot;), width = 10, height = 7)
+<pre class="r"><code>pdf(file=paste0(plot_dir, &quot;number_of_mouse_dunnart_peaks_all_reads.pdf&quot;), width = 13, height = 7)
 print(p + font)
 dev.off()</code></pre>
 <pre><code>svg 
@@ -1719,7 +1852,7 @@ lecook
 </table>
 </div>
 </div>
-<pre class="r"><code>pdf(file=paste0(plot_dir, &quot;mouse_dunnart_peak_intensity.pdf&quot;), width = 10, height = 7)
+<pre class="r"><code>pdf(file=paste0(plot_dir, &quot;mouse_dunnart_peak_intensity.pdf&quot;), width = 18, height = 7)
 print(p  + font)
 dev.off()</code></pre>
 <pre><code>svg 
@@ -1751,9 +1884,7 @@ smiCra_txdb &lt;- makeTxDbFromGFF(&quot;data/genomic_data/Scras_dunnart_assem1.0
 ## Convert geneIDs
 ### Tables downloaded from biomart and collated
 df2 &lt;- read.table(&quot;output/annotations/devil_to_mouse_ensembl.txt&quot;, header=TRUE, sep=&quot;\t&quot;) ## conversion table for devil ENSEMBL to mouse ENSEMBL
-df3 &lt;- read.table(&quot;output/annotations/refseq_to_ensembl.txt&quot;, header=TRUE, sep=&quot;\t&quot;) ## convertsion table for devil refseq to devil ENSEMBL
-bg = fread(&quot;output/annotations/go_background_orthologousENSEMBL_biomart.txt&quot;, header = FALSE)
-bg = unlist(bg, use.names = FALSE)</code></pre>
+df3 &lt;- read.table(&quot;output/annotations/refseq_to_ensembl.txt&quot;, header=TRUE, sep=&quot;\t&quot;) ## conversion table for devil refseq to devil ENSEMBL</code></pre>
 </div>
 <div id="annotate-peak-files-with-chipseeker" class="section level2">
 <h2>Annotate peak files with ChIPseeker</h2>
@@ -1767,104 +1898,107 @@ annotatePeaksmm10 &lt;- function(peak, outFile){
   
   # Write annotation to file
   write.table(peakAnno, outFile, sep=&quot;\t&quot;, quote=F, row.names=F)
+  
+  peakAnnoDF &lt;- as.data.frame(peakAnno)
+
 }
 
 annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E10.5_enhancer_peaks.narrowPeak&quot;), outFile = paste0(annot_dir, &quot;E10.5_enhancer_annotation.txt&quot;))</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-29 16:36:04 
-&gt;&gt; preparing features information...         2022-03-29 16:36:04 
-&gt;&gt; identifying nearest features...       2022-03-29 16:36:05 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-29 16:36:05 
-&gt;&gt; assigning genomic annotation...       2022-03-29 16:36:05 
-&gt;&gt; assigning chromosome lengths          2022-03-29 16:36:15 
-&gt;&gt; done...                   2022-03-29 16:36:15 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-04-11 16:27:37 
+&gt;&gt; preparing features information...         2022-04-11 16:27:37 
+&gt;&gt; identifying nearest features...       2022-04-11 16:27:37 
+&gt;&gt; calculating distance from peak to TSS...  2022-04-11 16:27:38 
+&gt;&gt; assigning genomic annotation...       2022-04-11 16:27:38 
+&gt;&gt; assigning chromosome lengths          2022-04-11 16:27:55 
+&gt;&gt; done...                   2022-04-11 16:27:55 </code></pre>
 <pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E11.5_enhancer_peaks.narrowPeak&quot;), outFile = paste0(annot_dir, &quot;E11.5_enhancer_annotation.txt&quot;))</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-29 16:36:15 
-&gt;&gt; preparing features information...         2022-03-29 16:36:15 
-&gt;&gt; identifying nearest features...       2022-03-29 16:36:15 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-29 16:36:15 
-&gt;&gt; assigning genomic annotation...       2022-03-29 16:36:15 
-&gt;&gt; assigning chromosome lengths          2022-03-29 16:36:17 
-&gt;&gt; done...                   2022-03-29 16:36:17 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-04-11 16:27:55 
+&gt;&gt; preparing features information...         2022-04-11 16:27:56 
+&gt;&gt; identifying nearest features...       2022-04-11 16:27:56 
+&gt;&gt; calculating distance from peak to TSS...  2022-04-11 16:27:56 
+&gt;&gt; assigning genomic annotation...       2022-04-11 16:27:56 
+&gt;&gt; assigning chromosome lengths          2022-04-11 16:27:58 
+&gt;&gt; done...                   2022-04-11 16:27:58 </code></pre>
 <pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E12.5_enhancer_peaks.narrowPeak&quot;), outFile = paste0(annot_dir, &quot;E12.5_enhancer_annotation.txt&quot;))</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-29 16:36:17 
-&gt;&gt; preparing features information...         2022-03-29 16:36:17 
-&gt;&gt; identifying nearest features...       2022-03-29 16:36:17 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-29 16:36:17 
-&gt;&gt; assigning genomic annotation...       2022-03-29 16:36:17 
-&gt;&gt; assigning chromosome lengths          2022-03-29 16:36:18 
-&gt;&gt; done...                   2022-03-29 16:36:18 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-04-11 16:27:58 
+&gt;&gt; preparing features information...         2022-04-11 16:27:58 
+&gt;&gt; identifying nearest features...       2022-04-11 16:27:58 
+&gt;&gt; calculating distance from peak to TSS...  2022-04-11 16:27:59 
+&gt;&gt; assigning genomic annotation...       2022-04-11 16:27:59 
+&gt;&gt; assigning chromosome lengths          2022-04-11 16:28:01 
+&gt;&gt; done...                   2022-04-11 16:28:01 </code></pre>
 <pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E13.5_enhancer_peaks.narrowPeak&quot;), outFile = paste0(annot_dir, &quot;E13.5_enhancer_annotation.txt&quot;))</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-29 16:36:19 
-&gt;&gt; preparing features information...         2022-03-29 16:36:19 
-&gt;&gt; identifying nearest features...       2022-03-29 16:36:19 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-29 16:36:19 
-&gt;&gt; assigning genomic annotation...       2022-03-29 16:36:19 
-&gt;&gt; assigning chromosome lengths          2022-03-29 16:36:20 
-&gt;&gt; done...                   2022-03-29 16:36:20 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-04-11 16:28:01 
+&gt;&gt; preparing features information...         2022-04-11 16:28:01 
+&gt;&gt; identifying nearest features...       2022-04-11 16:28:01 
+&gt;&gt; calculating distance from peak to TSS...  2022-04-11 16:28:02 
+&gt;&gt; assigning genomic annotation...       2022-04-11 16:28:02 
+&gt;&gt; assigning chromosome lengths          2022-04-11 16:28:04 
+&gt;&gt; done...                   2022-04-11 16:28:04 </code></pre>
 <pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E14.5_enhancer_peaks.narrowPeak&quot;), outFile = paste0(annot_dir, &quot;E14.5_enhancer_annotation.txt&quot;))</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-29 16:36:21 
-&gt;&gt; preparing features information...         2022-03-29 16:36:21 
-&gt;&gt; identifying nearest features...       2022-03-29 16:36:21 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-29 16:36:21 
-&gt;&gt; assigning genomic annotation...       2022-03-29 16:36:21 
-&gt;&gt; assigning chromosome lengths          2022-03-29 16:36:22 
-&gt;&gt; done...                   2022-03-29 16:36:22 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-04-11 16:28:04 
+&gt;&gt; preparing features information...         2022-04-11 16:28:04 
+&gt;&gt; identifying nearest features...       2022-04-11 16:28:05 
+&gt;&gt; calculating distance from peak to TSS...  2022-04-11 16:28:05 
+&gt;&gt; assigning genomic annotation...       2022-04-11 16:28:05 
+&gt;&gt; assigning chromosome lengths          2022-04-11 16:28:07 
+&gt;&gt; done...                   2022-04-11 16:28:07 </code></pre>
 <pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E15.5_enhancer_peaks.narrowPeak&quot;), outFile = paste0(annot_dir,&quot;E15.5_enhancer_annotation.txt&quot;))</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-29 16:36:22 
-&gt;&gt; preparing features information...         2022-03-29 16:36:23 
-&gt;&gt; identifying nearest features...       2022-03-29 16:36:23 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-29 16:36:23 
-&gt;&gt; assigning genomic annotation...       2022-03-29 16:36:23 
-&gt;&gt; assigning chromosome lengths          2022-03-29 16:36:24 
-&gt;&gt; done...                   2022-03-29 16:36:24 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-04-11 16:28:08 
+&gt;&gt; preparing features information...         2022-04-11 16:28:08 
+&gt;&gt; identifying nearest features...       2022-04-11 16:28:08 
+&gt;&gt; calculating distance from peak to TSS...  2022-04-11 16:28:08 
+&gt;&gt; assigning genomic annotation...       2022-04-11 16:28:08 
+&gt;&gt; assigning chromosome lengths          2022-04-11 16:28:11 
+&gt;&gt; done...                   2022-04-11 16:28:11 </code></pre>
 <pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E10.5_promoter_peaks.narrowPeak&quot;), outFile = paste0(annot_dir,&quot;E10.5_promoter_annotation.txt&quot;))</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-29 16:36:25 
-&gt;&gt; preparing features information...         2022-03-29 16:36:25 
-&gt;&gt; identifying nearest features...       2022-03-29 16:36:25 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-29 16:36:25 
-&gt;&gt; assigning genomic annotation...       2022-03-29 16:36:25 
-&gt;&gt; assigning chromosome lengths          2022-03-29 16:36:26 
-&gt;&gt; done...                   2022-03-29 16:36:26 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-04-11 16:28:11 
+&gt;&gt; preparing features information...         2022-04-11 16:28:11 
+&gt;&gt; identifying nearest features...       2022-04-11 16:28:11 
+&gt;&gt; calculating distance from peak to TSS...  2022-04-11 16:28:12 
+&gt;&gt; assigning genomic annotation...       2022-04-11 16:28:12 
+&gt;&gt; assigning chromosome lengths          2022-04-11 16:28:14 
+&gt;&gt; done...                   2022-04-11 16:28:14 </code></pre>
 <pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E11.5_promoter_peaks.narrowPeak&quot;), outFile = paste0(annot_dir,&quot;E11.5_promoter_annotation.txt&quot;))</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-29 16:36:27 
-&gt;&gt; preparing features information...         2022-03-29 16:36:27 
-&gt;&gt; identifying nearest features...       2022-03-29 16:36:27 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-29 16:36:27 
-&gt;&gt; assigning genomic annotation...       2022-03-29 16:36:27 
-&gt;&gt; assigning chromosome lengths          2022-03-29 16:36:29 
-&gt;&gt; done...                   2022-03-29 16:36:29 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-04-11 16:28:14 
+&gt;&gt; preparing features information...         2022-04-11 16:28:15 
+&gt;&gt; identifying nearest features...       2022-04-11 16:28:15 
+&gt;&gt; calculating distance from peak to TSS...  2022-04-11 16:28:15 
+&gt;&gt; assigning genomic annotation...       2022-04-11 16:28:15 
+&gt;&gt; assigning chromosome lengths          2022-04-11 16:28:18 
+&gt;&gt; done...                   2022-04-11 16:28:18 </code></pre>
 <pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E12.5_promoter_peaks.narrowPeak&quot;), outFile = paste0(annot_dir,&quot;E12.5_promoter_annotation.txt&quot;))</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-29 16:36:29 
-&gt;&gt; preparing features information...         2022-03-29 16:36:29 
-&gt;&gt; identifying nearest features...       2022-03-29 16:36:29 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-29 16:36:29 
-&gt;&gt; assigning genomic annotation...       2022-03-29 16:36:29 
-&gt;&gt; assigning chromosome lengths          2022-03-29 16:36:31 
-&gt;&gt; done...                   2022-03-29 16:36:31 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-04-11 16:28:18 
+&gt;&gt; preparing features information...         2022-04-11 16:28:18 
+&gt;&gt; identifying nearest features...       2022-04-11 16:28:18 
+&gt;&gt; calculating distance from peak to TSS...  2022-04-11 16:28:19 
+&gt;&gt; assigning genomic annotation...       2022-04-11 16:28:19 
+&gt;&gt; assigning chromosome lengths          2022-04-11 16:28:21 
+&gt;&gt; done...                   2022-04-11 16:28:21 </code></pre>
 <pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E13.5_promoter_peaks.narrowPeak&quot;), outFile = paste0(annot_dir,&quot;E13.5_promoter_annotation.txt&quot;))</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-29 16:36:31 
-&gt;&gt; preparing features information...         2022-03-29 16:36:31 
-&gt;&gt; identifying nearest features...       2022-03-29 16:36:31 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-29 16:36:31 
-&gt;&gt; assigning genomic annotation...       2022-03-29 16:36:31 
-&gt;&gt; assigning chromosome lengths          2022-03-29 16:36:33 
-&gt;&gt; done...                   2022-03-29 16:36:33 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-04-11 16:28:21 
+&gt;&gt; preparing features information...         2022-04-11 16:28:21 
+&gt;&gt; identifying nearest features...       2022-04-11 16:28:21 
+&gt;&gt; calculating distance from peak to TSS...  2022-04-11 16:28:22 
+&gt;&gt; assigning genomic annotation...       2022-04-11 16:28:22 
+&gt;&gt; assigning chromosome lengths          2022-04-11 16:28:25 
+&gt;&gt; done...                   2022-04-11 16:28:25 </code></pre>
 <pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E14.5_promoter_peaks.narrowPeak&quot;), outFile = paste0(annot_dir,&quot;E14.5_promoter_annotation.txt&quot;))</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-29 16:36:33 
-&gt;&gt; preparing features information...         2022-03-29 16:36:33 
-&gt;&gt; identifying nearest features...       2022-03-29 16:36:33 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-29 16:36:34 
-&gt;&gt; assigning genomic annotation...       2022-03-29 16:36:34 
-&gt;&gt; assigning chromosome lengths          2022-03-29 16:36:35 
-&gt;&gt; done...                   2022-03-29 16:36:35 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-04-11 16:28:25 
+&gt;&gt; preparing features information...         2022-04-11 16:28:25 
+&gt;&gt; identifying nearest features...       2022-04-11 16:28:26 
+&gt;&gt; calculating distance from peak to TSS...  2022-04-11 16:28:26 
+&gt;&gt; assigning genomic annotation...       2022-04-11 16:28:26 
+&gt;&gt; assigning chromosome lengths          2022-04-11 16:28:29 
+&gt;&gt; done...                   2022-04-11 16:28:29 </code></pre>
 <pre class="r"><code>annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E15.5_promoter_peaks.narrowPeak&quot;), outFile = paste0(annot_dir,&quot;E15.5_promoter_annotation.txt&quot;))</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-29 16:36:35 
-&gt;&gt; preparing features information...         2022-03-29 16:36:36 
-&gt;&gt; identifying nearest features...       2022-03-29 16:36:36 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-29 16:36:36 
-&gt;&gt; assigning genomic annotation...       2022-03-29 16:36:36 
-&gt;&gt; assigning chromosome lengths          2022-03-29 16:36:37 
-&gt;&gt; done...                   2022-03-29 16:36:37 </code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-04-11 16:28:29 
+&gt;&gt; preparing features information...         2022-04-11 16:28:29 
+&gt;&gt; identifying nearest features...       2022-04-11 16:28:29 
+&gt;&gt; calculating distance from peak to TSS...  2022-04-11 16:28:30 
+&gt;&gt; assigning genomic annotation...       2022-04-11 16:28:30 
+&gt;&gt; assigning chromosome lengths          2022-04-11 16:28:33 
+&gt;&gt; done...                   2022-04-11 16:28:33 </code></pre>
 </div>
 <div id="dunnart" class="section level3">
 <h3>Dunnart</h3>
@@ -1897,29 +2031,42 @@ annotatePeaksmm10(peak = paste0(fullPeak_dir, &quot;E10.5_enhancer_peaks.narrowP
   peakAnnoDF$mouseensembl[peakAnnoDF$mouseensembl == as.character(&quot;&quot;)] &lt;- NA
   peakAnnoDF &lt;- peakAnnoDF[!is.na(peakAnnoDF$mouseensembl),]
   write.table(peakAnnoDF, paste0(annot_dir, outFile1), sep = &quot;\t&quot;, quote = F, row.names = F)
+  
+  backg = unlist(backg$V1)
+  # # GO enrichment analysis
+  GO &lt;- enrichGO(gene = peakAnnoDF$mouseensembl,
+                  keyType = &quot;ENSEMBL&quot;,
+                  OrgDb = org.Mm.eg.db,
+                  ont = &quot;BP&quot;,
+                  universe = backg,
+                  pAdjustMethod = &quot;fdr&quot;,
+                  qvalueCutoff = 0.01,
+                  readable = TRUE)
+  write.table(GO, paste0(annot_dir, GOenrich), 
+              sep=&quot;\t&quot;, quote=F, row.names=F)
 }
 
 
 ### Enhancer-associated peaks annotation
-annotatePeaks(peak = paste0(fullPeak_dir, &quot;dunnart_enhancer_peaks.narrowPeak&quot;), outFile = &quot;dunnart_enhancer_annotation.txt&quot;, backg = unlist(fread(&quot;output/annotations/go_background_orthologousENSEMBL_biomart.txt&quot;, header = FALSE), use.names = FALSE),
-  outFile1 = &quot;dunnart_enhancer_annotationConvertedIDs.txt&quot;, outFile2 = &quot;dunnart_enhancer_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-29 16:36:38 
-&gt;&gt; preparing features information...         2022-03-29 16:36:38 
-&gt;&gt; identifying nearest features...       2022-03-29 16:36:38 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-29 16:36:39 
-&gt;&gt; assigning genomic annotation...       2022-03-29 16:36:39 
-&gt;&gt; assigning chromosome lengths          2022-03-29 16:36:48 
-&gt;&gt; done...                   2022-03-29 16:36:48 </code></pre>
+annotatePeaks(peak = paste0(fullPeak_dir, &quot;dunnart_enhancer_peaks.narrowPeak&quot;), outFile = &quot;dunnart_enhancer_annotation.txt&quot;, backg = fread(&quot;output/annotations/mart_export.txt&quot;, header = FALSE),
+  outFile1 = &quot;dunnart_enhancer_annotationConvertedIDs.txt&quot;, outFile2 = &quot;dunnart_enhancer_annotationConvertedIDs_t.devil.txt&quot;, GOenrich = &quot;dunnart_enhancer_mm10GOenrich&quot;)</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-04-11 16:28:33 
+&gt;&gt; preparing features information...         2022-04-11 16:28:34 
+&gt;&gt; identifying nearest features...       2022-04-11 16:28:34 
+&gt;&gt; calculating distance from peak to TSS...  2022-04-11 16:28:35 
+&gt;&gt; assigning genomic annotation...       2022-04-11 16:28:35 
+&gt;&gt; assigning chromosome lengths          2022-04-11 16:28:49 
+&gt;&gt; done...                   2022-04-11 16:28:49 </code></pre>
 <pre class="r"><code>### Promoter-associated peaks annotation
-annotatePeaks(peak = paste0(fullPeak_dir, &quot;dunnart_promoter_peaks.narrowPeak&quot;), outFile = &quot;dunnart_promoter_annotation.txt&quot;, backg = unlist(fread(&quot;output/annotations/go_background_orthologousENSEMBL_biomart.txt&quot;, header = FALSE), use.names = FALSE),
-  outFile1 = &quot;dunnart_promoter_annotationConvertedIDs.txt&quot;, outFile2 = &quot;dunnart_promoter_annotationConvertedIDs_t.devil.txt&quot;)</code></pre>
-<pre><code>&gt;&gt; loading peak file...              2022-03-29 16:36:49 
-&gt;&gt; preparing features information...         2022-03-29 16:36:50 
-&gt;&gt; identifying nearest features...       2022-03-29 16:36:50 
-&gt;&gt; calculating distance from peak to TSS...  2022-03-29 16:36:50 
-&gt;&gt; assigning genomic annotation...       2022-03-29 16:36:50 
-&gt;&gt; assigning chromosome lengths          2022-03-29 16:36:52 
-&gt;&gt; done...                   2022-03-29 16:36:52 </code></pre>
+annotatePeaks(peak = paste0(fullPeak_dir, &quot;dunnart_promoter_peaks.narrowPeak&quot;), outFile = &quot;dunnart_promoter_annotation.txt&quot;, backg =fread(&quot;output/annotations/mart_export.txt&quot;, header = FALSE),
+  outFile1 = &quot;dunnart_promoter_annotationConvertedIDs.txt&quot;, outFile2 = &quot;dunnart_promoter_annotationConvertedIDs_t.devil.txt&quot;, GOenrich = &quot;dunnart_promoter_mm10GOenrich&quot;)</code></pre>
+<pre><code>&gt;&gt; loading peak file...              2022-04-11 16:30:10 
+&gt;&gt; preparing features information...         2022-04-11 16:30:11 
+&gt;&gt; identifying nearest features...       2022-04-11 16:30:11 
+&gt;&gt; calculating distance from peak to TSS...  2022-04-11 16:30:12 
+&gt;&gt; assigning genomic annotation...       2022-04-11 16:30:12 
+&gt;&gt; assigning chromosome lengths          2022-04-11 16:30:14 
+&gt;&gt; done...                   2022-04-11 16:30:14 </code></pre>
 </div>
 </div>
 <div id="distance-to-nearest-tss" class="section level2">
@@ -2319,7 +2466,6 @@ df3 = lapply(df3, function(x) as.vector(x$V4))
 
 filtered &lt;- lapply(df2, function(x) x[x$V4 %in% unlist(df3),])
 
-
 lapply(names(filtered), function(x) write.table(filtered[[x]], file=paste0(filterPeaks_dir,x,&quot;_cluster1_peaks&quot;, &quot;.narrowPeak&quot;), sep=&quot;\t&quot;, quote=FALSE, col.names=FALSE, row.names=FALSE))</code></pre>
 <pre><code>[[1]]
 NULL
@@ -2715,6 +2861,163 @@ print(p + font)
 dev.off()</code></pre>
 <pre><code>svg 
   2 </code></pre>
+</div>
+<div id="plot-genomic-annotation-features" class="section level2">
+<h2>Plot genomic annotation features</h2>
+<pre class="r"><code>files =list.files(annot_dir, 
+                  pattern= &quot;dunnart_enhancer_annotationConvertedIDs.txt|cluster1_promoter_annotationConvertedIDs.txt|*.5_enhancer_annotation.txt|*_cluster1_annotation.txt&quot;,
+                  full.names=T) # create list of files in directory
+    
+files = as.list(files)
+data = lapply(files, 
+              function(x) fread(x, 
+                                header=TRUE, 
+                                sep=&quot;\t&quot;, 
+                                quote = &quot;&quot;, 
+                                na.strings=c(&quot;&quot;, &quot;NA&quot;))) 
+
+data = lapply(data, function(x) x %&gt;% 
+                dplyr::select(annotation) %&gt;% 
+                as.data.table())
+
+df1 = Map(mutate, data[c(1,3,5,7,9,11,13)], cre = &quot;promoter&quot;)
+df2 = Map(mutate, data[c(2,4,6,8,10,12,14)], cre = &quot;enhancer&quot;)
+data = append(df1, df2)
+
+df1 = Map(mutate, data[c(1,8)], group = &quot;dunnart&quot;)
+df2 = Map(mutate, data[c(2,9)], group = &quot;E10.5&quot;)
+df3 = Map(mutate, data[c(3,10)], group = &quot;E11.5&quot;)
+df4 = Map(mutate, data[c(4,11)], group = &quot;E12.5&quot;)
+df5 = Map(mutate, data[c(5,12)], group = &quot;E13.5&quot;)
+df6 = Map(mutate, data[c(6,13)], group = &quot;E14.5&quot;)
+df7 = Map(mutate, data[c(7,14)], group = &quot;E15.5&quot;)
+
+data &lt;- append(df1, df2)
+data &lt;- append(data, df3)
+data = append(data, df4)
+data = append(data, df5)
+data = append(data, df6)
+data = append(data, df7)
+    
+df1 = rbindlist(data,) ## bind rows back together
+df1 = map_df(df1, ~ gsub(&quot; .*&quot;, &quot;&quot;, .x))# remove everything after the first space
+df1 = df1[complete.cases(df1), ]
+promoters &lt;- filter(df1, cre == &quot;promoter&quot;)
+enhancers &lt;- filter(df1, cre == &quot;enhancer&quot;)
+
+promoters_tbl = with(promoters,
+                     table(annotation, group)) %&gt;% as.data.frame()
+enhancers_tbl = with(enhancers, 
+                         table(annotation, group)) %&gt;%
+  as.data.frame()
+
+
+# Plot proportion of peaks in each genomic region
+plot_genomic_features &lt;- function(x, y){
+  ggplot(x, 
+         aes(factor(group), 
+                  Freq, 
+                  fill=annotation)) +
+    geom_bar(position=position_stack(reverse = FALSE),
+             stat=&quot;identity&quot;) +
+    scale_fill_manual(values = y)  + 
+    theme_bw() + 
+    ylab(&quot;Number of peaks&quot;) +
+    xlab(&quot;&quot;)
+}
+
+p = plot_genomic_features(promoters_tbl, c(&#39;#4d004b&#39;,&#39;#4d004b&#39;,&#39;#4d004b&#39;,&#39;#4d004b&#39;,&#39;#4d004b&#39;,&#39;#4d004b&#39;,&#39;#4d004b&#39;))
+
+pdf(paste0(plot_dir, &quot;mouse_dunnart_promoter_genomic_features.pdf&quot;),  width=10, height=5)
+print(p + font)
+dev.off()</code></pre>
+<pre><code>svg 
+  2 </code></pre>
+<pre class="r"><code>print(p + ggtitle(&quot;Genomic features for promoter-associated peaks&quot;))</code></pre>
+<p><img src="figure/mouse_dunnart_peak_features.Rmd/unnamed-chunk-21-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-21-1">
+Past versions of unnamed-chunk-21-1.svg
+</button>
+</p>
+<div id="fig-unnamed-chunk-21-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/5361a8a63d23746774a7caaf0213d6b1aa1fba90/docs/figure/mouse_dunnart_peak_features.Rmd/unnamed-chunk-21-1.svg" target="_blank">5361a8a</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-04-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>p = plot_genomic_features(enhancers_tbl, c(&#39;#fff7ec&#39;,&#39;#fee8c8&#39;,&#39;#fdd49e&#39;,&#39;#fdbb84&#39;,&#39;#fc8d59&#39;,&#39;#ef6548&#39;,&#39;#4d004b&#39;))
+
+pdf(paste0(plot_dir, &quot;mouse_dunnart_enhancer_genomic_features.pdf&quot;), width=10, height=5)
+print(p + font)
+dev.off()</code></pre>
+<pre><code>svg 
+  2 </code></pre>
+<pre class="r"><code>print(p + ggtitle(&quot;Genomic features for enhancer-associated peaks&quot;))</code></pre>
+<p><img src="figure/mouse_dunnart_peak_features.Rmd/unnamed-chunk-21-2.svg" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-21-2">
+Past versions of unnamed-chunk-21-2.svg
+</button>
+</p>
+<div id="fig-unnamed-chunk-21-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/lecook/chipseq-cross-species/blob/5361a8a63d23746774a7caaf0213d6b1aa1fba90/docs/figure/mouse_dunnart_peak_features.Rmd/unnamed-chunk-21-2.svg" target="_blank">5361a8a</a>
+</td>
+<td>
+lecook
+</td>
+<td>
+2022-04-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -2743,21 +3046,24 @@ attached base packages:
 [8] base     
 
 other attached packages:
- [1] scales_1.1.1                          
- [2] TxDb.Mmusculus.UCSC.mm10.ensGene_3.4.0
- [3] dplyr_1.0.8                           
- [4] data.table_1.14.0                     
- [5] ggplot2_3.3.3                         
- [6] GenomicFeatures_1.46.5                
- [7] AnnotationDbi_1.56.2                  
- [8] Biobase_2.54.0                        
- [9] GenomicRanges_1.46.1                  
-[10] GenomeInfoDb_1.30.1                   
-[11] IRanges_2.28.0                        
-[12] S4Vectors_0.32.3                      
-[13] BiocGenerics_0.40.0                   
-[14] ChIPseeker_1.30.3                     
-[15] workflowr_1.7.0                       
+ [1] org.Mm.eg.db_3.14.0                   
+ [2] clusterProfiler_4.2.2                 
+ [3] purrr_0.3.4                           
+ [4] scales_1.1.1                          
+ [5] TxDb.Mmusculus.UCSC.mm10.ensGene_3.4.0
+ [6] dplyr_1.0.8                           
+ [7] data.table_1.14.0                     
+ [8] ggplot2_3.3.3                         
+ [9] GenomicFeatures_1.46.5                
+[10] AnnotationDbi_1.56.2                  
+[11] Biobase_2.54.0                        
+[12] GenomicRanges_1.46.1                  
+[13] GenomeInfoDb_1.30.1                   
+[14] IRanges_2.28.0                        
+[15] S4Vectors_0.32.4                      
+[16] BiocGenerics_0.40.0                   
+[17] ChIPseeker_1.30.3                     
+[18] workflowr_1.7.0                       
 
 loaded via a namespace (and not attached):
   [1] shadowtext_0.1.1                       
@@ -2829,26 +3135,26 @@ loaded via a namespace (and not attached):
  [67] munsell_0.5.0                          
  [68] tools_4.1.0                            
  [69] cachem_1.0.5                           
- [70] cli_2.5.0                              
- [71] generics_0.1.0                         
- [72] RSQLite_2.2.7                          
- [73] evaluate_0.14                          
- [74] stringr_1.4.0                          
- [75] fastmap_1.1.0                          
- [76] yaml_2.2.1                             
- [77] ggtree_3.2.1                           
- [78] processx_3.5.2                         
- [79] knitr_1.33                             
- [80] bit64_4.0.5                            
- [81] fs_1.5.0                               
- [82] tidygraph_1.2.0                        
- [83] caTools_1.18.2                         
- [84] purrr_0.3.4                            
+ [70] downloader_0.4                         
+ [71] cli_2.5.0                              
+ [72] generics_0.1.0                         
+ [73] RSQLite_2.2.7                          
+ [74] evaluate_0.14                          
+ [75] stringr_1.4.0                          
+ [76] fastmap_1.1.0                          
+ [77] yaml_2.2.1                             
+ [78] ggtree_3.2.1                           
+ [79] processx_3.5.2                         
+ [80] knitr_1.33                             
+ [81] bit64_4.0.5                            
+ [82] fs_1.5.0                               
+ [83] tidygraph_1.2.0                        
+ [84] caTools_1.18.2                         
  [85] KEGGREST_1.34.0                        
  [86] ggraph_2.0.5                           
  [87] nlme_3.1-152                           
  [88] whisker_0.4                            
- [89] aplot_0.1.2                            
+ [89] aplot_0.1.3                            
  [90] DO.db_2.9                              
  [91] xml2_1.3.2                             
  [92] biomaRt_2.50.3                         
@@ -2894,7 +3200,7 @@ loaded via a namespace (and not attached):
 [132] parallel_4.1.0                         
 [133] hms_1.1.0                              
 [134] grid_4.1.0                             
-[135] ggfun_0.0.5                            
+[135] ggfun_0.0.6                            
 [136] tidyr_1.1.3                            
 [137] rmarkdown_2.8                          
 [138] MatrixGenerics_1.6.0                   

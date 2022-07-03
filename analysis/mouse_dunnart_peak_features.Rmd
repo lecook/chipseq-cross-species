@@ -22,6 +22,9 @@ library(data.table)
 library(dplyr)
 library(TxDb.Mmusculus.UCSC.mm10.ensGene)
 library(scales)
+library(purrr)
+library(clusterProfiler)
+library(org.Mm.eg.db)
 
 plot_dir <- "output/plots/"
 fullPeak_dir <- "output/peaks/"
@@ -174,7 +177,7 @@ p <- ggplot(combined.tbl, aes(factor(sample), Freq, fill=mark)) +
 
 p + ggtitle("Number of peaks with all reads used for peak calling")
 
-pdf(file=paste0(plot_dir, "number_of_mouse_dunnart_peaks_all_reads.pdf"), width = 10, height = 7)
+pdf(file=paste0(plot_dir, "number_of_mouse_dunnart_peaks_all_reads.pdf"), width = 13, height = 7)
 print(p + font)
 dev.off()
 ```
@@ -239,7 +242,7 @@ p = ggplot(data, aes(x=factor(group), y=log10(V7), fill = cre)) + geom_violin(ae
   theme_bw() + xlab("") + ylab("Log10 Peak Intensity") +  scale_color_manual(values = c("#efc769", "#1a6259")) +
     scale_fill_manual(values = c("#ffe29f","#8db1ac"))
 p
-pdf(file=paste0(plot_dir, "mouse_dunnart_peak_intensity.pdf"), width = 10, height = 7)
+pdf(file=paste0(plot_dir, "mouse_dunnart_peak_intensity.pdf"), width = 18, height = 7)
 print(p  + font)
 dev.off()
 ```
@@ -274,9 +277,8 @@ smiCra_txdb <- makeTxDbFromGFF("data/genomic_data/Scras_dunnart_assem1.0_pb-ont-
 ## Convert geneIDs
 ### Tables downloaded from biomart and collated
 df2 <- read.table("output/annotations/devil_to_mouse_ensembl.txt", header=TRUE, sep="\t") ## conversion table for devil ENSEMBL to mouse ENSEMBL
-df3 <- read.table("output/annotations/refseq_to_ensembl.txt", header=TRUE, sep="\t") ## convertsion table for devil refseq to devil ENSEMBL
-bg = fread("output/annotations/go_background_orthologousENSEMBL_biomart.txt", header = FALSE)
-bg = unlist(bg, use.names = FALSE)
+df3 <- read.table("output/annotations/refseq_to_ensembl.txt", header=TRUE, sep="\t") ## conversion table for devil refseq to devil ENSEMBL
+
 ```
 
 ## Annotate peak files with ChIPseeker
@@ -291,19 +293,33 @@ annotatePeaksmm10 <- function(peak, outFile){
   
   # Write annotation to file
   write.table(peakAnno, outFile, sep="\t", quote=F, row.names=F)
+  
+  peakAnnoDF <- as.data.frame(peakAnno)
+
 }
 
 annotatePeaksmm10(peak = paste0(fullPeak_dir, "E10.5_enhancer_peaks.narrowPeak"), outFile = paste0(annot_dir, "E10.5_enhancer_annotation.txt"))
+
 annotatePeaksmm10(peak = paste0(fullPeak_dir, "E11.5_enhancer_peaks.narrowPeak"), outFile = paste0(annot_dir, "E11.5_enhancer_annotation.txt"))
+
 annotatePeaksmm10(peak = paste0(fullPeak_dir, "E12.5_enhancer_peaks.narrowPeak"), outFile = paste0(annot_dir, "E12.5_enhancer_annotation.txt"))
+
 annotatePeaksmm10(peak = paste0(fullPeak_dir, "E13.5_enhancer_peaks.narrowPeak"), outFile = paste0(annot_dir, "E13.5_enhancer_annotation.txt"))
+
 annotatePeaksmm10(peak = paste0(fullPeak_dir, "E14.5_enhancer_peaks.narrowPeak"), outFile = paste0(annot_dir, "E14.5_enhancer_annotation.txt"))
+
 annotatePeaksmm10(peak = paste0(fullPeak_dir, "E15.5_enhancer_peaks.narrowPeak"), outFile = paste0(annot_dir,"E15.5_enhancer_annotation.txt"))
+
 annotatePeaksmm10(peak = paste0(fullPeak_dir, "E10.5_promoter_peaks.narrowPeak"), outFile = paste0(annot_dir,"E10.5_promoter_annotation.txt"))
+
 annotatePeaksmm10(peak = paste0(fullPeak_dir, "E11.5_promoter_peaks.narrowPeak"), outFile = paste0(annot_dir,"E11.5_promoter_annotation.txt"))
+
 annotatePeaksmm10(peak = paste0(fullPeak_dir, "E12.5_promoter_peaks.narrowPeak"), outFile = paste0(annot_dir,"E12.5_promoter_annotation.txt"))
+
 annotatePeaksmm10(peak = paste0(fullPeak_dir, "E13.5_promoter_peaks.narrowPeak"), outFile = paste0(annot_dir,"E13.5_promoter_annotation.txt"))
+
 annotatePeaksmm10(peak = paste0(fullPeak_dir, "E14.5_promoter_peaks.narrowPeak"), outFile = paste0(annot_dir,"E14.5_promoter_annotation.txt"))
+
 annotatePeaksmm10(peak = paste0(fullPeak_dir, "E15.5_promoter_peaks.narrowPeak"), outFile = paste0(annot_dir,"E15.5_promoter_annotation.txt"))
 ```
 
@@ -338,16 +354,29 @@ annotatePeaks <- function(peak, outFile, outFile1, outFile2, GOenrich, kegg, bac
   peakAnnoDF$mouseensembl[peakAnnoDF$mouseensembl == as.character("")] <- NA
   peakAnnoDF <- peakAnnoDF[!is.na(peakAnnoDF$mouseensembl),]
   write.table(peakAnnoDF, paste0(annot_dir, outFile1), sep = "\t", quote = F, row.names = F)
+  
+  backg = unlist(backg$V1)
+  # # GO enrichment analysis
+  GO <- enrichGO(gene = peakAnnoDF$mouseensembl,
+                  keyType = "ENSEMBL",
+                  OrgDb = org.Mm.eg.db,
+                  ont = "BP",
+                  universe = backg,
+                  pAdjustMethod = "fdr",
+                  qvalueCutoff = 0.01,
+                  readable = TRUE)
+  write.table(GO, paste0(annot_dir, GOenrich), 
+              sep="\t", quote=F, row.names=F)
 }
 
 
 ### Enhancer-associated peaks annotation
-annotatePeaks(peak = paste0(fullPeak_dir, "dunnart_enhancer_peaks.narrowPeak"), outFile = "dunnart_enhancer_annotation.txt", backg = unlist(fread("output/annotations/go_background_orthologousENSEMBL_biomart.txt", header = FALSE), use.names = FALSE),
-  outFile1 = "dunnart_enhancer_annotationConvertedIDs.txt", outFile2 = "dunnart_enhancer_annotationConvertedIDs_t.devil.txt")
+annotatePeaks(peak = paste0(fullPeak_dir, "dunnart_enhancer_peaks.narrowPeak"), outFile = "dunnart_enhancer_annotation.txt", backg = fread("output/annotations/mart_export.txt", header = FALSE),
+  outFile1 = "dunnart_enhancer_annotationConvertedIDs.txt", outFile2 = "dunnart_enhancer_annotationConvertedIDs_t.devil.txt", GOenrich = "dunnart_enhancer_mm10GOenrich")
 
 ### Promoter-associated peaks annotation
-annotatePeaks(peak = paste0(fullPeak_dir, "dunnart_promoter_peaks.narrowPeak"), outFile = "dunnart_promoter_annotation.txt", backg = unlist(fread("output/annotations/go_background_orthologousENSEMBL_biomart.txt", header = FALSE), use.names = FALSE),
-  outFile1 = "dunnart_promoter_annotationConvertedIDs.txt", outFile2 = "dunnart_promoter_annotationConvertedIDs_t.devil.txt")
+annotatePeaks(peak = paste0(fullPeak_dir, "dunnart_promoter_peaks.narrowPeak"), outFile = "dunnart_promoter_annotation.txt", backg =fread("output/annotations/mart_export.txt", header = FALSE),
+  outFile1 = "dunnart_promoter_annotationConvertedIDs.txt", outFile2 = "dunnart_promoter_annotationConvertedIDs_t.devil.txt", GOenrich = "dunnart_promoter_mm10GOenrich")
 
 ```
 
@@ -474,18 +503,27 @@ cluster3 <- cre.kmeans_df$V4[cre.kmeans_df$Cluster==3]
 
 promoter = paste0(fullPeak_dir, "dunnart_promoter_peaks.narrowPeak")
 promoter_annot = paste0(annot_dir, "dunnart_promoter_annotationConvertedIDs.txt")
+promoter_annot2 = paste0(annot_dir, "dunnart_promoter_annotation.txt")
+promoter_annot3 = paste0(annot_dir, "dunnart_promoter_annotationConvertedIDs_t.devil.txt")
+
 
 out1 = paste0(filterPeaks_dir, "cluster1_dunnart_promoter_peaks.narrowPeak")
 out2 = paste0(filterPeaks_dir, "cluster2_dunnart_promoter_peaks.narrowPeak")
 out3 =  paste0(filterPeaks_dir, "cluster3_dunnart_promoter_peaks.narrowPeak")
 out4 = paste0(annot_dir, "dunnart_promoter_cluster1_annotationConvertedIDs.txt")
+out5 = paste0(annot_dir, "dunnart_promoter_cluster1_annotation.txt")
+out6 = paste0(annot_dir, "dunnart_promoter_cluster1_annotationConvertedIDs_t.devil.txt")
 
 file= fread(promoter, header=FALSE, sep="\t", quote = "") 
 file2 = fread(promoter_annot, header=TRUE, sep = "\t", quote="")
+file3 = fread(promoter_annot2, header=TRUE, sep = "\t", quote="")
+file4 = fread(promoter_annot3, header=TRUE, sep = "\t", quote="")
 write.table(subset(file, V4 %in% cluster1), out1, quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
 write.table(subset(file, V4 %in% cluster2), out2, quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
 write.table(subset(file, V4 %in% cluster3), out3, quote=FALSE, col.names=FALSE, row.names=FALSE, sep="\t")
 write.table(subset(file2, V4 %in% cluster1), out4, quote=FALSE, col.names=TRUE, row.names=FALSE, sep="\t")
+write.table(subset(file3, V4 %in% cluster1), out5, quote=FALSE, col.names=TRUE, row.names=FALSE, sep="\t")
+write.table(subset(file4, V4 %in% cluster1), out6, quote=FALSE, col.names=TRUE, row.names=FALSE, sep="\t")
 
 ```
 
@@ -502,7 +540,7 @@ message("cluster 3 promoter peaks: ", dim(fread(paste0(filterPeaks_dir, "cluster
 files =list.files(annot_dir, pattern= ".5_promoter_annotation.txt", full.names=T) # create list of files in directory
 files = as.list(files)
 data_annot = lapply(files, function(x) fread(x, header=TRUE, sep="\t", quote = "", na.strings=c("", "NA"))) # read in all files
-names(data_annot) = c("E10","E11","E12","E13","E14", "E15")
+names(data_annot) = c("E10.5","E11.5","E12.5","E13.5","E14.5", "E15.5")
 df1 = Map(mutate, data_annot, group = names(data_annot))
 
 ## add thresholds from kmeans clustering for cluster 1 in the dunnart
@@ -531,7 +569,6 @@ df3 = lapply(df1, function(x) x %>% select("V4"))
 df3 = lapply(df3, function(x) as.vector(x$V4))
 
 filtered <- lapply(df2, function(x) x[x$V4 %in% unlist(df3),])
-
 
 lapply(names(filtered), function(x) write.table(filtered[[x]], file=paste0(filterPeaks_dir,x,"_cluster1_peaks", ".narrowPeak"), sep="\t", quote=FALSE, col.names=FALSE, row.names=FALSE))
 
@@ -755,3 +792,88 @@ print(p + font)
 dev.off()
 
 ```
+
+## Plot genomic annotation features
+
+```{r}
+files =list.files(annot_dir, 
+                  pattern= "dunnart_enhancer_annotationConvertedIDs.txt|cluster1_promoter_annotationConvertedIDs.txt|*.5_enhancer_annotation.txt|*_cluster1_annotation.txt",
+                  full.names=T) # create list of files in directory
+    
+files = as.list(files)
+data = lapply(files, 
+              function(x) fread(x, 
+                                header=TRUE, 
+                                sep="\t", 
+                                quote = "", 
+                                na.strings=c("", "NA"))) 
+
+data = lapply(data, function(x) x %>% 
+                dplyr::select(annotation) %>% 
+                as.data.table())
+
+df1 = Map(mutate, data[c(1,3,5,7,9,11,13)], cre = "promoter")
+df2 = Map(mutate, data[c(2,4,6,8,10,12,14)], cre = "enhancer")
+data = append(df1, df2)
+
+df1 = Map(mutate, data[c(1,8)], group = "dunnart")
+df2 = Map(mutate, data[c(2,9)], group = "E10.5")
+df3 = Map(mutate, data[c(3,10)], group = "E11.5")
+df4 = Map(mutate, data[c(4,11)], group = "E12.5")
+df5 = Map(mutate, data[c(5,12)], group = "E13.5")
+df6 = Map(mutate, data[c(6,13)], group = "E14.5")
+df7 = Map(mutate, data[c(7,14)], group = "E15.5")
+
+data <- append(df1, df2)
+data <- append(data, df3)
+data = append(data, df4)
+data = append(data, df5)
+data = append(data, df6)
+data = append(data, df7)
+    
+df1 = rbindlist(data,) ## bind rows back together
+df1 = map_df(df1, ~ gsub(" .*", "", .x))# remove everything after the first space
+df1 = df1[complete.cases(df1), ]
+promoters <- filter(df1, cre == "promoter")
+enhancers <- filter(df1, cre == "enhancer")
+
+promoters_tbl = with(promoters,
+                     table(annotation, group)) %>% as.data.frame()
+enhancers_tbl = with(enhancers, 
+                         table(annotation, group)) %>%
+  as.data.frame()
+
+
+# Plot proportion of peaks in each genomic region
+plot_genomic_features <- function(x, y){
+  ggplot(x, 
+         aes(factor(group), 
+                  Freq, 
+                  fill=annotation)) +
+    geom_bar(position=position_stack(reverse = FALSE),
+             stat="identity") +
+    scale_fill_manual(values = y)  + 
+    theme_bw() + 
+    ylab("Number of peaks") +
+    xlab("")
+}
+
+p = plot_genomic_features(promoters_tbl, c('#4d004b','#4d004b','#4d004b','#4d004b','#4d004b','#4d004b','#4d004b'))
+
+pdf(paste0(plot_dir, "mouse_dunnart_promoter_genomic_features.pdf"),  width=10, height=5)
+print(p + font)
+dev.off()
+
+print(p + ggtitle("Genomic features for promoter-associated peaks"))
+
+p = plot_genomic_features(enhancers_tbl, c('#fff7ec','#fee8c8','#fdd49e','#fdbb84','#fc8d59','#ef6548','#4d004b'))
+
+pdf(paste0(plot_dir, "mouse_dunnart_enhancer_genomic_features.pdf"), width=10, height=5)
+print(p + font)
+dev.off()
+
+print(p + ggtitle("Genomic features for enhancer-associated peaks"))
+```
+
+
+
